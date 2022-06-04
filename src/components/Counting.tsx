@@ -1,11 +1,12 @@
-import { useAtom } from "jotai";
+import { atom, Provider, useAtom } from "jotai";
 import React from "react";
-import { countAtom } from "../atoms/countAtom";
+
+const countAtom = atom<number>(0);
 
 const Counting = () => {
   const [count, setCount] = useAtom(countAtom);
   return (
-    <>
+    <Provider>
       <h1>Test Counting!</h1>
       <div>
         <h3>{`show count!  ${count}`}</h3>
@@ -20,7 +21,7 @@ const Counting = () => {
       >
         - Click!
       </button>
-    </>
+    </Provider>
   );
 };
 

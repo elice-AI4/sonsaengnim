@@ -1,6 +1,7 @@
-import { useAtom } from "jotai";
+import { Provider, useAtom } from "jotai";
 import React from "react";
 import { textAtom, textLenAtom, uppercaseAtom } from "../atoms/TextLength";
+import FCTest from "./FCTest";
 
 const Input = () => {
   const [text, setText] = useAtom(textAtom);
@@ -19,12 +20,12 @@ const Uppercase = () => {
 
 const TextLength = () => {
   return (
-    <>
+    <Provider>
       <h1>TEXT Length Test</h1>
       <Input />
       <CharCount />
       <Uppercase />
-    </>
+    </Provider>
   );
 };
 
