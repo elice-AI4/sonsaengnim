@@ -12,7 +12,7 @@ export const GlobalStyle = createGlobalStyle`
       return css`
         h1 {
           font-size: ${theme.text.largest};
-          color: ${theme.colors.h1_color};
+          /* color: ${theme.colors.h1_color}; */
         }
       `;
     }}
