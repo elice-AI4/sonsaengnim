@@ -1,46 +1,52 @@
-# Getting Started with Create React App
+# (서비스 명)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+---
 
-## Available Scripts
+## 타이틀(서비스 명)
 
-In the project directory, you can run:
+1. 프로젝트 주제
+2. 유저에게 보이는 웹 서비스 타이틀 및 한 줄 소개
+3. 팀 구성원의 전체 이름과 역할
 
-### `npm start`
+| 이름   | 역할                   |
+| ------ | ---------------------- |
+| 박보선 | FE                     |
+| 박정훈 | FE                     |
+| 김동현 | BE                     |
+| 김유진 | BE, 디스코드 서버 관리 |
+| 김채정 | AI, 팀장               |
+| 유혜선 | AI, 노션 관리          |
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## 서비스 설명
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+1. 기획 의도
 
-### `npm test`
+- 조사할 문제, 조사할 문제가 흥미로운 이유
+- 프로젝트 목적 및 필요성 (어떤 사용자의, 어떤 문제를 해결하는지)
+- 프로젝트가 제공하는 기대 효과와 활용 방안
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+2. 사용된 인공지능 알고리즘 및 모델과 기술스택
 
-### `npm run build`
+- 어떤 인공지능 알고리즘 및 모델을 어떻게 전처리하고 사용할 것인지
+- 이 프로젝트의 맥락과 배경이 유사한 인공지능 기반 서비스의 활용 사례 및 참고 논문
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+3. 웹 서비스의 최종적인 메인 기능과 서브 기능 설명
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+(메인 기능)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+1.
+2.
+3. (서브 기능)
+4.
+5.
+6.
 
-### `npm run eject`
+7. 프로젝트 구성
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+- 와이어프레임 (whimsical, figma 등 링크 삽입)
+- 스토리보드 및 유저 시나리오
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+5. 프로젝트 평가 기준
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+- 자신들의 프로젝트 결과물을 질적으로 어떻게 평가할 것인지
+- 경쟁력을 수치화 또는 유사한 프로젝트들과 비교하기 위해 어떤 메트릭 또는 통계를 사용할것인지
