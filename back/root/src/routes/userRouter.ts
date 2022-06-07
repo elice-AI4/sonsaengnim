@@ -3,9 +3,20 @@ import { UserService } from "../services/userService";
 
 const userRouter = Router();
 
-// userRouter.post("/login", async (req: Request, res: Response, next: NextFunction) => {
-//   const { email, password } = req.body;
-// });
+// login
+userRouter.post("/login", async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const { email, password } = req.body;
+    const loginedUser = await UserService.login({ email, password });
+    if (loginedUser.errorMessage) {
+      throw new Error(loginedUser.errorMessage);
+    }
+
+    res.status(201).json(loginedUser);
+  } catch (error) {
+    next(error);
+  }
+});
 
 // 회원가입 라우터
 userRouter.post("/register", async (req: Request, res: Response, next: NextFunction) => {

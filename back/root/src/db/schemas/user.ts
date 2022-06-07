@@ -5,6 +5,7 @@ interface UserType {
   name: string;
   email: string;
   password: string;
+  errorMessage?;
 }
 
 const userSchema = new Schema(
