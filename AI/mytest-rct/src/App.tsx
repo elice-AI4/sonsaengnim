@@ -8,15 +8,15 @@ import Webcam from 'react-webcam'
 import { useRef, useEffect } from 'react'
 
 function App() {
-  const webcamRef = useRef(null)
-  const canvasRef = useRef(null)
+  const webcamRef = useRef<any>(null)
+  const canvasRef = useRef<any>(null)
 
   let camera = null
 
   const connect = window.drawConnectors
   const landmark = window.drawLandmarks
 
-  function onResults(results) {
+  function onResults(results: any) {
     canvasRef.current.width = webcamRef.current.video.videoWidth
     canvasRef.current.height = webcamRef.current.video.videoHeight
 
