@@ -8,26 +8,31 @@ interface HandType {
   video: string;
 }
 
-const handSchema = new Schema({
-  alphabet: {
-    type: String,
-    unique: true,
-    required: true,
-    index: true,
+const handSchema = new Schema(
+  {
+    alphabet: {
+      type: String,
+      unique: true,
+      required: true,
+      index: true,
+    },
+    handImage: {
+      type: String,
+      required: true,
+    },
+    mouthImage: {
+      type: String,
+      required: true,
+    },
+    video: {
+      type: String,
+      required: true,
+    },
   },
-  handImage: {
-    type: String,
-    required: true,
-  },
-  mouthImage: {
-    type: String,
-    required: true,
-  },
-  video: {
-    type: String,
-    required: true,
-  },
-});
+  {
+    timestamps:true
+  }
+);
 
 const Hand = model<HandType>("Hand", handSchema);
 
