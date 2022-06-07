@@ -6,6 +6,7 @@ import * as HandsMP from '@mediapipe/hands'
 import * as cam from '@mediapipe/camera_utils'
 import Webcam from 'react-webcam'
 import { useRef, useEffect } from 'react'
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 function App() {
   const webcamRef = useRef<any>(null)
@@ -75,35 +76,39 @@ function App() {
     }
   })
   return (
-    <div className="App">
-      <Webcam
-        ref={webcamRef}
-        style={{
-          position: 'absolute',
-          marginRight: 'auto',
-          marginLeft: 'auto',
-          left: 0,
-          right: 0,
-          textAlign: 'center',
-          zIndex: 9,
-          width: 640,
-        }}
-      />
+    <Router>
+      <Routes>
+        <div className="App">
+          <Webcam
+            ref={webcamRef}
+            style={{
+              position: 'absolute',
+              marginRight: 'auto',
+              marginLeft: 'auto',
+              left: 0,
+              right: 0,
+              textAlign: 'center',
+              zIndex: 9,
+              width: 640,
+            }}
+          />
 
-      <canvas
-        ref={canvasRef}
-        style={{
-          position: 'absolute',
-          marginRight: 'auto',
-          marginLeft: 'auto',
-          left: 0,
-          right: 0,
-          textAlign: 'center',
-          zIndex: 9,
-          width: 640,
-        }}
-      ></canvas>
-    </div>
+          <canvas
+            ref={canvasRef}
+            style={{
+              position: 'absolute',
+              marginRight: 'auto',
+              marginLeft: 'auto',
+              left: 0,
+              right: 0,
+              textAlign: 'center',
+              zIndex: 9,
+              width: 640,
+            }}
+          ></canvas>
+        </div>
+      </Routes>
+    </Router>
   )
 }
 
