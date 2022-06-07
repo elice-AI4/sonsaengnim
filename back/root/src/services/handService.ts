@@ -6,7 +6,7 @@ class HandService {
     return newHand;
   };
 
-  static findByAlph = async (alphabet) =>{
+  static getHanddata = async (alphabet) =>{
     const newHand = await HandModel.findByAlph({ alphabet: alphabet });
     return newHand;
   };
