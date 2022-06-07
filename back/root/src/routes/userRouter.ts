@@ -3,6 +3,11 @@ import { UserService } from "../services/userService";
 
 const userRouter = Router();
 
+// userRouter.post("/login", async (req: Request, res: Response, next: NextFunction) => {
+//   const { email, password } = req.body;
+// });
+
+// 회원가입 라우터
 userRouter.post("/register", async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { email, name, password } = req.body;
