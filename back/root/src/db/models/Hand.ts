@@ -5,6 +5,26 @@ class HandModel {
     const newHand = await Hand.create(newHandData);
     return newHand;
   };
+
+  static findAll = async () =>{
+    const newHand = await Hand.find();
+    return newHand;
+  };
+
+  static findByAlph = async ({ alphabet }) =>{
+    const newHand = await Hand.find({ alphabet: alphabet });
+    return newHand;
+  };
+  
+  static update = async ({ id, toUpdate }) =>{
+    const newHand = await Hand.findOneAndUpdate({ id , toUpdate });
+    return newHand;
+  }
+
+  static delete = async ({ _id }) => {
+    const result = await Hand.remove({ _id });
+    return result;
+  }
 }
 
 export { HandModel };
