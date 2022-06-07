@@ -1,0 +1,22 @@
+{
+  "name": "final-project",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://kdt-gitlab.elice.io/ai_track/class_04/ai_project/team5/final-project.git",
+  "author": "DongHyun Kim <developerforus@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "@types/express": "^4.17.13",
+    "@types/mongoose": "^5.11.97",
+    "@types/node": "^17.0.40",
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1",
+    "mongoose": "^6.3.5",
+    "tsc-watch": "^5.0.3",
+    "typescript": "^4.7.3"
+  },
+  "scripts": {
+    "build": "rm -rf dist && tsc",
+    "start": "tsc-watch --onSuccess \"node dist/index.js\""
+  }
+}
