@@ -76,8 +76,8 @@ function App() {
     }
   })
   return (
-    <Router>
-      <Routes>
+    // <Router>
+    //   <Routes>
         <div className="App">
           <Webcam
             ref={webcamRef}
@@ -107,8 +107,8 @@ function App() {
             }}
           ></canvas>
         </div>
-      </Routes>
-    </Router>
+    //   </Routes>
+    // </Router>
   )
 }
 

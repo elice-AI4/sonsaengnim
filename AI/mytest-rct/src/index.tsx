@@ -5,10 +5,8 @@ import App from './App'
 import reportWebVitals from './reportWebVitals'
 
 const root = ReactDOM.createRoot(
-  document.getElementById('root')! as HTMLElement,
+  document.getElementById('root') as HTMLElement,
 )
-// ! 안 넣으면 null checking 오류
-// https://stackoverflow.com/questions/63520680/argument-of-type-htmlelement-null-is-not-assignable-to-parameter-of-type-el
 
 root.render(
   <React.StrictMode>
