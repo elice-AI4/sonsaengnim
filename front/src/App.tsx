@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Hello from "./components/Hello";
+import Hello from "./components/page/main/Hello";
 import NotFound from "./components/NotFound";
 import { ROUTE } from "./components/route/route";
 
