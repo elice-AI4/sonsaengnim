@@ -1,6 +1,6 @@
 import { Router, Request, Response, NextFunction } from "express";
 import { UserService } from "../services/userService";
-
+import { checkLogin } from "../middlewares/checkLogin";
 const userRouter = Router();
 
 // login
@@ -30,4 +30,11 @@ userRouter.post("/register", async (req: Request, res: Response, next: NextFunct
   }
 });
 
+// 토큰 확인 삭제 해도 됨
+userRouter.post("/verify", checkLogin, (req: Request, res: Response) => {
+  res.status(201).json({
+    status: "succ",
+    req: req.user,
+  });
+});
 export { userRouter };
