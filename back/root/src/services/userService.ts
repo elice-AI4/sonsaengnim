@@ -1,7 +1,7 @@
 import { UserModel } from "../db/index";
 
 import { hashPassword } from "../utils/hashPassword";
-
+import { makeToken } from "../utils/makeToken";
 class UserService {
   // 유저 로그인
   static login = async ({ email, password }) => {
@@ -14,7 +14,11 @@ class UserService {
 
     const hashedPassword = hashPassword(password);
     if (user.password === hashedPassword) {
-      return user;
+      const token = makeToken({ ObjectId: user._id });
+      return {
+        user,
+        token,
+      };
     } else {
       const errorMessage = "비밀번호가 틀립니다.";
       return { errorMessage };
