@@ -3,7 +3,7 @@ function translator(landmarks :any) {
     // 관절 좌표 얻는 부분
     // AI/flask_practice/main.py line: 63 - 65
     const joint :Array<any> = landmark.reduce((acc:any, cur:any) => {
-      acc.push(cur)
+      acc.push([cur.x, cur.y, cur.z])
       return acc
     },[])
 
@@ -15,8 +15,11 @@ function translator(landmarks :any) {
       if (idx === 0) {
         v1.push(cur)
       }
-      else if ((idx % 4 === 0) || (idx === 20)) {
+      else if ((idx % 4 === 0) && (idx < 20)) {
         v1.push(joint[0])
+        v2.push(cur)
+      }
+      else if (idx === 20) {
         v2.push(cur)
       }
       else {
@@ -25,20 +28,20 @@ function translator(landmarks :any) {
       }
             
     })
-
+    
     // AI/flask_practice/main.py line: 70
     let v : Array<any> = [];
-    for(let i=0; i < 21; i++) {
+    for(let i :number =0; i < 20; i++) {
       let [x, y, z] = v2[i]
       let [a, b, c] = v1[i]
       v.push([x-a, y-b, z-c])
     }
 
-    // np.linalg.norm => 제곱합으로 정규화
+    // np.linalg.norm => 제곱합의 제곱근으로 정규화
     // AI/flask_practice/main.py line: 71
     v = v.reduce((acc, cur) => {
       let [x, y, z] = cur;
-      let squareSum = x**2 + y**2 + z**2;
+      let squareSum = (Math.abs(x)**2 + Math.abs(y)**2 + Math.abs(z)**2) ** 0.5;
       acc.push([x/squareSum, y/squareSum, z/squareSum])
       return acc;
     }, [])
@@ -47,7 +50,7 @@ function translator(landmarks :any) {
     // [[1, 2], [3, 4]] , [[10, 11], [12, 13]] => [[10, 22], [36, 52]] => [32, 88]
     // AI/flask_practice/main.py line: 72 - 74
     let compareV1 = v.slice(0, 18); 
-    let compareV2 = v.slice(1, 19);
+    let compareV2 = v.slice(1, 20);
     compareV1.splice(3, 1);
     compareV1.splice(10, 1);
     compareV1.splice(13, 1);
@@ -61,17 +64,21 @@ function translator(landmarks :any) {
       let [v2x, v2y, v2z] = compareV2[i];
       einsum.push(v1x * v2x + v1y * v2y + v1z * v2z)
     }
-    
+    console.log("comparev1: ", compareV1);
+    console.log("comparev2: ", compareV2);
+    console.log("einsum: ", einsum);
     // arccos으로 벡터별 각도(radian) 구한 후 degree로 변경
     // AI/flask_practice/main.py line: 74 - 76
     let angle = einsum.reduce((acc:Array<number>, cur:number) => {
       let arccos = Math.acos(cur)
+      console.log("cur: ", cur);
+      console.log("arccos: ", arccos)
       acc.push(arccos * 180 / Math.PI)
       return acc
     }, [])
-    
+
     let data = [angle];
-    
+    return data;
     // knn에 각도 넣어서 확인
     // gesture에서 해당 인덱스 값 찾아 결과 내기
   }
