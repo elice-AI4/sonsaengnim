@@ -3,6 +3,16 @@ import { UserService } from "../services/userService";
 import { checkLogin } from "../middlewares/checkLogin";
 const userRouter = Router();
 
+userRouter.delete("/login", checkLogin, async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const userId = req.user;
+    const deletedUser = await UserService.delete(userId);
+    res.status(200).json({ deletedUser, status: "succ" });
+  } catch (error) {
+    next(error);
+  }
+});
+
 userRouter.put("/login", checkLogin, async (req: Request, res: Response, next: NextFunction) => {
   try {
     const userId = req.user;

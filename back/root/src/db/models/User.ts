@@ -1,6 +1,12 @@
 import { User } from "../schemas/user";
 
 class UserModel {
+  // 유저 삭제하기
+  static delete = async userId => {
+    const deletedUser = await User.findByIdAndDelete({ _id: userId });
+    return deletedUser;
+  };
+
   // 유저 수정하기
   static modifyUser = async (filter, userUpdateData) => {
     const modifiedUser = await User.findOneAndUpdate(filter, userUpdateData, { new: true });

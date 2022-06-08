@@ -3,6 +3,12 @@ import { UserModel } from "../db/index";
 import { hashPassword } from "../utils/hashPassword";
 import { makeToken } from "../utils/makeToken";
 class UserService {
+  // 유저 삭제
+  static delete = async userId => {
+    const deletedUser = await UserModel.delete(userId);
+    return deletedUser;
+  };
+
   // 유저 정보 수정
   static modifyUser = async ({ email, password, name, userId }) => {
     let user = await UserModel.findById({ id: userId });
