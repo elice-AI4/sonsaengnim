@@ -5,6 +5,7 @@ import * as HandsMP from '@mediapipe/hands'
 import * as cam from '@mediapipe/camera_utils'
 import Webcam from 'react-webcam'
 import { useRef, useEffect } from 'react'
+import translator from '../utils/translator';
 
 function Webcamdisplay() {
   const webcamRef = useRef<any>(null)
@@ -32,6 +33,9 @@ function Webcamdisplay() {
       canvasElement.height,
     )
     if (results.multiHandLandmarks) {
+      /** landmark를 통해 알파벳 예측하는 함수 사용 부분
+      * const predicted = translator(results.multiHandLandmarks)
+      */
       for (const landmarks of results.multiHandLandmarks) {
         connect(canvasCtx, landmarks, HandsMP.HAND_CONNECTIONS, {
           color: '#00FF00',
