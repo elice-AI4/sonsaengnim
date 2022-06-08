@@ -2,6 +2,7 @@ import React from "react";
 import {
   CardContainer,
   DescriptionContainer,
+  H1,
   TemplateContainer,
 } from "./LearningTemplate.style";
 import CardTemplate from "./CardTemplate";
@@ -20,10 +21,10 @@ interface LearningTemplateProps {
 const LearningTemplate = ({ imgs, title, children }: LearningTemplateProps) => {
   return (
     <TemplateContainer>
-      {children && <InputContainer>{children}</InputContainer>}
       <DescriptionContainer>
-        <h1>{title}</h1>
+        <H1>{title}</H1>
         <Underline />
+        {children && <InputContainer>{children}</InputContainer>}
       </DescriptionContainer>
       <CardContainer>
         {imgs.map((img, index) => {

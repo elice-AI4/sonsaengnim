@@ -1,4 +1,6 @@
 import React from "react";
+import { useLocation } from "react-router";
+import { useNavigate } from "react-router";
 import { Card, CardImg } from "./CardTemplate.style";
 
 interface AlphabetCardProps {
@@ -7,8 +9,13 @@ interface AlphabetCardProps {
 }
 
 const AlphabetCard = ({ src, alt }: AlphabetCardProps) => {
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
+  const handleClickCard = () => {
+    navigate(`${pathname}/camera`);
+  };
   return (
-    <Card>
+    <Card onClick={handleClickCard}>
       <CardImg src={src} alt={alt} />
     </Card>
   );
