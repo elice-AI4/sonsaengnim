@@ -1,7 +1,7 @@
 import { model, Schema } from "mongoose";
 
 // 1. Create an interface representing a document in MongoDB.
-interface HandType {
+export interface HandType {
   alphabet: string;
   handImage: string;
   mouthImage: string;

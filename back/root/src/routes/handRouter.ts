@@ -4,6 +4,7 @@ import { HandService } from "../services/handService";
 
 const handRouter = Router();
 
+// 수화 데이터 입력하기
 handRouter.post(
   "/hand",
   async (req: Request, res: Response, next: NextFunction) => {
@@ -18,6 +19,7 @@ handRouter.post(
   }
 );
 
+// 알파벳별 수화 데이터 가져오기
 handRouter.get(
   "/hand/:alphabet", 
   async (req: Request, res: Response, next: NextFunction) =>{
