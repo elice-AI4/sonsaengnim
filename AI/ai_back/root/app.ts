@@ -1,11 +1,14 @@
 import express, { Request, Response, NextFunction } from 'express';
 import KNN from 'ml-knn';
 import * as fs from 'fs';
+import cors from 'cors';
 
 const app = express();
+app.use(cors<Request>());
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 
-app.get('/welcome', (req: Request, res: Response, next: NextFunction) => {
-    res.send('welcome!');
+app.post('/welcome', (req: Request, res: Response, next: NextFunction) => {
 
     const datasetFile = fs.readFileSync(__dirname+'/public/dataSet.txt', 'utf-8').toString().split("\n")
     let angleFile = []
@@ -18,11 +21,20 @@ app.get('/welcome', (req: Request, res: Response, next: NextFunction) => {
     angleFile.map((x) => Number(x))
     labelFile.map((x) => Number(x))
     let knn = new KNN(angleFile, labelFile)
-    console.log('isknn?', knn)
     //여기에 req.body로 받은 데이터 셋 넣기
-    // let result = knn.predict(test_dataset)
-
-    //res.send()
+    let predicted = "none";
+    if (req.body?.data_xy) {
+      const test_dataset = JSON.parse(req.body["data_xy"]);
+      console.log(test_dataset)
+      console.log(typeof(test_dataset))
+      let result = knn.predict(test_dataset)
+      console.log("result: ", result)
+      if (parseInt(result) <= 26) {
+        predicted = String.fromCharCode((parseInt(result) + 'a'.charCodeAt(0)))
+      }
+    }
+    console.log("predicted: ", predicted);
+    res.send(predicted);
 });
 
 app.listen('1234', () => {
