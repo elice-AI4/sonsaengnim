@@ -9,7 +9,6 @@ tags:
   - name: "Sign Language"
     description: "Sing Language For Children"
 schemes:
-  - "https"
   - "http"
 paths:
   /register:
@@ -19,6 +18,29 @@ paths:
       summary: "Register User"
       description: ""
       operationId: "Register User"
+      consumes:
+        - "application/json"
+        - "application/xml"
+      produces:
+        - "application/xml"
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Register User"
+          required: true
+          schema:
+            $ref: "#/definitions/User"
+      responses:
+        "405":
+          description: "Invalid input"
+  /login:
+    post:
+      tags:
+        - "Login User"
+      summary: "Login User"
+      description: ""
+      operationId: "Login User"
       consumes:
         - "application/json"
         - "application/xml"
