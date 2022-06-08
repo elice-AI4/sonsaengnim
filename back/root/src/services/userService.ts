@@ -3,6 +3,24 @@ import { UserModel } from "../db/index";
 import { hashPassword } from "../utils/hashPassword";
 import { makeToken } from "../utils/makeToken";
 class UserService {
+  // 유저 정보 수정
+  static modifyUser = async ({ email, password, name, userId }) => {
+    let user = await UserModel.findById({ id: userId });
+    delete user._id;
+    if (password) {
+      const hashedPassword = hashPassword(password);
+      const filter = { _id: userId };
+      const userUpdateData = { ...user, email, password: hashedPassword, name };
+      const modifiedUser = await UserModel.modifyUser(filter, userUpdateData);
+      return modifiedUser;
+    } else {
+      const filter = { _id: userId };
+      const userUpdateData = { ...user, email, password, name };
+      const modifiedUser = await UserModel.modifyUser(filter, userUpdateData);
+      return modifiedUser;
+    }
+  };
+
   // 유저 로그인
   static login = async ({ email, password }) => {
     // 해당 email 가입 내역 확인

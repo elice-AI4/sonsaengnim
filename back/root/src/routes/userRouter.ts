@@ -3,6 +3,17 @@ import { UserService } from "../services/userService";
 import { checkLogin } from "../middlewares/checkLogin";
 const userRouter = Router();
 
+userRouter.put("/login", checkLogin, async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const userId = req.user;
+    const { email, password, name } = req.body;
+    const modifiedUser = await UserService.modifyUser({ email, password, name, userId });
+    res.status(201).json(modifiedUser);
+  } catch (error) {
+    next(error);
+  }
+});
+
 // login
 userRouter.post("/login", async (req: Request, res: Response, next: NextFunction) => {
   try {
