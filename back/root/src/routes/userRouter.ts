@@ -6,8 +6,8 @@ const userRouter = Router();
 // login
 userRouter.post("/login", async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const { id, password } = req.body;
-    const loginedUser = await UserService.login({ id, password });
+    const { email, password } = req.body;
+    const loginedUser = await UserService.login({ email, password });
     if (loginedUser.errorMessage) {
       throw new Error(loginedUser.errorMessage);
     }
@@ -21,9 +21,9 @@ userRouter.post("/login", async (req: Request, res: Response, next: NextFunction
 // 회원가입 라우터
 userRouter.post("/register", async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const { id, name, password } = req.body;
+    const { email, name, password } = req.body;
 
-    const newUser = await UserService.createUser({ id, name, password });
+    const newUser = await UserService.createUser({ email, name, password });
     res.status(200).json(newUser);
   } catch (error) {
     next(error);

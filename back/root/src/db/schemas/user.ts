@@ -3,7 +3,7 @@ import { model, Schema } from "mongoose";
 // 1. Create an interface representing a document in MongoDB.
 interface UserType {
   name: string;
-  id: string;
+  email: string;
   password: string;
   errorMessage?;
 }
@@ -15,7 +15,7 @@ const userSchema = new Schema(
       required: true,
       index: true,
     },
-    id: {
+    email: {
       type: String,
       unique: true,
       required: true,
