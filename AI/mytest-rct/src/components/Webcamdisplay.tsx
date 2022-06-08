@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import { Hands } from "@mediapipe/hands";
 import * as HandsMP from "@mediapipe/hands";
 import * as cam from "@mediapipe/camera_utils";
+import { drawConnectors, drawLandmarks } from "@mediapipe/drawing_utils";
 import Webcam from "react-webcam";
 import { useRef, useEffect } from "react";
 import translator from "../utils/translator";
@@ -11,10 +12,8 @@ function Webcamdisplay() {
   const webcamRef = useRef<any>(null);
   const canvasRef = useRef<any>(null);
 
-  let camera = null;
-
-  const connect = window.drawConnectors;
-  const landmark = window.drawLandmarks;
+  const connect = drawConnectors;
+  const landmark = drawLandmarks;
 
   function onResults(results: any) {
     canvasRef.current.width = webcamRef.current.video.videoWidth;
@@ -68,7 +67,7 @@ function Webcamdisplay() {
       typeof webcamRef.current !== "undefined" &&
       webcamRef.current !== null
     ) {
-      camera = new cam.Camera(webcamRef.current.video, {
+      const camera = new cam.Camera(webcamRef.current.video, {
         onFrame: async () => {
           await hands.send({ image: webcamRef.current.video });
         },
@@ -78,9 +77,8 @@ function Webcamdisplay() {
       camera.start();
     }
   });
+
   return (
-    // <Router>
-    //   <Routes>
     <div className="App">
       <Webcam
         ref={webcamRef}
@@ -110,8 +108,6 @@ function Webcamdisplay() {
         }}
       ></canvas>
     </div>
-    //   </Routes>
-    // </Router>
   );
 }
 
