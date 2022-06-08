@@ -2,9 +2,7 @@ import express, { Request, Response, NextFunction } from 'express';
 import KNN from 'ml-knn';
 import * as fs from 'fs';
 
-
 const app = express();
-
 
 app.get('/welcome', (req: Request, res: Response, next: NextFunction) => {
     res.send('welcome!');
