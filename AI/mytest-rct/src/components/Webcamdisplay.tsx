@@ -6,6 +6,7 @@ import * as cam from "@mediapipe/camera_utils";
 import Webcam from "react-webcam";
 import { useRef, useEffect } from "react";
 import translator from "../utils/translator";
+import axios from "axios";
 
 function Webcamdisplay() {
   const webcamRef = useRef<any>(null);
@@ -16,7 +17,7 @@ function Webcamdisplay() {
   const connect = window.drawConnectors;
   const landmark = window.drawLandmarks;
 
-  function onResults(results: any) {
+  async function onResults(results: any) {
     canvasRef.current.width = webcamRef.current.video.videoWidth;
     canvasRef.current.height = webcamRef.current.video.videoHeight;
 
@@ -43,7 +44,13 @@ function Webcamdisplay() {
         });
         landmark(canvasCtx, landmarks, { color: "#FF0000", lineWidth: 2 });
       }
-      const predicted = translator(results.multiHandLandmarks)
+      const params = new URLSearchParams();
+      const preprocessed = translator(results.multiHandLandmarks)
+      const preprocessedJson = JSON.stringify(preprocessed);
+      console.log("preprocessedJson: ", preprocessedJson)
+      params.append("data_xy", preprocessedJson)
+      const predicted = await axios.post('http://localhost:1234/welcome', params);
+      // console.log(predicted);
     }
     canvasCtx.restore();
   }
