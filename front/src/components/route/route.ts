@@ -3,6 +3,6 @@ export const ROUTE = {
     link: "login",
   },
   LEARNING: {
-    linl: "learning",
+    link: "learning",
   },
 };
