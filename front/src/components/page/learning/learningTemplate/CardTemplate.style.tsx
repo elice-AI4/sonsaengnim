@@ -4,7 +4,7 @@ export const Card = styled.div`
   width: 125px;
   height: 100px;
   text-align: center;
-  background-color: #e2d2d2;
+  /* background-color: #e2d2d2; */
   border-radius: 50px;
 
   margin: 1rem;
