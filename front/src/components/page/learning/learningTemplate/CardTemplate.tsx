@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, CardImg } from "./AlphabetCard.style";
+import { Card, CardImg } from "./CardTemplate.style";
 
 interface AlphabetCardProps {
   src: string;

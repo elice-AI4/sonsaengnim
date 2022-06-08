@@ -4,8 +4,9 @@ import Hello from "./components/page/main/Hello";
 import NotFound from "./components/NotFound";
 import { ROUTE } from "./components/route/route";
 import Learning from "./components/page/learning/Learning";
-import Alphabet from "./components/page/learning/alphabet/Alphabet";
 import Word from "./components/page/learning/word/Word";
+import LearningTemplate from "./components/page/learning/learningTemplate/LearningTemplate";
+import { alphabetImgs } from "./components/page/learning/learningData";
 
 function App() {
   return (
@@ -15,7 +16,12 @@ function App() {
         <Route path={`/${ROUTE.LEARNING.link}`} element={<Learning />} />
         <Route
           path={`/${ROUTE.LEARNING.link}/${ROUTE.ALPHABET.link}`}
-          element={<Alphabet />}
+          element={
+            <LearningTemplate
+              imgs={alphabetImgs}
+              title="A부터 차근차근 알아가 볼까요?"
+            />
+          }
         />
         <Route
           path={`/${ROUTE.LEARNING.link}/${ROUTE.WORD.link}`}

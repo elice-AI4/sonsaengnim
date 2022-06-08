@@ -42,7 +42,6 @@ export const LearningContainer = styled.div`
   max-height: 700px;
 
   margin: auto;
-  border: 1px solid black;
 
   display: flex;
   justify-content: center;
