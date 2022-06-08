@@ -1,4 +1,5 @@
 import React from "react";
+import styled, { createGlobalStyle } from "styled-components";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import NotFound from "./components/NotFound";
 import { ROUTE } from "./components/route/route";
