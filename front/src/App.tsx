@@ -6,11 +6,13 @@ import Learning from "./components/page/learning/Learning";
 import Word from "./components/page/learning/word/Word";
 import LearningTemplate from "./components/page/learning/learningTemplate/LearningTemplate";
 import { alphabetImgs } from "./components/page/learning/learningData";
+import Main from "./components/page/main/Main";
 
 function App() {
   return (
     <Router>
       <Routes>
+        <Route path="/" element={<Main />} />
         <Route path={`/${ROUTE.LEARNING.link}`} element={<Learning />} />
         <Route
           path={`/${ROUTE.LEARNING.link}/${ROUTE.ALPHABET.link}`}
