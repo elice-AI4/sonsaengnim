@@ -36,7 +36,7 @@ const bounceImageWord = keyframes`
     }
 `;
 
-export const LearningContainer = styled.section`
+export const LearningContainer = styled.div`
   max-width: 1200px;
   height: 100vh;
   max-height: 700px;
@@ -55,7 +55,7 @@ export const ContentsContainer = styled.div`
   align-items: center;
 `;
 
-export const AlphabetButton = styled.div`
+export const AlphabetButton = styled.section`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -99,7 +99,7 @@ export const ImageC = styled.img`
   animation: ${bounceImageC} 1s linear alternate infinite;
 `;
 
-export const WordButton = styled.div`
+export const WordButton = styled.section`
   display: flex;
   flex-direction: column;
   justify-content: center;

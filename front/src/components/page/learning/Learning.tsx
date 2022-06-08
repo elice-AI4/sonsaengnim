@@ -1,6 +1,5 @@
-import React, { MouseEventHandler } from "react";
-import { Navigate, useLocation, useNavigate } from "react-router";
-import { Link } from "react-router-dom";
+import React from "react";
+import { useLocation, useNavigate } from "react-router";
 import {
   AlphabetContainer,
   ImageA,
@@ -32,19 +31,19 @@ const Learning = () => {
         <AlphabetButton onClick={handleClickAlphabet}>
           <AlphabetContainer>
             <ImageA
-              src={process.env.PUBLIC_URL + "/alphabet/A.png"}
+              src={process.env.PUBLIC_URL + "/alphabet/alpha_1.png"}
               alt="alphabet A"
               width="100px"
               height="100px"
             />
             <ImageB
-              src={process.env.PUBLIC_URL + "/alphabet/B.png"}
+              src={process.env.PUBLIC_URL + "/alphabet/alpha_2.png"}
               alt="alphabet B"
               width="100px"
               height="100px"
             />
             <ImageC
-              src={process.env.PUBLIC_URL + "/alphabet/C.png"}
+              src={process.env.PUBLIC_URL + "/alphabet/alpha_3.png"}
               alt="alphabet C"
               width="100px"
               height="100px"
