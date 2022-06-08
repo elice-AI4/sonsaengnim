@@ -5,4 +5,10 @@ export const ROUTE = {
   LEARNING: {
     link: "learning",
   },
+  ALPHABET: {
+    link: "alphabet",
+  },
+  WORD: {
+    link: "word",
+  },
 };

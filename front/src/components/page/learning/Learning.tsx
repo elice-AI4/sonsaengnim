@@ -1,4 +1,6 @@
-import React from "react";
+import React, { MouseEventHandler } from "react";
+import { Navigate, useLocation, useNavigate } from "react-router";
+import { Link } from "react-router-dom";
 import {
   AlphabetContainer,
   ImageA,
@@ -13,10 +15,21 @@ import {
 } from "./Learning.style";
 
 const Learning = () => {
+  const { pathname } = useLocation();
+  const navigate = useNavigate();
+
+  const handleClickAlphabet = () => {
+    navigate(`${pathname}/alphabet`);
+  };
+
+  const handleClickWord = () => {
+    navigate(`${pathname}/word`);
+  };
+
   return (
     <LearningContainer>
       <ContentsContainer>
-        <AlphabetButton>
+        <AlphabetButton onClick={handleClickAlphabet}>
           <AlphabetContainer>
             <ImageA
               src={process.env.PUBLIC_URL + "/alphabet/A.png"}
@@ -39,7 +52,7 @@ const Learning = () => {
           </AlphabetContainer>
           <h1>알파벳</h1>
         </AlphabetButton>
-        <WordButton>
+        <WordButton onClick={handleClickWord}>
           <WordContainer>
             <ImageWord
               src={process.env.PUBLIC_URL + "/alphabet/word.png"}
