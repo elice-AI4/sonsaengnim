@@ -34,8 +34,8 @@ function Webcamdisplay() {
     );
     if (results.multiHandLandmarks) {
       /** landmark를 통해 알파벳 예측하는 함수 사용 부분
-       * const predicted = translator(results.multiHandLandmarks)
-       */
+      * const predicted = translator(results.multiHandLandmarks)
+      */
       for (const landmarks of results.multiHandLandmarks) {
         connect(canvasCtx, landmarks, HandsMP.HAND_CONNECTIONS, {
           color: "#00FF00",
@@ -43,6 +43,7 @@ function Webcamdisplay() {
         });
         landmark(canvasCtx, landmarks, { color: "#FF0000", lineWidth: 2 });
       }
+      const predicted = translator(results.multiHandLandmarks)
     }
     canvasCtx.restore();
   }
