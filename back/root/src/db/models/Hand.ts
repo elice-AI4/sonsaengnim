@@ -17,7 +17,7 @@ class HandModel {
   };
   
   static update = async ({ id, toUpdate }) =>{
-    const newHand = await Hand.findOneAndUpdate({ id , toUpdate });
+    const newHand = await Hand.findOneAndUpdate({ filter: id, update: { $set: toUpdate }});
     return newHand;
   }
 

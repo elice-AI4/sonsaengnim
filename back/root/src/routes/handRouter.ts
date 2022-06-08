@@ -28,7 +28,6 @@ handRouter.get(
     } catch(error){
       next(error);
     }
-    
   }
 );
 
