@@ -11,7 +11,7 @@ function App() {
       <Routes>
         <Route path="/webcam" element={<Webcamdisplay />} />
         <Route path="/test" element={<KnnTest />} />
-        <Route path="/jsontest" element={<JsonTest/>} />
+        <Route path="/jsontest" element={<JsonTest />} />
       </Routes>
     </Router>
   );
