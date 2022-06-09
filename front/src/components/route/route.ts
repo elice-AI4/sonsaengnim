@@ -11,4 +11,7 @@ export const ROUTE = {
   WORD: {
     link: "word",
   },
+  QUIZ: {
+    link: "quiz",
+  },
 };
