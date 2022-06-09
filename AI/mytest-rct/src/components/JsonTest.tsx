@@ -2,14 +2,20 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 
 function JsonTest() {
-  const [data, setData] = useState("안녕");
+  const [data, setData] = useState(["안녕"]);
 
   useEffect(() => {
     axios.get("http://localhost:1234/json")
         .then((res) => {
           const jsonData = res.data;
-          console.log(jsonData);
-          setData(jsonData);
+          const parsedData = JSON.parse(jsonData);
+          const dataset : Array<any> = parsedData.reduce((acc:Array<any>, cur:Object) => {
+            const valueArr = Object.values(cur).map((val) => Number(val));
+            acc.push(valueArr);
+            return acc;
+          }, [])
+          console.log(dataset);
+          setData(dataset);
         });
   }, [])
   return (
