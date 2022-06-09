@@ -16,5 +16,14 @@ declare module "styled-components" {
     text: {
       largest: string;
     };
+
+    navbar: {
+      height: string;
+      backgroundColor: string;
+      link: {
+        fontSize: string;
+        fontWeight: string;
+      };
+    };
   }
 }

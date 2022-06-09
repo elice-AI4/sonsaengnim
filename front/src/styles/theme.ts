@@ -13,7 +13,16 @@ const theme: DefaultTheme = {
   },
 
   text: {
-    largest: "50px",
+    largest: "2rem",
+  },
+
+  navbar: {
+    height: "7rem",
+    backgroundColor: "orange",
+    link: {
+      fontSize: "1.5rem",
+      fontWeight: "700",
+    },
   },
 };
 
