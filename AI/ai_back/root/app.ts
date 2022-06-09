@@ -10,7 +10,6 @@ app.use(express.urlencoded({ extended: false }));
 
 app.get("/json", (req: Request, res: Response, next: NextFunction) => {
   const file = fs.readFileSync(__dirname+'/public/dataSet.json', 'utf-8');
-  console.log(typeof(file));
   res.json(file);
 })
 
