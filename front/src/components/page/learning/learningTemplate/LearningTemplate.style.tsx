@@ -44,6 +44,7 @@ export const CardContainer = styled.section`
   flex: 0.6;
   display: flex;
   flex-wrap: wrap;
+  justify-content: space-between;
 
   padding: 4rem;
 `;

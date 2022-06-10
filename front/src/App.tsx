@@ -9,6 +9,7 @@ import { alphabetImgs } from "./components/page/learning/learningData";
 import Main from "./components/page/main/Main";
 import Quiz from "./components/page/quiz/Quiz";
 import Header from "./components/header/Header";
+import About from "./components/page/about/About";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
       <Header />
       <Routes>
         <Route path="/" element={<Main />} />
+        <Route path={`/${ROUTE.ABOUT.link}`} element={<About />} />
         <Route path={`/${ROUTE.LEARNING.link}`} element={<Learning />} />
         <Route
           path={`/${ROUTE.LEARNING.link}/${ROUTE.ALPHABET.link}`}

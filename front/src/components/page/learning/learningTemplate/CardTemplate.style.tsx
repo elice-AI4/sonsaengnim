@@ -12,7 +12,6 @@ export const Card = styled.div`
   transition: all 0.5s ease;
 
   cursor: pointer;
-
   &:hover {
     transform: translateY(-0.7rem);
     box-shadow: rgba(0, 0, 0, 0.25) 0px 0.0625em 0.0625em,
