@@ -8,12 +8,15 @@ import LearningTemplate from "./components/page/learning/learningTemplate/Learni
 import { alphabetImgs } from "./components/page/learning/learningData";
 import Main from "./components/page/main/Main";
 import Login from "./components/page/login/Login";
+import Register from "./components/page/register/Register";
+
 function App() {
   return (
     <Router>
       <Routes>
         <Route path="/" element={<Main />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
         <Route path={`/${ROUTE.LEARNING.link}`} element={<Learning />} />
         <Route
           path={`/${ROUTE.LEARNING.link}/${ROUTE.ALPHABET.link}`}

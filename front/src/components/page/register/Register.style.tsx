@@ -1,39 +1,30 @@
 import styled, { css } from "styled-components";
-import LoginImg from "./login.jpg";
+import registerimg from "./register.jpg";
 
-export const LoginPage = styled.div`
+export const RegisterBackground = styled.div`
   width: 100%;
   height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-export const LoginBackground = styled.div<{ loginImg: string }>`
-  background-image: ${(props) => `url(${props.loginImg})`};
+  background-image: url(${registerimg});
   background-repeat: no-repeat;
   background-size: cover;
-  z-index: 1000;
-  width: 1100px;
-  height: 880px;
   display: flex;
   justify-content: center;
   align-items: center;
 `;
 
-export const LoginForm = styled.form`
-  background-color: rgba(255, 255, 255, 0.5);
-  border-radius: 20px;
+export const RegisterForm = styled.form`
   width: 500px;
   height: 250px;
-  margin-top: 150px;
+  margin-bottom: 90px;
+  background-color: rgba(255, 255, 255, 0.5);
+  border-radius: 20px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 `;
 
-export const LoginInput = styled.input`
+export const RegisterInput = styled.input`
   width: 200px;
   height: 40px;
   font-size: 15px;
@@ -47,7 +38,7 @@ export const InputBox = styled.div`
   justify-content: space-between;
 `;
 
-export const LoginButton = styled.button`
+export const RegisterButton = styled.button`
   margin-top: 10px;
   width: 120px;
   height: 30px;

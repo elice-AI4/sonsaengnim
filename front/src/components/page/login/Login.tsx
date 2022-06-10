@@ -8,6 +8,7 @@ import {
   LoginButton,
   ValidWord,
 } from "./login.style";
+import loginImg from "./login.jpg";
 
 interface UserLogin {
   id: string;
@@ -50,6 +51,11 @@ function Login() {
         ...valid,
         idValid: loginInfo.id.toLowerCase().match(reg) !== null ? true : false,
       });
+    } else {
+      setValid({
+        ...valid,
+        idValid: false,
+      });
     }
 
     if (loginInfo.password != "") {
@@ -57,12 +63,17 @@ function Login() {
         ...valid,
         pwValid: loginInfo.password.length >= 4 ? true : false,
       });
+    } else {
+      setValid({
+        ...valid,
+        pwValid: false,
+      });
     }
   }, [loginInfo]);
 
   return (
     <LoginPage>
-      <LoginBackground>
+      <LoginBackground loginImg={loginImg}>
         <LoginForm>
           <InputBox>
             <h2 style={{ fontWeight: "bold" }}>아이디</h2>
