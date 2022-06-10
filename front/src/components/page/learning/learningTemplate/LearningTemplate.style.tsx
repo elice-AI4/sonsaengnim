@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import bg from "../../../../src_assets/bg.png";
 
 export const H1 = styled.h1`
@@ -23,6 +23,11 @@ export const TemplateContainer = styled.div`
   height: 100%;
 
   margin: auto;
+  ${({ theme }) => {
+    return css`
+      transform: translateY(${theme.navbar.height});
+    `;
+  }}
 `;
 
 export const DescriptionContainer = styled.section`
