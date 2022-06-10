@@ -17,14 +17,20 @@ export const Navbar = styled.nav`
   }};
 `;
 
-export const H1 = styled.h1`
-  margin: 0;
-`;
-
-export const Title = styled.div`
+export const TitleContainer = styled.div`
   margin: 0 2rem 0 2rem;
   padding: 1rem;
   cursor: pointer;
+`;
+
+export const Title = styled.p`
+  margin: 0;
+  ${({ theme }) => {
+    return css`
+      font-size: ${theme.navbar.title.fontSize};
+      font-weight: ${theme.navbar.title.fontWeight};
+    `;
+  }}
 `;
 
 export const List = styled.div`

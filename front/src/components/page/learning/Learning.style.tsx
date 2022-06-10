@@ -1,29 +1,29 @@
-import styled, { keyframes } from "styled-components";
+import styled, { css, keyframes } from "styled-components";
 
 const bounceImageA = keyframes`
     from {
-        transform: translateY(10px) rotateZ(-45deg)
+        transform: translateY(5px) rotateZ(-45deg)
     }    
     to {
-        transform: translateY(40px) rotateZ(-45deg)
+        transform: translateY(30px) rotateZ(-45deg)
     }
 `;
 
 const bounceImageB = keyframes`
     from {
-        transform: translateY(0px) rotateZ(10deg)
+        transform: translateY(-10px) rotateZ(10deg)
     }
     to {
-        transform: translateY(35px) rotateZ(10deg)
+        transform: translateY(25px) rotateZ(10deg)
     }
 `;
 
 const bounceImageC = keyframes`
     from {
-        transform: translateY(10px) rotateZ(40deg)
+        transform: translateY(5px) rotateZ(40deg)
     }
     to {
-        transform: translateY(40px) rotateZ(40deg)
+        transform: translateY(30px) rotateZ(40deg)
     }
 `;
 
@@ -46,6 +46,12 @@ export const LearningContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+
+  ${({ theme }) => {
+    return css`
+      transform: translateY(${theme.navbar.height});
+    `;
+  }}
 `;
 
 export const ContentsContainer = styled.div`
@@ -75,12 +81,16 @@ export const AlphabetButton = styled.section`
     box-shadow: rgb(60, 64, 67, 0.3) 3px 3px 6px 0px inset,
       rgba(60, 64, 67, 0.15) -3px -3px 6px 1px inset;
   }
+
+  ${({ theme }) => {
+    return css`
+      width: ${theme.learning.button.width};
+      height: ${theme.learning.button.height};
+    `;
+  }}
 `;
 
 export const AlphabetContainer = styled.div`
-  width: 380px;
-  height: 150px;
-
   display: flex;
   justify-content: center;
   align-items: center;
@@ -119,13 +129,24 @@ export const WordButton = styled.section`
     box-shadow: rgb(60, 64, 67, 0.3) 3px 3px 6px 0px inset,
       rgba(60, 64, 67, 0.15) -3px -3px 6px 1px inset;
   }
+
+  ${({ theme }) => {
+    return css`
+      width: ${theme.learning.button.width};
+      height: ${theme.learning.button.height};
+    `;
+  }}
+`;
+
+export const ButtonTitle = styled.h1`
+  ${({ theme }) => {
+    return css`
+      font-size: ${theme.learning.button.title};
+    `;
+  }}
 `;
 
 export const WordContainer = styled.div`
-  width: 380px;
-
-  height: 150px;
-
   display: flex;
   justify-content: center;
   align-items: center;

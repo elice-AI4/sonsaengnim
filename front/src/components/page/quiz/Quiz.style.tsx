@@ -1,4 +1,4 @@
-import styled, { keyframes } from "styled-components";
+import styled, { css, keyframes } from "styled-components";
 
 const bounceImageA = keyframes`
     from {
@@ -78,6 +78,12 @@ export const QuizContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+
+  ${({ theme }) => {
+    return css`
+      transform: translateY(${theme.navbar.height});
+    `;
+  }}
 `;
 
 export const Button = styled.button`

@@ -20,9 +20,21 @@ declare module "styled-components" {
     navbar: {
       height: string;
       backgroundColor: string;
+      title: {
+        fontSize: string;
+        fontWeight: string;
+      };
       link: {
         fontSize: string;
         fontWeight: string;
+      };
+    };
+
+    learning: {
+      button: {
+        width: string;
+        height: string;
+        title: string;
       };
     };
   }

@@ -13,15 +13,27 @@ const theme: DefaultTheme = {
   },
 
   text: {
-    largest: "2rem",
+    largest: "4rem",
   },
 
   navbar: {
     height: "7rem",
     backgroundColor: "orange",
+    title: {
+      fontSize: "3rem",
+      fontWeight: "700",
+    },
     link: {
       fontSize: "1.5rem",
       fontWeight: "700",
+    },
+  },
+
+  learning: {
+    button: {
+      width: "50rem",
+      height: "30rem",
+      title: "5rem",
     },
   },
 };

@@ -1,7 +1,13 @@
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { ROUTE } from "../route/route";
-import { H1, List, Navbar, StyledLink, Title } from "./Header.style";
+import {
+  TitleContainer,
+  List,
+  Navbar,
+  StyledLink,
+  Title,
+} from "./Header.style";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -10,10 +16,11 @@ const Header = () => {
   };
   return (
     <Navbar>
-      <Title onClick={handleClickTitle}>
-        <H1>손선생</H1>
-      </Title>
+      <TitleContainer onClick={handleClickTitle}>
+        <Title>손선생</Title>
+      </TitleContainer>
       <List>
+        <StyledLink to={ROUTE.ABOUT.link}>ABOUT</StyledLink>
         <StyledLink to={ROUTE.LEARNING.link}>학습</StyledLink>
         <StyledLink to={ROUTE.QUIZ.link}>퀴즈</StyledLink>
       </List>
