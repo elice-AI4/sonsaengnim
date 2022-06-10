@@ -9,8 +9,12 @@ export const Navbar = styled.nav`
       display: flex;
       justify-content: space-between;
       align-items: center;
+      position: fixed;
+      transform: translate(0, 0);
+      width: 100%;
+      z-index: 999;
     `;
-  }}
+  }};
 `;
 
 export const H1 = styled.h1`
