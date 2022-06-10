@@ -9,10 +9,13 @@ import { alphabetImgs } from "./components/page/learning/learningData";
 import Main from "./components/page/main/Main";
 import Login from "./components/page/login/Login";
 import Register from "./components/page/register/Register";
+import Quiz from "./components/page/quiz/Quiz";
+import Header from "./components/header/Header";
 
 function App() {
   return (
     <Router>
+      <Header />
       <Routes>
         <Route path="/" element={<Main />} />
         <Route path="/login" element={<Login />} />
@@ -31,6 +34,7 @@ function App() {
           path={`/${ROUTE.LEARNING.link}/${ROUTE.WORD.link}`}
           element={<Word />}
         />
+        <Route path={`/${ROUTE.QUIZ.link}`} element={<Quiz />} />
         <Route path="/*" element={<NotFound />} />
       </Routes>
     </Router>
