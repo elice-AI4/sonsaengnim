@@ -14,8 +14,8 @@ export const LoginBackground = styled.div<{ loginImg: string }>`
   background-repeat: no-repeat;
   background-size: cover;
   z-index: 1000;
-  width: 1100px;
-  height: 880px;
+  width: 1000px;
+  height: 780px;
   display: flex;
   justify-content: center;
   align-items: center;
