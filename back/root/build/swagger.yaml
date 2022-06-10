@@ -6,15 +6,21 @@ info:
 host: "localhost:5000"
 basePath: "/"
 tags:
-  - name: "Sign Language"
-    description: "Sing Language For Children"
+  - name: Sign Language
+    description: "Sing Language in Alphabets"
+  - name: Register User
+    description: "Registering User"
+  - name: Login User
+    description: "Login User"
 schemes:
   - "http"
+
+
 paths:
   /register:
     post:
       tags:
-        - "Register User"
+        - Register User
       summary: "Register User"
       description: ""
       operationId: "Register User"
@@ -34,13 +40,12 @@ paths:
       responses:
         "405":
           description: "Invalid input"
-  /login:
+  /user:
     post:
       tags:
-        - "Login User"
+        - Login User
       summary: "Login User"
       description: ""
-      operationId: "Login User"
       consumes:
         - "application/json"
         - "application/xml"
@@ -59,10 +64,9 @@ paths:
           description: "Invalid input"
     put:
       tags:
-        - "Login User"
+        - Login User
       summary: "Login User"
       description: ""
-      operationId: "Login User"
       consumes:
         - "application/json"
         - "application/xml"
@@ -85,10 +89,9 @@ paths:
           description: "Invalid input"
     delete:
       tags:
-        - "Login User"
+        - Login User
       summary: "Login User"
       description: ""
-      operationId: "Login User"
       consumes:
         - "application/json"
         - "application/xml"
@@ -105,6 +108,50 @@ paths:
       responses:
         "405":
           description: "Invalid input"
+
+  /hand:
+    post:
+      tags:
+      - Sign Language
+      description: "putting in Sign language image"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Register hand data"
+          required: true
+          schema:
+            $ref: "#/definitions/Hand"
+      responses:
+        "201":
+          description: "POST Successful."
+        "405":
+          description: "Invalid input"
+    
+  /hand/{alphabet}:
+    get:
+      tags:
+      - Sign Language
+      description: "getting all alphabet dataset"
+      consumes:
+      - "applicaion/json"
+      produces:
+      - "applicaion/json"
+      parameters:
+        - in: path
+          name: alphabet
+          schema:
+            type: string
+          required: true
+          description: alphabet string
+      responses:
+        '200':
+          description: Return JSON 
+
+
 securityDefinitions:
   petstore_auth:
     type: "oauth2"
@@ -117,6 +164,7 @@ securityDefinitions:
     type: "apiKey"
     name: "api_key"
     in: "header"
+
 definitions:
   User:
     type: "object"
@@ -129,6 +177,22 @@ definitions:
         type: "string"
     xml:
       name: "Order"
+  Hand:
+    type: object
+    properties:
+      alphabet:
+        type: string
+        example: "test"
+      handImage:
+        type: string
+        example: "test hand image"
+      mouthImage:
+        type: string
+        example: "test mouth image"
+      video:
+        type: string
+        example: "test video"
+
 externalDocs:
   description: "Find out more about Swagger"
   url: "http://swagger.io"
