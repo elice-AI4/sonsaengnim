@@ -10,6 +10,7 @@ export const TemplateContainer = styled.div`
   /* background-repeat: no-repeat; */
   /* background-size: cover; */
   /* background-color: #ffa07a; */
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: center;

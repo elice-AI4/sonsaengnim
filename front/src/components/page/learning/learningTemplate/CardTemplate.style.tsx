@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const Card = styled.div`
+export const Card = styled.div<{ src: string }>`
   width: 125px;
   height: 100px;
   text-align: center;
@@ -18,6 +18,9 @@ export const Card = styled.div`
       rgba(0, 0, 0, 0.25) 0px 0.125em 0.5em,
       rgba(255, 255, 255, 0.1) 0px 0px 0px 1px inset;
   }
+
+  opacity: ${(props) => (props.src ? 1 : 0)};
+  pointer-events: ${(props) => (props.src ? "inherit" : "none")};
 `;
 
 export const CardImg = styled.img`
