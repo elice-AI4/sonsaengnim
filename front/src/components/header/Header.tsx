@@ -17,7 +17,7 @@ const Header = () => {
   return (
     <Navbar>
       <TitleContainer onClick={handleClickTitle}>
-        <Title>손선생</Title>
+        <Title>손생님</Title>
       </TitleContainer>
       <List>
         <StyledLink to={ROUTE.ABOUT.link}>ABOUT</StyledLink>

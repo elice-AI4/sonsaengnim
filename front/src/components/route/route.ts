@@ -2,13 +2,19 @@ export const ROUTE = {
   LOGIN: {
     link: "login",
   },
-  COUNT: {
-    link: "count",
+  ABOUT: {
+    link: "about",
   },
-  TEXT: {
-    link: "text",
+  LEARNING: {
+    link: "learning",
   },
-  FC: {
-    link: "fc",
+  ALPHABET: {
+    link: "alphabet",
+  },
+  WORD: {
+    link: "word",
+  },
+  QUIZ: {
+    link: "quiz",
   },
 };
