@@ -7,6 +7,8 @@ import Word from "./components/page/learning/word/Word";
 import LearningTemplate from "./components/page/learning/learningTemplate/LearningTemplate";
 import { alphabetImgs } from "./components/page/learning/learningData";
 import Main from "./components/page/main/Main";
+import Login from "./components/page/login/Login";
+import Register from "./components/page/register/Register";
 import Quiz from "./components/page/quiz/Quiz";
 import Header from "./components/header/Header";
 import About from "./components/page/about/About";
@@ -17,6 +19,8 @@ function App() {
       <Header />
       <Routes>
         <Route path="/" element={<Main />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
         <Route path={`/${ROUTE.ABOUT.link}`} element={<About />} />
         <Route path={`/${ROUTE.LEARNING.link}`} element={<Learning />} />
         <Route
