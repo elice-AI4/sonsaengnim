@@ -6,13 +6,21 @@ export const GlobalStyle = createGlobalStyle`
     }
     html {
         font-size: 62.5%;
+        padding: 0;
+        margin: 0;
     }
-
+    body {
+      padding: 0;
+      margin: 0;
+       -ms-overflow-style: none;       
+    }
+    ::-webkit-scrollbar {
+      display: none;
+    }
     ${({ theme }) => {
       return css`
         h1 {
           font-size: ${theme.text.largest};
-          /* color: ${theme.colors.h1_color}; */
         }
       `;
     }}
