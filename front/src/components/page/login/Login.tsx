@@ -9,7 +9,6 @@ import {
   ValidWord,
 } from "./login.style";
 import loginImg from "./login.jpg";
-
 interface UserLogin {
   id: string;
   password: string;
@@ -33,15 +32,10 @@ function Login() {
   });
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    // setLoginInfo((cur): UserLogin => {
-    //   const newInfo: UserLogin = { ...cur };
-    //   newInfo[e.target.name] = e.target.value;
-    //   return newInfo;
-    // });
-
-    setLoginInfo({
-      ...loginInfo,
-      [e.target.name]: e.target.value,
+    setLoginInfo((cur): UserLogin => {
+      const newInfo: UserLogin = { ...cur };
+      newInfo[e.target.name as keyof UserLogin] = e.target.value; // 정석
+      return newInfo;
     });
   };
 

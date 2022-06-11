@@ -14,13 +14,13 @@ import {
   ButtonCotainer,
 } from "./Quiz.style";
 import quiz from "../../../src_assets/quiz.png";
-import A from "../../../src_assets/alphabet/alpha_1.png";
-import E from "../../../src_assets/alphabet/alpha_5.png";
-import H from "../../../src_assets/alphabet/alpha_8.png";
-import J from "../../../src_assets/alphabet/alpha_10.png";
-import S from "../../../src_assets/alphabet/alpha_19.png";
-import X from "../../../src_assets/alphabet/alpha_24.png";
-import Y from "../../../src_assets/alphabet/alpha_25.png";
+import A from "../../../src_assets/alphabet/A.png";
+import E from "../../../src_assets/alphabet/E.png";
+import H from "../../../src_assets/alphabet/H.png";
+import J from "../../../src_assets/alphabet/J.png";
+import S from "../../../src_assets/alphabet/S.png";
+import X from "../../../src_assets/alphabet/X.png";
+import Y from "../../../src_assets/alphabet/Y.png";
 
 const imgSize = {
   width: "100px",

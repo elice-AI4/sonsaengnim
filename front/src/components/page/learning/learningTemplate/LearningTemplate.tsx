@@ -32,6 +32,10 @@ const LearningTemplate = ({ imgs, title, children }: LearningTemplateProps) => {
             <CardTemplate src={img.src} alt={img.alt} key={`img ${index}`} />
           );
         })}
+        <CardTemplate src="" alt="" />
+        <CardTemplate src="" alt="" />
+        <CardTemplate src="" alt="" />
+        <CardTemplate src="" alt="" />
       </CardContainer>
     </TemplateContainer>
   );

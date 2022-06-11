@@ -11,6 +11,7 @@ import Login from "./components/page/login/Login";
 import Register from "./components/page/register/Register";
 import Quiz from "./components/page/quiz/Quiz";
 import Header from "./components/header/Header";
+import About from "./components/page/about/About";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route path="/" element={<Main />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path={`/${ROUTE.ABOUT.link}`} element={<About />} />
         <Route path={`/${ROUTE.LEARNING.link}`} element={<Learning />} />
         <Route
           path={`/${ROUTE.LEARNING.link}/${ROUTE.ALPHABET.link}`}

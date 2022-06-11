@@ -30,9 +30,10 @@ function Register() {
     pwValid: false,
   });
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setRegisterInfo({
-      ...registerInfo,
-      [e.target.name]: e.target.value,
+    setRegisterInfo((cur): UserRegister => {
+      const newInfo: UserRegister = { ...cur };
+      newInfo[e.target.name as keyof UserRegister] = e.target.value; // 정석
+      return newInfo;
     });
   };
   useEffect((): void => {

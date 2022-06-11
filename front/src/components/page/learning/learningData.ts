@@ -1,213 +1,240 @@
+import A from "../../../src_assets/alphabet/A.png";
+import B from "../../../src_assets/alphabet/B.png";
+import C from "../../../src_assets/alphabet/C.png";
+import D from "../../../src_assets/alphabet/D.png";
+import E from "../../../src_assets/alphabet/E.png";
+import F from "../../../src_assets/alphabet/F.png";
+import G from "../../../src_assets/alphabet/G.png";
+import H from "../../../src_assets/alphabet/H.png";
+import I from "../../../src_assets/alphabet/I.png";
+import J from "../../../src_assets/alphabet/J.png";
+import K from "../../../src_assets/alphabet/K.png";
+import L from "../../../src_assets/alphabet/L.png";
+import M from "../../../src_assets/alphabet/M.png";
+import N from "../../../src_assets/alphabet/N.png";
+import O from "../../../src_assets/alphabet/O.png";
+import P from "../../../src_assets/alphabet/P.png";
+import Q from "../../../src_assets/alphabet/Q.png";
+import R from "../../../src_assets/alphabet/R.png";
+import S from "../../../src_assets/alphabet/S.png";
+import T from "../../../src_assets/alphabet/T.png";
+import U from "../../../src_assets/alphabet/U.png";
+import V from "../../../src_assets/alphabet/V.png";
+import W from "../../../src_assets/alphabet/W.png";
+import X from "../../../src_assets/alphabet/X.png";
+import Y from "../../../src_assets/alphabet/Y.png";
+import Z from "../../../src_assets/alphabet/Z.png";
+
 export const alphabetImgs = [
   {
-    src: "src_assets/alphabet/alpha_1.png",
+    src: A,
     alt: "A",
   },
   {
-    src: "src_assets/alphabet/alpha_2.png",
+    src: B,
     alt: "B",
   },
   {
-    src: "src_assets/alphabet/alpha_3.png",
+    src: C,
     alt: "C",
   },
   {
-    src: "src_assets/alphabet/alpha_4.png",
+    src: D,
     alt: "D",
   },
   {
-    src: "src_assets/alphabet/alpha_5.png",
+    src: E,
     alt: "E",
   },
   {
-    src: "src_assets/alphabet/alpha_6.png",
+    src: F,
     alt: "F",
   },
   {
-    src: "src_assets/alphabet/alpha_7.png",
+    src: G,
     alt: "G",
   },
   {
-    src: "src_assets/alphabet/alpha_8.png",
+    src: H,
     alt: "H",
   },
   {
-    src: "src_assets/alphabet/alpha_9.png",
+    src: I,
     alt: "I",
   },
   {
-    src: "src_assets/alphabet/alpha_10.png",
+    src: J,
     alt: "J",
   },
   {
-    src: "src_assets/alphabet/alpha_11.png",
+    src: K,
     alt: "K",
   },
   {
-    src: "src_assets/alphabet/alpha_12.png",
+    src: L,
     alt: "L",
   },
   {
-    src: "src_assets/alphabet/alpha_13.png",
+    src: M,
     alt: "M",
   },
   {
-    src: "src_assets/alphabet/alpha_14.png",
+    src: N,
     alt: "N",
   },
   {
-    src: "src_assets/alphabet/alpha_15.png",
+    src: O,
     alt: "O",
   },
   {
-    src: "src_assets/alphabet/alpha_16.png",
+    src: P,
     alt: "P",
   },
   {
-    src: "src_assets/alphabet/alpha_17.png",
+    src: Q,
     alt: "Q",
   },
   {
-    src: "src_assets/alphabet/alpha_18.png",
+    src: R,
     alt: "R",
   },
   {
-    src: "src_assets/alphabet/alpha_19.png",
+    src: S,
     alt: "S",
   },
   {
-    src: "src_assets/alphabet/alpha_20.png",
+    src: T,
     alt: "T",
   },
   {
-    src: "src_assets/alphabet/alpha_21.png",
+    src: U,
     alt: "U",
   },
   {
-    src: "src_assets/alphabet/alpha_22.png",
+    src: V,
     alt: "V",
   },
   {
-    src: "src_assets/alphabet/alpha_23.png",
+    src: W,
     alt: "W",
   },
   {
-    src: "src_assets/alphabet/alpha_24.png",
+    src: X,
     alt: "X",
   },
   {
-    src: "src_assets/alphabet/alpha_25.png",
+    src: Y,
     alt: "Y",
   },
   {
-    src: "src_assets/alphabet/alpha_26.png",
+    src: Z,
     alt: "Z",
   },
 ];
 
 export const wordImgs = [
   {
-    src: "src_assets/alphabet/alpha_1.png",
+    src: A,
     alt: "A",
   },
   {
-    src: "src_assets/alphabet/alpha_2.png",
+    src: B,
     alt: "B",
   },
   {
-    src: "src_assets/alphabet/alpha_3.png",
+    src: C,
     alt: "C",
   },
   {
-    src: "src_assets/alphabet/alpha_4.png",
+    src: D,
     alt: "D",
   },
   {
-    src: "src_assets/alphabet/alpha_5.png",
+    src: E,
     alt: "E",
   },
   {
-    src: "src_assets/alphabet/alpha_6.png",
+    src: F,
     alt: "F",
   },
   {
-    src: "src_assets/alphabet/alpha_7.png",
+    src: G,
     alt: "G",
   },
   {
-    src: "src_assets/alphabet/alpha_8.png",
+    src: H,
     alt: "H",
   },
   {
-    src: "src_assets/alphabet/alpha_9.png",
+    src: I,
     alt: "I",
   },
   {
-    src: "src_assets/alphabet/alpha_10.png",
+    src: J,
     alt: "J",
   },
   {
-    src: "src_assets/alphabet/alpha_11.png",
+    src: K,
     alt: "K",
   },
   {
-    src: "src_assets/alphabet/alpha_12.png",
+    src: L,
     alt: "L",
   },
   {
-    src: "src_assets/alphabet/alpha_13.png",
+    src: M,
     alt: "M",
   },
   {
-    src: "src_assets/alphabet/alpha_14.png",
+    src: N,
     alt: "N",
   },
   {
-    src: "src_assets/alphabet/alpha_15.png",
+    src: O,
     alt: "O",
   },
   {
-    src: "src_assets/alphabet/alpha_16.png",
+    src: P,
     alt: "P",
   },
   {
-    src: "src_assets/alphabet/alpha_17.png",
+    src: Q,
     alt: "Q",
   },
   {
-    src: "src_assets/alphabet/alpha_18.png",
+    src: R,
     alt: "R",
   },
   {
-    src: "src_assets/alphabet/alpha_19.png",
+    src: S,
     alt: "S",
   },
   {
-    src: "src_assets/alphabet/alpha_20.png",
+    src: T,
     alt: "T",
   },
   {
-    src: "src_assets/alphabet/alpha_21.png",
+    src: U,
     alt: "U",
   },
   {
-    src: "src_assets/alphabet/alpha_22.png",
+    src: V,
     alt: "V",
   },
   {
-    src: "src_assets/alphabet/alpha_23.png",
+    src: W,
     alt: "W",
   },
   {
-    src: "src_assets/alphabet/alpha_24.png",
+    src: X,
     alt: "X",
   },
   {
-    src: "src_assets/alphabet/alpha_25.png",
+    src: Y,
     alt: "Y",
   },
   {
-    src: "src_assets/alphabet/alpha_26.png",
+    src: Z,
     alt: "Z",
   },
 ];
