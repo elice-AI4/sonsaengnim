@@ -1,37 +1,38 @@
-import React, { useRef } from "react";
+import React, { forwardRef, useRef } from "react";
 import { useLocation } from "react-router";
 import { useNavigate } from "react-router";
 import { Card, CardImg } from "./CardTemplate.style";
+import { motion } from "framer-motion";
+
 interface CardTemplateProps {
   src: string;
   alt: string;
 }
 
 const boxVariants = {
-  hover: { scale: 1.2, rotateZ: "360deg" },
-  tab: { borderRadius: "100px", scale: 1 },
+  hover: { scale: 1.3, rotateZ: "360deg" },
+  tab: { borderRadius: "100px", scale: 1.2 },
   drag: { backgroundColor: "rgb(46,123,250)", transition: { duration: 2 } },
 };
 
 const CardTemplate = ({ src, alt }: CardTemplateProps) => {
-  const navigate = useNavigate();
-  const { pathname } = useLocation();
-
-  const containerRef = useRef<HTMLDivElement>(null);
-
   const handleClickCard = () => {
     // navigate(`${pathname}/camera`);
   };
   return (
-    <Card onClick={handleClickCard} src={src} ref={containerRef}>
+    <Card onClick={handleClickCard} src={src}>
       <CardImg
         src={src}
         alt={alt}
         drag
         dragElastic={0.5} /* force Elastic : 마우스에 탄성 */
-        dragSnapToOrigin /* 원래자리로 돌아가기 */
         /* 드래그 영역 제한 {top: 50, bottom: 50, left: 50,right: 50} or ref설정 */
-        //   dragConstraints={biggerBoxRef}
+        dragConstraints={{
+          top: -50,
+          bottom: 50,
+          left: -50,
+          right: 50,
+        }}
         variants={boxVariants}
         whileHover="hover"
         whileDrag="drag"
@@ -40,5 +41,4 @@ const CardTemplate = ({ src, alt }: CardTemplateProps) => {
     </Card>
   );
 };
-
 export default CardTemplate;

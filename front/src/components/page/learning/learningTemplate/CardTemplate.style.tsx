@@ -20,7 +20,8 @@ export const Card = styled(motion.div)<{ src: string }>`
   }
 
   opacity: ${(props) => (props.src ? 1 : 0)};
-  pointer-events: ${(props) => (props.src ? "inherit" : "none")};
+
+  pointer-events: ${(props) => (props.src ? "auto" : "none")};
 `;
 
 export const CardImg = styled(motion.img)`
