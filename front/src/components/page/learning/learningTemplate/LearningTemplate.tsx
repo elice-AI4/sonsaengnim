@@ -20,24 +20,26 @@ interface LearningTemplateProps {
 
 const LearningTemplate = ({ imgs, title, children }: LearningTemplateProps) => {
   return (
-    <TemplateContainer>
-      <DescriptionContainer>
-        <H1>{title}</H1>
-        <Underline />
-        {children && <InputContainer>{children}</InputContainer>}
-      </DescriptionContainer>
-      <CardContainer>
-        {imgs.map((img, index) => {
-          return (
-            <CardTemplate src={img.src} alt={img.alt} key={`img ${index}`} />
-          );
-        })}
-        <CardTemplate src="" alt="" />
-        <CardTemplate src="" alt="" />
-        <CardTemplate src="" alt="" />
-        <CardTemplate src="" alt="" />
-      </CardContainer>
-    </TemplateContainer>
+    <>
+      <TemplateContainer>
+        <DescriptionContainer>
+          <H1>{title}</H1>
+          <Underline />
+          {children && <InputContainer>{children}</InputContainer>}
+        </DescriptionContainer>
+        <CardContainer>
+          {imgs.map((img, index) => {
+            return (
+              <CardTemplate src={img.src} alt={img.alt} key={`img ${index}`} />
+            );
+          })}
+          <CardTemplate src="" alt="" />
+          <CardTemplate src="" alt="" />
+          <CardTemplate src="" alt="" />
+          <CardTemplate src="" alt="" />
+        </CardContainer>
+      </TemplateContainer>
+    </>
   );
 };
 

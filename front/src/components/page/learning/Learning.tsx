@@ -1,4 +1,4 @@
-import React, { MouseEventHandler, useEffect, useRef, useState } from "react";
+import React from "react";
 import { useLocation, useNavigate } from "react-router";
 import {
   AlphabetContainer,
@@ -12,7 +12,6 @@ import {
   WordButton,
   WordContainer,
   ButtonTitle,
-  Circle,
 } from "./Learning.style";
 
 const imgSize = {
@@ -20,48 +19,20 @@ const imgSize = {
   height: "100px",
 };
 
-interface mousePoint {
-  clientX: string;
-  clientY: string;
-}
-
 const Learning = () => {
   const { pathname } = useLocation();
   const navigate = useNavigate();
 
-  const [mousePoint, setMousePoint] = useState<mousePoint>({
-    clientX: "0",
-    clientY: "0",
-  });
-  const [isClick, setIsClick] = useState(false);
-
-  const handleClickAlphabet = (e: React.MouseEvent<HTMLButtonElement>) => {
-    setIsClick(true);
-
-    setMousePoint({
-      clientX: e.clientX.toString(),
-      clientY: e.clientY.toString(),
-    });
-  };
-
-  const navigateAlphabet = () => {
-    return setTimeout(() => {
-      navigate(`${pathname}/alphabet`);
-    }, 1000);
+  const handleClickAlphabet = () => {
+    navigate(`${pathname}/alphabet`);
   };
 
   const handleClickWord = () => {
     navigate(`${pathname}/word`);
   };
 
-  useEffect(() => {
-    const timer = navigateAlphabet();
-    return () => clearTimeout(timer);
-  });
-
   return (
     <>
-      <Circle {...mousePoint} isClick={isClick} />
       <LearningContainer>
         <ContentsContainer>
           <AlphabetButton onClick={handleClickAlphabet}>
