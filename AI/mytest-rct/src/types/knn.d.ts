@@ -1,8 +1,4 @@
-
-
-declare module 'ml-knn' {
-
+declare module "ml-knn" {
   const value: any;
-  export default value
+  export default value;
 }
-

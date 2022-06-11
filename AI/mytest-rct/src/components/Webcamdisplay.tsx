@@ -5,13 +5,15 @@ import * as HandsMP from "@mediapipe/hands";
 import * as cam from "@mediapipe/camera_utils";
 import { drawConnectors, drawLandmarks } from "@mediapipe/drawing_utils";
 import Webcam from "react-webcam";
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 import translator from "../utils/translator";
-import axios from "axios";
+import predictor from "../utils/predictor";
+import loadData from "../utils/loadData";
 
 function Webcamdisplay() {
   const webcamRef = useRef<any>(null);
   const canvasRef = useRef<any>(null);
+  const [data, setData] = useState<any>(["안녕"]);
 
   const connect = drawConnectors;
   const landmark = drawLandmarks;
@@ -34,8 +36,8 @@ function Webcamdisplay() {
     );
     if (results.multiHandLandmarks) {
       /** landmark를 통해 알파벳 예측하는 함수 사용 부분
-      * const predicted = translator(results.multiHandLandmarks)
-      */
+       * const predicted = translator(results.multiHandLandmarks)
+       */
       for (const landmarks of results.multiHandLandmarks) {
         connect(canvasCtx, landmarks, HandsMP.HAND_CONNECTIONS, {
           color: "#00FF00",
@@ -43,18 +45,20 @@ function Webcamdisplay() {
         });
         landmark(canvasCtx, landmarks, { color: "#FF0000", lineWidth: 2 });
       }
-      const params = new URLSearchParams();
-      const preprocessed = translator(results.multiHandLandmarks)
-      const preprocessedJson = JSON.stringify(preprocessed);
-      console.log("preprocessedJson: ", preprocessedJson)
-      params.append("data_xy", preprocessedJson)
-      const predicted = await axios.post('http://localhost:1234/welcome', params);
-      // console.log(predicted);
+      const preprocessed = translator(results.multiHandLandmarks);
+      let predicted = "undefined";
+      if (preprocessed !== undefined) {
+        predicted = predictor(data, preprocessed);
+      }
+      console.log(predicted);
     }
     canvasCtx.restore();
   }
-
+  async function dataOnClick() {
+    loadData().then(data => setData(data));
+  }
   useEffect(() => {
+    //loadData().then((data) => setData(data));
     const hands = new Hands({
       locateFile: file => {
         return `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}`;
@@ -87,6 +91,11 @@ function Webcamdisplay() {
 
   return (
     <div className="App">
+      <div>
+        <br></br>
+        <button onClick={dataOnClick}>Load Data Button</button>
+        <br></br>
+      </div>
       <Webcam
         ref={webcamRef}
         style={{

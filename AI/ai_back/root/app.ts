@@ -8,6 +8,11 @@ app.use(cors<Request>());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
+app.get("/json", (req: Request, res: Response, next: NextFunction) => {
+  const file = fs.readFileSync(__dirname+'/public/dataSet.json', 'utf-8');
+  res.json(file);
+})
+
 app.post('/welcome', (req: Request, res: Response, next: NextFunction) => {
 
     const datasetFile = fs.readFileSync(__dirname+'/public/dataSet.txt', 'utf-8').toString().split("\n")
