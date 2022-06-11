@@ -51,7 +51,9 @@ function Login() {
         idValid: false,
       });
     }
+  }, [loginInfo.id]);
 
+  useEffect((): void => {
     if (loginInfo.password != "") {
       setValid({
         ...valid,
@@ -63,7 +65,7 @@ function Login() {
         pwValid: false,
       });
     }
-  }, [loginInfo]);
+  }, [loginInfo.password]);
 
   return (
     <LoginPage>
