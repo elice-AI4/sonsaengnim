@@ -49,7 +49,9 @@ function Register() {
         idValid: false,
       });
     }
+  }, [registerInfo.id]);
 
+  useEffect((): void => {
     if (registerInfo.password != "") {
       setValid({
         ...valid,
@@ -61,7 +63,7 @@ function Register() {
         pwValid: false,
       });
     }
-  }, [registerInfo]);
+  }, [registerInfo.password]);
 
   return (
     <RegisterBackground>
