@@ -35,6 +35,19 @@ const bounceImageWord = keyframes`
         transform: translateY(40px)
     }
 `;
+interface CircleProps {
+  clientX: string;
+  clientY: string;
+  isClick: boolean;
+}
+const circleImage = (props: CircleProps) => keyframes`
+  from {    
+    transform: translate(calc(${props.clientX}px - 50px), calc(${props.clientY}px - 50px)) scale(1.0)
+  }
+  to {
+    transform: translate(calc(${props.clientX}px - 50px), calc(${props.clientY}px - 50px)) scale(30.0)
+  }
+`;
 
 export const LearningContainer = styled.div`
   max-width: 1200px;
@@ -154,4 +167,23 @@ export const WordContainer = styled.div`
 
 export const ImageWord = styled.img`
   animation: ${bounceImageWord} 1s linear alternate infinite;
+`;
+
+export const Circle = styled.div<CircleProps>`
+  z-index: 998;
+  position: absolute;
+  transform: translate(0, 0);
+  left: 0;
+  border-radius: 50%;
+  width: 100px;
+  height: 100px;
+  background-color: #e2d2d2;
+  opacity: 0;
+
+  animation: ${(props) =>
+    props.isClick &&
+    css`
+      ${circleImage(props)} 0.5s linear alternate infinite;
+      opacity: 1;
+    `};
 `;

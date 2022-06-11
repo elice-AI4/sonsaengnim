@@ -14,10 +14,7 @@ const CardTemplate = ({ src, alt }: CardTemplateProps) => {
     navigate(`${pathname}/camera`);
   };
   return (
-    <Card
-      onClick={handleClickCard}
-      style={{ opacity: src ? 1 : 0, pointerEvents: src ? "inherit" : "none" }}
-    >
+    <Card onClick={handleClickCard} src={src}>
       <CardImg src={src} alt={alt} />
     </Card>
   );
