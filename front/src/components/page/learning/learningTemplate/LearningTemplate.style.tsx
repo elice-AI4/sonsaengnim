@@ -1,3 +1,4 @@
+import { motion } from "framer-motion";
 import styled, { css } from "styled-components";
 import bg from "../../../../src_assets/bg.png";
 
@@ -38,7 +39,7 @@ export const DescriptionContainer = styled.section`
   padding: 4rem;
 `;
 
-export const CardContainer = styled.section`
+export const CardContainer = styled(motion.section)`
   margin: auto;
   width: 80%;
 
