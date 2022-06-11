@@ -45,7 +45,7 @@ Hand pose estimation(Mediapipe)을 통한 영어 알파벳 지화 학습 사이�
 
 인터렉티브한 방식을 통해 청각 장애인의 영어 알파벳 지문자 교육을 돕는다.
 
-![image](uploads/47ecdb63a6dd73f373d9920f92e9b1de/image.png)
+![image](/uploads/d018f568bd383edfb72f1175471d5a0f/스크린샷_2022-06-04_오후_5.55.20.png)
 (프로토타입 화면)
 
 - 주 사용자: 영어 알파벳 학습을 희망하는 청각장애인(아동 및 초등생)
@@ -74,7 +74,7 @@ Hand pose estimation(Mediapipe)을 통한 영어 알파벳 지화 학습 사이�
 
 **BE** :raised_back_of_hand:  : express, typescript, jest, node js
 
-**AI** :fingers_crossed:  : mediapipe*, tensorflow js, react, typescript, node js, express, ml-knn
+**AI** :fingers_crossed:  : mediapipe*, tensorflow, python, flask, LSTM
    
 Hand pose estimation: [google의 mediapipe](https://google.github.io/mediapipe/solutions/hands#python-solution-api)              
 
