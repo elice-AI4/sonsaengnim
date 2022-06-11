@@ -38,4 +38,14 @@ swagger: `back/root/build/swagger.yaml`
 
 ## AI
 
-현재 테스트 중인 모델 일부 수정하여 ipynb 파일 첨부
+### ai_back
+mytest-rct와 함께 작동되는 express 코드
+
+### flask_practice
+mediapipe 인식 + 알파벳 인식까지 구현한 flask 코드
+
+### model
+레퍼런스로 참고한 ML 학습 코드
+
+### mytest-rct
+mediapipe 인식까지 구현한 react 코드
