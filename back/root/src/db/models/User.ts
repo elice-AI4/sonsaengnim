@@ -1,9 +1,5 @@
-import { IUser } from "../../models/interfaces/IUser";
 import { User } from "../../models/schemas/user";
-
-export interface IUserModel {
-  create: (email: string, name: string, password: string) => Promise<Partial<IUser>>;
-}
+import IUserModel from "../../models/interfaces/IUserModel";
 
 export class UserModel implements IUserModel {
   async create(email: string, name: string, password: string) {
