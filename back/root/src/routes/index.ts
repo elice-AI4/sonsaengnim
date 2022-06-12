@@ -1,12 +1,11 @@
-import express from "express";
-import { indexRouter } from "./indexRouter";
-import { handRouter } from "./handRouter";
-import { userRouter } from "./userRouter";
+import { Router } from "express";
+// import { indexRouter } from "./indexRouter";
+import userRouter from "./userRouter";
 
-const routes = express();
+export default () => {
+  const app = Router();
 
-routes.use(indexRouter);
-routes.use(userRouter);
-routes.use(handRouter);
+  userRouter(app);
 
-export { routes };
+  return app;
+};

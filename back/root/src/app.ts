@@ -1,5 +1,5 @@
 import express from "express";
-import { routes } from "./routes/index";
+import routes from "./routes";
 
 import morgan from "morgan";
 import cors from "cors";
@@ -24,7 +24,7 @@ app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-app.use(routes);
+app.use(routes());
 
 // yaml로 된 swagger 연동
 app.use("/swagger", swaggerUi.serve, swaggerUi.setup(swaggerYaml));
