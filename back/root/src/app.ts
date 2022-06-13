@@ -31,4 +31,4 @@ app.use("/swagger", swaggerUi.serve, swaggerUi.setup(swaggerYaml));
 
 app.use(errorMiddleware);
 
-export { app };
+export default app;

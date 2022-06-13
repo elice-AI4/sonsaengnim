@@ -7,10 +7,10 @@ export default class UserService {
   constructor(private userModel: MongoUserModel) {}
 
   public async createUser(email: string, password: string, name: string) {
-    const hashedPassword = hashPassword(password);
-    password = hashedPassword;
+    const hashedPassword = await hashPassword(password);
+    const userData = { email, password: hashedPassword, name };
 
-    const user = await this.userModel.create(email, password, name);
+    const user = await this.userModel.create(userData);
     return user;
   }
 }

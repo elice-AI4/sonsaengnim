@@ -5,4 +5,5 @@ export default interface IUser {
   password: string;
   createdAt: string;
   updatedAt: string;
+  errorMessage?;
 }
