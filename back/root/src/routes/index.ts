@@ -1,6 +1,6 @@
 import { Router } from "express";
 // import { indexRouter } from "./indexRouter";
-import userRouter from "./userRouter";
+import userRouter from "./registerRouter";
 import indexRouter from "./indexRouter";
 
 export default () => {
