@@ -1,5 +1,4 @@
 import { MongoUserModel } from "../db/index";
-
 export default class UserService {
   // eslint-disable-next-line no-unused-vars
   constructor(private userModel: MongoUserModel) {}

@@ -1,12 +1,15 @@
 import { Router } from "express";
 // import { indexRouter } from "./indexRouter";
-import userRouter from "./registerRouter";
+import registerRouter from "./registerRouter";
 import indexRouter from "./indexRouter";
+import userRouter from "./userRouter";
 
 export default () => {
   const app = Router();
 
-  userRouter(app);
   indexRouter(app);
+  registerRouter(app);
+  userRouter(app);
+
   return app;
 };

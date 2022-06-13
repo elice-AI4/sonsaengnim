@@ -6,4 +6,9 @@ export class MongoUserModel implements IUserModel {
     const user = await User.create({ email, name, password });
     return user;
   }
+
+  async findByEmail(email: string) {
+    const user = await User.findOne({ email });
+    return user;
+  }
 }
