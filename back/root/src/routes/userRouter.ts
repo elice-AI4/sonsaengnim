@@ -38,4 +38,15 @@ export default (app: Router) => {
       next(error);
     }
   });
+
+  userRouter.delete("/", checkLogin, async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const userId = req.user;
+
+      const deletedUser = await userService.deleteUser(userId);
+      res.status(200).json(deletedUser);
+    } catch (error) {
+      next(error);
+    }
+  });
 };
