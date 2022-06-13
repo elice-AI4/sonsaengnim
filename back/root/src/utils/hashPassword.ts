@@ -5,4 +5,4 @@ const hashPassword: Function = (password: string) => {
   return hashedPassword;
 };
 
-export { hashPassword };
+export default hashPassword;

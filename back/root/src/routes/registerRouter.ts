@@ -10,8 +10,10 @@ export default (app: Router) => {
   userRouter.post("/", async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { email, name, password } = req.body;
+
       const userService = new UserService(new MongoUserModel());
       const newUser = await userService.createUser(email, name, password);
+
       res.status(200).json(newUser);
     } catch (error) {
       next(error);
