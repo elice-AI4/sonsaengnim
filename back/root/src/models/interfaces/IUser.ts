@@ -6,4 +6,5 @@ export default interface IUser {
   createdAt: string;
   updatedAt: string;
   errorMessage?;
+  userId?;
 }

@@ -2,7 +2,7 @@ import { MongoUserModel } from "../db";
 
 import bcrypt from "bcrypt";
 import makeToken from "../utils/makeToken";
-
+import hashPassword from "../utils/hashPassword";
 export default class UserService {
   // eslint-disable-next-line no-unused-vars
   constructor(private userModel: MongoUserModel) {}
@@ -23,6 +23,27 @@ export default class UserService {
     } else {
       const errorMessage = "비밀번호가 일치하지 않습니다.";
       return { errorMessage };
+    }
+  }
+
+  async updateUser(email: string, password: string, name: string, userId) {
+    let user = await this.userModel.findByEmail(email);
+
+    if (password) {
+      const filter = { _id: userId };
+      const hashedPassword = await hashPassword(password);
+      const updateUserData = { ...user, email, password: hashedPassword, name };
+
+      const updatedUser = await this.userModel.updateUser(filter, updateUserData);
+
+      return updatedUser;
+    } else {
+      const filter = { _id: userId };
+      const updateUserData = { ...user, email, password, name };
+
+      const updatedUser = await this.userModel.updateUser(filter, updateUserData);
+
+      return updatedUser;
     }
   }
 }

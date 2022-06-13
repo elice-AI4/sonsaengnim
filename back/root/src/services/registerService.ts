@@ -10,7 +10,7 @@ export default class UserService {
     const hashedPassword = await hashPassword(password);
     const userData = { email, password: hashedPassword, name };
 
-    const user = await this.userModel.create(userData);
+    const user = await this.userModel.createUser(userData);
     return user;
   }
 }
