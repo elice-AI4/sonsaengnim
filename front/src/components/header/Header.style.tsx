@@ -18,7 +18,7 @@ export const Navbar = styled.nav`
 `;
 
 export const TitleContainer = styled.div`
-  margin: 0 2rem 0 2rem;
+  margin: 1rem;
   padding: 1rem;
   cursor: pointer;
 `;
@@ -40,10 +40,15 @@ export const List = styled.div`
   margin-right: 1rem;
 `;
 
-export const StyledLink = styled(Link)`
+export const DefaultLink = styled(Link)`
   text-decoration: none;
   color: black;
   padding: 1rem;
+`;
+
+export const HomeLink = styled(DefaultLink)``;
+
+export const StyledLink = styled(DefaultLink)`
   /* margin-right: 1rem; */
   ${({ theme }) => {
     return css`

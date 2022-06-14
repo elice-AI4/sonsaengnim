@@ -1,5 +1,4 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
 import { ROUTE } from "../route/route";
 import {
   TitleContainer,
@@ -7,17 +6,16 @@ import {
   Navbar,
   StyledLink,
   Title,
+  HomeLink,
 } from "./Header.style";
 
 const Header = () => {
-  const navigate = useNavigate();
-  const handleClickTitle = () => {
-    navigate("/");
-  };
   return (
     <Navbar>
-      <TitleContainer onClick={handleClickTitle}>
-        <Title>손생님</Title>
+      <TitleContainer>
+        <HomeLink to="/">
+          <Title>손생님</Title>
+        </HomeLink>
       </TitleContainer>
       <List>
         <StyledLink to={ROUTE.ABOUT.link}>ABOUT</StyledLink>

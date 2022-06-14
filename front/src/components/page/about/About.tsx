@@ -1,8 +1,20 @@
 import React from "react";
-import { AboutContainer } from "./About.style";
+import { AboutContainer, AboutMainPage } from "./About.style";
+import imgAboutMainPage from "../../../src_assets/about/imgAboutMainPage.jpg";
 
 const About = () => {
-  return <AboutContainer>hello</AboutContainer>;
+  return (
+    <AboutContainer>
+      <AboutMainPage>
+        <img
+          src={imgAboutMainPage}
+          alt="baby studying"
+          width="1200px"
+          height="800px"
+        />
+      </AboutMainPage>
+    </AboutContainer>
+  );
 };
 
 export default About;
