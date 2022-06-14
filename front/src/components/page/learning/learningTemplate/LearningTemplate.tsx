@@ -1,5 +1,6 @@
 import React, { RefObject, useRef } from "react";
 import {
+  Button,
   CardContainer,
   ContentContainer,
   DescriptionContainer,
@@ -39,6 +40,7 @@ const LearningTemplate = ({ imgs, title, children }: LearningTemplateProps) => {
           <CardTemplate src="" alt="" />
           <CardTemplate src="" alt="" />
         </CardContainer>
+        <Button>따라해보기</Button>
       </ContentContainer>
     </TemplateContainer>
   );

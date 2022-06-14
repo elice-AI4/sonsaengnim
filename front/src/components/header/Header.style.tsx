@@ -9,7 +9,7 @@ export const Navbar = styled.nav`
       display: flex;
       justify-content: space-between;
       align-items: center;
-      position: fixed;
+      position: absolute;
       transform: translate(0, 0);
       width: 100%;
       z-index: 999;
@@ -77,7 +77,7 @@ export const StyledLink = styled(DefaultLink)`
 const Line = styled.div`
   width: 100vw;
   background-color: #ffc774;
-  position: fixed;
+  position: absolute;
   width: 100%;
   z-index: 2;
 `;

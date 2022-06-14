@@ -20,7 +20,6 @@ export const TemplateContainer = styled.div`
   min-width: 1400px;
   height: 100vh;
 
-  margin: auto;
   ${({ theme }) => {
     return css`
       transform: translateY(${theme.navbar.height});
@@ -40,10 +39,20 @@ export const ContentContainer = styled.div`
   text-align: center;
 `;
 
+export const Button = styled.button`
+  width: 20rem;
+  height: 5rem;
+  background-color: rgb(70, 51, 255);
+  color: white;
+  font-size: 2rem;
+  font-weight: 600;
+`;
+
 export const DescriptionContainer = styled.section`
   width: 80%;
   flex: 0.4;
   padding: 4rem;
+  margin-top: 5rem;
 `;
 
 export const CardContainer = styled(motion.section)`

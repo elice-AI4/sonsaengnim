@@ -52,7 +52,7 @@ export const LearningContainer = styled.div`
 
   ${({ theme }) => {
     return css`
-      transform: translateY(${theme.navbar.height});
+      /* transform: translateY(${theme.navbar.height}); */
       height: calc(100vh - ${theme.navbar.height});
     `;
   }}
