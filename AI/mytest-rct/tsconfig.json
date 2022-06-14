@@ -1,0 +1,56 @@
+{
+  "compilerOptions": {
+    "target": "es5", //타입스크립트 파일을 어떤 버전의 자바스크립트로 바꿔줄지 정하는 부분
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "allowJs": true, // js 파일들 ts에서 import해서 쓸 수 있는지
+    "skipLibCheck": true, //? //https://www.typescriptlang.org/tsconfig#skipLibCheck
+    "esModuleInterop": true, 
+    "allowSyntheticDefaultImports": true,
+    "strict": true, // strict 관련, noimplicit 어쩌구 관련 모드 전부 켜기
+    "forceConsistentCasingInFileNames": true,
+    "noFallthroughCasesInSwitch": true, // switch문 이상하면 에러내기
+    "module": "esnext", // 자바스크립트 파일간 import 문법 구현할 때 어떤 문법 쓸지 정하는 곳, esnext: 'import'
+    "moduleResolution": "node", 
+    "resolveJsonModule": true, 
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react-jsx"
+  },
+  "include": [
+    "src"
+  ]
+
+  // "compileOnSave": true,
+  // "compilerOptions": {
+  //   "target": "es2016",
+  //   "lib": [
+  //     "dom",
+  //     "dom.iterable",
+  //     "esnext"
+  //   ],
+  //   "jsx": "preserve",
+  //   "module": "esnext",
+  //   "sourceMap": true,
+  //   "removeComments": true,
+  //   "esModuleInterop": true,
+  //   "forceConsistentCasingInFileNames": true,
+  //   "strict": true,
+  //   "skipLibCheck": true,
+  //   "allowJs": true,
+  //   "allowSyntheticDefaultImports": true,
+  //   "moduleResolution": "node",
+  //   "resolveJsonModule": true,
+  //   "isolatedModules": true,
+  //   "noEmit": true
+  // },
+  // "include": [
+  //   "./src/"
+  // ],
+  // "exclude": [
+  //   "node_modules/*"
+  // ]
+}
