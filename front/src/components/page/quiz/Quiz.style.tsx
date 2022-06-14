@@ -108,7 +108,7 @@ export const Button = styled.button`
   }
 `;
 
-export const QuizeImg = styled.img`
+export const QuizImg = styled.img`
   transition: all 0.5s ease-in-out;
 `;
 
@@ -125,7 +125,7 @@ export const ButtonCotainer = styled.div`
   justify-content: center;
   align-items: center;
   &:hover {
-    ${QuizeImg} {
+    ${QuizImg} {
       transform: scale(1.1);
     }
   }
