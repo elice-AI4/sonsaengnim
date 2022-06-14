@@ -1,30 +1,31 @@
 import { Hand } from "../schemas/hand";
+import { IHand } from "../schemas/hand";
 
 class HandModel {
-  static create = async (newHandData) => {
+  public async create(newHandData:IHand) {
     const newHand = await Hand.create(newHandData);
     return newHand;
   };
 
   // 수화 데이터 한꺼번에 가져오기
-  static findAll = async () =>{
+  public async findAll() {
     const newHand = await Hand.find().lean();
     return newHand;
   };
 
   // 수화 데이터 알파벳별로 가져오기
-  static findByAlph = async ({ alphabet }) =>{
-    const newHand = await Hand.find({ alphabet: alphabet });
+  public async findByAlph(alphabet : String) {
+    const newHand = await Hand.find({ alphabet });
     return newHand;
   };
   
-  static update = async ({ id, toUpdate }) =>{
-    const newHand = await Hand.findOneAndUpdate({ filter: id, update: { $set: toUpdate }});
+  public async update({id, toUpdate}:{id: String, toUpdate: Partial<String>}) {
+    const newHand = await Hand.findOneAndUpdate(id, { $set: toUpdate });
     return newHand;
   }
 
-  static delete = async ({ _id }) => {
-    const result = await Hand.remove({ _id });
+  public async delete(_id: string) {
+    const result = await Hand.findByIdAndDelete(_id);
     return result;
   }
 }
