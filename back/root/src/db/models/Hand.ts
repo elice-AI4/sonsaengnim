@@ -8,7 +8,7 @@ class HandModel {
 
   // 수화 데이터 한꺼번에 가져오기
   static findAll = async () =>{
-    const newHand = await Hand.find();
+    const newHand = await Hand.find().lean();
     return newHand;
   };
 
