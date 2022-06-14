@@ -1,5 +1,5 @@
 import express from "express";
-import routes from "./routes";
+import routes from "./api";
 
 import morgan from "morgan";
 import cors from "cors";
@@ -11,7 +11,7 @@ import swaggerUi from "swagger-ui-express";
 // yaml을 연동하기 위함
 import YAML from "yamljs";
 
-import { errorMiddleware } from "./middlewares/errorMiddleware";
+import { errorMiddleware } from "./api/middlewares/errorMiddleware";
 
 const app = express();
 

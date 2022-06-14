@@ -1,6 +1,6 @@
 import { Router, Request, Response, NextFunction } from "express";
-import UserService from "../services/registerService";
-import { MongoUserModel } from "../db";
+import UserService from "../../services/registerService";
+import { MongoUserModel } from "../../db";
 
 export default (app: Router) => {
   const userRouter = Router();
