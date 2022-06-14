@@ -31,9 +31,14 @@ const theme: DefaultTheme = {
 
   learning: {
     button: {
-      width: "50rem",
-      height: "30rem",
+      width: "45rem",
+      height: "33rem",
+      mediumWidth: "41rem",
+      mediumHeight: "28rem",
+      smallWidth: "35rem",
+      smallHeight: "25rem",
       title: "5rem",
+      mediumTitle: "4rem",
     },
   },
 };
