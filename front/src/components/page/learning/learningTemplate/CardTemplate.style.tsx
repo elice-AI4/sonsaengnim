@@ -22,6 +22,10 @@ export const Card = styled(motion.div)<{ src: string }>`
   opacity: ${(props) => (props.src ? 1 : 0)};
 
   pointer-events: ${(props) => (props.src ? "auto" : "none")};
+
+  @media (max-width: 1270px) {
+    font-size: 3rem;
+  }
 `;
 
 export const CardImg = styled(motion.img)`

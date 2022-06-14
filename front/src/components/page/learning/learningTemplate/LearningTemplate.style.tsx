@@ -1,28 +1,24 @@
 import { motion } from "framer-motion";
 import styled, { css } from "styled-components";
-import bg from "../../../../src_assets/bg.png";
+import alphabetPage from "../../../../src_assets/learning/alphabetPage.jpg";
 
 export const H1 = styled.h1`
   margin-bottom: 1rem;
+  @media (max-width: 1270px) {
+    /* font-size: 3rem; */
+  }
 `;
 
 export const TemplateContainer = styled.div`
-  /* background-image: url(${bg}); */
-  /* background-repeat: no-repeat; */
-  /* background-size: cover; */
-  /* background-color: #ffa07a; */
+  background-image: url(${alphabetPage});
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
   position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
 
-  text-align: center;
-
-  max-width: 1200px;
-  min-width: 860px;
-
-  height: 100%;
+  width: 100vw;
+  min-width: 1400px;
+  height: 100vh;
 
   margin: auto;
   ${({ theme }) => {
@@ -32,10 +28,21 @@ export const TemplateContainer = styled.div`
   }}
 `;
 
+export const ContentContainer = styled.div`
+  width: 65vw;
+  min-width: 1000px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  text-align: center;
+`;
+
 export const DescriptionContainer = styled.section`
   width: 80%;
   flex: 0.4;
-
   padding: 4rem;
 `;
 

@@ -1,6 +1,7 @@
 import React, { RefObject, useRef } from "react";
 import {
   CardContainer,
+  ContentContainer,
   DescriptionContainer,
   H1,
   TemplateContainer,
@@ -20,8 +21,8 @@ interface LearningTemplateProps {
 
 const LearningTemplate = ({ imgs, title, children }: LearningTemplateProps) => {
   return (
-    <>
-      <TemplateContainer>
+    <TemplateContainer>
+      <ContentContainer>
         <DescriptionContainer>
           <H1>{title}</H1>
           <Underline />
@@ -38,8 +39,8 @@ const LearningTemplate = ({ imgs, title, children }: LearningTemplateProps) => {
           <CardTemplate src="" alt="" />
           <CardTemplate src="" alt="" />
         </CardContainer>
-      </TemplateContainer>
-    </>
+      </ContentContainer>
+    </TemplateContainer>
   );
 };
 

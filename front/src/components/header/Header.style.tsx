@@ -73,3 +73,30 @@ export const StyledLink = styled(DefaultLink)`
     }
   }
 `;
+
+const Line = styled.div`
+  width: 100vw;
+  background-color: #ffc774;
+  position: fixed;
+  width: 100%;
+  z-index: 2;
+`;
+
+export const ThickLine = styled(Line)`
+  height: 1.3rem;
+  margin-bottom: 0.3rem;
+  ${({ theme }) => {
+    return css`
+      transform: translate(0, ${theme.navbar.height});
+    `;
+  }}
+`;
+
+export const ThinLine = styled(Line)`
+  height: 0.3rem;
+  ${({ theme }) => {
+    return css`
+      transform: translate(0, calc(${theme.navbar.height} + 1.6rem));
+    `;
+  }}
+`;
