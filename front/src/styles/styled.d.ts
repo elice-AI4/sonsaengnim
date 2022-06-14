@@ -27,6 +27,7 @@ declare module "styled-components" {
       link: {
         fontSize: string;
         fontWeight: string;
+        hoverLineColor: string;
       };
     };
 

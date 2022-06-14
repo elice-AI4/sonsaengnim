@@ -18,7 +18,6 @@ export const Navbar = styled.nav`
 `;
 
 export const TitleContainer = styled.div`
-  margin: 1rem;
   padding: 1rem;
   cursor: pointer;
 `;
@@ -49,6 +48,7 @@ export const DefaultLink = styled(Link)`
 export const HomeLink = styled(DefaultLink)``;
 
 export const StyledLink = styled(DefaultLink)`
+  position: relative;
   /* margin-right: 1rem; */
   ${({ theme }) => {
     return css`
@@ -56,4 +56,20 @@ export const StyledLink = styled(DefaultLink)`
       font-weight: ${theme.navbar.link.fontWeight};
     `;
   }}
+
+  &:hover {
+    &::after {
+      content: "";
+      position: absolute;
+      width: 80%;
+      height: 4px;
+      left: 50%;
+      transform: translate(-50%, 20px);
+      ${({ theme }) => {
+        return css`
+          background-color: ${theme.navbar.link.hoverLineColor};
+        `;
+      }}
+    }
+  }
 `;

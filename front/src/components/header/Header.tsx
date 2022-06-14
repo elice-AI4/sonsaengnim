@@ -8,13 +8,14 @@ import {
   Title,
   HomeLink,
 } from "./Header.style";
+import title from "../../src_assets/navbar/title.png";
 
 const Header = () => {
   return (
     <Navbar>
       <TitleContainer>
         <HomeLink to="/">
-          <Title>손생님</Title>
+          <img src={title} alt="title 손생님" width="150px" height="100%" />
         </HomeLink>
       </TitleContainer>
       <List>

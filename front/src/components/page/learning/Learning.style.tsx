@@ -59,8 +59,6 @@ export const LearningContainer = styled.div`
 `;
 
 export const ContentsContainer = styled.div`
-  border: 1px solid;
-  /* margin-bottom: 15rem; */
   display: flex;
   flex: 0.5;
   justify-content: center;
