@@ -15,7 +15,7 @@ const checkLogin = (req: Request, res: Response, next: NextFunction) => {
       // 토큰 변형 확인
       const token = req.headers["authorization"].split(" ")[1];
       // const decoded = jwt.verify(token, config.JWT_KEY);
-      // req.user = String(decoded.ObjectId);
+      // req.user = decoded.ObjectId;
       jwt.verify(token, config.JWT_KEY);
       next();
     }
