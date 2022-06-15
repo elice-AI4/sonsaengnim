@@ -1,7 +1,7 @@
 import React from "react";
-import LearningTemplate from "../learningTemplate/LearningTemplate";
+import LearningTemplate from "../LearningTemplate";
 import { wordImgs } from "../learningData";
-import { Input } from "./Word.style";
+import { Input } from "./index.style";
 
 const Word = () => {
   return (

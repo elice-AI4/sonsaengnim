@@ -28,7 +28,7 @@ const Header = () => {
       <Navbar>
         <TitleContainer>
           <HomeLink to="/">
-            <img src={title} alt="title 손생님" width="150px" height="100%" />
+            <img src={title} alt="title 손생님" width="180px" height="100%" />
           </HomeLink>
         </TitleContainer>
         <List>

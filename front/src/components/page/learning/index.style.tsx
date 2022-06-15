@@ -48,14 +48,7 @@ export const LearningContainer = styled.div`
   display: flex;
   justify-content: center;
   flex-direction: column;
-  /* align-items: flex-end; */
-
-  ${({ theme }) => {
-    return css`
-      /* transform: translateY(${theme.navbar.height}); */
-      height: calc(100vh - ${theme.navbar.height});
-    `;
-  }}
+  height: 100vh;
 `;
 
 export const ContentsContainer = styled.div`

@@ -9,10 +9,10 @@ export const Navbar = styled.nav`
       display: flex;
       justify-content: space-between;
       align-items: center;
-      position: absolute;
+      position: relative;
       transform: translate(0, 0);
       width: 100%;
-      z-index: 999;
+      z-index: 2;
     `;
   }};
 `;
@@ -62,9 +62,9 @@ export const StyledLink = styled(DefaultLink)`
       content: "";
       position: absolute;
       width: 80%;
-      height: 4px;
+      height: 0.5rem;
       left: 50%;
-      transform: translate(-50%, 20px);
+      transform: translate(-50%, 28px);
       ${({ theme }) => {
         return css`
           background-color: ${theme.navbar.link.hoverLineColor};
@@ -85,18 +85,19 @@ const Line = styled.div`
 export const ThickLine = styled(Line)`
   height: 1.3rem;
   margin-bottom: 0.3rem;
-  ${({ theme }) => {
+  /* ${({ theme }) => {
     return css`
       transform: translate(0, ${theme.navbar.height});
     `;
-  }}
+  }} */
 `;
 
 export const ThinLine = styled(Line)`
   height: 0.3rem;
-  ${({ theme }) => {
+  /* ${({ theme }) => {
     return css`
       transform: translate(0, calc(${theme.navbar.height} + 1.6rem));
     `;
-  }}
+  }} */
+  transform: translateY(1.6rem);
 `;

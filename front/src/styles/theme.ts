@@ -24,7 +24,7 @@ const theme: DefaultTheme = {
       fontWeight: "700",
     },
     link: {
-      fontSize: "1.5rem",
+      fontSize: "2.0rem",
       fontWeight: "700",
       hoverLineColor: "#FFC774",
     },

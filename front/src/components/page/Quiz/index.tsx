@@ -12,7 +12,7 @@ import {
   YImg,
   QuizImg,
   ButtonCotainer,
-} from "./Quiz.style";
+} from "./index.style";
 import imgQuiz from "../../../src_assets/quiz.png";
 import imgA from "../../../src_assets/alphabet/A.png";
 import imgE from "../../../src_assets/alphabet/E.png";

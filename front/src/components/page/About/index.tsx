@@ -1,5 +1,5 @@
 import React from "react";
-import { AboutContainer, AboutMainPage } from "./About.style";
+import { AboutContainer, AboutMainPage } from "./index.style";
 import imgAboutMainPage from "../../../src_assets/about/imgAboutMainPage.jpg";
 
 const About = () => {

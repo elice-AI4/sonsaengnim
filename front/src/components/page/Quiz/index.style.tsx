@@ -68,29 +68,19 @@ const bounceImageY = keyframes`
 `;
 
 export const QuizContainer = styled.div`
-  /* background: center / cover no-repeat url(${backgroundImg}); */
   background-image: url(${backgroundImg});
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
   width: 100%;
-  /* max-width: 1200px; */
-  /* min-width: 860px; */
 
   height: calc(100vh - 70px);
-  /* max-height: 700px; */
 
   margin: auto;
 
   display: flex;
   justify-content: center;
   align-items: center;
-
-  ${({ theme }) => {
-    return css`
-      transform: translateY(${theme.navbar.height});
-    `;
-  }}
 `;
 
 export const Button = styled.button`

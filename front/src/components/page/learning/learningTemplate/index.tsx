@@ -6,12 +6,11 @@ import {
   ContentContainer,
   DescriptionContainer,
   H1,
-  MotionDiv,
   TemplateContainer,
-} from "./LearningTemplate.style";
+} from "./index.style";
 import CardTemplate from "./CardTemplate";
 import { ReactComponent as Underline } from "../../../../src_assets/Underline.svg";
-import { InputContainer } from "../word/Word.style";
+import { InputContainer } from "../Word/index.style";
 import { motion } from "framer-motion";
 import { useLocation } from "react-router";
 

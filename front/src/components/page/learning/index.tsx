@@ -12,7 +12,7 @@ import {
   WordButton,
   WordContainer,
   ButtonTitle,
-} from "./Learning.style";
+} from "./index.style";
 
 const Learning = () => {
   const { pathname } = useLocation();

@@ -16,12 +16,6 @@ export const TemplateContainer = styled.div`
   width: 100vw;
   min-width: 1400px;
   height: 100vh;
-
-  ${({ theme }) => {
-    return css`
-      transform: translateY(${theme.navbar.height});
-    `;
-  }}
 `;
 
 export const ContentContainer = styled.div`
