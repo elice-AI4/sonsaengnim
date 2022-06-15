@@ -23,8 +23,8 @@ import imgX from "../../../src_assets/alphabet/X.png";
 import imgY from "../../../src_assets/alphabet/Y.png";
 
 const imgSize = {
-  width: "100px",
-  height: "100px",
+  width: "130px",
+  height: "130px",
 };
 
 const Quiz = () => {

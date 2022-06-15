@@ -1,4 +1,5 @@
 import styled, { css, keyframes } from "styled-components";
+import backgroundImg from "../../../src_assets/quiz/quizPage.jpg";
 
 const bounceImageA = keyframes`
     from {
@@ -67,11 +68,17 @@ const bounceImageY = keyframes`
 `;
 
 export const QuizContainer = styled.div`
-  max-width: 1200px;
-  min-width: 860px;
+  /* background: center / cover no-repeat url(${backgroundImg}); */
+  background-image: url(${backgroundImg});
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  width: 100%;
+  /* max-width: 1200px; */
+  /* min-width: 860px; */
 
-  height: 100vh;
-  max-height: 700px;
+  height: calc(100vh - 70px);
+  /* max-height: 700px; */
 
   margin: auto;
 
