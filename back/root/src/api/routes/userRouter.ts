@@ -17,12 +17,9 @@ export default (app: Router) => {
       const { email, password } = req.body;
       const loginedUser = await userService.login(email, password);
 
-      if (loginedUser.errorMessage) {
-        throw new Error(loginedUser.errorMessage);
-      }
-
       res.status(200).json(loginedUser);
     } catch (error) {
+      res.statusCode = 400;
       next(error);
     }
   });

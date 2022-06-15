@@ -8,21 +8,23 @@ export default class UserService {
   constructor(private userModel: MongoUserModel) {}
 
   async login(email: string, password: string) {
-    const user = await this.userModel.findByEmail(email);
+    try {
+      const user = await this.userModel.findByEmail(email);
 
-    if (!user) {
-      const errorMessage = "해당 이메일로 가입한 유저가 없습니다.";
-      return { errorMessage };
-    }
-    const correctPasswordHash = user.password;
-    const isPasswordCorrect = await bcrypt.compare(password, correctPasswordHash);
+      if (!user) {
+        throw new Error("해당 이메일로 가입한 유저가 없습니다.");
+      }
+      const correctPasswordHash = user.password;
+      const isPasswordCorrect = await bcrypt.compare(password, correctPasswordHash);
 
-    if (isPasswordCorrect) {
-      const token = issueJwtToken({ ObjectId: user._id });
-      return { user, token };
-    } else {
-      const errorMessage = "비밀번호가 일치하지 않습니다.";
-      return { errorMessage };
+      if (isPasswordCorrect) {
+        const token = issueJwtToken({ ObjectId: user._id });
+        return { user, token };
+      } else {
+        throw new Error("비밀 번호가 일치하지 않습니다.");
+      }
+    } catch (error) {
+      throw new Error(error);
     }
   }
 
