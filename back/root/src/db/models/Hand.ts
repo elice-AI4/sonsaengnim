@@ -21,7 +21,7 @@ class MongoHandModel implements IHandModel {
     return newHand;
   }
 
-  public async update({ id, toUpdate }: { id: string; toUpdate: Partial<string> }) {
+  public async update({ id, toUpdate }: { id: string; toUpdate: Partial<IHand> }) {
     const newHand = await Hand.findByIdAndUpdate(id, { $set: toUpdate });
     return newHand;
   }
