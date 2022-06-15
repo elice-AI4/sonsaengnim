@@ -12,7 +12,7 @@ export class MongoUserModel implements IUserModel {
     return user;
   }
 
-  async deleteUser(userId) {
+  async deleteUser(userId: string) {
     const user = await User.findOneAndDelete({ _id: userId });
     return user;
   }

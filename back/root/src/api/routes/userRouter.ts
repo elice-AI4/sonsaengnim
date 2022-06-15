@@ -41,7 +41,7 @@ export default (app: Router) => {
 
   userRouter.delete("/", checkLogin, async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const userId = req.user;
+      const userId: string = req.user;
 
       const deletedUser = await userService.deleteUser(userId);
       res.status(200).json(deletedUser);

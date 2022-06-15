@@ -46,7 +46,7 @@ export default class UserService {
       return updatedUser;
     }
   }
-  async deleteUser(userId) {
+  async deleteUser(userId: string) {
     const deletedUser = await this.userModel.deleteUser(userId);
     return { deletedUser, status: "succ" };
   }
