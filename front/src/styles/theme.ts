@@ -18,22 +18,28 @@ const theme: DefaultTheme = {
 
   navbar: {
     height: "7rem",
-    backgroundColor: "orange",
+    backgroundColor: "transparent",
     title: {
       fontSize: "3rem",
       fontWeight: "700",
     },
     link: {
-      fontSize: "1.5rem",
+      fontSize: "2.0rem",
       fontWeight: "700",
+      hoverLineColor: "#FFC774",
     },
   },
 
   learning: {
     button: {
-      width: "50rem",
-      height: "30rem",
+      width: "45rem",
+      height: "33rem",
+      mediumWidth: "41rem",
+      mediumHeight: "28rem",
+      smallWidth: "35rem",
+      smallHeight: "25rem",
       title: "5rem",
+      mediumTitle: "4rem",
     },
   },
 };

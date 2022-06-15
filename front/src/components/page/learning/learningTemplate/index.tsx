@@ -1,13 +1,18 @@
-import React, { RefObject, useRef } from "react";
+import React, { useRef } from "react";
 import {
+  Button,
+  ButtonLink,
   CardContainer,
+  ContentContainer,
   DescriptionContainer,
   H1,
   TemplateContainer,
-} from "./LearningTemplate.style";
+} from "./index.style";
 import CardTemplate from "./CardTemplate";
 import { ReactComponent as Underline } from "../../../../src_assets/Underline.svg";
-import { InputContainer } from "../word/Word.style";
+import { InputContainer } from "../Word/index.style";
+import { motion } from "framer-motion";
+import { useLocation } from "react-router";
 
 interface LearningTemplateProps {
   imgs: {
@@ -19,9 +24,13 @@ interface LearningTemplateProps {
 }
 
 const LearningTemplate = ({ imgs, title, children }: LearningTemplateProps) => {
+  const { pathname } = useLocation();
+
+  console.log(pathname);
+
   return (
-    <>
-      <TemplateContainer>
+    <TemplateContainer>
+      <ContentContainer>
         <DescriptionContainer>
           <H1>{title}</H1>
           <Underline />
@@ -33,13 +42,17 @@ const LearningTemplate = ({ imgs, title, children }: LearningTemplateProps) => {
               <CardTemplate src={img.src} alt={img.alt} key={`img ${index}`} />
             );
           })}
+
           <CardTemplate src="" alt="" />
           <CardTemplate src="" alt="" />
           <CardTemplate src="" alt="" />
           <CardTemplate src="" alt="" />
         </CardContainer>
-      </TemplateContainer>
-    </>
+        <Button>
+          <ButtonLink to={pathname}>따라해보기</ButtonLink>
+        </Button>
+      </ContentContainer>
+    </TemplateContainer>
   );
 };
 

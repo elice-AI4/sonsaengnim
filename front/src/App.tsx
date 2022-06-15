@@ -2,19 +2,23 @@ import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import NotFound from "./components/NotFound";
 import { ROUTE } from "./components/route/route";
-import Learning from "./components/page/learning/Learning";
-import Word from "./components/page/learning/word/Word";
-import LearningTemplate from "./components/page/learning/learningTemplate/LearningTemplate";
-import { alphabetImgs } from "./components/page/learning/learningData";
-import Main from "./components/page/main/Main";
-import Login from "./components/page/login/Login";
-import Register from "./components/page/register/Register";
-import Quiz from "./components/page/quiz/Quiz";
+import Learning from "./components/page/Learning";
+import Word from "./components/page/Learning/Word";
+import LearningTemplate from "./components/page/Learning/LearningTemplate";
+import { alphabetImgs } from "./components/page/Learning/learningData";
+import Main from "./components/page/Main/Main";
+import Login from "./components/page/Login/Login";
+import Register from "./components/page/Register/Register";
+import Quiz from "./components/page/Quiz";
 import Header from "./components/header/Header";
+<<<<<<< HEAD
 import About from "./components/page/about/About";
 import Test1 from "./Test1";
 import Test2 from "./Test2";
 import Problem from "./components/page/problem/Problem";
+=======
+import About from "./components/page/About";
+>>>>>>> 16d286955ac5bfbd1e2b580ea170819661c8a379
 
 function App() {
   return (

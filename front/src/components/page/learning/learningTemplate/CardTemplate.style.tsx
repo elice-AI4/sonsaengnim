@@ -5,7 +5,7 @@ export const Card = styled(motion.div)<{ src: string }>`
   width: 125px;
   height: 100px;
   text-align: center;
-  border-radius: 50px;
+  border-radius: 5px;
 
   margin: 1rem;
 
@@ -22,9 +22,8 @@ export const Card = styled(motion.div)<{ src: string }>`
   opacity: ${(props) => (props.src ? 1 : 0)};
 
   pointer-events: ${(props) => (props.src ? "auto" : "none")};
-`;
 
-export const CardImg = styled(motion.img)`
-  width: 100px;
-  height: 100px;
+  @media (max-width: 1270px) {
+    font-size: 3rem;
+  }
 `;

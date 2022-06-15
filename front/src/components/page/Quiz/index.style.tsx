@@ -1,4 +1,5 @@
 import styled, { css, keyframes } from "styled-components";
+import backgroundImg from "../../../src_assets/quiz/quizPage.jpg";
 
 const bounceImageA = keyframes`
     from {
@@ -67,23 +68,19 @@ const bounceImageY = keyframes`
 `;
 
 export const QuizContainer = styled.div`
-  max-width: 1200px;
-  min-width: 860px;
+  background-image: url(${backgroundImg});
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  width: 100%;
 
-  height: 100vh;
-  max-height: 700px;
+  height: calc(100vh - 70px);
 
   margin: auto;
 
   display: flex;
   justify-content: center;
   align-items: center;
-
-  ${({ theme }) => {
-    return css`
-      transform: translateY(${theme.navbar.height});
-    `;
-  }}
 `;
 
 export const Button = styled.button`
@@ -108,7 +105,7 @@ export const Button = styled.button`
   }
 `;
 
-export const QuizeImg = styled.img`
+export const QuizImg = styled.img`
   transition: all 0.5s ease-in-out;
 `;
 
@@ -125,7 +122,7 @@ export const ButtonCotainer = styled.div`
   justify-content: center;
   align-items: center;
   &:hover {
-    ${QuizeImg} {
+    ${QuizImg} {
       transform: scale(1.1);
     }
   }

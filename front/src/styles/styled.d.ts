@@ -27,6 +27,7 @@ declare module "styled-components" {
       link: {
         fontSize: string;
         fontWeight: string;
+        hoverLineColor: string;
       };
     };
 
@@ -34,7 +35,12 @@ declare module "styled-components" {
       button: {
         width: string;
         height: string;
+        mediumWidth: string;
+        mediumHeight: string;
+        smallWidth: string;
+        smallHeight: string;
         title: string;
+        mediumTitle: string;
       };
     };
   }

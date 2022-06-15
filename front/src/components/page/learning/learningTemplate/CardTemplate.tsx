@@ -1,7 +1,5 @@
-import React, { forwardRef, useRef } from "react";
-import { useLocation } from "react-router";
-import { useNavigate } from "react-router";
-import { Card, CardImg } from "./CardTemplate.style";
+import React, { useRef } from "react";
+import { Card } from "./CardTemplate.style";
 import { motion } from "framer-motion";
 
 interface CardTemplateProps {
@@ -16,27 +14,21 @@ const boxVariants = {
 };
 
 const CardTemplate = ({ src, alt }: CardTemplateProps) => {
-  const handleClickCard = () => {
-    // navigate(`${pathname}/camera`);
-  };
+  const constraintsRef = useRef<HTMLDivElement>(null);
   return (
-    <Card onClick={handleClickCard} src={src}>
-      <CardImg
+    <Card src={src} ref={constraintsRef}>
+      <motion.img
         src={src}
         alt={alt}
+        width="100px"
+        height="100px"
         drag
-        dragElastic={0.5} /* force Elastic : 마우스에 탄성 */
-        /* 드래그 영역 제한 {top: 50, bottom: 50, left: 50,right: 50} or ref설정 */
-        dragConstraints={{
-          top: -50,
-          bottom: 50,
-          left: -50,
-          right: 50,
-        }}
         variants={boxVariants}
         whileHover="hover"
         whileDrag="drag"
         whileTap="tab"
+        dragElastic={0.5} /* force Elastic : 마우스에 탄성 */
+        dragConstraints={constraintsRef}
       />
     </Card>
   );
