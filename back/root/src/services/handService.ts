@@ -8,9 +8,8 @@ export default class HandService {
     const hand = await this.handModel.findByAlphabet(alphabet);
 
     if (!hand) {
-      return "해당 알파벳 데이터를 찾을 수 없스니다.";
+      return "해당 알파벳 데이터를 찾을 수 없습니다.";
     }
-
     return hand;
   }
 
