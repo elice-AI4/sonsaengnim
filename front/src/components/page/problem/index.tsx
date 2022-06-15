@@ -4,7 +4,7 @@ import * as h from "@mediapipe/hands";
 import * as cam from "@mediapipe/camera_utils";
 import Webcam from "react-webcam";
 import { drawConnectors, drawLandmarks } from "@mediapipe/drawing_utils";
-import { UserCanvas, ProblemBox, ProblemImg, AnswerBox } from "./Problem.style";
+import { UserCanvas, ProblemBox, ProblemImg, AnswerBox } from "./index.style";
 import p1 from "./problempic/p1.jpg";
 
 function Problem() {

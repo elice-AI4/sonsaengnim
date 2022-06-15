@@ -6,19 +6,15 @@ import Learning from "./components/page/Learning";
 import Word from "./components/page/Learning/Word";
 import LearningTemplate from "./components/page/Learning/LearningTemplate";
 import { alphabetImgs } from "./components/page/Learning/learningData";
-import Main from "./components/page/Main/Main";
-import Login from "./components/page/Login/Login";
-import Register from "./components/page/Register/Register";
+import Main from "./components/page/Main";
+import Login from "./components/page/Login";
+import Register from "./components/page/Register";
 import Quiz from "./components/page/Quiz";
 import Header from "./components/header/Header";
-<<<<<<< HEAD
-import About from "./components/page/about/About";
 import Test1 from "./Test1";
 import Test2 from "./Test2";
-import Problem from "./components/page/problem/Problem";
-=======
+import Problem from "./components/page/Problem";
 import About from "./components/page/About";
->>>>>>> 16d286955ac5bfbd1e2b580ea170819661c8a379
 
 function App() {
   return (

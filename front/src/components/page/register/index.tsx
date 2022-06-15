@@ -6,7 +6,7 @@ import {
   RegisterInput,
   ValidWord,
   RegisterButton,
-} from "./Register.style";
+} from "./index.style";
 import { countAtom } from "../../../state";
 import { useAtom } from "jotai";
 interface UserRegister {

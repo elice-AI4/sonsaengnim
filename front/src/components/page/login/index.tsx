@@ -7,7 +7,7 @@ import {
   InputBox,
   LoginButton,
   ValidWord,
-} from "./login.style";
+} from "./index.style";
 import loginImg from "./login.jpg";
 import { countAtom } from "../../../state";
 import { useAtom, Provider, atom, useAtomValue } from "jotai";

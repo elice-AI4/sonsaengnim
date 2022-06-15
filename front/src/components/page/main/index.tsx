@@ -4,7 +4,7 @@ import {
   ServiceBox,
   MoveButton,
   ServiceImg,
-} from "./Main.style";
+} from "./index.style";
 import StudyLogo from "./study.png";
 import GameLogo from "./game.png";
 import SearchLogo from "./search.png";
