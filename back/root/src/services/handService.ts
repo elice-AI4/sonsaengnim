@@ -5,7 +5,7 @@ export default class HandService {
   constructor(private handModel: MongoHandModel) {}
 
   async get(alphabet: string) {
-    const hand = await this.handModel.findByAlph(alphabet);
+    const hand = await this.handModel.findByAlphabet(alphabet);
 
     if (!hand) {
       const errorMessage = "해당 알파벳 데이터를 찾을 수 없스니다.";
