@@ -1,6 +1,7 @@
-import React, { RefObject, useRef } from "react";
+import React, { useRef } from "react";
 import {
   Button,
+  ButtonLink,
   CardContainer,
   ContentContainer,
   DescriptionContainer,
@@ -12,6 +13,7 @@ import CardTemplate from "./CardTemplate";
 import { ReactComponent as Underline } from "../../../../src_assets/Underline.svg";
 import { InputContainer } from "../word/Word.style";
 import { motion } from "framer-motion";
+import { useLocation } from "react-router";
 
 interface LearningTemplateProps {
   imgs: {
@@ -23,7 +25,10 @@ interface LearningTemplateProps {
 }
 
 const LearningTemplate = ({ imgs, title, children }: LearningTemplateProps) => {
-  const ref = useRef<HTMLDivElement>(null);
+  const { pathname } = useLocation();
+
+  console.log(pathname);
+
   return (
     <TemplateContainer>
       <ContentContainer>
@@ -32,28 +37,21 @@ const LearningTemplate = ({ imgs, title, children }: LearningTemplateProps) => {
           <Underline />
           {children && <InputContainer>{children}</InputContainer>}
         </DescriptionContainer>
-        <MotionDiv>
-          <motion.div ref={ref}>
-            <CardContainer>
-              {imgs.map((img, index) => {
-                return (
-                  <CardTemplate
-                    src={img.src}
-                    alt={img.alt}
-                    key={`img ${index}`}
-                    dragConstraints={ref}
-                  />
-                );
-              })}
+        <CardContainer>
+          {imgs.map((img, index) => {
+            return (
+              <CardTemplate src={img.src} alt={img.alt} key={`img ${index}`} />
+            );
+          })}
 
-              <CardTemplate src="" alt="" />
-              <CardTemplate src="" alt="" />
-              <CardTemplate src="" alt="" />
-              <CardTemplate src="" alt="" />
-            </CardContainer>
-          </motion.div>
-        </MotionDiv>
-        <Button>따라해보기</Button>
+          <CardTemplate src="" alt="" />
+          <CardTemplate src="" alt="" />
+          <CardTemplate src="" alt="" />
+          <CardTemplate src="" alt="" />
+        </CardContainer>
+        <Button>
+          <ButtonLink to={pathname}>따라해보기</ButtonLink>
+        </Button>
       </ContentContainer>
     </TemplateContainer>
   );

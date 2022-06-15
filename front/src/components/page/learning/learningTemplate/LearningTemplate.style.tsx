@@ -1,12 +1,9 @@
-import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 import styled, { css } from "styled-components";
 import alphabetPage from "../../../../src_assets/learning/alphabetPage.jpg";
 
 export const H1 = styled.h1`
   margin-bottom: 1rem;
-  @media (max-width: 1270px) {
-    /* font-size: 3rem; */
-  }
 `;
 
 export const TemplateContainer = styled.div`
@@ -29,7 +26,7 @@ export const TemplateContainer = styled.div`
 
 export const ContentContainer = styled.div`
   width: 65vw;
-  min-width: 1000px;
+  min-width: 1100px;
 
   display: flex;
   flex-direction: column;
@@ -48,6 +45,11 @@ export const Button = styled.button`
   font-weight: 600;
 `;
 
+export const ButtonLink = styled(Link)`
+  text-decoration: none;
+  color: white;
+`;
+
 export const DescriptionContainer = styled.section`
   width: 80%;
   flex: 0.4;
@@ -59,12 +61,11 @@ export const CardContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  border: 1px solid;
-`;
-
-export const MotionDiv = styled.div`
   margin: auto;
   width: 80%;
+  max-width: 1000px;
   flex: 0.6;
   padding: 4rem;
 `;
+
+export const MotionDiv = styled.div``;
