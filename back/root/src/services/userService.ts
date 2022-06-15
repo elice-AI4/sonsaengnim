@@ -43,10 +43,9 @@ export default class UserService {
     let user = await this.userModel.findById(userId);
     const hashedPassword = await hashPassword(password);
 
-    const filter = { _id: userId };
     const updateUserData = { ...user, password: hashedPassword };
 
-    const updatedUser = await this.userModel.updateUser(filter, updateUserData);
+    const updatedUser = await this.userModel.updateUser(userId, updateUserData);
 
     return updatedUser;
   }
