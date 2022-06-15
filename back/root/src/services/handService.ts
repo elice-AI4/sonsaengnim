@@ -8,8 +8,7 @@ export default class HandService {
     const hand = await this.handModel.findByAlphabet(alphabet);
 
     if (!hand) {
-      const errorMessage = "해당 알파벳 데이터를 찾을 수 없스니다.";
-      return errorMessage;
+      return "해당 알파벳 데이터를 찾을 수 없스니다.";
     }
 
     return hand;
@@ -18,8 +17,7 @@ export default class HandService {
   async getAll() {
     const hand = await this.handModel.findAll();
     if (!hand) {
-      const errorMessage = "데이터가 존재하지 않습니다.";
-      return errorMessage;
+      return "데이터가 존재하지 않습니다.";
     }
     return hand;
   }
@@ -27,8 +25,7 @@ export default class HandService {
   async create(newHandData: IHand) {
     const newHand = await this.handModel.create(newHandData);
     if (!newHand) {
-      const errorMessage = "생성에 실패했습니다.";
-      return errorMessage;
+      return "생성에 실패했습니다.";
     }
     return newHand;
   }
