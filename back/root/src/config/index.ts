@@ -13,5 +13,5 @@ export default {
   MONGO_URL: process.env.MONGO_URL || "MONGO_URL does not exist in .env file.",
 
   // jwt key
-  issueJwtToken: process.env.issueJwtToken,
+  JWT_KEY: process.env.JWT_KEY,
 };
