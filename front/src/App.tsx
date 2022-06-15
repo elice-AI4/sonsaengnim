@@ -13,7 +13,7 @@ import Quiz from "./components/page/Quiz";
 import Header from "./components/header/Header";
 import Test1 from "./Test1";
 import Test2 from "./Test2";
-import Problem from "./components/page/Problem";
+import Problem from "./components/page/Quiz/Game";
 import About from "./components/page/About";
 
 function App() {
@@ -27,7 +27,7 @@ function App() {
           <Route path="/" element={<Main />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/problem" element={<Problem />} />
+          <Route path="/quiz/game" element={<Problem />} />
           <Route path={`/${ROUTE.ABOUT.link}`} element={<About />} />
           <Route path={`/${ROUTE.LEARNING.link}`} element={<Learning />} />
           <Route

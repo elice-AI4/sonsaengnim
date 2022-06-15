@@ -5,7 +5,7 @@ import * as cam from "@mediapipe/camera_utils";
 import Webcam from "react-webcam";
 import { drawConnectors, drawLandmarks } from "@mediapipe/drawing_utils";
 import { UserCanvas, ProblemBox, ProblemImg, AnswerBox } from "./index.style";
-import p1 from "./problempic/p1.jpg";
+import p1 from "./gamepic/p1.jpg";
 
 function Problem() {
   const webcamRef = useRef<Webcam>(null);
