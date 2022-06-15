@@ -12,34 +12,42 @@ import Register from "./components/page/register/Register";
 import Quiz from "./components/page/quiz/Quiz";
 import Header from "./components/header/Header";
 import About from "./components/page/about/About";
+import Test1 from "./Test1";
+import Test2 from "./Test2";
+import Problem from "./components/page/problem/Problem";
 
 function App() {
   return (
-    <Router>
-      <Header />
-      <Routes>
-        <Route path="/" element={<Main />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path={`/${ROUTE.ABOUT.link}`} element={<About />} />
-        <Route path={`/${ROUTE.LEARNING.link}`} element={<Learning />} />
-        <Route
-          path={`/${ROUTE.LEARNING.link}/${ROUTE.ALPHABET.link}`}
-          element={
-            <LearningTemplate
-              imgs={alphabetImgs}
-              title="A부터 차근차근 알아가 볼까요?"
-            />
-          }
-        />
-        <Route
-          path={`/${ROUTE.LEARNING.link}/${ROUTE.WORD.link}`}
-          element={<Word />}
-        />
-        <Route path={`/${ROUTE.QUIZ.link}`} element={<Quiz />} />
-        <Route path="/*" element={<NotFound />} />
-      </Routes>
-    </Router>
+    <>
+      {/* <Test1></Test1>
+      <Test2></Test2> */}
+      <Router>
+        <Header />
+        <Routes>
+          <Route path="/" element={<Main />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/problem" element={<Problem />} />
+          <Route path={`/${ROUTE.ABOUT.link}`} element={<About />} />
+          <Route path={`/${ROUTE.LEARNING.link}`} element={<Learning />} />
+          <Route
+            path={`/${ROUTE.LEARNING.link}/${ROUTE.ALPHABET.link}`}
+            element={
+              <LearningTemplate
+                imgs={alphabetImgs}
+                title="A부터 차근차근 알아가 볼까요?"
+              />
+            }
+          />
+          <Route
+            path={`/${ROUTE.LEARNING.link}/${ROUTE.WORD.link}`}
+            element={<Word />}
+          />
+          <Route path={`/${ROUTE.QUIZ.link}`} element={<Quiz />} />
+          <Route path="/*" element={<NotFound />} />
+        </Routes>
+      </Router>
+    </>
   );
 }
 

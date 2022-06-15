@@ -7,7 +7,8 @@ import {
   ValidWord,
   RegisterButton,
 } from "./Register.style";
-
+import { countAtom } from "../../../state";
+import { useAtom } from "jotai";
 interface UserRegister {
   id: string;
   password: string;
@@ -19,6 +20,7 @@ interface LoginValid {
 }
 
 function Register() {
+  const [count] = useAtom(countAtom);
   const reg =
     /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   const [registerInfo, setRegisterInfo] = useState<UserRegister>({
@@ -66,39 +68,42 @@ function Register() {
   }, [registerInfo.password]);
 
   return (
-    <RegisterBackground>
-      <RegisterForm>
-        <InputBox>
-          <h2 style={{ fontWeight: "bold" }}>아이디</h2>
-          <RegisterInput
-            type="email"
-            placeholder="이메일"
-            name="id"
-            value={registerInfo.id}
-            onChange={handleOnChange}
-          />
-        </InputBox>
-        {!valid.idValid && (
-          <ValidWord>이메일 형식의 아이디가 아닙니다.</ValidWord>
-        )}
-        <InputBox>
-          <h2 style={{ fontWeight: "bold" }}>비밀번호</h2>
-          <RegisterInput
-            type="password"
-            placeholder="비밀번호"
-            name="password"
-            value={registerInfo.password}
-            onChange={handleOnChange}
-          />
-        </InputBox>
-        {!valid.pwValid && (
-          <ValidWord>비밀번호 4글자 이상 필요합니다.</ValidWord>
-        )}
-        <RegisterButton disabled={!(valid.idValid && valid.pwValid)}>
-          회원가입
-        </RegisterButton>
-      </RegisterForm>
-    </RegisterBackground>
+    <>
+      <RegisterBackground>
+        <RegisterForm>
+          <InputBox>
+            <h2 style={{ fontWeight: "bold" }}>아이디</h2>
+            <RegisterInput
+              type="email"
+              placeholder="이메일"
+              name="id"
+              value={registerInfo.id}
+              onChange={handleOnChange}
+            />
+          </InputBox>
+          {!valid.idValid && (
+            <ValidWord>이메일 형식의 아이디가 아닙니다.</ValidWord>
+          )}
+          <InputBox>
+            <h2 style={{ fontWeight: "bold" }}>비밀번호</h2>
+            <RegisterInput
+              type="password"
+              placeholder="비밀번호"
+              name="password"
+              value={registerInfo.password}
+              onChange={handleOnChange}
+            />
+          </InputBox>
+          {!valid.pwValid && (
+            <ValidWord>비밀번호 4글자 이상 필요합니다.</ValidWord>
+          )}
+          <RegisterButton disabled={!(valid.idValid && valid.pwValid)}>
+            회원가입
+          </RegisterButton>
+        </RegisterForm>
+      </RegisterBackground>
+      <h2>{count}</h2>
+    </>
   );
 }
 
