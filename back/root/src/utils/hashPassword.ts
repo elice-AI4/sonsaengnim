@@ -1,8 +1,10 @@
-import crypto from "crypto";
+// import crypto from "crypto";
+import bcrypt from "bcrypt";
 
-const hashPassword: Function = (password: string) => {
-  const hashedPassword = crypto.createHash("sha512").update(password).digest("hex");
+const hashPassword = async (password: string) => {
+  const hashedPassword = await bcrypt.hash(password, 10);
+  console.log("hashedPW: ", hashedPassword);
   return hashedPassword;
 };
 
-export { hashPassword };
+export default hashPassword;

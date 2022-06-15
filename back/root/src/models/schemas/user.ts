@@ -1,15 +1,7 @@
+import IUser from "../interfaces/IUser";
 import { model, Schema } from "mongoose";
 
 // 1. Create an interface representing a document in MongoDB.
-export interface IUser {
-  username: string, 
-  email: string,
-  password: string,
-  errorMessage?,
-  createdAt?: Date,
-  updatedAt?: Date
-}
-
 const userSchema = new Schema(
   {
     username: {
@@ -30,9 +22,11 @@ const userSchema = new Schema(
   },
   {
     timestamps: true,
+    versionKey: false,
   },
+  
 );
 
 const User = model<IUser>("User", userSchema);
 
-export { User };
+export default User;

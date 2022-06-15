@@ -1,8 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 
-import dotenv from "dotenv";
-dotenv.config();
+import config from "../../config";
 
 const checkLogin = (req: Request, res: Response, next: NextFunction) => {
   try {
@@ -14,10 +13,10 @@ const checkLogin = (req: Request, res: Response, next: NextFunction) => {
       });
     } else {
       // 토큰 변형 확인
-      const JWT_KEY = process.env.JWT_KEY;
       const token = req.headers["authorization"].split(" ")[1];
-      const decoded = jwt.verify(token, JWT_KEY);
-      req.user = decoded.ObjectId;
+      // const decoded = jwt.verify(token, config.JWT_KEY);
+      // req.user = decoded.ObjectId;
+      jwt.verify(token, config.JWT_KEY);
       next();
     }
   } catch (error) {
@@ -30,4 +29,4 @@ const checkLogin = (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
-export { checkLogin };
+export default checkLogin;
