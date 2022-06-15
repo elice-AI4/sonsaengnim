@@ -2,8 +2,8 @@
 import IUser from "./IUser";
 
 export default interface IUserModel {
-  createUser: (email: string, password: string, name: string) => Promise<Partial<IUser>>;
-  updateUser: (email: string, password: string, name: string) => Promise<Partial<IUser>>;
+  createUser: (username: string, email: string, password: string) => Promise<Partial<IUser>>;
+  updateUser: (username: string, email: string, password: string) => Promise<Partial<IUser>>;
   deleteUser: (userId) => Promise<Partial<IUser>>;
   findByEmail: (email: string) => Promise<Partial<IUser>>;
 }

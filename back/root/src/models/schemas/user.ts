@@ -4,7 +4,7 @@ import { model, Schema } from "mongoose";
 // 1. Create an interface representing a document in MongoDB.
 const userSchema = new Schema(
   {
-    name: {
+    username: {
       type: String,
       required: true,
       index: true,

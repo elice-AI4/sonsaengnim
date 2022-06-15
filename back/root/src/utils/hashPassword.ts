@@ -3,7 +3,7 @@ import bcrypt from "bcrypt";
 
 const hashPassword = async (password: string) => {
   const hashedPassword = await bcrypt.hash(password, 10);
-  console.log(hashedPassword);
+  console.log("hashedPW: ", hashedPassword);
   return hashedPassword;
 };
 

@@ -29,10 +29,10 @@ export default (app: Router) => {
 
   userRouter.put("/", checkLogin, async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const { email, password, name } = req.body;
+      const { username, email, password } = req.body;
       const userId = req.user;
 
-      const updatedUser = await userService.updateUser(email, password, name, userId);
+      const updatedUser = await userService.updateUser(email, password, username, userId);
       res.status(200).json(updatedUser);
     } catch (error) {
       next(error);

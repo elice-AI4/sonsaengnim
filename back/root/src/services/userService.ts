@@ -26,20 +26,20 @@ export default class UserService {
     }
   }
 
-  async updateUser(email: string, password: string, name: string, userId) {
+  async updateUser(email: string, password: string, username: string, userId) {
     let user = await this.userModel.findByEmail(email);
 
     if (password) {
       const filter = { _id: userId };
       const hashedPassword = await hashPassword(password);
-      const updateUserData = { ...user, email, password: hashedPassword, name };
+      const updateUserData = { ...user, email, password: hashedPassword, username };
 
       const updatedUser = await this.userModel.updateUser(filter, updateUserData);
 
       return updatedUser;
     } else {
       const filter = { _id: userId };
-      const updateUserData = { ...user, email, password, name };
+      const updateUserData = { ...user, email, password, username };
 
       const updatedUser = await this.userModel.updateUser(filter, updateUserData);
 
