@@ -22,7 +22,7 @@ class MongoHandModel implements IHandModel {
   }
 
   public async update({ id, toUpdate }: { id: String; toUpdate: Partial<String> }) {
-    const newHand = await Hand.findOneAndUpdate(id, { $set: toUpdate });
+    const newHand = await Hand.findByIdAndUpdate(id, { $set: toUpdate });
     return newHand;
   }
 
