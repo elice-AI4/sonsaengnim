@@ -109,7 +109,9 @@ function Game() {
       camera.start();
     }
   }, [a]);
+  console.log(webcamRef);
   console.log(webcamRef2);
+
   return (
     <ProblemBox>
       <ProblemImg src={p1}></ProblemImg>
