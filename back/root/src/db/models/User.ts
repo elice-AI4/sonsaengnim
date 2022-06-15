@@ -21,4 +21,9 @@ export class MongoUserModel implements IUserModel {
     const user = await User.findOne({ email }).lean();
     return user;
   }
+
+  async findById(userId: string) {
+    const user = await User.findById(userId).lean();
+    return user;
+  }
 }

@@ -26,26 +26,29 @@ export default class UserService {
     }
   }
 
-  async updateUser(email: string, password: string, username: string, userId) {
-    let user = await this.userModel.findByEmail(email);
+  async updateUser(userId: string, email?: string, username?: string) {
+    let user = await this.userModel.findById(userId);
 
-    if (password) {
-      const filter = { _id: userId };
-      const hashedPassword = await hashPassword(password);
-      const updateUserData = { ...user, email, password: hashedPassword, username };
+    const filter = { _id: userId };
+    const updateUserData = { ...user, email, username };
 
-      const updatedUser = await this.userModel.updateUser(filter, updateUserData);
+    const updatedUser = await this.userModel.updateUser(filter, updateUserData);
 
-      return updatedUser;
-    } else {
-      const filter = { _id: userId };
-      const updateUserData = { ...user, email, password, username };
-
-      const updatedUser = await this.userModel.updateUser(filter, updateUserData);
-
-      return updatedUser;
-    }
+    return updatedUser;
   }
+
+  async changePassword(userId: string, password: string) {
+    let user = await this.userModel.findById(userId);
+    const hashedPassword = await hashPassword(password);
+
+    const filter = { _id: userId };
+    const updateUserData = { ...user, password: hashedPassword };
+
+    const updatedUser = await this.userModel.updateUser(filter, updateUserData);
+
+    return updatedUser;
+  }
+
   async deleteUser(userId: string) {
     const deletedUser = await this.userModel.deleteUser(userId);
     return { deletedUser, status: "succ" };

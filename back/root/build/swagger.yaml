@@ -86,6 +86,31 @@ paths:
       responses:
         "405":
           description: "Invalid input"
+    patch:
+      tags:
+        - Login User
+      summary: "Login User"
+      description: ""
+      consumes:
+        - "application/json"
+        - "application/xml"
+      produces:
+        - "application/xml"
+        - "application/json"
+      parameters:
+        - name: authorization
+          in: header
+          type: string
+          required: true
+        - in: "body"
+          name: "body"
+          description: "Register User"
+          required: true
+          schema:
+            $ref: "#/definitions/User"
+      responses:
+        "405":
+          description: "Invalid input"
     delete:
       tags:
         - Login User

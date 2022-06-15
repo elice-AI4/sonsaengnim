@@ -29,10 +29,22 @@ export default (app: Router) => {
 
   userRouter.put("/", checkLogin, async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const { username, email, password } = req.body;
+      const { username, email } = req.body;
       const userId = req.user;
 
-      const updatedUser = await userService.updateUser(email, password, username, userId);
+      const updatedUser = await userService.updateUser(userId, email, username);
+      res.status(200).json(updatedUser);
+    } catch (error) {
+      next(error);
+    }
+  });
+
+  userRouter.patch("/", checkLogin, async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { password } = req.body;
+      const userId = req.user;
+
+      const updatedUser = await userService.changePassword(userId, password);
       res.status(200).json(updatedUser);
     } catch (error) {
       next(error);
