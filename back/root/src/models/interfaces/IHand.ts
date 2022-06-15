@@ -1,4 +1,4 @@
-export default interface IHand {
+export interface IHand {
   alphabet: string;
   handImage: string;
   mouthImage: string;

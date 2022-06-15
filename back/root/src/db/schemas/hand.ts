@@ -1,5 +1,5 @@
 import { model, Schema } from "mongoose";
-import IHand from "../interfaces/IHand";
+import { IHand } from "../../models";
 
 const handSchema = new Schema(
   {

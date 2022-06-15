@@ -1,6 +1,6 @@
-import IHand from "./IHand";
+import { IHand } from "./IHand";
 
-export default interface IHandModel {
+export interface IHandModel {
   create(newHandData: IHand): Promise<Object>;
   findAll(): Promise<Object>;
   findByAlph(alphabet: String): Promise<Object>;

@@ -1,6 +1,7 @@
-import IHand from "../../models/interfaces/IHand";
-import IHandModel from "../../models/interfaces/IHandModel";
-import { Hand } from "../../models/schemas/hand";
+import { IHandModel } from "../../models";
+import { IHand } from "../../models";
+
+import { Hand } from "../schemas/hand";
 
 class MongoHandModel implements IHandModel {
   public async create(newHandData: IHand) {

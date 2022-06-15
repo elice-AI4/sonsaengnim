@@ -1,5 +1,5 @@
-import User from "../../models/schemas/user";
-import IUserModel from "../../models/interfaces/IUserModel";
+import User from "../schemas/user";
+import { IUserModel } from "../../models";
 
 export class MongoUserModel implements IUserModel {
   async createUser(userData) {

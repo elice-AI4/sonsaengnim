@@ -1,5 +1,5 @@
 import { MongoHandModel } from "../db/models/Hand";
-import IHand from "../models/interfaces/IHand";
+import { IHand } from "../models";
 
 export default class HandService {
   constructor(private handModel: MongoHandModel) {}

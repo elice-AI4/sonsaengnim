@@ -1,7 +1,7 @@
 import { Router, Request, Response, NextFunction } from "express";
 import HandService from "../../services/handService";
 import { MongoHandModel } from "../../db/models/Hand";
-import IHand from "../../models/interfaces/IHand";
+import { IHand } from "../../models";
 
 export default (app: Router) => {
   const handRouter = Router();

@@ -1,4 +1,4 @@
-import IUser from "../interfaces/IUser";
+import { IUser } from "../../models";
 import { model, Schema } from "mongoose";
 
 // 1. Create an interface representing a document in MongoDB.
@@ -24,7 +24,6 @@ const userSchema = new Schema(
     timestamps: true,
     versionKey: false,
   },
-  
 );
 
 const User = model<IUser>("User", userSchema);
