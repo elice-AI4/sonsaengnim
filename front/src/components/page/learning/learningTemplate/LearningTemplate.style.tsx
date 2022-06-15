@@ -55,14 +55,16 @@ export const DescriptionContainer = styled.section`
   margin-top: 5rem;
 `;
 
-export const CardContainer = styled(motion.section)`
-  margin: auto;
-  width: 80%;
-
-  flex: 0.6;
+export const CardContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
+  border: 1px solid;
+`;
 
+export const MotionDiv = styled.div`
+  margin: auto;
+  width: 80%;
+  flex: 0.6;
   padding: 4rem;
 `;
