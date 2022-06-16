@@ -12,6 +12,7 @@ import Register from "./components/page/Register/Register";
 import Quiz from "./components/page/Quiz";
 import Header from "./components/header/Header";
 import About from "./components/page/About";
+import Game from "./components/page/Learning/Game";
 
 function App() {
   return (
@@ -33,10 +34,15 @@ function App() {
           }
         />
         <Route
+          path={`/${ROUTE.LEARNING.link}/${ROUTE.ALPHABET.link}/${ROUTE.GAME.link}/:alphabet`}
+          element={<Game />}
+        />
+        <Route
           path={`/${ROUTE.LEARNING.link}/${ROUTE.WORD.link}`}
           element={<Word />}
         />
         <Route path={`/${ROUTE.QUIZ.link}`} element={<Quiz />} />
+
         <Route path="/*" element={<NotFound />} />
       </Routes>
     </Router>

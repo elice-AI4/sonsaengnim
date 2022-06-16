@@ -49,7 +49,7 @@ const LearningTemplate = ({ imgs, title, children }: LearningTemplateProps) => {
           <CardTemplate src="" alt="" />
         </CardContainer>
         <Button>
-          <ButtonLink to={pathname}>따라해보기</ButtonLink>
+          <ButtonLink to={`${pathname}/game/a`}>따라해보기</ButtonLink>
         </Button>
       </ContentContainer>
     </TemplateContainer>

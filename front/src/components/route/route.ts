@@ -17,4 +17,7 @@ export const ROUTE = {
   QUIZ: {
     link: "quiz",
   },
+  GAME: {
+    link: "game",
+  },
 };
