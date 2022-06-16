@@ -1,4 +1,6 @@
 import { Router, Request, Response, NextFunction } from "express";
+import { body, check } from "express-validator";
+import { validate } from "../middlewares/validator";
 
 import UserService from "../../services/userService";
 
@@ -12,29 +14,42 @@ export default (app: Router) => {
 
   app.use("/user", userRouter);
 
-  userRouter.post("/", async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      const { email, password } = req.body;
-      const loginedUser = await userService.login(email, password);
+  userRouter.post(
+    "/",
+    [body("email").trim().isEmail().withMessage("이메일 형식으로 입력하세요"), validate],
+    async (req: Request, res: Response, next: NextFunction) => {
+      try {
+        const { email, password } = req.body;
+        const loginedUser = await userService.login(email, password);
 
-      res.status(200).json(loginedUser);
-    } catch (error) {
-      res.statusCode = 400;
-      next(error);
-    }
-  });
+        res.status(200).json(loginedUser);
+      } catch (error) {
+        res.statusCode = 400;
+        next(error);
+      }
+    },
+  );
 
-  userRouter.put("/", checkLogin, async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      const { username, email } = req.body;
-      const userId = req.user;
+  userRouter.put(
+    "/",
+    checkLogin,
+    [
+      check("email").optional().trim().isEmail().withMessage("이메일 형식으로 입력하세요"),
+      check("username").optional().trim().isLength({ min: 2 }).withMessage("이름은 두글자 이상!"),
+      validate,
+    ],
+    async (req: Request, res: Response, next: NextFunction) => {
+      try {
+        const { username, email } = req.body;
+        const userId = req.user;
 
-      const updatedUser = await userService.updateUser(userId, email, username);
-      res.status(200).json(updatedUser);
-    } catch (error) {
-      next(error);
-    }
-  });
+        const updatedUser = await userService.updateUser(userId, email, username);
+        res.status(200).json(updatedUser);
+      } catch (error) {
+        next(error);
+      }
+    },
+  );
 
   userRouter.patch("/", checkLogin, async (req: Request, res: Response, next: NextFunction) => {
     try {
