@@ -43,8 +43,9 @@ declare module "styled-components" {
         mediumTitle: string;
       };
       play: {
-        darkBlue:string;
-      }
+        darkBlue: string;
+        cyan: string;
+      };
     };
   }
 }

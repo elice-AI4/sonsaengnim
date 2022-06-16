@@ -1,3 +1,4 @@
+import exp from "constants";
 import styled, { css } from "styled-components";
 import backgroundImg from "../../../../src_assets/learning/play/playPage.png";
 
@@ -9,6 +10,7 @@ export const GameContainer = styled.div`
 
 export const Sidebar = styled.aside`
   width: 400px;
+  min-width: 400px;
   min-height: 100vh;
 
   background-color: #a8c0ea;
@@ -80,9 +82,13 @@ export const ImageUnderLine = styled.div`
 `;
 
 export const CameraContainer = styled.section`
-  width: calc(100vw - 400px);
+  width: 100%;
+  min-width: 1000px;
   min-height: 100vh;
   background-image: url(${backgroundImg});
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
 `;
 
 export const AlphabetContainer = styled.section`
@@ -92,4 +98,116 @@ export const AlphabetContainer = styled.section`
 
   border: 1px solid;
   display: flex;
+`;
+
+export const Moniter = styled.section`
+  width: 80rem;
+  height: 80rem;
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 5rem;
+
+  padding: 4rem;
+  ${({ theme }) => {
+    return css`
+      background-color: ${theme.learning.play.cyan};
+    `;
+  }}
+`;
+
+export const Circle = styled.div`
+  width: 5rem;
+  height: 5rem;
+  border-radius: 50%;
+  margin-right: 2rem;
+`;
+
+export const CircleContainer = styled.div`
+  display: flex;
+`;
+
+export const RedCircle = styled(Circle)`
+  background-color: red;
+`;
+
+export const GreenCircle = styled(Circle)`
+  background-color: #0dac00;
+`;
+export const BlueCircle = styled(Circle)`
+  background-color: #3a86ff;
+`;
+
+export const Explain = styled.h1`
+  ${({ theme }) => {
+    return css`
+      color: ${theme.learning.play.darkBlue};
+      text-align: center;
+      font-size: 3rem;
+      font-weight: 700;
+    `;
+  }}
+`;
+
+export const HR = styled.div`
+  width: 40%;
+  height: 0.5rem;
+  border-radius: 0.5rem;
+  margin: auto;
+  ${({ theme }) => {
+    return css`
+      background-color: ${theme.learning.play.darkBlue};
+    `;
+  }}
+`;
+
+interface StartButtonProp {
+  isPlayWebcam: boolean;
+}
+
+export const StartButton = styled.div<StartButtonProp>`
+  width: 10rem;
+  height: 7rem;
+  border-radius: 1.5rem;
+  position: relative;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  ${({ theme }) => {
+    return css`
+      background-color: ${theme.learning.play.darkBlue};
+    `;
+  }}
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  cursor: ${(props) => (props.isPlayWebcam ? "auto" : "pointer")};
+  transition: opacity 0.5s ease;
+  opacity: ${(props) => (props.isPlayWebcam ? 0 : 1)};
+`;
+
+export const TopContainer = styled.div`
+  flex: 0.2;
+`;
+
+export const BottomContainer = styled.div`
+  flex: 0.8;
+`;
+
+interface StartTriangleProp {
+  isPlayWebcam: boolean;
+}
+
+export const StartTriangle = styled.div<StartTriangleProp>`
+  border-bottom: 20px solid transparent;
+  border-top: 20px solid transparent;
+  border-left: 30px solid white;
+  transition: opacity 0.5s ease;
+  opacity: ${(props) => (props.isPlayWebcam ? 0 : 1)};
 `;

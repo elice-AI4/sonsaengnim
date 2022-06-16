@@ -21,11 +21,12 @@ export const AlphabetButton = styled.div`
   cursor: pointer;
 
   transition: all 0.2s ease-in;
-  &:hover {
-    background-color: #9adcdd;
-  }
+
   ${({ theme }) => {
     return css`
+      &:hover {
+        background-color: ${theme.learning.play.cyan};
+      }
       border-radius: 20px;
       border: 2px solid ${theme.learning.play.darkBlue};
     `;

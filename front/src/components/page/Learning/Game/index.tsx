@@ -9,6 +9,17 @@ import {
   ButtonContainer,
   Button,
   CameraContainer,
+  Moniter,
+  CircleContainer,
+  RedCircle,
+  GreenCircle,
+  BlueCircle,
+  Explain,
+  HR,
+  StartButton,
+  TopContainer,
+  BottomContainer,
+  StartTriangle,
 } from "./index.style";
 import { alphabetImgs } from "../learningData";
 import { wordImgs } from "../learningData";
@@ -20,6 +31,7 @@ const Game = () => {
 
   const [src, setSrc] = useState("");
   const [isAlphabetLearningPage, setIsAlphabetLearningPage] = useState(true);
+  const [isPlayWebcam, setIsPlayWebcam] = useState(false);
 
   const handleSetSrc = (index: number) => {
     setSrc(
@@ -27,6 +39,10 @@ const Game = () => {
         ? alphabetImgs[index].src
         : wordImgs[index].src
     );
+  };
+
+  const handleClickButton = () => {
+    setIsPlayWebcam(true);
   };
 
   useEffect(() => {
@@ -38,6 +54,16 @@ const Game = () => {
       setIsAlphabetLearningPage(false);
     }
   }, []);
+
+  useEffect(() => {
+    if (isPlayWebcam === true) {
+      const timer = setTimeout(() => {
+        setIsPlayWebcam(false);
+      }, 5000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [isPlayWebcam]);
 
   return (
     <GameContainer>
@@ -58,7 +84,27 @@ const Game = () => {
           <WordList />
         )}
       </Sidebar>
-      <CameraContainer></CameraContainer>
+      <CameraContainer>
+        <Moniter>
+          <TopContainer>
+            <CircleContainer>
+              <RedCircle />
+              <GreenCircle />
+              <BlueCircle />
+            </CircleContainer>
+            <Explain>5초 동안 동작을 취해주세요.</Explain>
+            <HR />
+          </TopContainer>
+          <BottomContainer>
+            <StartButton
+              onClick={handleClickButton}
+              isPlayWebcam={isPlayWebcam}
+            >
+              <StartTriangle isPlayWebcam={isPlayWebcam} />
+            </StartButton>
+          </BottomContainer>
+        </Moniter>
+      </CameraContainer>
     </GameContainer>
   );
 };

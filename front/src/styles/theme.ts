@@ -42,8 +42,9 @@ const theme: DefaultTheme = {
       mediumTitle: "4rem",
     },
     play: {
-      darkBlue: "#2a306a"
-    }
+      darkBlue: "#2a306a",
+      cyan: " #9adcdd",
+    },
   },
 };
 
