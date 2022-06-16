@@ -1,6 +1,6 @@
 import { Router, Request, Response, NextFunction } from "express";
 
-import { validate, userValidate } from "./../middlewares/validator";
+import { userValidate } from "./../middlewares/validator";
 
 import UserService from "../../services/registerService";
 import { MongoUserModel } from "../../db";
@@ -10,7 +10,7 @@ export default (app: Router) => {
   app.use("/register", registerRouter);
 
   // 회원가입 라우터
-  registerRouter.post("/", userValidate, validate, async (req: Request, res: Response, next: NextFunction) => {
+  registerRouter.post("/", userValidate, async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { username, email, password } = req.body;
       const userService = new UserService(new MongoUserModel());

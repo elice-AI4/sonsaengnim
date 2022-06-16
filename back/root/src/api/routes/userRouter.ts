@@ -1,6 +1,5 @@
 import { Router, Request, Response, NextFunction } from "express";
-import { body, check } from "express-validator";
-import { validate } from "../middlewares/validator";
+import { userValidateOptional } from "../middlewares/validator";
 
 import UserService from "../../services/userService";
 
@@ -14,63 +13,41 @@ export default (app: Router) => {
 
   app.use("/user", userRouter);
 
-  userRouter.post(
-    "/",
-    [
-      body("email").trim().isEmail().withMessage("이메일 형식으로 입력하세요"),
-      body("password").trim().isLength({ min: 1 }).withMessage("공백은 안됩니다."),
-      validate,
-    ],
-    async (req: Request, res: Response, next: NextFunction) => {
-      try {
-        const { email, password } = req.body;
-        const loginedUser = await userService.login(email, password);
+  userRouter.post("/", userValidateOptional, async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { email, password } = req.body;
+      const loginedUser = await userService.login(email, password);
 
-        res.status(200).json(loginedUser);
-      } catch (error) {
-        res.statusCode = 400;
-        next(error);
-      }
-    },
-  );
+      res.status(200).json(loginedUser);
+    } catch (error) {
+      res.statusCode = 400;
+      next(error);
+    }
+  });
 
-  userRouter.put(
-    "/",
-    checkLogin,
-    [
-      check("email").optional().trim().isEmail().withMessage("이메일 형식으로 입력하세요"),
-      body("username").trim().isLength({ min: 1 }).withMessage("공백은 안됩니다."),
-      validate,
-    ],
-    async (req: Request, res: Response, next: NextFunction) => {
-      try {
-        const { username, email } = req.body;
-        const userId = req.user;
+  userRouter.put("/", checkLogin, userValidateOptional, async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { username, email } = req.body;
+      const userId = req.user;
 
-        const updatedUser = await userService.updateUser(userId, email, username);
-        res.status(200).json(updatedUser);
-      } catch (error) {
-        next(error);
-      }
-    },
-  );
+      const updatedUser = await userService.updateUser(userId, email, username);
+      res.status(200).json(updatedUser);
+    } catch (error) {
+      next(error);
+    }
+  });
 
-  userRouter.patch(
-    "/",
-    checkLogin,
-    [body("password").trim().isLength({ min: 1 }).withMessage("공백은 안됩니다."), validate],
-    async (req: Request, res: Response, next: NextFunction) => {
-      try {
-        const { password } = req.body;
-        const userId = req.user;
+  userRouter.patch("/", checkLogin, userValidateOptional, async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { password } = req.body;
+      const userId = req.user;
 
-        const updatedUser = await userService.changePassword(userId, password);
-        res.status(200).json(updatedUser);
-      } catch (error) {
-        next(error);
-      }
-    },
-  );
+      const updatedUser = await userService.changePassword(userId, password);
+      res.status(200).json(updatedUser);
+    } catch (error) {
+      next(error);
+    }
+  });
 
   userRouter.delete("/", checkLogin, async (req: Request, res: Response, next: NextFunction) => {
     try {
