@@ -7,15 +7,16 @@ import UserService from "../../services/registerService";
 import { MongoUserModel } from "../../db";
 
 export default (app: Router) => {
-  const userRouter = Router();
-  app.use("/register", userRouter);
+  const registerRouter = Router();
+  app.use("/register", registerRouter);
 
   // 회원가입 라우터
-  userRouter.post(
+  registerRouter.post(
     "/",
     [
-      body("email").trim().isEmail().withMessage("이메일 형식으로 입력하세요"),
-      body("username").trim().isLength({ min: 2 }).withMessage("이름은 두글자 이상 입력해주세요"),
+      body("email").trim().isEmail().withMessage("이메일 형식으로 입력하세요."),
+      body("username").trim().isLength({ min: 1 }).withMessage("공백은 안됩니다."),
+      body("password").trim().isLength({ min: 1 }).withMessage("공백은 안됩니다."),
       validate,
     ],
     async (req: Request, res: Response, next: NextFunction) => {

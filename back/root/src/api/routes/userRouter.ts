@@ -16,7 +16,11 @@ export default (app: Router) => {
 
   userRouter.post(
     "/",
-    [body("email").trim().isEmail().withMessage("이메일 형식으로 입력하세요"), validate],
+    [
+      body("email").trim().isEmail().withMessage("이메일 형식으로 입력하세요"),
+      body("password").trim().isLength({ min: 1 }).withMessage("공백은 안됩니다."),
+      validate,
+    ],
     async (req: Request, res: Response, next: NextFunction) => {
       try {
         const { email, password } = req.body;
@@ -35,7 +39,7 @@ export default (app: Router) => {
     checkLogin,
     [
       check("email").optional().trim().isEmail().withMessage("이메일 형식으로 입력하세요"),
-      check("username").optional().trim().isLength({ min: 2 }).withMessage("이름은 두글자 이상 입력해주세요"),
+      body("username").trim().isLength({ min: 1 }).withMessage("공백은 안됩니다."),
       validate,
     ],
     async (req: Request, res: Response, next: NextFunction) => {
@@ -51,17 +55,22 @@ export default (app: Router) => {
     },
   );
 
-  userRouter.patch("/", checkLogin, async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      const { password } = req.body;
-      const userId = req.user;
+  userRouter.patch(
+    "/",
+    checkLogin,
+    [body("password").trim().isLength({ min: 1 }).withMessage("공백은 안됩니다."), validate],
+    async (req: Request, res: Response, next: NextFunction) => {
+      try {
+        const { password } = req.body;
+        const userId = req.user;
 
-      const updatedUser = await userService.changePassword(userId, password);
-      res.status(200).json(updatedUser);
-    } catch (error) {
-      next(error);
-    }
-  });
+        const updatedUser = await userService.changePassword(userId, password);
+        res.status(200).json(updatedUser);
+      } catch (error) {
+        next(error);
+      }
+    },
+  );
 
   userRouter.delete("/", checkLogin, async (req: Request, res: Response, next: NextFunction) => {
     try {
