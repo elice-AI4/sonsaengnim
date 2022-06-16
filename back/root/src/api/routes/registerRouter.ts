@@ -1,7 +1,6 @@
 import { Router, Request, Response, NextFunction } from "express";
 
-import { body } from "express-validator";
-import { validate } from "./../middlewares/validator";
+import { validate, userValidate } from "./../middlewares/validator";
 
 import UserService from "../../services/registerService";
 import { MongoUserModel } from "../../db";
@@ -11,24 +10,15 @@ export default (app: Router) => {
   app.use("/register", registerRouter);
 
   // 회원가입 라우터
-  registerRouter.post(
-    "/",
-    [
-      body("email").trim().isEmail().withMessage("이메일 형식으로 입력하세요."),
-      body("username").trim().isLength({ min: 1 }).withMessage("공백은 안됩니다."),
-      body("password").trim().isLength({ min: 1 }).withMessage("공백은 안됩니다."),
-      validate,
-    ],
-    async (req: Request, res: Response, next: NextFunction) => {
-      try {
-        const { username, email, password } = req.body;
-        const userService = new UserService(new MongoUserModel());
-        const newUser = await userService.createUser(username, email, password);
+  registerRouter.post("/", userValidate, validate, async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { username, email, password } = req.body;
+      const userService = new UserService(new MongoUserModel());
+      const newUser = await userService.createUser(username, email, password);
 
-        res.status(200).json(newUser);
-      } catch (error) {
-        next(error);
-      }
-    },
-  );
+      res.status(200).json(newUser);
+    } catch (error) {
+      next(error);
+    }
+  });
 };
