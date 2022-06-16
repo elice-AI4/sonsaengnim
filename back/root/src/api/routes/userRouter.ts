@@ -1,5 +1,5 @@
 import { Router, Request, Response, NextFunction } from "express";
-import { userValidateOptional } from "../middlewares/validator";
+import { userValidateOptional } from "../middlewares/validators";
 
 import UserService from "../../services/userService";
 

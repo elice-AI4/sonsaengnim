@@ -1,6 +1,5 @@
 import { Router, Request, Response, NextFunction } from "express";
-
-import { userValidate } from "./../middlewares/validator";
+import { userValidate } from "../middlewares/validators";
 
 import UserService from "../../services/registerService";
 import { MongoUserModel } from "../../db";
