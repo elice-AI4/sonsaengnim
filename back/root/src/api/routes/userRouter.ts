@@ -35,7 +35,7 @@ export default (app: Router) => {
     checkLogin,
     [
       check("email").optional().trim().isEmail().withMessage("이메일 형식으로 입력하세요"),
-      check("username").optional().trim().isLength({ min: 2 }).withMessage("이름은 두글자 이상!"),
+      check("username").optional().trim().isLength({ min: 2 }).withMessage("이름은 두글자 이상 입력해주세요"),
       validate,
     ],
     async (req: Request, res: Response, next: NextFunction) => {
