@@ -20,4 +20,7 @@ export const ROUTE = {
   GAME: {
     link: "game",
   },
+  PLAY: {
+    link: "play"
+  }
 };

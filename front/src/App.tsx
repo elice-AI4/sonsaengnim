@@ -34,7 +34,11 @@ function App() {
           }
         />
         <Route
-          path={`/${ROUTE.LEARNING.link}/${ROUTE.ALPHABET.link}/${ROUTE.GAME.link}/:alphabet`}
+          path={`/${ROUTE.LEARNING.link}/${ROUTE.ALPHABET.link}/${ROUTE.GAME.link}/${ROUTE.PLAY.link}`}
+          element={<Game />}
+        />
+        <Route
+          path={`/${ROUTE.LEARNING.link}/${ROUTE.WORD.link}/${ROUTE.GAME.link}/${ROUTE.PLAY.link}`}
           element={<Game />}
         />
         <Route

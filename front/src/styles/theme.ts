@@ -41,6 +41,9 @@ const theme: DefaultTheme = {
       title: "5rem",
       mediumTitle: "4rem",
     },
+    play: {
+      darkBlue: "#2a306a"
+    }
   },
 };
 

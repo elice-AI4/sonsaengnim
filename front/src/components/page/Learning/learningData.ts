@@ -135,67 +135,67 @@ export const alphabetImgs = [
 export const wordImgs = [
   {
     src: A,
-    alt: "A",
+    alt: "ant",
   },
   {
     src: B,
-    alt: "B",
+    alt: "banana",
   },
   {
     src: C,
-    alt: "C",
+    alt: "cry",
   },
   {
     src: D,
-    alt: "D",
+    alt: "dance",
   },
   {
     src: E,
-    alt: "E",
+    alt: "egg",
   },
   {
     src: F,
-    alt: "F",
+    alt: "fun",
   },
   {
     src: G,
-    alt: "G",
+    alt: "game",
   },
   {
     src: H,
-    alt: "H",
+    alt: "house",
   },
   {
     src: I,
-    alt: "I",
+    alt: "internet",
   },
   {
     src: J,
-    alt: "J",
+    alt: "jump",
   },
   {
     src: K,
-    alt: "K",
+    alt: "key",
   },
   {
     src: L,
-    alt: "L",
+    alt: "love",
   },
   {
     src: M,
-    alt: "M",
+    alt: "mother",
   },
   {
     src: N,
-    alt: "N",
+    alt: "name",
   },
   {
     src: O,
-    alt: "O",
+    alt: "open",
   },
   {
     src: P,
-    alt: "P",
+    alt: "paper",
   },
   {
     src: Q,
@@ -203,15 +203,15 @@ export const wordImgs = [
   },
   {
     src: R,
-    alt: "R",
+    alt: "rabbit",
   },
   {
     src: S,
-    alt: "S",
+    alt: "school",
   },
   {
     src: T,
-    alt: "T",
+    alt: "tiger",
   },
   {
     src: U,
@@ -219,11 +219,11 @@ export const wordImgs = [
   },
   {
     src: V,
-    alt: "V",
+    alt: "video",
   },
   {
     src: W,
-    alt: "W",
+    alt: "walk",
   },
   {
     src: X,

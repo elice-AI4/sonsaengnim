@@ -1,6 +1,5 @@
 import React, { useRef } from "react";
 import {
-  Button,
   ButtonLink,
   CardContainer,
   ContentContainer,
@@ -13,6 +12,7 @@ import { ReactComponent as Underline } from "../../../../src_assets/Underline.sv
 import { InputContainer } from "../Word/index.style";
 import { motion } from "framer-motion";
 import { useLocation } from "react-router";
+import { ROUTE } from "../../../route/route";
 
 interface LearningTemplateProps {
   imgs: {
@@ -48,9 +48,7 @@ const LearningTemplate = ({ imgs, title, children }: LearningTemplateProps) => {
           <CardTemplate src="" alt="" />
           <CardTemplate src="" alt="" />
         </CardContainer>
-        <Button>
-          <ButtonLink to={`${pathname}/game/a`}>따라해보기</ButtonLink>
-        </Button>
+          <ButtonLink to={`${pathname}/${ROUTE.GAME.link}/${ROUTE.PLAY.link}` }>따라해보기</ButtonLink>
       </ContentContainer>
     </TemplateContainer>
   );

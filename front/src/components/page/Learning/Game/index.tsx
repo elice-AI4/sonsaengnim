@@ -1,23 +1,45 @@
-import React from "react";
-import { useParams } from "react-router";
-import AlphabetList from "./AlphabetList";
+import React, { useEffect, useState } from "react";
+import AlphabetList from "./alphabetList/AlphabetList";
 import {
   AlphabetContainer,
-  AlphabetImage,
+  Image,
   GameContainer,
   Sidebar,
+  ImageUnderLine,
+  ImageContainer,
 } from "./index.style";
 import { alphabetImgs } from "../learningData";
+import { wordImgs } from "../learningData";
+import { useLocation } from "react-router";
+import WordList from "./WordList";
 
 const Game = () => {
-  const { alphabet } = useParams();
+  const {pathname} =  useLocation()
+  
+  const [src, setSrc] = useState('');
+  const [isAlphabetLearningPage, setIsAlphabetLearningPage] = useState(true)
+  
+  useEffect(() => {
+    if(pathname.includes('alphabet') === true) {
+      setSrc(alphabetImgs[0].src)
+      setIsAlphabetLearningPage(true)
+    } else {
+      setSrc(wordImgs[1].src)
+      setIsAlphabetLearningPage(false)
+    }
 
+  }, [])
+  
   return (
     <GameContainer>
       <Sidebar>
-        <AlphabetImage>
-          <img src={alphabetImgs[0].src} alt="" />
-        </AlphabetImage>
+        <ImageContainer>
+        <Image>
+          <img src={src} alt="learningImage" />
+        </Image>
+        <ImageUnderLine/>
+        </ImageContainer>
+        { isAlphabetLearningPage === true ? <AlphabetList /> : <WordList />}
       </Sidebar>
     </GameContainer>
   );

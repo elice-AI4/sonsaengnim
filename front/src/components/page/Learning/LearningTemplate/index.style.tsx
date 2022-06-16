@@ -15,7 +15,7 @@ export const TemplateContainer = styled.div`
 
   width: 100vw;
   min-width: 1400px;
-  height: 100vh;
+  min-height: 100vh;
 `;
 
 export const ContentContainer = styled.div`
@@ -30,18 +30,22 @@ export const ContentContainer = styled.div`
   text-align: center;
 `;
 
-export const Button = styled.button`
+
+export const ButtonLink = styled(Link)`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  line-height: 2rem;
+  text-decoration: none;
+  color: white;
   width: 20rem;
   height: 5rem;
   background-color: rgb(70, 51, 255);
-  color: white;
   font-size: 2rem;
   font-weight: 600;
-`;
+  border-radius: 10px;
+  margin-bottom: 10rem;
 
-export const ButtonLink = styled(Link)`
-  text-decoration: none;
-  color: white;
 `;
 
 export const DescriptionContainer = styled.section`

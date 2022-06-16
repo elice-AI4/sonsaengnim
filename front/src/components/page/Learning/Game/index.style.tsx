@@ -16,13 +16,29 @@ export const Sidebar = styled.aside`
   align-items: center;
 `;
 
-export const AlphabetImage = styled.div`
+export const ImageContainer = styled.div`
   width: 60%;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`
+
+export const Image = styled.div`
   height: 240px;
   display: flex;
   border: 5px solid #2a306a;
+  background-color: white;
   border-radius: 10px;
+  margin-bottom: 3rem;
 `;
+
+export const ImageUnderLine = styled.div`
+  width: 7rem;
+  height: 0.8rem;
+  border-radius: 10px;
+  background-color: #2a306a;
+`
 
 export const CameraContainer = styled.section``;
 

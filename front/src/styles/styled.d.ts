@@ -42,6 +42,9 @@ declare module "styled-components" {
         title: string;
         mediumTitle: string;
       };
+      play: {
+        darkBlue:string;
+      }
     };
   }
 }
