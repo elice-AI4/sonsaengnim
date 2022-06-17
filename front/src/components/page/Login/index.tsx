@@ -8,12 +8,14 @@ import {
   LoginButton,
   ValidWord,
 } from "./index.style";
+import { useNavigate } from "react-router-dom";
 import loginImg from "./login.jpg";
-import { countAtom } from "../../../state";
-import { useAtom, Provider, atom, useAtomValue } from "jotai";
-//atomwithstorage
+import { useAtom } from "jotai";
+import { reg, userAtom } from "../../../state";
+import * as Api from "../../../api";
+
 interface UserLogin {
-  id: string;
+  email: string;
   password: string;
 }
 
@@ -23,23 +25,28 @@ interface LoginValid {
 }
 
 function Login() {
-  // const [count, setCount] = useAtom(countAtom);
-  const count = atom((get) => {
-    const num = get(countAtom);
-    return num;
-  });
-  const count2 = useAtomValue(count);
-  const reg =
-    /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  const navigate = useNavigate();
+  const [user, setUser] = useAtom(userAtom);
   const [loginInfo, setLoginInfo] = useState<UserLogin>({
-    id: "",
+    email: "",
     password: "",
   });
   const [valid, setValid] = useState<LoginValid>({
     idValid: false,
     pwValid: false,
   });
-
+  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const res = await Api.post("user", loginInfo);
+    console.log(res.data);
+    setUser({
+      email: res.data.user.email,
+      username: res.data.user.username,
+      password: res.data.user.password,
+      token: res.data.token,
+    });
+    navigate("/");
+  };
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setLoginInfo((cur): UserLogin => {
       const newInfo: UserLogin = { ...cur };
@@ -49,10 +56,11 @@ function Login() {
   };
 
   useEffect((): void => {
-    if (loginInfo.id !== "") {
+    if (loginInfo.email !== "") {
       setValid({
         ...valid,
-        idValid: loginInfo.id.toLowerCase().match(reg) !== null ? true : false,
+        idValid:
+          loginInfo.email.toLowerCase().match(reg) !== null ? true : false,
       });
     } else {
       setValid({
@@ -60,7 +68,7 @@ function Login() {
         idValid: false,
       });
     }
-  }, [loginInfo.id]);
+  }, [loginInfo.email]);
 
   useEffect((): void => {
     if (loginInfo.password != "") {
@@ -80,14 +88,14 @@ function Login() {
     <>
       <LoginPage>
         <LoginBackground loginImg={loginImg}>
-          <LoginForm>
+          <LoginForm onSubmit={handleLogin}>
             <InputBox>
               <h2 style={{ fontWeight: "bold" }}>아이디</h2>
               <LoginInput
                 type="email"
                 placeholder="이메일"
-                name="id"
-                value={loginInfo.id}
+                name="email"
+                value={loginInfo.email}
                 onChange={handleOnChange}
               />
             </InputBox>
@@ -107,14 +115,14 @@ function Login() {
             {!valid.pwValid && (
               <ValidWord>비밀번호 4글자 이상 필요합니다.</ValidWord>
             )}
-            <LoginButton disabled={!(valid.idValid && valid.pwValid)}>
-              로그인
-            </LoginButton>
+            <LoginButton
+              type="submit"
+              value="로그인"
+              disabled={!(valid.idValid && valid.pwValid)}
+            ></LoginButton>
           </LoginForm>
         </LoginBackground>
       </LoginPage>
-      {/* <button onClick={() => setCount((c: number) => c + 1)}>+</button> */}
-      <h2>{count2}</h2>
     </>
   );
 }

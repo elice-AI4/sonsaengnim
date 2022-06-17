@@ -8,10 +8,12 @@ import {
 import StudyLogo from "./study.png";
 import GameLogo from "./game.png";
 import SearchLogo from "./search.png";
-import { countAtom } from "../../../state";
-import { useAtom, Provider } from "jotai";
+import { useAtom } from "jotai";
+import { reg, userAtom } from "../../../state";
+
 function Main() {
-  const [, setCount] = useAtom(countAtom);
+  const [user, setUser] = useAtom(userAtom);
+  console.log(user);
   return (
     <>
       <MainBackGround>
@@ -37,7 +39,6 @@ function Main() {
           <MoveButton>검색하러 가기</MoveButton>
         </ServiceBox>
       </MainBackGround>
-      <button onClick={() => setCount((c: number) => c + 1)}>+</button>
     </>
   );
 }

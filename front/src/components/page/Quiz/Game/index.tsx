@@ -5,18 +5,24 @@ import * as cam from "@mediapipe/camera_utils";
 import Webcam from "react-webcam";
 import { drawConnectors, drawLandmarks } from "@mediapipe/drawing_utils";
 import { UserCanvas, ProblemBox, ProblemImg, AnswerBox } from "./index.style";
+import Modal from "../../Modal";
 import p1 from "./gamepic/p2.jpg";
 
 function Game() {
+  const [modal, setModal] = useState<boolean>(false);
   const webcamRef = useRef<Webcam>(null);
   const webcamRef2 = useRef<Webcam>(null);
-  console.log(webcamRef);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const connect = drawConnectors;
   const [a, setA] = useState(false);
   let camera = null;
+
+  const closeModal = () => {
+    setModal(false);
+  };
+
   const onResults: h.ResultsListener = (results) => {
-    console.log(results);
+    // console.log(results);
     if (!canvasRef.current || !webcamRef.current?.video) {
       return;
     }
@@ -56,9 +62,6 @@ function Game() {
     }
   };
   useEffect(() => {
-    console.log(a);
-
-    console.log("12312312312313", a);
     if (a) {
       const hands = new Hands({
         locateFile: (file) => {
@@ -93,64 +96,29 @@ function Game() {
         });
         camera.start();
       }
-    } else {
-      if (!webcamRef2.current?.video) {
-        return;
-      }
-      camera = new cam.Camera(webcamRef2.current?.video, {
-        onFrame: async () => {
-          if (!webcamRef2.current?.video) {
-            return;
-          }
-        },
-        width: 640,
-        height: 480,
-      });
-      camera.start();
     }
   }, [a]);
-  console.log(webcamRef);
-  console.log(webcamRef2);
 
   return (
     <ProblemBox>
+      <Modal visible={modal} closeModal={closeModal}>
+        hello
+      </Modal>
       <ProblemImg src={p1}></ProblemImg>
       <AnswerBox>
-        {a ? (
-          <>
-            <h1>기록 시작</h1>
-            <Webcam
-              ref={webcamRef}
-              style={{
-                position: "absolute",
-                marginLeft: "auto",
-                marginRight: "auto",
-                textAlign: "center",
-                zIndex: 9,
-                width: 640,
-                height: 480,
-                border: "3px solid blue",
-              }}
-            />
-          </>
-        ) : (
-          <>
-            <h1>그냥 카메라</h1>
-            <Webcam
-              ref={webcamRef2}
-              style={{
-                position: "absolute",
-                marginLeft: "auto",
-                marginRight: "auto",
-                textAlign: "center",
-                zIndex: 9,
-                width: 640,
-                height: 480,
-                border: "3px solid blue",
-              }}
-            />
-          </>
-        )}
+        <Webcam
+          ref={a ? webcamRef : webcamRef2}
+          style={{
+            position: "absolute",
+            marginLeft: "auto",
+            marginRight: "auto",
+            textAlign: "center",
+            zIndex: 9,
+            width: 640,
+            height: 480,
+            border: "3px solid blue",
+          }}
+        />
         <UserCanvas ref={canvasRef} />
       </AnswerBox>
       <button
@@ -160,6 +128,14 @@ function Game() {
         }}
       >
         클릭
+      </button>
+      <button
+        onClick={() => {
+          setModal(true);
+          camera = null;
+        }}
+      >
+        모달
       </button>
     </ProblemBox>
   );

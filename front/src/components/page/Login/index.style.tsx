@@ -47,7 +47,7 @@ export const InputBox = styled.div`
   justify-content: space-between;
 `;
 
-export const LoginButton = styled.button`
+export const LoginButton = styled.input`
   margin-top: 10px;
   width: 120px;
   height: 30px;

@@ -11,16 +11,12 @@ import Login from "./components/page/Login";
 import Register from "./components/page/Register";
 import Quiz from "./components/page/Quiz";
 import Header from "./components/header/Header";
-import Test1 from "./Test1";
-import Test2 from "./Test2";
 import Game from "./components/page/Quiz/Game";
 import About from "./components/page/About";
 
 function App() {
   return (
     <>
-      {/* <Test1></Test1>
-      <Test2></Test2> */}
       <Router>
         <Header />
         <Routes>

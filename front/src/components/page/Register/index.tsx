@@ -6,12 +6,16 @@ import {
   RegisterInput,
   ValidWord,
   RegisterButton,
+  RegisterText,
 } from "./index.style";
-import { countAtom } from "../../../state";
-import { useAtom } from "jotai";
+import { reg } from "../../../state";
+import { useNavigate } from "react-router-dom";
+import * as Api from "../../../api";
+
 interface UserRegister {
-  id: string;
+  email: string;
   password: string;
+  username: string;
 }
 
 interface LoginValid {
@@ -20,17 +24,34 @@ interface LoginValid {
 }
 
 function Register() {
-  const [count] = useAtom(countAtom);
-  const reg =
-    /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  const navigate = useNavigate();
   const [registerInfo, setRegisterInfo] = useState<UserRegister>({
-    id: "",
+    email: "",
     password: "",
+    username: "",
   });
   const [valid, setValid] = useState<LoginValid>({
     idValid: false,
     pwValid: false,
   });
+
+  const handleRegister = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const res = await Api.post("register", registerInfo);
+    console.log(res);
+    setRegisterInfo({
+      email: "",
+      password: "",
+      username: "",
+    });
+    setValid({
+      idValid: false,
+      pwValid: false,
+    });
+    alert("회원가입이 완료되었습니다.");
+    navigate("/login");
+  };
+
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setRegisterInfo((cur): UserRegister => {
       const newInfo: UserRegister = { ...cur };
@@ -39,11 +60,11 @@ function Register() {
     });
   };
   useEffect((): void => {
-    if (registerInfo.id !== "") {
+    if (registerInfo.email !== "") {
       setValid({
         ...valid,
         idValid:
-          registerInfo.id.toLowerCase().match(reg) !== null ? true : false,
+          registerInfo.email.toLowerCase().match(reg) !== null ? true : false,
       });
     } else {
       setValid({
@@ -51,7 +72,7 @@ function Register() {
         idValid: false,
       });
     }
-  }, [registerInfo.id]);
+  }, [registerInfo.email]);
 
   useEffect((): void => {
     if (registerInfo.password != "") {
@@ -70,14 +91,14 @@ function Register() {
   return (
     <>
       <RegisterBackground>
-        <RegisterForm>
+        <RegisterForm onSubmit={handleRegister}>
           <InputBox>
-            <h2 style={{ fontWeight: "bold" }}>아이디</h2>
+            <RegisterText>아이디</RegisterText>
             <RegisterInput
               type="email"
               placeholder="이메일"
-              name="id"
-              value={registerInfo.id}
+              name="email"
+              value={registerInfo.email}
               onChange={handleOnChange}
             />
           </InputBox>
@@ -85,7 +106,7 @@ function Register() {
             <ValidWord>이메일 형식의 아이디가 아닙니다.</ValidWord>
           )}
           <InputBox>
-            <h2 style={{ fontWeight: "bold" }}>비밀번호</h2>
+            <RegisterText>비밀번호</RegisterText>
             <RegisterInput
               type="password"
               placeholder="비밀번호"
@@ -97,12 +118,23 @@ function Register() {
           {!valid.pwValid && (
             <ValidWord>비밀번호 4글자 이상 필요합니다.</ValidWord>
           )}
-          <RegisterButton disabled={!(valid.idValid && valid.pwValid)}>
-            회원가입
-          </RegisterButton>
+          <InputBox>
+            <RegisterText>이름</RegisterText>
+            <RegisterInput
+              type="text"
+              placeholder="이름"
+              name="username"
+              value={registerInfo.username}
+              onChange={handleOnChange}
+            />
+          </InputBox>
+          <RegisterButton
+            type="submit"
+            value="회원가입"
+            disabled={!(valid.idValid && valid.pwValid)}
+          ></RegisterButton>
         </RegisterForm>
       </RegisterBackground>
-      <h2>{count}</h2>
     </>
   );
 }

@@ -1,3 +1,18 @@
-import { atom } from "jotai";
+import { atomWithStorage } from "jotai/utils";
 
-export const countAtom = atom<number>(0);
+interface User {
+  email: string;
+  username: string;
+  password: string;
+  token: string;
+}
+
+export const reg =
+  /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+export const userAtom = atomWithStorage<User>("user", {
+  email: "",
+  username: "",
+  password: "",
+  token: "",
+});
