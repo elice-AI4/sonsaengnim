@@ -23,6 +23,7 @@ import {
 } from "./index.style";
 import { alphabetImgs } from "../learningData";
 import { wordImgs } from "../learningData";
+import { handAlphabetVideo } from "../handData";
 import { useLocation } from "react-router";
 import WordList from "./WordList";
 
@@ -75,7 +76,13 @@ const LeaningGame = () => {
         </ButtonContainer>
         <ImageContainer>
           <Image>
-            <img src={src} alt="learningImage" />
+            {/* <img src={src} alt="learningImage" /> */}
+            <video controls width="300">
+              <source
+                src={handAlphabetVideo[0].src}
+                type={handAlphabetVideo[0].type}
+              />
+            </video>
           </Image>
           <ImageUnderLine />
         </ImageContainer>
