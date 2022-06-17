@@ -28,6 +28,8 @@ import WordList from "./WordList";
 
 const Game = () => {
   const { pathname } = useLocation();
+  console.log(pathname);
+  
 
   const [src, setSrc] = useState("");
   const [isAlphabetLearningPage, setIsAlphabetLearningPage] = useState(true);
