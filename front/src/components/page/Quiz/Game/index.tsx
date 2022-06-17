@@ -102,7 +102,7 @@ function QuizGame() {
   return (
     <ProblemBox>
       <Modal visible={modal} closeModal={closeModal}>
-        hello
+        <h1>hello</h1>
       </Modal>
       <ProblemImg src={p1}></ProblemImg>
       <AnswerBox>
