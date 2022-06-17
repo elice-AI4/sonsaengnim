@@ -1,35 +1,28 @@
-import { User } from "../schemas/user";
-
-class UserModel {
-  // 가입된 유저 찾기
-  // 유저 삭제하기
-  static delete = async userId => {
-    const deletedUser = await User.findByIdAndDelete({ _id: userId });
-    return deletedUser;
-  };
-
-  // 유저 수정하기
-  static modifyUser = async (filter, userUpdateData) => {
-    const modifiedUser = await User.findOneAndUpdate(filter, userUpdateData, { new: true });
-    return modifiedUser;
-  };
-
-  // 유저 아이디로 유저 찾기
-  static findById = async ({ id }) => {
-    const user = await User.findOne({ id }).lean();
+import User from "../schemas/user";
+import { IUserModel } from "../../models";
+export class MongoUserModel implements IUserModel {
+  async createUser(userData) {
+    const user = await User.create(userData);
     return user;
-  };
-  // 가입된 이메일 유저 찾기
-  static findByEmail = async ({ email }) => {
+  }
+
+  async updateUser(userId, updateUserData) {
+    const user = await User.findByIdAndUpdate(userId, { $set: updateUserData }, { new: true });
+    return user;
+  }
+
+  async deleteUser(userId: string) {
+    const user = await User.findByIdAndDelete(userId);
+    return user;
+  }
+
+  async findByEmail(email: string) {
     const user = await User.findOne({ email }).lean();
     return user;
-  };
+  }
 
-  // 유저 생성
-  static create = async ({ email, password, name }) => {
-    const newUser = await User.create({ email, password, name });
-    return newUser;
-  };
+  async findById(userId: string) {
+    const user = await User.findById(userId).lean();
+    return user;
+  }
 }
-
-export { UserModel };

@@ -1,5 +1,5 @@
 import express from "express";
-import { routes } from "./routes/index";
+import routes from "./api";
 
 import morgan from "morgan";
 import cors from "cors";
@@ -11,7 +11,7 @@ import swaggerUi from "swagger-ui-express";
 // yaml을 연동하기 위함
 import YAML from "yamljs";
 
-import { errorMiddleware } from "./middlewares/errorMiddleware";
+import { errorMiddleware } from "./api/middlewares/errorMiddleware";
 
 const app = express();
 
@@ -24,11 +24,11 @@ app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-app.use(routes);
+app.use(routes());
 
 // yaml로 된 swagger 연동
 app.use("/swagger", swaggerUi.serve, swaggerUi.setup(swaggerYaml));
 
 app.use(errorMiddleware);
 
-export { app };
+export default app;

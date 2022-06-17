@@ -15,7 +15,6 @@ tags:
 schemes:
   - "http"
 
-
 paths:
   /register:
     post:
@@ -87,6 +86,31 @@ paths:
       responses:
         "405":
           description: "Invalid input"
+    patch:
+      tags:
+        - Login User
+      summary: "Login User"
+      description: ""
+      consumes:
+        - "application/json"
+        - "application/xml"
+      produces:
+        - "application/xml"
+        - "application/json"
+      parameters:
+        - name: authorization
+          in: header
+          type: string
+          required: true
+        - in: "body"
+          name: "body"
+          description: "Register User"
+          required: true
+          schema:
+            $ref: "#/definitions/User"
+      responses:
+        "405":
+          description: "Invalid input"
     delete:
       tags:
         - Login User
@@ -109,10 +133,10 @@ paths:
         "405":
           description: "Invalid input"
 
-  /hand:
+  /hands:
     post:
       tags:
-      - Sign Language
+        - Sign Language
       description: "putting in Sign language image"
       consumes:
         - "application/json"
@@ -130,16 +154,27 @@ paths:
           description: "POST Successful."
         "405":
           description: "Invalid input"
-    
-  /hand/{alphabet}:
     get:
       tags:
-      - Sign Language
+        - Sign Language
       description: "getting all alphabet dataset"
       consumes:
-      - "applicaion/json"
+        - "application/json"
       produces:
-      - "applicaion/json"
+        - "application/json"
+      responses:
+        "200":
+          description: Return JSON
+
+  /hands/{alphabet}:
+    get:
+      tags:
+        - Sign Language
+      description: "getting all alphabet dataset"
+      consumes:
+        - "applicaion/json"
+      produces:
+        - "applicaion/json"
       parameters:
         - in: path
           name: alphabet
@@ -148,9 +183,8 @@ paths:
           required: true
           description: alphabet string
       responses:
-        '200':
-          description: Return JSON 
-
+        "200":
+          description: Return JSON
 
 securityDefinitions:
   petstore_auth:
