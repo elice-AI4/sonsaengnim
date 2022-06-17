@@ -9,7 +9,7 @@ async function get(endpoint: string, params = "") {
   );
   return axios.get(serverUrl + endpoint + "/" + params, {
     headers: {
-      //   Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
+      Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
     },
   });
 }
@@ -24,7 +24,7 @@ async function post(endpoint: string, data: object) {
   return axios.post(serverUrl + endpoint, bodyData, {
     headers: {
       "Content-Type": "application/json",
-      //   Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
+      Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
     },
   });
 }
@@ -39,7 +39,7 @@ async function put(endpoint: string, data: object) {
   return axios.put(serverUrl + endpoint, bodyData, {
     headers: {
       "Content-Type": "application/json",
-      //   Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
+      Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
     },
   });
 }

@@ -14,8 +14,8 @@ export const RegisterBackground = styled.div`
 
 export const RegisterForm = styled.form`
   width: 500px;
-  height: 250px;
-  margin-bottom: 90px;
+  height: 300px;
+  margin-bottom: 140px;
   background-color: rgba(255, 255, 255, 0.5);
   border-radius: 20px;
   display: flex;
@@ -38,7 +38,7 @@ export const InputBox = styled.div`
   justify-content: space-between;
 `;
 
-export const RegisterButton = styled.button`
+export const RegisterButton = styled.input`
   margin-top: 10px;
   width: 120px;
   height: 30px;
@@ -51,5 +51,9 @@ export const RegisterButton = styled.button`
 
 export const ValidWord = styled.p`
   color: red;
+  font-weight: bold;
+`;
+
+export const RegisterText = styled.h2`
   font-weight: bold;
 `;
