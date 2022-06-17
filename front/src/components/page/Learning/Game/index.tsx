@@ -77,7 +77,7 @@ const LeaningGame = () => {
         <ImageContainer>
           <Image>
             {/* <img src={src} alt="learningImage" /> */}
-            <video controls width="300">
+            <video autoPlay loop controls width="300">
               <source
                 src={handAlphabetVideo[0].src}
                 type={handAlphabetVideo[0].type}
