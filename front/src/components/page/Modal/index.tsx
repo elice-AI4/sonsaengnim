@@ -2,14 +2,21 @@ import React, { ReactElement } from "react";
 import { ModalWrapper, ModalOverlay, ModalInner } from "./index.style";
 import PropTypes from "prop-types";
 
-interface modalState {
+interface ModalState {
   className?: string;
   visible: boolean;
   children: ReactElement;
   closeModal(): void;
+  style?: React.CSSProperties;
 }
 
-function Modal({ className, visible, children, closeModal }: modalState) {
+function Modal({
+  className,
+  visible,
+  children,
+  closeModal,
+  style,
+}: ModalState) {
   return (
     <>
       <ModalOverlay visible={visible} />
@@ -19,7 +26,12 @@ function Modal({ className, visible, children, closeModal }: modalState) {
         visible={visible}
         onClick={closeModal}
       >
-        <ModalInner tabIndex={0} className="modal-inner" visible={visible}>
+        <ModalInner
+          tabIndex={0}
+          className="modal-inner"
+          visible={visible}
+          style={style}
+        >
           {children}
           <button onClick={closeModal}>닫기</button>
         </ModalInner>

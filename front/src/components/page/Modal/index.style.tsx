@@ -11,7 +11,6 @@ export const ModalWrapper = styled.div<{ visible: boolean }>`
   z-index: 1000;
   overflow: auto;
   outline: 0;
-  /* background-color: red; */
 `;
 
 export const ModalOverlay = styled.div<{ visible: boolean }>`
