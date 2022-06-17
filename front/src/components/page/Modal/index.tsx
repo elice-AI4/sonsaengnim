@@ -13,7 +13,12 @@ function Modal({ className, visible, children, closeModal }: modalState) {
   return (
     <>
       <ModalOverlay visible={visible} />
-      <ModalWrapper className={className} tabIndex={-1} visible={visible}>
+      <ModalWrapper
+        className={className}
+        tabIndex={-1}
+        visible={visible}
+        onClick={closeModal}
+      >
         <ModalInner tabIndex={0} className="modal-inner" visible={visible}>
           {children}
           <button onClick={closeModal}>닫기</button>

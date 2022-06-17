@@ -39,6 +39,6 @@ export const ModalInner = styled.div<{ visible: boolean }>`
   padding: 40px 20px;
   opacity: ${(props) => (props.visible ? 1 : 0)};
   transform: ${(props) =>
-    props.visible ? "translateY(-50%)" : "translateY(-80%)"};
+    props.visible ? "translateY(-50%)" : "translateY(-70%)"};
   transition: all 0.5s ease;
 `;
