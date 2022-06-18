@@ -12,7 +12,7 @@ export const GlobalStyle = createGlobalStyle`
     body {
       padding: 0;
       margin: 0;
-       -ms-overflow-style: none;       
+       -ms-overflow-style: none;
     }
     ::-webkit-scrollbar {
       display: none;
