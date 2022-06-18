@@ -33,8 +33,8 @@ describe("End-to-End Test", () => {
         .post("/user")
         .set("Accept", "application/json")
         .type("application/json")
-        .send({ username: "kim", email: "test123@test.com", password: "1234" })
-        .expect(400)
+        .send({ email: "test123123123@test.com", password: "1234" })
+        .expect(200)
         .expect("Content-Type", /json/);
       //.expect({ name: "modolee" });
     });
