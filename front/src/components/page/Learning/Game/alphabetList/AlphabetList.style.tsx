@@ -10,7 +10,6 @@ export const AlphabetButton = styled.div`
   width: 7rem;
   height: 5rem;
 
-  background-color: white;
   margin: 1rem;
 
   display: flex;
@@ -31,4 +30,10 @@ export const AlphabetButton = styled.div`
       border: 2px solid ${theme.learning.play.darkBlue};
     `;
   }}
+  &.target {
+    background-color: ${(props) => props.theme.learning.play.cyan};
+  }
+  &.non-target {
+    background-color: white;
+  }
 `;
