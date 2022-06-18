@@ -18,7 +18,7 @@ const theme: DefaultTheme = {
 
   navbar: {
     height: "7rem",
-    backgroundColor: "transparent",
+    backgroundColor: "white",
     title: {
       fontSize: "3rem",
       fontWeight: "700",

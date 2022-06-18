@@ -85,6 +85,7 @@ const Line = styled.div`
 export const ThickLine = styled(Line)`
   height: 1.3rem;
   margin-bottom: 0.3rem;
+  position: fixed;
   ${({ theme }) => {
     return css`
       transform: translateY(${theme.navbar.height});
@@ -94,6 +95,7 @@ export const ThickLine = styled(Line)`
 
 export const ThinLine = styled(Line)`
   height: 0.3rem;
+  position: fixed;
   ${({ theme }) => {
     return css`
       transform: translateY(calc(${theme.navbar.height} + 1.6rem));

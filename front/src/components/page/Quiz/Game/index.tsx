@@ -101,7 +101,7 @@ function QuizGame() {
 
   return (
     <ProblemBox>
-      <Modal visible={modal} closeModal={closeModal} style={{ color: "red" }}>
+      <Modal visible={modal} closeModal={closeModal}>
         <h1>hello</h1>
       </Modal>
       <ProblemImg src={p1}></ProblemImg>
