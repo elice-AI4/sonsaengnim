@@ -22,9 +22,12 @@ function App() {
         <Header />
         <Routes>
           <Route path="/" element={<Main />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/quiz/game" element={<QuizGame />} />
+          <Route path={`/${ROUTE.LOGIN.link}`} element={<Login />} />
+          <Route path={`/${ROUTE.REGISTER.link}`} element={<Register />} />
+          <Route
+            path={`/${ROUTE.QUIZ.link}/${ROUTE.GAME.link}`}
+            element={<QuizGame />}
+          />
           <Route path={`/${ROUTE.ABOUT.link}`} element={<About />} />
           <Route path={`/${ROUTE.LEARNING.link}`} element={<Learning />} />
           <Route

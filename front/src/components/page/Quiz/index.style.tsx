@@ -1,5 +1,6 @@
 import styled, { css, keyframes } from "styled-components";
 import backgroundImg from "../../../src_assets/quiz/quizPage.jpg";
+import { Link } from "react-router-dom";
 
 const bounceImageA = keyframes`
     from {

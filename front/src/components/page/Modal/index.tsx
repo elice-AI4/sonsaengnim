@@ -5,18 +5,25 @@ import PropTypes from "prop-types";
 interface modalState {
   className?: string;
   visible: boolean;
-  children: string;
+  children: JSX.Element | JSX.Element[];
+  // children : string | HTMLImageElement;
   closeModal(): void;
+  style?: React.CSSProperties;
 }
 
-function Modal({ className, visible, children, closeModal }: modalState) {
+function Modal({
+  className,
+  visible,
+  children,
+  closeModal,
+  style,
+}: modalState) {
   return (
     <>
       <ModalOverlay visible={visible} />
       <ModalWrapper className={className} tabIndex={-1} visible={visible}>
-        <ModalInner tabIndex={0} className="modal-inner">
+        <ModalInner tabIndex={0} className="modal-inner" style={style}>
           {children}
-          <button onClick={closeModal}>닫기</button>
         </ModalInner>
       </ModalWrapper>
     </>

@@ -21,6 +21,9 @@ export const ROUTE = {
     link: "game",
   },
   PLAY: {
-    link: "play"
-  }
+    link: "play",
+  },
+  REGISTER: {
+    link: "register",
+  },
 };

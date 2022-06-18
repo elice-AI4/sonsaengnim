@@ -11,7 +11,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import loginImg from "./login.jpg";
 import { useAtom } from "jotai";
-import { reg, userAtom } from "../../../state";
+import { reg, userAtom, loginAtom } from "../../../state";
 import * as Api from "../../../api";
 
 interface UserLogin {
@@ -26,7 +26,9 @@ interface LoginValid {
 
 function Login() {
   const navigate = useNavigate();
-  const [user, setUser] = useAtom(userAtom);
+  const [, setUser] = useAtom(userAtom);
+  const [, setLogin] = useAtom(loginAtom);
+
   const [loginInfo, setLoginInfo] = useState<UserLogin>({
     email: "",
     password: "",
@@ -45,6 +47,8 @@ function Login() {
       password: res.data.user.password,
       token: res.data.token,
     });
+    setLogin(true);
+    sessionStorage.setItem("userToken", res.data.token);
     navigate("/");
   };
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {

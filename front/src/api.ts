@@ -1,4 +1,6 @@
 import axios from "axios";
+import { useAtom } from "jotai";
+import { userAtom } from "./state";
 
 const serverUrl = "http://localhost:5000/";
 

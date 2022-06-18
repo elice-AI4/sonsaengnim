@@ -16,3 +16,5 @@ export const userAtom = atomWithStorage<User>("user", {
   password: "",
   token: "",
 });
+
+export const loginAtom = atomWithStorage<boolean>("login", false);

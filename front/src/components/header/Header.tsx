@@ -11,8 +11,11 @@ import {
 } from "./Header.style";
 import title from "../../src_assets/navbar/title.png";
 import { useLocation } from "react-router";
+import { useAtom } from "jotai";
+import { loginAtom } from "../../state";
 
 const Header = () => {
+  const [login] = useAtom(loginAtom);
   const { pathname } = useLocation();
 
   const checkPathname = (pathname: string) => {
@@ -32,6 +35,13 @@ const Header = () => {
           </HomeLink>
         </TitleContainer>
         <List>
+          {!login && (
+            <>
+              <StyledLink to={ROUTE.LOGIN.link}>로그인</StyledLink>
+              <StyledLink to={ROUTE.REGISTER.link}>회원가입</StyledLink>
+            </>
+          )}
+
           <StyledLink to={ROUTE.ABOUT.link}>ABOUT</StyledLink>
           <StyledLink to={ROUTE.LEARNING.link}>학습</StyledLink>
           <StyledLink to={ROUTE.QUIZ.link}>퀴즈</StyledLink>

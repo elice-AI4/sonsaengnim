@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Button,
   ImageContainer,
@@ -21,13 +22,14 @@ import imgJ from "../../../src_assets/alphabet/J.png";
 import imgS from "../../../src_assets/alphabet/S.png";
 import imgX from "../../../src_assets/alphabet/X.png";
 import imgY from "../../../src_assets/alphabet/Y.png";
-
+import { ROUTE } from "../../route/route";
 const imgSize = {
   width: "130px",
   height: "130px",
 };
 
 const Quiz = () => {
+  const navigate = useNavigate();
   return (
     <QuizContainer>
       <ImageContainer>
@@ -75,7 +77,9 @@ const Quiz = () => {
         />
         <ButtonCotainer>
           <QuizImg src={imgQuiz} width="400px" height="120px" alt="quiz" />
-          <Button>퀴즈 맞추러 가기</Button>
+          <Button onClick={() => navigate(`${ROUTE.GAME.link}`)}>
+            퀴즈 맞추러 가기
+          </Button>
         </ButtonCotainer>
       </ImageContainer>
     </QuizContainer>
