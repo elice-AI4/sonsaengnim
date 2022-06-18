@@ -8,6 +8,7 @@ import {
   HomeLink,
   ThickLine,
   ThinLine,
+  Offset,
 } from "./Header.style";
 import title from "../../src_assets/navbar/title.png";
 import { useLocation } from "react-router";
@@ -20,6 +21,12 @@ const Header = () => {
       pathname === `/${ROUTE.LEARNING.link}/${ROUTE.ALPHABET.link}` ||
       pathname === `/${ROUTE.LEARNING.link}/${ROUTE.WORD.link}`
     ) {
+      return true;
+    }
+  };
+
+  const checkDrawOffset = (pathname: string) => {
+    if (pathname.includes("learning") || pathname.includes("about")) {
       return true;
     }
   };
@@ -41,6 +48,13 @@ const Header = () => {
         <>
           <ThickLine />
           <ThinLine />
+        </>
+      ) : (
+        <></>
+      )}
+      {checkDrawOffset(pathname) === true ? (
+        <>
+          <Offset />
         </>
       ) : (
         <></>

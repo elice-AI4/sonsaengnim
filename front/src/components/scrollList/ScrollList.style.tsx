@@ -6,6 +6,7 @@ export const ListWrapper = styled.div`
   height: 200px;
   position: fixed;
   transform: translate(0, 50%);
+  z-index: 5;
 `;
 
 export const Ul = styled.ul`

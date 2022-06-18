@@ -2,10 +2,17 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import {
   AboutContainer,
   AboutMainPage,
+  FirstImg,
   FirstSectionLeft,
   FirstSectionRight,
   LeftSection,
+  RightSection,
+  SecondImg,
+  SecondSectionLeft,
   Section,
+  ThirdImg,
+  ThirdSectionLeft,
+  ThirdSectionRight,
 } from "./index.style";
 import imgAboutMainPage from "../../../src_assets/about/imgAboutMainPage.jpg";
 import ScrollList from "../../scrollList/ScrollList";
@@ -20,8 +27,13 @@ const About = () => {
   const [curIndex, setCurIndex] = useState(0);
 
   const handleOnClick = (num: number) => {
-    console.log(num);
-    const top = section[num]?.offsetTop - 80;
+    let top = 0;
+    if (num !== 0) {
+      top = section[num]?.offsetTop + 70;
+    } else {
+      top = section[num]?.offsetTop;
+    }
+
     window.scrollTo({
       top,
       behavior: "smooth",
@@ -70,12 +82,7 @@ const About = () => {
             className={curIndex === 0 ? "target" : "non-target"}
           >
             <FirstSectionLeft>
-              <img
-                src={imgAboutMainPage}
-                alt="baby studying"
-                width="800px"
-                height="500px"
-              />
+              <FirstImg src={imgAboutMainPage} alt="baby studying" />
             </FirstSectionLeft>
             <FirstSectionRight>
               <h1>Hello! (수화 이미지로 보여줄까..?)</h1>
@@ -86,23 +93,19 @@ const About = () => {
             ref={section_1}
             className={curIndex === 1 ? "target" : "non-target"}
           >
-            <img
-              src={imgAboutMainPage}
-              alt="baby studying"
-              width="1200px"
-              height="800px"
-            />
+            <SecondSectionLeft>
+              <SecondImg src={imgAboutMainPage} alt="baby studying" />
+            </SecondSectionLeft>
+            <RightSection></RightSection>
           </Section>
           <Section
             ref={section_2}
             className={curIndex === 2 ? "target" : "non-target"}
           >
-            <img
-              src={imgAboutMainPage}
-              alt="baby studying"
-              width="1200px"
-              height="800px"
-            />
+            <ThirdSectionLeft>
+              <ThirdImg src={imgAboutMainPage} alt="baby studying" />
+            </ThirdSectionLeft>
+            <ThirdSectionRight></ThirdSectionRight>
           </Section>
         </AboutMainPage>
       </AboutContainer>
