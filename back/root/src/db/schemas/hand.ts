@@ -1,12 +1,5 @@
 import { model, Schema } from "mongoose";
-
-// 1. Create an interface representing a document in MongoDB.
-export interface HandType {
-  alphabet: string;
-  handImage: string;
-  mouthImage: string;
-  video: string;
-}
+import { IHand } from "../../models";
 
 const handSchema = new Schema(
   {
@@ -30,10 +23,11 @@ const handSchema = new Schema(
     },
   },
   {
-    timestamps:true
-  }
+    timestamps: true,
+    versionKey: false,
+  },
 );
 
-const Hand = model<HandType>("Hand", handSchema);
+const Hand = model<IHand>("Hand", handSchema);
 
 export { Hand };
