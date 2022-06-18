@@ -38,7 +38,7 @@ const AlphabetList = ({ handleSetSrc }: AlphabetListProps) => {
   const [curIndex, setIcurIndex] = useState(0);
   return (
     <Container>
-      {Alphabet.map((alpha, index) => {
+      {Alphabet.map((alpha: string, index: number) => {
         return (
           <AlphabetButton
             key={`${alpha} ${index}`}
