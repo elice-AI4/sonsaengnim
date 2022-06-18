@@ -13,7 +13,6 @@ export const LoginBackground = styled.div<{ loginImg: string }>`
   background-image: ${(props) => `url(${props.loginImg})`};
   background-repeat: no-repeat;
   background-size: cover;
-  z-index: 1000;
   width: 1000px;
   height: 780px;
   display: flex;

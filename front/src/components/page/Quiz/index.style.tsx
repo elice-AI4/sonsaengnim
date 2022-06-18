@@ -73,11 +73,8 @@ export const QuizContainer = styled.div`
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
-  width: 100%;
-
-  height: calc(100vh - 70px);
-
-  margin: auto;
+  width: 100vw;
+  min-height: 100vh;
 
   display: flex;
   justify-content: center;

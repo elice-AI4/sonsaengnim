@@ -43,19 +43,25 @@ export const LearningContainer = styled.div`
   background-size: cover;
   background-position: center;
   width: 100vw;
+  min-height: 100vh;
   min-width: 1000px;
 
   display: flex;
   justify-content: center;
   flex-direction: column;
-  height: 100vh;
 `;
 
 export const ContentsContainer = styled.div`
   display: flex;
-  flex: 0.5;
   justify-content: center;
   align-items: center;
+
+  &:nth-child(1) {
+    flex: 0.75;
+  }
+  &:nth-child(2) {
+    flex: 0.25;
+  }
 `;
 
 export const ButtonSection = styled.section`
