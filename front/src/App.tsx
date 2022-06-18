@@ -13,7 +13,7 @@ import Quiz from "./components/page/Quiz";
 import Header from "./components/header/Header";
 import QuizGame from "./components/page/Quiz/Game";
 import About from "./components/page/About";
-import Game from "./components/page/Learning/Game";
+import LeaningGame from "./components/page/Learning/Game";
 
 function App() {
   return (
@@ -39,6 +39,15 @@ function App() {
               />
             }
           />
+          <Route
+            path={`/${ROUTE.LEARNING.link}/${ROUTE.ALPHABET.link}/${ROUTE.GAME.link}/${ROUTE.PLAY.link}`}
+            element={<LeaningGame />}
+          />
+          <Route
+            path={`/${ROUTE.LEARNING.link}/${ROUTE.WORD.link}/${ROUTE.GAME.link}/${ROUTE.PLAY.link}`}
+            element={<LeaningGame />}
+          />
+
           <Route
             path={`/${ROUTE.LEARNING.link}/${ROUTE.WORD.link}`}
             element={<Word />}

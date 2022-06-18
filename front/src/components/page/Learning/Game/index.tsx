@@ -26,10 +26,9 @@ import { wordImgs } from "../learningData";
 import { useLocation } from "react-router";
 import WordList from "./WordList";
 
-const Game = () => {
+const LeaningGame = () => {
   const { pathname } = useLocation();
   console.log(pathname);
-  
 
   const [src, setSrc] = useState("");
   const [isAlphabetLearningPage, setIsAlphabetLearningPage] = useState(true);
@@ -111,4 +110,4 @@ const Game = () => {
   );
 };
 
-export default Game;
+export default LeaningGame;
