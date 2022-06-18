@@ -1,4 +1,3 @@
-import exp from "constants";
 import styled, { css } from "styled-components";
 import backgroundImg from "../../../../src_assets/learning/play/playPage.png";
 
@@ -39,7 +38,8 @@ export const Button = styled.div`
   border-radius: 0.5rem;
   ${({ theme }) => {
     return css`
-      &:hover {
+      &:hover,
+      &.target {
         background-color: ${theme.learning.play.darkBlue};
         color: white;
       }

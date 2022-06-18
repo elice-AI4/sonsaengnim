@@ -9,7 +9,7 @@ export const Navbar = styled.nav`
       display: flex;
       justify-content: space-between;
       align-items: center;
-      position: relative;
+      position: fixed;
       transform: translate(0, 0);
       width: 100%;
       z-index: 2;
@@ -85,19 +85,28 @@ const Line = styled.div`
 export const ThickLine = styled(Line)`
   height: 1.3rem;
   margin-bottom: 0.3rem;
-  /* ${({ theme }) => {
+  position: fixed;
+  ${({ theme }) => {
     return css`
-      transform: translate(0, ${theme.navbar.height});
+      transform: translateY(${theme.navbar.height});
     `;
-  }} */
+  }}
 `;
 
 export const ThinLine = styled(Line)`
   height: 0.3rem;
-  /* ${({ theme }) => {
+  position: fixed;
+  ${({ theme }) => {
     return css`
-      transform: translate(0, calc(${theme.navbar.height} + 1.6rem));
+      transform: translateY(calc(${theme.navbar.height} + 1.6rem));
     `;
-  }} */
-  transform: translateY(1.6rem);
+  }}
+`;
+
+export const Offset = styled.div`
+  ${({ theme }) => {
+    return css`
+      height: ${theme.navbar.height};
+    `;
+  }}
 `;

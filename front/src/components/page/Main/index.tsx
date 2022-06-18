@@ -10,10 +10,16 @@ import GameLogo from "./game.png";
 import SearchLogo from "./search.png";
 import { useAtom } from "jotai";
 import { reg, userAtom } from "../../../state";
+import { useNavigate } from "react-router";
 
 function Main() {
   const [user, setUser] = useAtom(userAtom);
-  console.log(user);
+  const navigate = useNavigate();
+
+  const handleClickButton = (path: string) => {
+    navigate(path);
+  };
+
   return (
     <>
       <MainBackGround>
@@ -24,13 +30,17 @@ function Main() {
           ></ServiceImg>
           {/* <a href='https://kr.freepik.com/vectors/book'>Book 벡터는 pch.vector - kr.freepik.com가 제작함</a> */}
           <h2>알파벳 수어를 배우러 가볼까요?</h2>
-          <MoveButton>공부하러 가기</MoveButton>
+          <MoveButton onClick={() => handleClickButton("learning")}>
+            공부하러 가기
+          </MoveButton>
         </ServiceBox>
         <ServiceBox color={"#FFD700"}>
           <ServiceImg src={GameLogo}></ServiceImg>
           {/* <a href='https://kr.freepik.com/vectors/wood'>Wood 벡터는 pch.vector - kr.freepik.com가 제작함</a> */}
           <h2>공부한 내용을 확인해볼까요?</h2>
-          <MoveButton>게임하러 가기</MoveButton>
+          <MoveButton onClick={() => handleClickButton("quiz")}>
+            게임하러 가기
+          </MoveButton>
         </ServiceBox>
         <ServiceBox color={"#6495ED"}>
           <ServiceImg src={SearchLogo}></ServiceImg>

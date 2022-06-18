@@ -23,16 +23,17 @@ import {
 } from "./index.style";
 import { alphabetImgs } from "../learningData";
 import { wordImgs } from "../learningData";
+import { handAlphabetVideo } from "../handData";
 import { useLocation } from "react-router";
 import WordList from "./WordList";
 
 const LeaningGame = () => {
   const { pathname } = useLocation();
-  console.log(pathname);
 
   const [src, setSrc] = useState("");
   const [isAlphabetLearningPage, setIsAlphabetLearningPage] = useState(true);
   const [isPlayWebcam, setIsPlayWebcam] = useState(false);
+  const [isHandVideo, setIsHandVideo] = useState(true);
 
   const handleSetSrc = (index: number) => {
     setSrc(
@@ -70,19 +71,36 @@ const LeaningGame = () => {
     <GameContainer>
       <Sidebar>
         <ButtonContainer>
-          <Button>손모양</Button>
-          <Button>입모양</Button>
+          <Button
+            className={isHandVideo ? "target" : "non-target"}
+            onClick={() => setIsHandVideo(!isHandVideo)}
+          >
+            손모양
+          </Button>
+          <Button
+            className={!isHandVideo ? "target" : "non-target"}
+            onClick={() => setIsHandVideo(!isHandVideo)}
+          >
+            입모양
+          </Button>
         </ButtonContainer>
         <ImageContainer>
           <Image>
-            <img src={src} alt="learningImage" />
+            {/* <img src={src} alt="learningImage" /> */}
+            <video autoPlay loop controls width="300">
+              <source
+                src={handAlphabetVideo[0].src}
+                type={handAlphabetVideo[0].type}
+              />
+            </video>
           </Image>
           <ImageUnderLine />
         </ImageContainer>
         {isAlphabetLearningPage === true ? (
           <AlphabetList handleSetSrc={handleSetSrc} />
         ) : (
-          <WordList />
+          // <WordList />
+          <AlphabetList handleSetSrc={handleSetSrc} />
         )}
       </Sidebar>
       <CameraContainer>
