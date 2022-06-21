@@ -1,4 +1,6 @@
 import axios from "axios";
+import { useAtom } from "jotai";
+import { userAtom } from "./state";
 
 const serverUrl = "http://localhost:5000/";
 
@@ -9,7 +11,7 @@ async function get(endpoint: string, params = "") {
   );
   return axios.get(serverUrl + endpoint + "/" + params, {
     headers: {
-      //   Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
+      Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
     },
   });
 }
@@ -24,7 +26,7 @@ async function post(endpoint: string, data: object) {
   return axios.post(serverUrl + endpoint, bodyData, {
     headers: {
       "Content-Type": "application/json",
-      //   Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
+      Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
     },
   });
 }
@@ -39,7 +41,7 @@ async function put(endpoint: string, data: object) {
   return axios.put(serverUrl + endpoint, bodyData, {
     headers: {
       "Content-Type": "application/json",
-      //   Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
+      Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
     },
   });
 }

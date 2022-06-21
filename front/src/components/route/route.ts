@@ -17,4 +17,13 @@ export const ROUTE = {
   QUIZ: {
     link: "quiz",
   },
+  GAME: {
+    link: "game",
+  },
+  PLAY: {
+    link: "play",
+  },
+  REGISTER: {
+    link: "register",
+  },
 };

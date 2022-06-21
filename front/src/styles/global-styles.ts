@@ -14,6 +14,12 @@ export const GlobalStyle = createGlobalStyle`
       margin: 0;
        -ms-overflow-style: none;
     }
+    button {
+      border: none;
+      background-color: transparent;
+      border-radius: 5px;
+      cursor: pointer;
+    }
     ::-webkit-scrollbar {
       display: none;
     }

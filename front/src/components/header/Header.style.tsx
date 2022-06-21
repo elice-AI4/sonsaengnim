@@ -12,13 +12,12 @@ export const Navbar = styled.nav`
       position: fixed;
       transform: translate(0, 0);
       width: 100%;
-      z-index: 999;
+      z-index: 2;
     `;
   }};
 `;
 
 export const TitleContainer = styled.div`
-  margin: 1rem;
   padding: 1rem;
   cursor: pointer;
 `;
@@ -49,11 +48,65 @@ export const DefaultLink = styled(Link)`
 export const HomeLink = styled(DefaultLink)``;
 
 export const StyledLink = styled(DefaultLink)`
+  position: relative;
   /* margin-right: 1rem; */
   ${({ theme }) => {
     return css`
       font-size: ${theme.navbar.link.fontSize};
       font-weight: ${theme.navbar.link.fontWeight};
+    `;
+  }}
+
+  &:hover {
+    &::after {
+      content: "";
+      position: absolute;
+      width: 80%;
+      height: 0.5rem;
+      left: 50%;
+      transform: translate(-50%, 28px);
+      ${({ theme }) => {
+        return css`
+          background-color: ${theme.navbar.link.hoverLineColor};
+        `;
+      }}
+    }
+  }
+`;
+
+const Line = styled.div`
+  width: 100vw;
+  background-color: #ffc774;
+  position: absolute;
+  width: 100%;
+  z-index: 2;
+`;
+
+export const ThickLine = styled(Line)`
+  height: 1.3rem;
+  margin-bottom: 0.3rem;
+  position: fixed;
+  ${({ theme }) => {
+    return css`
+      transform: translateY(${theme.navbar.height});
+    `;
+  }}
+`;
+
+export const ThinLine = styled(Line)`
+  height: 0.3rem;
+  position: fixed;
+  ${({ theme }) => {
+    return css`
+      transform: translateY(calc(${theme.navbar.height} + 1.6rem));
+    `;
+  }}
+`;
+
+export const Offset = styled.div`
+  ${({ theme }) => {
+    return css`
+      height: ${theme.navbar.height};
     `;
   }}
 `;
