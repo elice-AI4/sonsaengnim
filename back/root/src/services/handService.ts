@@ -12,7 +12,7 @@ export default class HandService {
       }
       return hand;
     } catch (error) {
-      return error;
+      throw error;
     }
   }
 
@@ -24,7 +24,7 @@ export default class HandService {
       }
       return hand;
     } catch (error) {
-      return error;
+      throw error;
     }
   }
 
@@ -36,7 +36,7 @@ export default class HandService {
       }
       return newHand;
     } catch (error) {
-      return error;
+      throw error;
     }
   }
 }

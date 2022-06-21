@@ -14,9 +14,6 @@ export default (app: Router) => {
     try {
       const { alphabet } = req.params;
       const data = await handService.get(alphabet);
-      if (data instanceof Error) {
-        throw data;
-      }
       res.status(200).send(data);
     } catch (error) {
       res.status(400);
@@ -28,9 +25,6 @@ export default (app: Router) => {
   handRouter.get("/", async (req: Request, res: Response, next: NextFunction) => {
     try {
       const data = await handService.getAll();
-      if (data instanceof Error) {
-        throw data;
-      }
       return res.status(200).send(data);
     } catch (error) {
       res.status(400);
@@ -44,9 +38,6 @@ export default (app: Router) => {
       const { alphabet, handVideo, mouthVideo } = req.body;
       const newHandData: IHand = { alphabet, handVideo, mouthVideo };
       const newHand = await handService.create(newHandData);
-      if (newHand instanceof Error) {
-        throw newHand;
-      }
       res.status(200).json(newHand);
     } catch (error) {
       res.status(400);
