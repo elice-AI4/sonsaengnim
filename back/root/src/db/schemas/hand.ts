@@ -17,10 +17,6 @@ const handSchema = new Schema(
       type: String,
       required: true,
     },
-    video: {
-      type: String,
-      required: true,
-    },
   },
   {
     timestamps: true,
