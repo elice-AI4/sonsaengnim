@@ -8,6 +8,7 @@ export const handValidate = [
     .bail()
     .trim()
     .notEmpty()
+    .isLength({ min: 1 })
     .withMessage("공백입니다. 입력된 알파벳이 없습니다.")
     .bail()
     .isString()
