@@ -207,7 +207,7 @@ definitions:
         type: "string"
       password:
         type: "string"
-      name:
+      username:
         type: "string"
     xml:
       name: "Order"
@@ -217,15 +217,12 @@ definitions:
       alphabet:
         type: string
         example: "test"
-      handImage:
+      handVideo:
         type: string
-        example: "test hand image"
-      mouthImage:
+        example: "test hand video"
+      mouthVideo:
         type: string
-        example: "test mouth image"
-      video:
-        type: string
-        example: "test video"
+        example: "test mouth video"
 
 externalDocs:
   description: "Find out more about Swagger"

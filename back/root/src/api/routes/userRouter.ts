@@ -20,7 +20,7 @@ export default (app: Router) => {
 
       res.status(200).json(loginedUser);
     } catch (error) {
-      res.statusCode = 400;
+      res.status(400);
       next(error);
     }
   });
@@ -33,6 +33,7 @@ export default (app: Router) => {
       const updatedUser = await userService.updateUser(userId, email, username);
       res.status(200).json(updatedUser);
     } catch (error) {
+      res.status(400);
       next(error);
     }
   });
@@ -45,6 +46,7 @@ export default (app: Router) => {
       const updatedUser = await userService.changePassword(userId, password);
       res.status(200).json(updatedUser);
     } catch (error) {
+      res.status(400);
       next(error);
     }
   });
@@ -56,6 +58,7 @@ export default (app: Router) => {
       const deletedUser = await userService.deleteUser(userId);
       res.status(200).json(deletedUser);
     } catch (error) {
+      res.status(400);
       next(error);
     }
   });

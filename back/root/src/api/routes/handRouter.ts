@@ -41,8 +41,8 @@ export default (app: Router) => {
   // 수화 데이터 입력하기
   handRouter.post("/", handValidate, async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const { alphabet, handImage, mouthImage } = req.body;
-      const newHandData: IHand = { alphabet, handImage, mouthImage };
+      const { alphabet, handVideo, mouthVideo } = req.body;
+      const newHandData: IHand = { alphabet, handVideo, mouthVideo };
       const newHand = await handService.create(newHandData);
       if (newHand instanceof Error) {
         throw newHand;

@@ -1,7 +1,7 @@
 export interface IHand {
   alphabet: string;
-  handImage: string;
-  mouthImage: string;
+  handVideo: string;
+  mouthVideo: string;
   createdAt?: Date;
   updatedAt?: Date;
 }
