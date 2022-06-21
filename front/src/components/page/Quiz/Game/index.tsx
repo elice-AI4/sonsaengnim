@@ -15,9 +15,13 @@ import {
 } from "./index.style";
 import Modal from "../../Modal";
 import { io, Socket } from "socket.io-client";
-const socket: Socket<ServerToClientEvents, ClientToServerEvents> = io(
-  "http://localhost:5000"
-);
+
+interface TestData {
+  x: number;
+  y: number;
+  z: number;
+  visibility: undefined;
+}
 
 interface ServerToClientData {
   data: number;
@@ -27,10 +31,10 @@ interface ServerToClientEvents {
   answer: (data: ServerToClientData) => void;
 }
 interface ClientToServerEvents {
-  coordinate: (hands: object) => void;
+  coordinate: (hands: { testData: TestData[] }) => void;
 }
 
-const testData = [
+const testData: TestData[] = [
   {
     x: Math.random(),
     y: Math.random(),
@@ -83,6 +87,8 @@ function QuizGame() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const connect = drawConnectors;
   const [cameraOn, setCameraOn] = useState(false);
+  const [socket, setSocket] =
+    useState<Socket<ServerToClientEvents, ClientToServerEvents>>();
   let camera = null;
 
   const closeModal = () => {
@@ -161,13 +167,30 @@ function QuizGame() {
     }
   }, [cameraOn]);
 
-  const [socketAnswer, setSocketAnswer] = useState(0);
+  const [socketAnswer, setSocketAnswer] = useState<ServerToClientData>();
+
   useEffect(() => {
-    socket.on("answer", (data: ServerToClientData) => {
-      console.log(data);
-      // setSocketAnswer(data);
-    });
+    setSocket(io("http://localhost:5000"));
+    // const socket: Socket<ServerToClientEvents, ClientToServerEvents> =
+
+    return () => {
+      socket?.disconnect();
+    };
   }, []);
+
+  useEffect(() => {
+    if (socket) {
+      const func = (data: ServerToClientData) => {
+        // console.log(data);
+        setSocketAnswer(data);
+      };
+      socket.on("answer", func);
+
+      return () => {
+        socket.off("answer", func);
+      };
+    }
+  }, [socket]);
 
   console.log(process.env.PUBLIC_URL);
   return (
@@ -241,9 +264,10 @@ function QuizGame() {
         >
           오답
         </button>
-        <button onClick={() => socket.emit("coordinate", { testData })}>
+        <button onClick={() => socket?.emit("coordinate", { testData })}>
           목업데이터 보내보기
         </button>
+        <h1>{socketAnswer && socketAnswer.data}</h1>
       </ButtonBox>
     </ProblemBox>
   );
