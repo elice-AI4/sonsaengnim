@@ -13,21 +13,21 @@ export const handValidate = [
     .bail()
     .isString()
     .withMessage("string 으로 입력해주세요."),
-  body("handImage")
+  body("handVideo")
     .exists()
-    .withMessage("handImage 항목이 없습니다.")
+    .withMessage("handVideo 항목이 없습니다.")
     .bail()
     .trim()
     .notEmpty()
-    .withMessage("공백입니다. 입력된 handImage가 없습니다."),
+    .withMessage("공백입니다. 입력된 handVideo가 없습니다."),
   // .isURL()
-  body("mouthImage")
+  body("mouthVideo")
     .exists()
-    .withMessage("mouthImage 항목이 없습니다.")
+    .withMessage("mouthVideo 항목이 없습니다.")
     .bail()
     .trim()
     .notEmpty()
-    .withMessage("공백입니다. 입력된 mouthImage가 없습니다.")
+    .withMessage("공백입니다. 입력된 mouthVideo가 없습니다.")
     .bail(),
   // .isURL()
   validate,
