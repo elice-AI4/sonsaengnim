@@ -24,7 +24,7 @@ const bounceImageC = keyframes`
         transform: translateY(5px) rotateZ(40deg)
     }
     to {
-        transform: translateY(30px) rotateZ(40deg)
+        transform:translateY(30px) rotateZ(40deg)
     }
 `;
 

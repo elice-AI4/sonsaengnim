@@ -14,6 +14,42 @@ import {
   AnswerImg,
 } from "./index.style";
 import Modal from "../../Modal";
+import { io, Socket } from "socket.io-client";
+const socket: Socket<ServerToClientEvents, ClientToServerEvents> = io(
+  "http://localhost:5000"
+);
+
+interface ServerToClientData {
+  data: number;
+}
+
+interface ServerToClientEvents {
+  answer: (data: ServerToClientData) => void;
+}
+interface ClientToServerEvents {
+  coordinate: (hands: object) => void;
+}
+
+const testData = [
+  {
+    x: Math.random(),
+    y: Math.random(),
+    z: Math.random(),
+    visibility: undefined,
+  },
+  {
+    x: Math.random(),
+    y: Math.random(),
+    z: Math.random(),
+    visibility: undefined,
+  },
+  {
+    x: Math.random(),
+    y: Math.random(),
+    z: Math.random(),
+    visibility: undefined,
+  },
+];
 
 const hands = new Hands({
   locateFile: (file) => {
@@ -124,6 +160,15 @@ function QuizGame() {
       }
     }
   }, [cameraOn]);
+
+  const [socketAnswer, setSocketAnswer] = useState(0);
+  useEffect(() => {
+    socket.on("answer", (data: ServerToClientData) => {
+      console.log(data);
+      // setSocketAnswer(data);
+    });
+  }, []);
+
   console.log(process.env.PUBLIC_URL);
   return (
     <ProblemBox>
@@ -195,6 +240,9 @@ function QuizGame() {
           }}
         >
           오답
+        </button>
+        <button onClick={() => socket.emit("coordinate", { testData })}>
+          목업데이터 보내보기
         </button>
       </ButtonBox>
     </ProblemBox>
