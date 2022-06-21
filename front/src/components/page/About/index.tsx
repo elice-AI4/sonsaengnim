@@ -17,7 +17,7 @@ import {
 import imgAboutMainPage from "../../../src_assets/about/imgAboutMainPage.jpg";
 import ScrollList from "../../scrollList/ScrollList";
 
-const scrollNames = ["수화", "지화", "손선생"];
+const scrollNames = ["수화", "지화", "손생님"];
 
 const About = () => {
   const [section, setSection] = useState<HTMLElement[]>([]);
