@@ -7,59 +7,57 @@ import { MongoUserModel } from "../../db";
 
 import checkLogin from "../middlewares/checkLogin";
 
-export default (app: Router) => {
-  const userRouter = Router();
-  const userService = new UserService(new MongoUserModel());
+const userRouter = Router();
+const userService = new UserService(new MongoUserModel());
 
-  app.use("/user", userRouter);
+userRouter.post("/", userValidateOptional, async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const { email, password } = req.body;
+    const loginedUser = await userService.login(email, password);
 
-  userRouter.post("/", userValidateOptional, async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      const { email, password } = req.body;
-      const loginedUser = await userService.login(email, password);
+    res.status(200).json(loginedUser);
+  } catch (error) {
+    res.status(400);
+    next(error);
+  }
+});
 
-      res.status(200).json(loginedUser);
-    } catch (error) {
-      res.status(400);
-      next(error);
-    }
-  });
+userRouter.put("/", checkLogin, userValidateOptional, async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const { username, email } = req.body;
+    const userId = req.user;
 
-  userRouter.put("/", checkLogin, userValidateOptional, async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      const { username, email } = req.body;
-      const userId = req.user;
+    const updatedUser = await userService.updateUser(userId, email, username);
+    res.status(200).json(updatedUser);
+  } catch (error) {
+    res.status(400);
+    next(error);
+  }
+});
 
-      const updatedUser = await userService.updateUser(userId, email, username);
-      res.status(200).json(updatedUser);
-    } catch (error) {
-      res.status(400);
-      next(error);
-    }
-  });
+userRouter.patch("/", checkLogin, userValidateOptional, async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const { password } = req.body;
+    const userId = req.user;
 
-  userRouter.patch("/", checkLogin, userValidateOptional, async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      const { password } = req.body;
-      const userId = req.user;
+    const updatedUser = await userService.changePassword(userId, password);
+    res.status(200).json(updatedUser);
+  } catch (error) {
+    res.status(400);
+    next(error);
+  }
+});
 
-      const updatedUser = await userService.changePassword(userId, password);
-      res.status(200).json(updatedUser);
-    } catch (error) {
-      res.status(400);
-      next(error);
-    }
-  });
+userRouter.delete("/", checkLogin, async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const userId: string = req.user;
 
-  userRouter.delete("/", checkLogin, async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      const userId: string = req.user;
+    const deletedUser = await userService.deleteUser(userId);
+    res.status(200).json(deletedUser);
+  } catch (error) {
+    res.status(400);
+    next(error);
+  }
+});
 
-      const deletedUser = await userService.deleteUser(userId);
-      res.status(200).json(deletedUser);
-    } catch (error) {
-      res.status(400);
-      next(error);
-    }
-  });
-};
+export { userRouter };
