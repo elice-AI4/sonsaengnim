@@ -46,4 +46,21 @@ describe("End-to-End Test", () => {
       //.expect({ name: "modolee" });
     });
   });
+
+  describe("GET /hands", () => {
+    test("check hand data", async () => {
+      await request(app).get("/hands").set("Accept", "application/json").expect(200).expect("Content-Type", /json/);
+    });
+  });
+
+  describe("GET /hands/:alphabet", () => {
+    let alphabet = "a";
+    test("check hand data", async () => {
+      await request(app)
+        .get("/hands/" + alphabet)
+        .set("Accept", "application/json")
+        .expect(200)
+        .expect("Content-Type", /json/);
+    });
+  });
 });
