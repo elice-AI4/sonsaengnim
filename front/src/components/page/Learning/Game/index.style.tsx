@@ -167,14 +167,14 @@ export const HR = styled.div`
 `;
 
 interface StartButtonProp {
-  isPlayWebcam: boolean;
+  cameraOn: boolean;
 }
 
 export const StartButton = styled.div<StartButtonProp>`
   width: 10rem;
   height: 7rem;
   border-radius: 1.5rem;
-  position: relative;
+  position: absolute;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
@@ -187,9 +187,9 @@ export const StartButton = styled.div<StartButtonProp>`
   justify-content: center;
   align-items: center;
 
-  cursor: ${(props) => (props.isPlayWebcam ? "auto" : "pointer")};
+  cursor: ${(props) => (props.cameraOn ? "auto" : "pointer")};
   transition: opacity 0.5s ease;
-  opacity: ${(props) => (props.isPlayWebcam ? 0 : 1)};
+  opacity: ${(props) => (props.cameraOn ? 0 : 1)};
 `;
 
 export const TopContainer = styled.div`
@@ -198,10 +198,14 @@ export const TopContainer = styled.div`
 
 export const BottomContainer = styled.div`
   flex: 0.8;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 interface StartTriangleProp {
-  isPlayWebcam: boolean;
+  cameraOn: boolean;
 }
 
 export const StartTriangle = styled.div<StartTriangleProp>`
@@ -209,5 +213,5 @@ export const StartTriangle = styled.div<StartTriangleProp>`
   border-top: 20px solid transparent;
   border-left: 30px solid white;
   transition: opacity 0.5s ease;
-  opacity: ${(props) => (props.isPlayWebcam ? 0 : 1)};
+  opacity: ${(props) => (props.cameraOn ? 0 : 1)};
 `;

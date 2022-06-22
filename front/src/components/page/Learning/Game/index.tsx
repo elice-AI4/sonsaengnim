@@ -21,51 +21,71 @@ import {
   BottomContainer,
   StartTriangle,
 } from "./index.style";
-import { alphabetImgs } from "../learningData";
-import { wordImgs } from "../learningData";
-import { handAlphabetVideo } from "../handData";
 import { useLocation } from "react-router";
 import WordList from "./WordList";
+import Mediapipe from "../../../mediapipe/Mediapipe";
+import * as Api from "../../../../api";
+
+interface VideoDataProps {
+  _id: string;
+  alphabet: string;
+  handVideo: string;
+  mouthVideo: string;
+}
 
 const LeaningGame = () => {
   const { pathname } = useLocation();
 
-  const [src, setSrc] = useState("");
+  const [videos, setVideos] = useState<VideoDataProps[]>([]);
+  const [curVideo, setCurVideo] = useState({
+    handVideo: "",
+    mouthVideo: "",
+  });
   const [isAlphabetLearningPage, setIsAlphabetLearningPage] = useState(true);
-  const [isPlayWebcam, setIsPlayWebcam] = useState(false);
+  const [cameraOn, setCameraOn] = useState(false);
   const [isHandVideo, setIsHandVideo] = useState(true);
 
-  const handleSetSrc = (index: number) => {
-    setSrc(
-      isAlphabetLearningPage === true
-        ? alphabetImgs[index].src
-        : wordImgs[index].src
-    );
+  const handleSetAlphabet = (index: number) => {
+    setCurVideo({
+      handVideo: videos[index].handVideo,
+      mouthVideo: videos[index].mouthVideo,
+    });
   };
 
   const handleClickButton = () => {
-    setIsPlayWebcam(true);
+    setCameraOn(true);
+  };
+  const getVideos = async () => {
+    const res = await Api.get("hands");
+    setVideos(res.data);
+    setCurVideo({
+      handVideo: res.data[0]?.handVideo,
+      mouthVideo: res.data[0]?.mouthVideo,
+    });
   };
 
   useEffect(() => {
-    if (pathname.includes("alphabet") === true) {
-      setSrc(alphabetImgs[0].src);
-      setIsAlphabetLearningPage(true);
-    } else {
-      setSrc(wordImgs[1].src);
-      setIsAlphabetLearningPage(false);
+    try {
+      getVideos();
+      if (pathname.includes("alphabet") === true) {
+        setIsAlphabetLearningPage(true);
+      } else {
+        setIsAlphabetLearningPage(false);
+      }
+    } catch (e: any) {
+      throw new Error(e);
     }
   }, []);
 
   useEffect(() => {
-    if (isPlayWebcam === true) {
+    if (cameraOn === true) {
       const timer = setTimeout(() => {
-        setIsPlayWebcam(false);
+        setCameraOn(false);
       }, 5000);
 
       return () => clearTimeout(timer);
     }
-  }, [isPlayWebcam]);
+  }, [cameraOn]);
 
   return (
     <GameContainer>
@@ -86,21 +106,37 @@ const LeaningGame = () => {
         </ButtonContainer>
         <ImageContainer>
           <Image>
-            {/* <img src={src} alt="learningImage" /> */}
-            <video autoPlay loop controls width="300">
-              <source
-                src={handAlphabetVideo[0].src}
-                type={handAlphabetVideo[0].type}
-              />
-            </video>
+            {isAlphabetLearningPage && isHandVideo ? (
+              <video
+                autoPlay
+                loop
+                controls
+                width="370"
+                key={curVideo.handVideo}
+              >
+                <source src={curVideo.handVideo} type="video/mp4" />
+              </video>
+            ) : isAlphabetLearningPage && !isHandVideo ? (
+              <video
+                autoPlay
+                loop
+                controls
+                width="370"
+                key={curVideo.mouthVideo}
+              >
+                <source src={curVideo.mouthVideo} type="video/mp4" />
+              </video>
+            ) : (
+              <></>
+            )}
           </Image>
           <ImageUnderLine />
         </ImageContainer>
         {isAlphabetLearningPage === true ? (
-          <AlphabetList handleSetSrc={handleSetSrc} />
+          <AlphabetList handleSetAlphabet={handleSetAlphabet} />
         ) : (
           // <WordList />
-          <AlphabetList handleSetSrc={handleSetSrc} />
+          <AlphabetList handleSetAlphabet={handleSetAlphabet} />
         )}
       </Sidebar>
       <CameraContainer>
@@ -115,11 +151,9 @@ const LeaningGame = () => {
             <HR />
           </TopContainer>
           <BottomContainer>
-            <StartButton
-              onClick={handleClickButton}
-              isPlayWebcam={isPlayWebcam}
-            >
-              <StartTriangle isPlayWebcam={isPlayWebcam} />
+            <Mediapipe cameraOn={cameraOn} />
+            <StartButton onClick={handleClickButton} cameraOn={cameraOn}>
+              <StartTriangle cameraOn={cameraOn} />
             </StartButton>
           </BottomContainer>
         </Moniter>
