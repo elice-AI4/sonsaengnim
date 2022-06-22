@@ -30,7 +30,7 @@
     "start": "tsc-watch --onSuccess \"node dist/index.js\"",
     "lint": "npx eslint root --ext .ts",
     "swagger": "cp -r ./build /back/dist",
-    "test": "jest /back/dist/__test__ --forceExit"
+    "test": "jest /back/dist/__test__ --forceExit --detectOpenHandles"
   },
   "devDependencies": {
     "@babel/core": "^7.18.5",
