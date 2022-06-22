@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import AlphabetList from "./alphabetList/AlphabetList";
 import {
   Image,
   GameContainer,
@@ -22,9 +21,9 @@ import {
   StartTriangle,
 } from "./index.style";
 import { useLocation } from "react-router";
-import WordList from "./WordList";
 import Mediapipe from "../../../mediapipe/Mediapipe";
 import * as Api from "../../../../api";
+import ButtonList from "./buttonList/ButtonList";
 
 interface VideoDataProps {
   _id: string;
@@ -33,7 +32,7 @@ interface VideoDataProps {
   mouthVideo: string;
 }
 
-const LeaningGame = () => {
+const LearningGame = () => {
   const { pathname } = useLocation();
 
   const [videos, setVideos] = useState<VideoDataProps[]>([]);
@@ -45,7 +44,7 @@ const LeaningGame = () => {
   const [cameraOn, setCameraOn] = useState(false);
   const [isHandVideo, setIsHandVideo] = useState(true);
 
-  const handleSetAlphabet = (index: number) => {
+  const handleSetVideo = (index: number) => {
     setCurVideo({
       handVideo: videos[index].handVideo,
       mouthVideo: videos[index].mouthVideo,
@@ -106,26 +105,30 @@ const LeaningGame = () => {
         </ButtonContainer>
         <ImageContainer>
           <Image>
-            {isAlphabetLearningPage && isHandVideo ? (
-              <video
-                autoPlay
-                loop
-                controls
-                width="370"
-                key={curVideo.handVideo}
-              >
-                <source src={curVideo.handVideo} type="video/mp4" />
-              </video>
-            ) : isAlphabetLearningPage && !isHandVideo ? (
-              <video
-                autoPlay
-                loop
-                controls
-                width="370"
-                key={curVideo.mouthVideo}
-              >
-                <source src={curVideo.mouthVideo} type="video/mp4" />
-              </video>
+            {isAlphabetLearningPage ? (
+              isHandVideo ? (
+                <video
+                  autoPlay
+                  loop
+                  controls
+                  width="370"
+                  key={curVideo.handVideo}
+                >
+                  <source src={curVideo.handVideo} type="video/mp4" />
+                </video>
+              ) : !isHandVideo ? (
+                <video
+                  autoPlay
+                  loop
+                  controls
+                  width="370"
+                  key={curVideo.mouthVideo}
+                >
+                  <source src={curVideo.mouthVideo} type="video/mp4" />
+                </video>
+              ) : (
+                <></>
+              )
             ) : (
               <></>
             )}
@@ -133,10 +136,15 @@ const LeaningGame = () => {
           <ImageUnderLine />
         </ImageContainer>
         {isAlphabetLearningPage === true ? (
-          <AlphabetList handleSetAlphabet={handleSetAlphabet} />
+          <ButtonList
+            handleSetVideo={handleSetVideo}
+            isAlphabetLearningPage={isAlphabetLearningPage}
+          />
         ) : (
-          // <WordList />
-          <AlphabetList handleSetAlphabet={handleSetAlphabet} />
+          <ButtonList
+            handleSetVideo={handleSetVideo}
+            isAlphabetLearningPage={isAlphabetLearningPage}
+          />
         )}
       </Sidebar>
       <CameraContainer>
@@ -162,4 +170,4 @@ const LeaningGame = () => {
   );
 };
 
-export default LeaningGame;
+export default LearningGame;
