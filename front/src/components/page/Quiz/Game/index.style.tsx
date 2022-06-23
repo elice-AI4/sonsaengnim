@@ -8,6 +8,7 @@ export const UserCanvas = styled.canvas`
   z-index: 9;
   width: 640px;
   height: 480px;
+  opacity: 0.5;
 `;
 
 export const ProblemBox = styled.div`
