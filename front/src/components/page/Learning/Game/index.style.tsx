@@ -8,8 +8,8 @@ export const GameContainer = styled.div`
 `;
 
 export const Sidebar = styled.aside`
-  width: 400px;
-  min-width: 400px;
+  width: 500px;
+  min-width: 500px;
   min-height: 100vh;
 
   background-color: #a8c0ea;
@@ -57,8 +57,11 @@ export const ImageContainer = styled.div`
 `;
 
 export const Image = styled.div`
-  height: 240px;
+  width: 440px;
+  height: 330px;
   display: flex;
+  justify-content: center;
+  align-items: center;
   background-color: white;
   border-radius: 10px;
   margin-bottom: 3rem;

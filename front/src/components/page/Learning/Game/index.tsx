@@ -111,8 +111,9 @@ const LearningGame = () => {
                   autoPlay
                   loop
                   controls
-                  width="370"
+                  width="430"
                   key={curVideo.handVideo}
+                  style={{ borderRadius: "5px" }}
                 >
                   <source src={curVideo.handVideo} type="video/mp4" />
                 </video>
@@ -121,8 +122,9 @@ const LearningGame = () => {
                   autoPlay
                   loop
                   controls
-                  width="370"
+                  width="430"
                   key={curVideo.mouthVideo}
+                  style={{ borderRadius: "5px" }}
                 >
                   <source src={curVideo.mouthVideo} type="video/mp4" />
                 </video>

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Container } from "./ButtonList.style";
+import { BlankButton, Button, Container } from "./ButtonList.style";
 
 const Alphabet = [
   "A",
@@ -60,6 +60,8 @@ const ButtonList = ({
       ) : (
         <></>
       )}
+      <BlankButton />
+      <BlankButton />
     </Container>
   );
 };

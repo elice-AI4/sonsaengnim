@@ -1,10 +1,19 @@
 import styled, { css } from "styled-components";
 
 export const Container = styled.div`
-  width: 90%;
   display: flex;
   flex-wrap: wrap;
+  justify-content: space-between;
   margin: auto;
+
+  width: 80%;
+`;
+
+export const BlankButton = styled.div`
+  width: 7rem;
+  height: 5rem;
+
+  margin: 1rem;
 `;
 export const Button = styled.div`
   width: 7rem;
