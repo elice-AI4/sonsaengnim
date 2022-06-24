@@ -32,18 +32,12 @@ interface WebCamProps {
 function MediaPipeWebCam({ cameraOn }: WebCamProps) {
   const webcamRef = useRef<Webcam>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  let camera = null;
-
-  const onResults2: h.ResultsListener = (results) => {
-    undefined;
-  };
 
   const onResults: h.ResultsListener = (results) => {
-    console.log(results);
     if (!canvasRef.current || !webcamRef.current?.video || !cameraOn) {
       return;
     }
-
+    console.log(results);
     canvasRef.current.width = webcamRef.current?.video.videoWidth;
     canvasRef.current.height = webcamRef.current?.video.videoHeight;
 
@@ -100,30 +94,43 @@ function MediaPipeWebCam({ cameraOn }: WebCamProps) {
   useEffect(() => {
     if (cameraOn) {
       holistic.onResults(onResults);
-      if (
-        typeof webcamRef.current !== "undefined" &&
-        webcamRef.current !== null
-      ) {
-        if (!webcamRef.current?.video) {
-          return;
-        }
-
-        camera = new cam.Camera(webcamRef.current?.video, {
-          onFrame: async () => {
-            if (!webcamRef.current?.video) {
-              return;
-            }
-            await holistic.send({ image: webcamRef.current?.video });
-          },
-          width: 640,
-          height: 480,
-        });
-        camera.start();
-      }
     } else {
-      holistic.onResults(onResults2);
+      holistic.onResults(() => undefined);
     }
   }, [cameraOn]);
+
+  useEffect(() => {
+    let camera: cam.Camera | null = null;
+    let isCanceled = false;
+
+    if (
+      typeof webcamRef.current !== "undefined" &&
+      webcamRef.current !== null
+    ) {
+      if (!webcamRef.current?.video) {
+        return;
+      }
+
+      camera = new cam.Camera(webcamRef.current?.video, {
+        onFrame: async () => {
+          if (!webcamRef.current?.video || isCanceled) {
+            return;
+          }
+          await holistic.send({ image: webcamRef.current?.video });
+        },
+        width: 640,
+        height: 480,
+      });
+      camera.start();
+    }
+    return () => {
+      isCanceled = true;
+
+      holistic.onResults(() => undefined);
+
+      camera?.stop();
+    };
+  }, []);
 
   return (
     <>
