@@ -21,7 +21,6 @@ import {
   StartTriangle,
 } from "./index.style";
 import { useLocation } from "react-router";
-import Mediapipe from "../../../mediapipe/Mediapipe";
 import * as Api from "../../../../api";
 import ButtonList from "./buttonList/ButtonList";
 
@@ -161,7 +160,6 @@ const LearningGame = () => {
             <HR />
           </TopContainer>
           <BottomContainer>
-            <Mediapipe cameraOn={cameraOn} />
             <StartButton onClick={handleClickButton} cameraOn={cameraOn}>
               <StartTriangle cameraOn={cameraOn} />
             </StartButton>

@@ -1,5 +1,4 @@
-import Webcam from "react-webcam";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 export const UserCanvas = styled.canvas`
   position: absolute;
@@ -9,9 +8,4 @@ export const UserCanvas = styled.canvas`
   z-index: 9;
   width: 640px;
   height: 480px;
-`;
-
-export const StyledWebcam = styled(Webcam)`
-  width: 64rem;
-  height: 48rem;
 `;
