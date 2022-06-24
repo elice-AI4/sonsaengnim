@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   ProblemBox,
   ProblemImg,
@@ -8,10 +8,48 @@ import {
   AnswerImg,
 } from "./index.style";
 import Modal from "../../Modal";
+import { io, Socket } from "socket.io-client";
 import MediaPipeWebCam from "./../../../MediaPipeWebCam";
 
 const MAX_COUNT = 10;
+interface TestData {
+  x: number;
+  y: number;
+  z: number;
+  visibility: undefined;
+}
 
+interface ServerToClientData {
+  data: number;
+}
+
+interface ServerToClientEvents {
+  answer: (data: ServerToClientData) => void;
+}
+interface ClientToServerEvents {
+  coordinate: (hands: { testData: TestData[] }) => void;
+}
+
+const testData: TestData[] = [
+  {
+    x: Math.random(),
+    y: Math.random(),
+    z: Math.random(),
+    visibility: undefined,
+  },
+  {
+    x: Math.random(),
+    y: Math.random(),
+    z: Math.random(),
+    visibility: undefined,
+  },
+  {
+    x: Math.random(),
+    y: Math.random(),
+    z: Math.random(),
+    visibility: undefined,
+  },
+];
 const ModalStyle = {
   width: "1000px",
   height: "900px",
@@ -31,6 +69,9 @@ function QuizGame() {
 
   const [cameraOn, setCameraOn] = useState(false);
 
+  const [socket, setSocket] =
+    useState<Socket<ServerToClientEvents, ClientToServerEvents>>();
+
   const closeModal = () => {
     setModal(false);
   };
@@ -39,6 +80,30 @@ function QuizGame() {
     setQuizNumber(Math.floor(Math.random() * 10) + 1);
     setModal(false);
   };
+
+  const [socketAnswer, setSocketAnswer] = useState<ServerToClientData>();
+
+  useEffect(() => {
+    setSocket(io("http://localhost:5000"));
+    // const socket: Socket<ServerToClientEvents, ClientToServerEvents> =
+
+    return () => {
+      socket?.disconnect();
+    };
+  }, []);
+
+  useEffect(() => {
+    if (socket) {
+      const func = (data: ServerToClientData) => {
+        setSocketAnswer(data);
+      };
+      socket.on("answer", func);
+
+      return () => {
+        socket.off("answer", func);
+      };
+    }
+  }, [socket]);
 
   return (
     <ProblemBox>
@@ -73,7 +138,7 @@ function QuizGame() {
           src={`${process.env.PUBLIC_URL}/quizgamepic/p${quizNumber}.jpg`}
         ></ProblemImg>
         <AnswerBox>
-          <MediaPipeWebCam cameraOn={cameraOn}></MediaPipeWebCam>
+          <MediaPipeWebCam cameraOn={cameraOn} />
         </AnswerBox>
       </QuizBox>
       <ButtonBox>
@@ -100,6 +165,10 @@ function QuizGame() {
         >
           오답
         </button>
+        <button onClick={() => socket?.emit("coordinate", { testData })}>
+          목업데이터 보내보기
+        </button>
+        <h1>{socketAnswer && socketAnswer.data}</h1>
       </ButtonBox>
     </ProblemBox>
   );
