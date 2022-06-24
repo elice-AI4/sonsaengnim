@@ -21,7 +21,10 @@ export const AnswerBox = styled.div`
 
 export const QuizBox = styled.div`
   border: 1px solid red;
+  height: 480px;
+  width: 1400px;
   display: flex;
+  justify-content: space-around;
 `;
 
 export const ButtonBox = styled.div`

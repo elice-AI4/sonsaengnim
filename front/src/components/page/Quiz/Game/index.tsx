@@ -10,6 +10,8 @@ import {
 import Modal from "../../Modal";
 import MediaPipeWebCam from "./../../../MediaPipeWebCam";
 
+const MAX_COUNT = 10;
+
 const ModalStyle = {
   width: "1000px",
   height: "900px",
@@ -22,6 +24,7 @@ function QuizGame() {
   const [modal, setModal] = useState<boolean>(false);
   const [answer, setAnswer] = useState<boolean>(false);
   const [score, setScore] = useState<number>(0);
+  const [timer, setTimer] = useState<boolean>(false);
   const [quizNumber, setQuizNumber] = useState<number>(
     Math.floor(Math.random() * 10) + 1
   );
@@ -79,7 +82,7 @@ function QuizGame() {
             setCameraOn(() => !cameraOn);
           }}
         >
-          녹화시작
+          문제풀기
         </button>
         <button
           onClick={() => {

@@ -34,8 +34,13 @@ function MediaPipeWebCam({ cameraOn }: WebCamProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   let camera = null;
 
+  const onResults2: h.ResultsListener = (results) => {
+    undefined;
+  };
+
   const onResults: h.ResultsListener = (results) => {
-    if (!canvasRef.current || !webcamRef.current?.video) {
+    console.log(results);
+    if (!canvasRef.current || !webcamRef.current?.video || !cameraOn) {
       return;
     }
 
@@ -102,6 +107,7 @@ function MediaPipeWebCam({ cameraOn }: WebCamProps) {
         if (!webcamRef.current?.video) {
           return;
         }
+
         camera = new cam.Camera(webcamRef.current?.video, {
           onFrame: async () => {
             if (!webcamRef.current?.video) {
@@ -114,6 +120,8 @@ function MediaPipeWebCam({ cameraOn }: WebCamProps) {
         });
         camera.start();
       }
+    } else {
+      holistic.onResults(onResults2);
     }
   }, [cameraOn]);
 
