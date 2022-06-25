@@ -25,12 +25,8 @@ def build_model(mode='A'):
     :return model:
     '''
     print("실제 모델 모드: ", mode)
-    ALPHABET_MODEL_PATH = "model_hs_8"
-    WORD_MODEL_PATH = "model_hs_word_1"
-    model_path = ALPHABET_MODEL_PATH if mode == 'A' else WORD_MODEL_PATH
-    # print(os.getcwd())
-    # PATH = os.path.join(os.getcwd(), model_path)
-    actions = np.array(['a', 'b', 'c', 'd','e', 'f','g', 'h' ,'i' , 'j', 'k', 'l'  ,'m', 'n', 'o', 'p' ,'q', 'r', 's', 't' ,'u','v', 'w', 'x' , 'y', 'z'])
+   
+    actions = choose_action(mode)
     model = Sequential()
     model.add(LSTM(64, return_sequences=True, activation='relu', input_shape=(30,258)))
     model.add(LSTM(128, return_sequences=True, activation='relu'))
@@ -39,7 +35,11 @@ def build_model(mode='A'):
     model.add(Dense(32, activation='relu'))
     model.add(Dense(actions.shape[0], activation='softmax'))
     model.compile(optimizer='Adam', loss='categorical_crossentropy', metrics=['categorical_accuracy'])
-    model.load_weights('action_hs_8.h5')
+    
+    if mode=="A":
+        model.load_weights('action_hs_8.h5')
+    else:
+        model.load_weights('action_hs_word_1.h5')
     return model
 
 
@@ -110,5 +110,3 @@ def prediction(result, mode):
     predict_top3_idx = top_n(3, res)
     top3_alphabet = [actions[i] for i in predict_top3_idx]
     return top3_alphabet
-
-

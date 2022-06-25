@@ -22,7 +22,6 @@ class HandSignModel:
     def predict(self, data):
         print('start prediction')
         return prediction(data, mode=self.mode)
-            # print("predict Error: could not predict")
 
     def run(self, data):
         result = self.predict(data)
