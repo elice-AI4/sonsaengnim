@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import {
   Holistic,
   HAND_CONNECTIONS,
@@ -9,6 +9,8 @@ import * as h from "@mediapipe/holistic";
 import Webcam from "react-webcam";
 import { drawConnectors, drawLandmarks } from "@mediapipe/drawing_utils";
 import { UserCanvas } from "./index.style";
+import { Socket, io } from "socket.io-client";
+import { interval, Subject, throttle } from "rxjs";
 
 const holistic = new Holistic({
   locateFile: (file) => {
@@ -29,15 +31,58 @@ interface WebCamProps {
   cameraOn: boolean;
 }
 
+interface MediapipeDataProps {
+  poseLandmarks: h.NormalizedLandmarkList;
+  leftHandLandmarks: h.NormalizedLandmarkList;
+  rightHandLandmarks: h.NormalizedLandmarkList;
+}
+
+interface ServerToClientData {
+  data: boolean;
+}
+
+interface ServerToClientEvents {
+  answer: (data: ServerToClientData) => void;
+}
+interface ClientToServerEvents {
+  coordinate: (hands: MediapipeDataProps[]) => void;
+}
+
 function MediaPipeWebCam({ cameraOn }: WebCamProps) {
   const webcamRef = useRef<Webcam>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const [subject, setSubject] = useState<Subject<MediapipeDataProps>>();
+  const [socket, setSocket] =
+    useState<Socket<ServerToClientEvents, ClientToServerEvents>>();
+  const [socketAnswer, setSocketAnswer] = useState<ServerToClientData>();
+  const [mediapipeData, setMediapipeData] = useState<MediapipeDataProps[]>([]);
 
   const onResults: h.ResultsListener = (results) => {
     if (!canvasRef.current || !webcamRef.current?.video || !cameraOn) {
       return;
     }
-    console.log(results);
+    const { poseLandmarks, leftHandLandmarks, rightHandLandmarks } = results;
+    const data = {
+      poseLandmarks,
+      leftHandLandmarks,
+      rightHandLandmarks,
+    };
+    setMediapipeData((cur) => {
+      const temp = [...cur];
+      temp.push(data);
+      if (temp.length == 40) {
+        socket?.emit("coordinate", temp);
+        console.log(temp);
+      }
+      return temp;
+    });
+
+    // subject?.pipe(throttle(() => interval(1000))).subscribe((data) => {
+    //   socket?.emit("coordinate", { data });
+    //   // console.log(data);
+    // });
+    // subject?.next(data);
+
     canvasRef.current.width = webcamRef.current?.video.videoWidth;
     canvasRef.current.height = webcamRef.current?.video.videoHeight;
 
@@ -96,6 +141,7 @@ function MediaPipeWebCam({ cameraOn }: WebCamProps) {
       holistic.onResults(onResults);
     } else {
       holistic.onResults(() => undefined);
+      setMediapipeData([]);
     }
   }, [cameraOn]);
 
@@ -132,6 +178,34 @@ function MediaPipeWebCam({ cameraOn }: WebCamProps) {
     };
   }, []);
 
+  useEffect(() => {
+    setSocket(io("http://localhost:5000"));
+    // const socket: Socket<ServerToClientEvents, ClientToServerEvents> =
+
+    return () => {
+      socket?.disconnect();
+    };
+  }, []);
+
+  useEffect(() => {
+    const sub = new Subject<MediapipeDataProps>();
+    setSubject(sub);
+  }, []);
+
+  useEffect(() => {
+    if (socket) {
+      const func = (data: ServerToClientData) => {
+        setSocketAnswer(data);
+        console.log(data);
+      };
+      socket.on("answer", func);
+
+      return () => {
+        socket.off("answer", func);
+      };
+    }
+  }, [socket]);
+
   return (
     <>
       <Webcam
@@ -147,6 +221,7 @@ function MediaPipeWebCam({ cameraOn }: WebCamProps) {
         }}
       />
       {cameraOn && <UserCanvas ref={canvasRef} />}
+      <h1>{socketAnswer && socketAnswer.data}</h1>
     </>
   );
 }

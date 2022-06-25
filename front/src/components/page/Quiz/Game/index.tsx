@@ -69,8 +69,8 @@ function QuizGame() {
 
   const [cameraOn, setCameraOn] = useState(false);
 
-  // const [socket, setSocket] =
-  //   useState<Socket<ServerToClientEvents, ClientToServerEvents>>();
+  const [socket, setSocket] =
+    useState<Socket<ServerToClientEvents, ClientToServerEvents>>();
 
   const closeModal = () => {
     setModal(false);
@@ -83,27 +83,27 @@ function QuizGame() {
 
   const [socketAnswer, setSocketAnswer] = useState<ServerToClientData>();
 
-  // useEffect(() => {
-  //   setSocket(io("http://localhost:5000"));
-  //   // const socket: Socket<ServerToClientEvents, ClientToServerEvents> =
+  useEffect(() => {
+    setSocket(io("http://localhost:5000"));
+    // const socket: Socket<ServerToClientEvents, ClientToServerEvents> =
 
-  //   return () => {
-  //     socket?.disconnect();
-  //   };
-  // }, []);
+    return () => {
+      socket?.disconnect();
+    };
+  }, []);
 
-  // useEffect(() => {
-  //   if (socket) {
-  //     const func = (data: ServerToClientData) => {
-  //       setSocketAnswer(data);
-  //     };
-  //     socket.on("answer", func);
+  useEffect(() => {
+    if (socket) {
+      const func = (data: ServerToClientData) => {
+        setSocketAnswer(data);
+      };
+      socket.on("answer", func);
 
-  //     return () => {
-  //       socket.off("answer", func);
-  //     };
-  //   }
-  // }, [socket]);
+      return () => {
+        socket.off("answer", func);
+      };
+    }
+  }, [socket]);
 
   return (
     <ProblemBox>
@@ -165,9 +165,9 @@ function QuizGame() {
         >
           오답
         </button>
-        {/* <button onClick={() => socket?.emit("coordinate", { testData })}>
+        <button onClick={() => socket?.emit("coordinate", { testData })}>
           목업데이터 보내보기
-        </button> */}
+        </button>
         <h1>{socketAnswer && socketAnswer.data}</h1>
       </ButtonBox>
     </ProblemBox>
