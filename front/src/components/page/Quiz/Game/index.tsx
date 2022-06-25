@@ -1,11 +1,5 @@
-import React, { useRef, useEffect, useState } from "react";
-import { Hands } from "@mediapipe/hands";
-import * as h from "@mediapipe/hands";
-import * as cam from "@mediapipe/camera_utils";
-import Webcam from "react-webcam";
-import { drawConnectors, drawLandmarks } from "@mediapipe/drawing_utils";
+import React, { useEffect, useState } from "react";
 import {
-  UserCanvas,
   ProblemBox,
   ProblemImg,
   AnswerBox,
@@ -14,25 +8,53 @@ import {
   AnswerImg,
 } from "./index.style";
 import Modal from "../../Modal";
+import { io, Socket } from "socket.io-client";
+import MediaPipeWebCam from "./../../../MediaPipeWebCam";
 
-const hands = new Hands({
-  locateFile: (file) => {
-    return `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}`;
+const MAX_COUNT = 10;
+interface TestData {
+  x: number;
+  y: number;
+  z: number;
+  visibility: undefined;
+}
+
+interface ServerToClientData {
+  data: number;
+}
+
+interface ServerToClientEvents {
+  answer: (data: ServerToClientData) => void;
+}
+interface ClientToServerEvents {
+  coordinate: (hands: { testData: TestData[] }) => void;
+}
+
+const testData: TestData[] = [
+  {
+    x: Math.random(),
+    y: Math.random(),
+    z: Math.random(),
+    visibility: undefined,
   },
-});
-
-hands.setOptions({
-  maxNumHands: 2,
-  modelComplexity: 1,
-  minDetectionConfidence: 0.5,
-  minTrackingConfidence: 0.5,
-});
-
+  {
+    x: Math.random(),
+    y: Math.random(),
+    z: Math.random(),
+    visibility: undefined,
+  },
+  {
+    x: Math.random(),
+    y: Math.random(),
+    z: Math.random(),
+    visibility: undefined,
+  },
+];
 const ModalStyle = {
   width: "1000px",
   height: "900px",
   display: "flex",
-  "flex-direction": "column",
+  flexDirection: "column",
   alignItems: "center",
 };
 
@@ -40,58 +62,18 @@ function QuizGame() {
   const [modal, setModal] = useState<boolean>(false);
   const [answer, setAnswer] = useState<boolean>(false);
   const [score, setScore] = useState<number>(0);
+  const [timer, setTimer] = useState<boolean>(false);
   const [quizNumber, setQuizNumber] = useState<number>(
     Math.floor(Math.random() * 10) + 1
   );
-  const webcamRef = useRef<Webcam>(null);
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const connect = drawConnectors;
+
   const [cameraOn, setCameraOn] = useState(false);
-  let camera = null;
+
+  const [socket, setSocket] =
+    useState<Socket<ServerToClientEvents, ClientToServerEvents>>();
 
   const closeModal = () => {
     setModal(false);
-  };
-
-  const onResults: h.ResultsListener = (results) => {
-    console.log(results);
-    if (!canvasRef.current || !webcamRef.current?.video) {
-      return;
-    }
-
-    canvasRef.current.width = webcamRef.current?.video.videoWidth;
-    canvasRef.current.height = webcamRef.current?.video.videoHeight;
-
-    const canvasElement = canvasRef.current;
-    const canvasCtx = canvasElement.getContext("2d");
-
-    if (!canvasCtx) {
-      return;
-    }
-
-    canvasCtx.save();
-
-    canvasCtx.clearRect(0, 0, canvasElement.width, canvasElement.height);
-    canvasCtx.drawImage(
-      results.image,
-      0,
-      0,
-      canvasElement.width,
-      canvasElement.height
-    );
-
-    if (results.multiHandLandmarks) {
-      for (const landmarks of results.multiHandLandmarks) {
-        connect(canvasCtx, landmarks, h.HAND_CONNECTIONS, {
-          color: "#00FF00",
-          lineWidth: 5,
-        });
-        drawLandmarks(canvasCtx, landmarks, {
-          color: "#FF0000",
-          lineWidth: 2,
-        });
-      }
-    }
   };
 
   const nextQuiz = () => {
@@ -99,35 +81,37 @@ function QuizGame() {
     setModal(false);
   };
 
-  useEffect(() => {
-    if (cameraOn) {
-      hands.onResults(onResults);
-      if (
-        typeof webcamRef.current !== "undefined" &&
-        webcamRef.current !== null
-      ) {
-        if (!webcamRef.current?.video) {
-          return;
-        }
+  const [socketAnswer, setSocketAnswer] = useState<ServerToClientData>();
 
-        camera = new cam.Camera(webcamRef.current?.video, {
-          onFrame: async () => {
-            if (!webcamRef.current?.video) {
-              return;
-            }
-            await hands.send({ image: webcamRef.current?.video });
-          },
-          width: 640,
-          height: 480,
-        });
-        camera.start();
-      }
+  useEffect(() => {
+    setSocket(io("http://localhost:5000"));
+    // const socket: Socket<ServerToClientEvents, ClientToServerEvents> =
+
+    return () => {
+      socket?.disconnect();
+    };
+  }, []);
+
+  useEffect(() => {
+    if (socket) {
+      const func = (data: ServerToClientData) => {
+        setSocketAnswer(data);
+      };
+      socket.on("answer", func);
+
+      return () => {
+        socket.off("answer", func);
+      };
     }
-  }, [cameraOn]);
-  console.log(process.env.PUBLIC_URL);
+  }, [socket]);
+
   return (
     <ProblemBox>
-      <Modal visible={modal} closeModal={closeModal} style={ModalStyle}>
+      <Modal
+        visible={modal}
+        closeModal={closeModal}
+        style={ModalStyle as React.CSSProperties}
+      >
         {answer ? (
           <>
             <h1>정답입니다!!!</h1>
@@ -154,35 +138,21 @@ function QuizGame() {
           src={`${process.env.PUBLIC_URL}/quizgamepic/p${quizNumber}.jpg`}
         ></ProblemImg>
         <AnswerBox>
-          <Webcam
-            ref={webcamRef}
-            style={{
-              position: "absolute",
-              marginLeft: "auto",
-              marginRight: "auto",
-              textAlign: "center",
-              zIndex: 9,
-              width: 640,
-              height: 480,
-            }}
-          />
-          {cameraOn && <UserCanvas ref={canvasRef} />}
+          <MediaPipeWebCam cameraOn={cameraOn} />
         </AnswerBox>
       </QuizBox>
       <ButtonBox>
         <button
           onClick={() => {
             setCameraOn(() => !cameraOn);
-            camera = null;
           }}
         >
-          녹화시작
+          문제풀기
         </button>
         <button
           onClick={() => {
             setModal(true);
             setAnswer(true);
-            camera = null;
           }}
         >
           정답
@@ -191,11 +161,14 @@ function QuizGame() {
           onClick={() => {
             setModal(true);
             setAnswer(false);
-            camera = null;
           }}
         >
           오답
         </button>
+        <button onClick={() => socket?.emit("coordinate", { testData })}>
+          목업데이터 보내보기
+        </button>
+        <h1>{socketAnswer && socketAnswer.data}</h1>
       </ButtonBox>
     </ProblemBox>
   );
