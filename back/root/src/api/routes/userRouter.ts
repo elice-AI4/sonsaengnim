@@ -4,8 +4,9 @@ import { userValidateOptional } from "../middlewares/validators";
 import UserService from "../../services/userService";
 
 import { MongoUserModel } from "../../db";
-
+import { IScore } from "../../models/interfaces/IScore";
 import checkLogin from "../middlewares/checkLogin";
+import { getToptenScores } from "../../utils/topTenScore";
 
 const userRouter = Router();
 const userService = new UserService(new MongoUserModel());
@@ -54,6 +55,26 @@ userRouter.delete("/", checkLogin, async (req: Request, res: Response, next: Nex
 
     const deletedUser = await userService.deleteUser(userId);
     res.status(200).json(deletedUser);
+  } catch (error) {
+    res.status(400);
+    next(error);
+  }
+});
+
+userRouter.get("/score", async (req, res, next) => {
+  try {
+    const { username, score } = req.query;
+    let name: string = username as string;
+    let num_score: number = Number(score);
+
+    const newScore: IScore = {
+      username: name,
+      score: num_score,
+      rank: -1,
+    };
+    req.body = JSON.parse(JSON.stringify(req.body));
+    const topten = getToptenScores(newScore, req);
+    res.status(200).send(topten);
   } catch (error) {
     res.status(400);
     next(error);
