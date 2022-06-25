@@ -3,9 +3,18 @@ import { MongoUserModel } from "../db";
 import bcrypt from "bcrypt";
 import issueJwtToken from "../utils/issueJwtToken";
 import hashPassword from "../utils/hashPassword";
+import { tokenReissue } from "../utils/tokenReissue";
+
 export default class UserService {
   // eslint-disable-next-line no-unused-vars
   constructor(private userModel: MongoUserModel) {}
+
+  // token 다시 받기
+  async getToken(token: string) {
+    const accessToken = tokenReissue(token);
+    console.log(accessToken);
+    return accessToken;
+  }
 
   async login(email: string, password: string) {
     try {

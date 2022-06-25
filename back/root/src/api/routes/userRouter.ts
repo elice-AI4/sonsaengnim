@@ -10,6 +10,19 @@ import checkLogin from "../middlewares/checkLogin";
 const userRouter = Router();
 const userService = new UserService(new MongoUserModel());
 
+userRouter.get("/jwt/:token", async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const token = req.params.token;
+    console.log(token);
+    const accessToken = await userService.getToken(token);
+    console.log(accessToken);
+    res.status(201).json({ message: "토큰을 재발급 하였습니다.", accessToken });
+  } catch (error) {
+    res.status(400);
+    next(error);
+  }
+});
+
 userRouter.post("/", userValidateOptional, async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { email, password } = req.body;
@@ -35,18 +48,23 @@ userRouter.put("/", checkLogin, userValidateOptional, async (req: Request, res: 
   }
 });
 
-userRouter.patch("/", checkLogin, userValidateOptional, async (req: Request, res: Response, next: NextFunction) => {
-  try {
-    const { password } = req.body;
-    const userId = req.user;
+userRouter.put(
+  "/password",
+  checkLogin,
+  userValidateOptional,
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { password } = req.body;
+      const userId = req.user;
 
-    const updatedUser = await userService.changePassword(userId, password);
-    res.status(200).json(updatedUser);
-  } catch (error) {
-    res.status(400);
-    next(error);
-  }
-});
+      const updatedUser = await userService.changePassword(userId, password);
+      res.status(200).json(updatedUser);
+    } catch (error) {
+      res.status(400);
+      next(error);
+    }
+  },
+);
 
 userRouter.delete("/", checkLogin, async (req: Request, res: Response, next: NextFunction) => {
   try {
