@@ -9,7 +9,6 @@ CORS(app)
 app.config['SECRET_KEY'] = 'secret!'
 socket = SocketIO(app, cors_allowed_origins='*', engineio_logger=True)
 
-
 @app.route('/')
 def index():
     """
@@ -20,25 +19,23 @@ def index():
 
 
 def retrieve_active_users():
-    emit('respond', {"data": "hi, mr.client"})
-
+    emit('answer', {"data": "true"})
 
 @socket.on('connect')
 def on_connect():
     print('user connected')
+
+
+@socket.on('coordinate')
+def greet(data):
+    print("@@@@@@@@@@@@@@@@@@@client 에서 넘어온 data의 길이: ", len(data))
     retrieve_active_users()
-
-
-@socket.on('greet')
-def greet():
-    print("연결 했습니다!")
-    emit("respond", {"data": "hi, mr.client"}, json=True)
 
 
 @socket.on('test')
 def handle_json(payload):
-    print('received: ')
-    print(payload)
+    # print('received: ')
+    # print(payload)
     emit("response", "하이")
 
 
@@ -49,4 +46,3 @@ def disconnect_socket(payload):
 
 if __name__ == "__main__":
     socket.run(app)
-
