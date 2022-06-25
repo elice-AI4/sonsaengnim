@@ -3,6 +3,7 @@ import { MongoUserModel } from "../db";
 import bcrypt from "bcrypt";
 import issueJwtToken from "../utils/issueJwtToken";
 import hashPassword from "../utils/hashPassword";
+
 export default class UserService {
   // eslint-disable-next-line no-unused-vars
   constructor(private userModel: MongoUserModel) {}
@@ -30,24 +31,23 @@ export default class UserService {
 
   async updateUser(userId: string, email?: string, username?: string) {
     let user = await this.userModel.findById(userId);
-
     const filter = { _id: userId };
     const updateUserData = { ...user, email, username };
-
     const updatedUser = await this.userModel.updateUser(filter, updateUserData);
-
     return updatedUser;
   }
 
   async changePassword(userId: string, password: string) {
     let user = await this.userModel.findById(userId);
     const hashedPassword = await hashPassword(password);
-
     const updateUserData = { ...user, password: hashedPassword };
-
     const updatedUser = await this.userModel.updateUser(userId, updateUserData);
-
     return updatedUser;
+  }
+
+  async addScore(userId: string, score: number) {
+    const user = await this.userModel.pushScore(userId, score);
+    return user;
   }
 
   async deleteUser(userId: string) {
