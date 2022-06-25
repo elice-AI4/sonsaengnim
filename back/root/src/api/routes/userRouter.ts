@@ -4,9 +4,7 @@ import { userValidateOptional } from "../middlewares/validators";
 import UserService from "../../services/userService";
 
 import { MongoUserModel } from "../../db";
-import { IScore } from "../../models/interfaces/IScore";
 import checkLogin from "../middlewares/checkLogin";
-import { getToptenScores } from "../../utils/getToptenScore";
 
 const userRouter = Router();
 const userService = new UserService(new MongoUserModel());
@@ -23,7 +21,7 @@ userRouter.post("/", userValidateOptional, async (req: Request, res: Response, n
   }
 });
 
-userRouter.put("/", checkLogin, userValidateOptional, async (req: Request, res: Response, next: NextFunction) => {
+userRouter.put("/info", checkLogin, userValidateOptional, async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { username, email } = req.body;
     const userId = req.user;
@@ -36,18 +34,23 @@ userRouter.put("/", checkLogin, userValidateOptional, async (req: Request, res: 
   }
 });
 
-userRouter.patch("/", checkLogin, userValidateOptional, async (req: Request, res: Response, next: NextFunction) => {
-  try {
-    const { password } = req.body;
-    const userId = req.user;
+userRouter.put(
+  "/password",
+  checkLogin,
+  userValidateOptional,
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { password } = req.body;
+      const userId = req.user;
 
-    const updatedUser = await userService.changePassword(userId, password);
-    res.status(200).json(updatedUser);
-  } catch (error) {
-    res.status(400);
-    next(error);
-  }
-});
+      const updatedUser = await userService.changePassword(userId, password);
+      res.status(200).json(updatedUser);
+    } catch (error) {
+      res.status(400);
+      next(error);
+    }
+  },
+);
 
 userRouter.delete("/", checkLogin, async (req: Request, res: Response, next: NextFunction) => {
   try {
@@ -61,22 +64,13 @@ userRouter.delete("/", checkLogin, async (req: Request, res: Response, next: Nex
   }
 });
 
-userRouter.get("/score", async (req, res, next) => {
+userRouter.post("/score", checkLogin, async (req, res, next) => {
   try {
-    const { username, score } = req.query;
-    let name: string = username as string;
-    let num_score: number = Number(score);
-
-    const newScore: IScore = {
-      username: name,
-      score: num_score,
-      rank: -1,
-    };
-    req.body = JSON.parse(JSON.stringify(req.body));
-    const topten = getToptenScores(newScore, req);
-    res.status(200).send(topten);
+    const { score } = req.body;
+    const userId: string = req.user;
+    const newUser = await userService.addScore(userId, score);
+    res.status(200).json(newUser);
   } catch (error) {
-    res.status(400);
     next(error);
   }
 });
