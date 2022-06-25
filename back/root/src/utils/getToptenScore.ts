@@ -21,16 +21,20 @@ const getToptenScores = (newScore: IScore, req) => {
       rank++;
     });
 
+  // 동점자 처리
   for (let i = 0, add = 1; i < topten.length - 1; i++) {
-    console.log(typeof topten[i]);
+    console.log(topten[i]);
     if (topten[i].score === topten[i + 1].score) {
       topten[i + 1].rank = topten[i].rank;
       add++;
+      console.log("topten[i + 1]:", topten[i + 1], "add: ", add);
     } else {
       topten[i + 1].rank = topten[i].rank + add;
+      add = 1;
     }
+    console.log("\n");
   }
-
+  topten.pop();
   console.log(topten);
 
   return topten;
