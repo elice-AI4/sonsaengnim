@@ -13,9 +13,7 @@ const userService = new UserService(new MongoUserModel());
 userRouter.get("/jwt/:token", async (req: Request, res: Response, next: NextFunction) => {
   try {
     const token = req.params.token;
-    console.log(token);
     const accessToken = await userService.getToken(token);
-    console.log(accessToken);
     res.status(201).json({ message: "토큰을 재발급 하였습니다.", accessToken });
   } catch (error) {
     res.status(400);
