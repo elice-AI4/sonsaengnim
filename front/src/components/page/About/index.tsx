@@ -27,9 +27,6 @@ const About = () => {
   const [curIndex, setCurIndex] = useState(0);
 
   const handleOnClick = (num: number) => {
-    if (!section[num]?.offsetTop) {
-      return;
-    }
     let top = 0;
     if (num !== 0) {
       top = (section[num]?.offsetTop || 0) + 70;

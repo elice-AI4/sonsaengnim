@@ -23,12 +23,34 @@ import {
 import { useLocation } from "react-router";
 import * as Api from "../../../../api";
 import ButtonList from "./buttonList/ButtonList";
+import MediaPipeWebCam from "../../../MediaPipeWebCam";
 
 interface VideoDataProps {
   _id: string;
   alphabet: string;
   handVideo: string;
   mouthVideo: string;
+}
+
+interface MediapipeDataProps {
+  poseLandmarks: {
+    x: number;
+    y: number;
+    z: number;
+    visibility: number | undefined;
+  };
+  leftHandLandmarks: {
+    x: number;
+    y: number;
+    z: number;
+    visibility: number | undefined;
+  };
+  rightHandLandmarks: {
+    x: number;
+    y: number;
+    z: number;
+    visibility: number | undefined;
+  };
 }
 
 const LearningGame = () => {
@@ -42,6 +64,19 @@ const LearningGame = () => {
   const [isAlphabetLearningPage, setIsAlphabetLearningPage] = useState(true);
   const [cameraOn, setCameraOn] = useState(false);
   const [isHandVideo, setIsHandVideo] = useState(true);
+
+  // useEffect(() => {
+  //   const sub = new Subject<MediapipeDataProps[]>();
+
+  //   sub?.subscribe({
+  //     next: (v) => console.log(`observerA: ${v}`),
+  //   });
+  //   setSubject(sub);
+
+  //   const clicks = fromEvent(document, "click");
+  //   const result = clicks.pipe(throttle(() => interval(1000)));
+  //   result.subscribe((x) => console.log(`observerA: ${x.AT_TARGET}`));
+  // }, []);
 
   const handleSetVideo = (index: number) => {
     setCurVideo({
@@ -160,6 +195,7 @@ const LearningGame = () => {
             <HR />
           </TopContainer>
           <BottomContainer>
+            <MediaPipeWebCam cameraOn={cameraOn} />
             <StartButton onClick={handleClickButton} cameraOn={cameraOn}>
               <StartTriangle cameraOn={cameraOn} />
             </StartButton>

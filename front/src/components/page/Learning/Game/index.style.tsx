@@ -174,6 +174,7 @@ interface StartButtonProp {
 }
 
 export const StartButton = styled.div<StartButtonProp>`
+  z-index: 10;
   width: 10rem;
   height: 7rem;
   border-radius: 1.5rem;
