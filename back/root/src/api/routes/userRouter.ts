@@ -6,7 +6,7 @@ import UserService from "../../services/userService";
 import { MongoUserModel } from "../../db";
 import { IScore } from "../../models/interfaces/IScore";
 import checkLogin from "../middlewares/checkLogin";
-import { getToptenScores } from "../../utils/topTenScore";
+import { getToptenScores } from "../../utils/getToptenScore";
 
 const userRouter = Router();
 const userService = new UserService(new MongoUserModel());
