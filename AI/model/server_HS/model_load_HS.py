@@ -2,6 +2,11 @@ import numpy as np
 import tensorflow as tf
 import os
 from scipy.stats import rankdata
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import LSTM, Dense, Input
+from tensorflow.keras.callbacks import TensorBoard, ModelCheckpoint
+from tensorflow.keras.optimizers import Adam
+from datetime import datetime
 
 # 정리를 해야함
 # Actions that we try to detect
@@ -20,12 +25,22 @@ def build_model(mode='A'):
     :return model:
     '''
     print("실제 모델 모드: ", mode)
-    ALPHABET_MODEL_PATH = "model_hs_8"
-    WORD_MODEL_PATH = "model_hs_word_1"
-    model_path = ALPHABET_MODEL_PATH if mode == 'A' else WORD_MODEL_PATH
-    # print(os.getcwd())
-    # PATH = os.path.join(os.getcwd(), model_path)
-    return tf.keras.models.load_model(model_path)
+   
+    actions = choose_action(mode)
+    model = Sequential()
+    model.add(LSTM(64, return_sequences=True, activation='relu', input_shape=(30,258)))
+    model.add(LSTM(128, return_sequences=True, activation='relu'))
+    model.add(LSTM(64, return_sequences=False, activation='relu'))
+    model.add(Dense(64, activation='relu'))
+    model.add(Dense(32, activation='relu'))
+    model.add(Dense(actions.shape[0], activation='softmax'))
+    model.compile(optimizer='Adam', loss='categorical_crossentropy', metrics=['categorical_accuracy'])
+    
+    if mode=="A":
+        model.load_weights('action_hs_8.h5')
+    else:
+        model.load_weights('action_hs_word_1.h5')
+    return model
 
 
 def top_n(n, array):
@@ -45,12 +60,22 @@ def top_n(n, array):
 
 
 def extract_keypoints(results):
-    poses = results['poseLandmarks']
-    lhs = results['leftHandLandmarks']
-    rhs = results['rightHandLandmarks']
-    pose = np.array([[res['x'], res['y'], res['z'], res['visibility']] for res in poses]).flatten() if poses else np.zeros(33*4)
-    lh = np.array([[res['x'], res['y'], res['z']] for res in lhs]).flatten() if lhs else np.zeros(21*3)
-    rh = np.array([[res['x'], res['y'], res['z']] for res in rhs]).flatten() if rhs else np.zeros(21*3)
+    try:
+        poses = results['poseLandmarks']
+    except:
+        poses = [{"x": 0, "y": 0, "z": 0, "visibility": 0} for res in range(33)]
+    try:
+        lhs = results['leftHandLandmarks']
+    except:
+        lhs = [{"x": 0, "y": 0, "z": 0} for res in range(21)]
+    try:
+        rhs = results['rightHandLandmarks']
+    except:
+        rhs = [{"x": 0, "y": 0, "z": 0} for res in range(21)]
+    pose = np.array([[res['x'], res['y'], res['z'], res['visibility']] for res in poses]).flatten()
+    lh = np.array([[res['x'], res['y'], res['z']] for res in lhs]).flatten()
+    rh = np.array([[res['x'], res['y'], res['z']] for res in rhs]).flatten()
+
     return np.concatenate([pose, lh, rh])
 
 
@@ -65,7 +90,7 @@ def result_to_sequence(result):
     for num in range(SEQ_LENGTH):
         keypoint = extract_keypoints(result[num])
         input_sequences.append(keypoint)
-    print(input_sequences)
+    # print(input_sequences)
     return input_sequences
 
 
@@ -85,5 +110,3 @@ def prediction(result, mode):
     predict_top3_idx = top_n(3, res)
     top3_alphabet = [actions[i] for i in predict_top3_idx]
     return top3_alphabet
-
-

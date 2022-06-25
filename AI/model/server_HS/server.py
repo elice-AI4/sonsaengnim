@@ -8,9 +8,9 @@ from time import sleep
 from model_load_HS import prediction
 
 app = Flask(__name__)
+CORS(app)
 app.config['SECRET_KEY'] = 'secret!'
-socket = SocketIO(app)
-CORS(app, cors_allowed_origins='*', engineio_logger=True)
+socket = SocketIO(app, cors_allowed_origins='*', engineio_logger=True)
 
 # prediction generator
 class HandSignModel:
@@ -21,10 +21,7 @@ class HandSignModel:
 
     def predict(self, data):
         print('start prediction')
-        try:
-            return prediction(data, mode=self.mode)
-        except:
-            print("predict Error: could not predict")
+        return prediction(data, mode=self.mode)
 
     def run(self, data):
         result = self.predict(data)
@@ -53,4 +50,4 @@ def disconnect_socket(payload):
 
 
 if __name__ == '__main__':
-    socket.run(app)
+    socket.run(app, port = 4000)
