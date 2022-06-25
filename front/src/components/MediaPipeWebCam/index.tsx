@@ -70,9 +70,9 @@ function MediaPipeWebCam({ cameraOn }: WebCamProps) {
     setMediapipeData((cur) => {
       const temp = [...cur];
       temp.push(data);
-      if (temp.length == 40) {
-        socket?.emit("coordinate", temp);
+      if (temp.length == 30) {
         console.log(temp);
+        socket?.emit("coordinate", temp);
       }
       return temp;
     });
@@ -179,7 +179,7 @@ function MediaPipeWebCam({ cameraOn }: WebCamProps) {
   }, []);
 
   useEffect(() => {
-    setSocket(io("http://localhost:5000"));
+    setSocket(io("http://localhost:4000"));
     // const socket: Socket<ServerToClientEvents, ClientToServerEvents> =
 
     return () => {
