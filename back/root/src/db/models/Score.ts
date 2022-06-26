@@ -19,6 +19,19 @@ export class MongoScoreModel implements IScoreModel {
 
   async getTopten() {
     // 동점자 처리 필요
-    return await Score.find().sort({ created_at: -1 }).sort({ score: -1 });
+    // return await Score.find().sort({ created_at: -1 }).sort({ score: -1 });
+    return await Score.aggregate([
+      {
+        $setWindowFields: {
+          partitionBy: "$state",
+          sortBy: { score: -1 },
+          output: {
+            rank: {
+              $rank: {},
+            },
+          },
+        },
+      },
+    ]).limit(10);
   }
 }
