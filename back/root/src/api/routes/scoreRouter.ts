@@ -10,7 +10,6 @@ scoreRouter.get("/", checkLogin, async (req, res, next) => {
   try {
     const { score } = req.body;
     const userId: string = req.user;
-
     const scoreBoard = await scoreService.addScore({ userId, score });
     res.status(200).send(scoreBoard);
   } catch (error) {
