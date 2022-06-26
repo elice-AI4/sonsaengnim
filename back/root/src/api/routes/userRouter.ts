@@ -9,6 +9,17 @@ import checkLogin from "../middlewares/checkLogin";
 const userRouter = Router();
 const userService = new UserService(new MongoUserModel());
 
+userRouter.get("/jwt/:token", async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const token = req.params.token;
+    const accessToken = await userService.getToken(token);
+    res.status(201).json({ message: "토큰을 재발급 하였습니다.", accessToken });
+  } catch (error) {
+    res.status(400);
+    next(error);
+  }
+});
+
 userRouter.post("/", userValidateOptional, async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { email, password } = req.body;
