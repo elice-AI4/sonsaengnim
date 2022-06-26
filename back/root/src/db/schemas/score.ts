@@ -4,13 +4,14 @@ import { model, Schema } from "mongoose";
 // 1. Create an interface representing a document in MongoDB.
 const scoreSchema = new Schema(
   {
-    username: {
-      type: String,
-      required: true,
-      index: true,
+    userId: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+      unique: true,
     },
-    scores: {
-      type: Array,
+    score: {
+      type: Number,
+      required: true,
     },
   },
   {
