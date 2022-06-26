@@ -21,7 +21,7 @@ const userSchema = new Schema(
       required: true,
     },
     scores: {
-      type: Array<IScore>,
+      type: Array<IScore>, // 수정 필요
     },
   },
   {
