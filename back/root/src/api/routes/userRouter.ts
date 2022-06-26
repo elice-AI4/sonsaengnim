@@ -32,7 +32,7 @@ userRouter.post("/", userValidateOptional, async (req: Request, res: Response, n
   }
 });
 
-userRouter.put("/info", checkLogin, userValidateOptional, async (req: Request, res: Response, next: NextFunction) => {
+userRouter.put("/", checkLogin, userValidateOptional, async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { username, email } = req.body;
     const userId = req.user;
