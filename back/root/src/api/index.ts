@@ -1,17 +1,17 @@
 import { Router } from "express";
 // import { indexRouter } from "./indexRouter";
-import { registerRouter } from "./routes/registerRouter";
-import { indexRouter } from "./routes/indexRouter";
-import { userRouter } from "./routes/userRouter";
-import { handRouter } from "./routes/handRouter";
-import { scoreRouter } from "./routes/scoreRouter";
+import registerRouter from "./routes/registerRouter";
+import indexRouter from "./routes/indexRouter";
+import userRouter from "./routes/userRouter";
+import handRouter from "./routes/handRouter";
 
-const router = Router();
+export default () => {
+  const app = Router();
 
-router.use("/", indexRouter);
-router.use("/register", registerRouter);
-router.use("/user", userRouter);
-router.use("/hands", handRouter);
-router.use("/scores", scoreRouter);
+  indexRouter(app);
+  registerRouter(app);
+  userRouter(app);
+  handRouter(app);
 
-export { router };
+  return app;
+};

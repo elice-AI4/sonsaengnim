@@ -9,11 +9,15 @@ const handSchema = new Schema(
       required: true,
       index: true,
     },
-    handVideo: {
+    handImage: {
       type: String,
       required: true,
     },
-    mouthVideo: {
+    mouthImage: {
+      type: String,
+      required: true,
+    },
+    video: {
       type: String,
       required: true,
     },

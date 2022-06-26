@@ -1,4 +1,3 @@
-import { IScore } from "./IScore";
 export interface IUser {
   _id: string;
   username: string;
@@ -8,5 +7,4 @@ export interface IUser {
   updatedAt: string;
   errorMessage?;
   userId?: string;
-  scores?: Array<IScore>;
 }

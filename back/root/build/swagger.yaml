@@ -64,7 +64,32 @@ paths:
     put:
       tags:
         - Login User
-      summary: "modify User information"
+      summary: "Login User"
+      description: ""
+      consumes:
+        - "application/json"
+        - "application/xml"
+      produces:
+        - "application/xml"
+        - "application/json"
+      parameters:
+        - name: authorization
+          in: header
+          type: string
+          required: true
+        - in: "body"
+          name: "body"
+          description: "Register User"
+          required: true
+          schema:
+            $ref: "#/definitions/User"
+      responses:
+        "405":
+          description: "Invalid input"
+    patch:
+      tags:
+        - Login User
+      summary: "Login User"
       description: ""
       consumes:
         - "application/json"
@@ -89,7 +114,7 @@ paths:
     delete:
       tags:
         - Login User
-      summary: "Delete User"
+      summary: "Login User"
       description: ""
       consumes:
         - "application/json"
@@ -107,53 +132,6 @@ paths:
       responses:
         "405":
           description: "Invalid input"
-
-  /user/password:
-    put:
-      tags:
-        - Login User
-      summary: "user password modify"
-      description: ""
-      consumes:
-        - "application/json"
-        - "application/xml"
-      produces:
-        - "application/xml"
-        - "application/json"
-      parameters:
-        - name: authorization
-          in: header
-          type: string
-          required: true
-        - in: "body"
-          name: "body"
-          description: "Register User"
-          required: true
-          schema:
-            $ref: "#/definitions/User"
-      responses:
-        "405":
-          description: "Invalid input"
-
-  /user/jwt/{token}:
-    get:
-      tags:
-        - Login User
-      description: "reissue jwt token "
-      consumes:
-        - "application/json"
-      produces:
-        - "application/json"
-      parameters:
-        - in: path
-          name: token
-          schema:
-            type: string
-          required: true
-          description: get token
-      responses:
-        "200":
-          description: Return JSON
 
   /hands:
     post:
@@ -229,7 +207,7 @@ definitions:
         type: "string"
       password:
         type: "string"
-      username:
+      name:
         type: "string"
     xml:
       name: "Order"
@@ -239,12 +217,15 @@ definitions:
       alphabet:
         type: string
         example: "test"
-      handVideo:
+      handImage:
         type: string
-        example: "test hand video"
-      mouthVideo:
+        example: "test hand image"
+      mouthImage:
         type: string
-        example: "test mouth video"
+        example: "test mouth image"
+      video:
+        type: string
+        example: "test video"
 
 externalDocs:
   description: "Find out more about Swagger"
