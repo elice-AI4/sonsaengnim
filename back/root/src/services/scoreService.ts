@@ -10,6 +10,7 @@ export default class ScoreService {
   }
 
   async getTopten() {
-    return "success";
+    const topten = await this.scoreModel.getTopten();
+    return topten;
   }
 }
