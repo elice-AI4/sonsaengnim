@@ -25,4 +25,22 @@ export class MongoUserModel implements IUserModel {
     const user = await User.findById(userId).lean();
     return user;
   }
+
+  async pushScore(userId: string, newScore: number) {
+    const user = await User.findById(userId).lean();
+    const updatedUser = await User.findByIdAndUpdate(
+      userId,
+      {
+        $push: {
+          scores: {
+            username: user.username,
+            score: newScore,
+            createdAt: new Date(),
+          },
+        },
+      },
+      { new: true },
+    );
+    return updatedUser;
+  }
 }
