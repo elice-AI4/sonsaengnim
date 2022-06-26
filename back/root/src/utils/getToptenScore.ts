@@ -1,0 +1,3 @@
+const getToptenScores = () => {};
+
+export { getToptenScores };

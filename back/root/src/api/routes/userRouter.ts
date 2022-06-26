@@ -4,40 +4,52 @@ import { userValidateOptional } from "../middlewares/validators";
 import UserService from "../../services/userService";
 
 import { MongoUserModel } from "../../db";
-
 import checkLogin from "../middlewares/checkLogin";
 
-export default (app: Router) => {
-  const userRouter = Router();
-  const userService = new UserService(new MongoUserModel());
+const userRouter = Router();
+const userService = new UserService(new MongoUserModel());
 
-  app.use("/user", userRouter);
+userRouter.get("/jwt/:token", async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const token = req.params.token;
+    const accessToken = await userService.getToken(token);
+    res.status(201).json({ message: "토큰을 재발급 하였습니다.", accessToken });
+  } catch (error) {
+    res.status(400);
+    next(error);
+  }
+});
 
-  userRouter.post("/", userValidateOptional, async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      const { email, password } = req.body;
-      const loginedUser = await userService.login(email, password);
+userRouter.post("/", userValidateOptional, async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const { email, password } = req.body;
+    const loginedUser = await userService.login(email, password);
 
-      res.status(200).json(loginedUser);
-    } catch (error) {
-      res.statusCode = 400;
-      next(error);
-    }
-  });
+    res.status(200).json(loginedUser);
+  } catch (error) {
+    res.status(400);
+    next(error);
+  }
+});
 
-  userRouter.put("/", checkLogin, userValidateOptional, async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      const { username, email } = req.body;
-      const userId = req.user;
+userRouter.put("/", checkLogin, userValidateOptional, async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const { username, email } = req.body;
+    const userId = req.user;
 
-      const updatedUser = await userService.updateUser(userId, email, username);
-      res.status(200).json(updatedUser);
-    } catch (error) {
-      next(error);
-    }
-  });
+    const updatedUser = await userService.updateUser(userId, email, username);
+    res.status(200).json(updatedUser);
+  } catch (error) {
+    res.status(400);
+    next(error);
+  }
+});
 
-  userRouter.patch("/", checkLogin, userValidateOptional, async (req: Request, res: Response, next: NextFunction) => {
+userRouter.put(
+  "/password",
+  checkLogin,
+  userValidateOptional,
+  async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { password } = req.body;
       const userId = req.user;
@@ -45,18 +57,33 @@ export default (app: Router) => {
       const updatedUser = await userService.changePassword(userId, password);
       res.status(200).json(updatedUser);
     } catch (error) {
+      res.status(400);
       next(error);
     }
-  });
+  },
+);
 
-  userRouter.delete("/", checkLogin, async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      const userId: string = req.user;
+userRouter.delete("/", checkLogin, async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const userId: string = req.user;
 
-      const deletedUser = await userService.deleteUser(userId);
-      res.status(200).json(deletedUser);
-    } catch (error) {
-      next(error);
-    }
-  });
-};
+    const deletedUser = await userService.deleteUser(userId);
+    res.status(200).json(deletedUser);
+  } catch (error) {
+    res.status(400);
+    next(error);
+  }
+});
+
+userRouter.post("/score", checkLogin, async (req, res, next) => {
+  try {
+    const { score } = req.body;
+    const userId: string = req.user;
+    const newUser = await userService.addScore(userId, score);
+    res.status(200).json(newUser);
+  } catch (error) {
+    next(error);
+  }
+});
+
+export { userRouter };
