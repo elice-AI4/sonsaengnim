@@ -29,6 +29,8 @@ holistic.setOptions({
 
 interface WebCamProps {
   cameraOn: boolean;
+  isCameraSettingOn: () => void;
+  isLoading: boolean;
 }
 
 interface MediapipeDataProps {
@@ -48,7 +50,11 @@ interface ClientToServerEvents {
   coordinate: (hands: MediapipeDataProps[]) => void;
 }
 
-function MediaPipeWebCam({ cameraOn }: WebCamProps) {
+function MediaPipeWebCam({
+  cameraOn,
+  isCameraSettingOn,
+  isLoading,
+}: WebCamProps) {
   const webcamRef = useRef<Webcam>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [subject, setSubject] = useState<Subject<MediapipeDataProps>>();
@@ -71,7 +77,6 @@ function MediaPipeWebCam({ cameraOn }: WebCamProps) {
       const temp = [...cur];
       temp.push(data);
       if (temp.length == 30) {
-        console.log(temp);
         socket?.emit("coordinate", temp);
       }
       return temp;
@@ -163,6 +168,7 @@ function MediaPipeWebCam({ cameraOn }: WebCamProps) {
             return;
           }
           await holistic.send({ image: webcamRef.current?.video });
+          isCameraSettingOn();
         },
         width: 640,
         height: 480,
@@ -221,7 +227,6 @@ function MediaPipeWebCam({ cameraOn }: WebCamProps) {
         }}
       />
       {cameraOn && <UserCanvas ref={canvasRef} />}
-      <h1>{socketAnswer && socketAnswer.data}</h1>
     </>
   );
 }

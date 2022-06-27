@@ -66,6 +66,7 @@ function QuizGame() {
   const [quizNumber, setQuizNumber] = useState<number>(
     Math.floor(Math.random() * 10) + 1
   );
+  const [isLoading, setIsLoading] = useState(true);
 
   const [cameraOn, setCameraOn] = useState(false);
 
@@ -105,6 +106,10 @@ function QuizGame() {
     }
   }, [socket]);
 
+  const isCameraSettingOn = () => {
+    setIsLoading(false);
+  };
+
   return (
     <ProblemBox>
       <Modal
@@ -138,7 +143,11 @@ function QuizGame() {
           src={`${process.env.PUBLIC_URL}/quizgamepic/p${quizNumber}.jpg`}
         ></ProblemImg>
         <AnswerBox>
-          <MediaPipeWebCam cameraOn={cameraOn} />
+          <MediaPipeWebCam
+            cameraOn={cameraOn}
+            isCameraSettingOn={isCameraSettingOn}
+            isLoading={isLoading}
+          />
         </AnswerBox>
       </QuizBox>
       <ButtonBox>
