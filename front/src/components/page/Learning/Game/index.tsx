@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   Image,
   GameContainer,
@@ -65,6 +65,7 @@ const LearningGame = () => {
   const [isAlphabetLearningPage, setIsAlphabetLearningPage] = useState(true);
   const [cameraOn, setCameraOn] = useState(false);
   const [isHandVideo, setIsHandVideo] = useState(true);
+  const lazyStartTimerId: { current: any } = useRef(null);
 
   // useEffect(() => {
   //   const sub = new Subject<MediapipeDataProps[]>();
@@ -87,7 +88,9 @@ const LearningGame = () => {
   };
 
   const handleClickButton = () => {
-    setCameraOn(true);
+    lazyStartTimerId.current = setTimeout(() => {
+      setCameraOn(true);
+    }, 2000);
   };
   const getVideos = async () => {
     const res = await Api.get("hands");
@@ -96,6 +99,10 @@ const LearningGame = () => {
       handVideo: res.data[0]?.handVideo,
       mouthVideo: res.data[0]?.mouthVideo,
     });
+  };
+
+  const handleOffMediapipe = () => {
+    setCameraOn(false);
   };
 
   useEffect(() => {
@@ -111,27 +118,20 @@ const LearningGame = () => {
     }
   }, []);
 
-  useEffect(() => {
-    if (cameraOn === true) {
-      const timer = setTimeout(() => {
-        setCameraOn(false);
-      }, 5000);
-
-      return () => clearTimeout(timer);
-    }
-  }, [cameraOn]);
-
   const [isLoading, setIsLoading] = useState(true);
   const isCameraSettingOn = () => {
     if (isLoading === false) return;
     setIsLoading(false);
-    // console.log("로딩 끝");
-    // console.log(isLoading);
   };
 
   useEffect(() => {
-    console.log(isLoading);
-  }, [isLoading]);
+    return () => {
+      if (lazyStartTimerId !== null) {
+        clearTimeout(lazyStartTimerId.current);
+      }
+    };
+  }, []);
+
   return (
     <>
       {isLoading && <Loading />}
@@ -205,14 +205,14 @@ const LearningGame = () => {
                 <GreenCircle />
                 <BlueCircle />
               </CircleContainer>
-              <Explain>5초 동안 동작을 취해주세요.</Explain>
+              <Explain>오른손으로 동작을 취해주세요.</Explain>
               <HR />
             </TopContainer>
             <BottomContainer>
               <MediaPipeWebCam
                 cameraOn={cameraOn}
+                handleOffMediapipe={handleOffMediapipe}
                 isCameraSettingOn={isCameraSettingOn}
-                isLoading={isLoading}
               />
               <StartButton onClick={handleClickButton} cameraOn={cameraOn}>
                 <StartTriangle cameraOn={cameraOn} />

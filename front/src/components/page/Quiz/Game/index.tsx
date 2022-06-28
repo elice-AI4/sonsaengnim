@@ -109,6 +109,9 @@ function QuizGame() {
   const isCameraSettingOn = () => {
     setIsLoading(false);
   };
+  const handleOffMediapipe = () => {
+    setCameraOn(false);
+  };
 
   return (
     <ProblemBox>
@@ -145,8 +148,8 @@ function QuizGame() {
         <AnswerBox>
           <MediaPipeWebCam
             cameraOn={cameraOn}
+            handleOffMediapipe={handleOffMediapipe}
             isCameraSettingOn={isCameraSettingOn}
-            isLoading={isLoading}
           />
         </AnswerBox>
       </QuizBox>

@@ -29,8 +29,8 @@ holistic.setOptions({
 
 interface WebCamProps {
   cameraOn: boolean;
+  handleOffMediapipe: () => void;
   isCameraSettingOn: () => void;
-  isLoading: boolean;
 }
 
 interface MediapipeDataProps {
@@ -52,8 +52,8 @@ interface ClientToServerEvents {
 
 function MediaPipeWebCam({
   cameraOn,
+  handleOffMediapipe,
   isCameraSettingOn,
-  isLoading,
 }: WebCamProps) {
   const webcamRef = useRef<Webcam>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -76,9 +76,7 @@ function MediaPipeWebCam({
     setMediapipeData((cur) => {
       const temp = [...cur];
       temp.push(data);
-      if (temp.length == 30) {
-        socket?.emit("coordinate", temp);
-      }
+
       return temp;
     });
 
@@ -140,6 +138,13 @@ function MediaPipeWebCam({
       lineWidth: 2,
     });
   };
+  useEffect(() => {
+    if (mediapipeData.length === 60) {
+      console.log("60개 채웠어요!");
+      socket?.emit("coordinate", mediapipeData);
+      handleOffMediapipe();
+    }
+  }, [mediapipeData]);
 
   useEffect(() => {
     if (cameraOn) {
