@@ -7,11 +7,11 @@ host: "localhost:5000"
 basePath: "/"
 tags:
   - name: Sign Language
-    description: "Sing Language in Alphabets"
+    description: "Sing Language in Alphabets API"
   - name: Register User
     description: "Registering User"
-  - name: Login User
-    description: "Login User"
+  - name: User
+    description: "User API"
   - name: Score Board
     description: "Top ten scores"
 
@@ -45,7 +45,7 @@ paths:
   /user:
     post:
       tags:
-        - Login User
+        - User
       summary: "Login User"
       description: ""
       consumes:
@@ -66,7 +66,7 @@ paths:
           description: "Invalid input"
     put:
       tags:
-        - Login User
+        - User
       summary: "modify User information"
       description: ""
       consumes:
@@ -91,7 +91,7 @@ paths:
           description: "Invalid input"
     delete:
       tags:
-        - Login User
+        - User
       summary: "Delete User"
       description: ""
       consumes:
@@ -114,7 +114,7 @@ paths:
   /user/password:
     put:
       tags:
-        - Login User
+        - User
       summary: "user password modify"
       description: ""
       consumes:
@@ -141,7 +141,7 @@ paths:
   /user/jwt/{token}:
     get:
       tags:
-        - Login User
+        - User
       description: "reissue jwt token "
       consumes:
         - "application/json"
