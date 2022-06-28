@@ -1,6 +1,20 @@
 import { Link } from "react-router-dom";
 import styled, { css, keyframes } from "styled-components";
 
+const sectionAnimation = keyframes`
+ 0% {
+  opacity: 0;
+  transform: translateY(-20px);
+ }
+ 20% {
+  opacity: 0;
+ }
+ to {
+  opacity: 1;
+  transform: translateY(0);
+ }
+`;
+
 export const AboutContainer = styled.div`
   position: relative;
   transform: translateX(300px);
@@ -26,6 +40,12 @@ export const ImpactWord = styled.span`
 export const Section = styled.section`
   display: flex;
   padding: 3rem;
+  &.target {
+    animation: 1.8s ${sectionAnimation};
+  }
+  &.non-target {
+    opacity: 0;
+  }
 
   &:first-child {
     ${({ theme }) => {
@@ -42,6 +62,7 @@ export const Section = styled.section`
 export const LeftSection = styled.div`
   padding: 2rem;
   flex: 0.4;
+
   /* border: 1px solid; */
 `;
 export const RightSection = styled.div`
