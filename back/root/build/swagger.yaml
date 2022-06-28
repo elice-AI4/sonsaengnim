@@ -11,7 +11,7 @@ tags:
   - name: User
     description: "User API"
   - name: Sign Language
-    description: "Sing Language in Alphabets API"
+    description: "American Sing Language API"
   - name: Score Board
     description: "Top ten scores"
 
@@ -179,7 +179,7 @@ paths:
     get:
       tags:
         - Sign Language
-      description: "getting all alphabet dataset"
+      description: "getting all english dataset"
       consumes:
         - "application/json"
       produces:
@@ -188,22 +188,22 @@ paths:
         "200":
           description: Return JSON
 
-  /hands/{alphabet}:
+  /hands/{english}:
     get:
       tags:
         - Sign Language
-      description: "getting all alphabet dataset"
+      description: "getting all english dataset"
       consumes:
         - "applicaion/json"
       produces:
         - "applicaion/json"
       parameters:
         - in: path
-          name: alphabet
+          name: english
           schema:
             type: string
           required: true
-          description: alphabet string
+          description: english string
       responses:
         "200":
           description: Return JSON
@@ -269,7 +269,7 @@ definitions:
   Hand:
     type: object
     properties:
-      alphabet:
+      english:
         type: string
         example: "test"
       handVideo:

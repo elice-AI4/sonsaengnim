@@ -3,7 +3,7 @@ import { IHand } from "../../models";
 
 const handSchema = new Schema(
   {
-    alphabet: {
+    english: {
       type: String,
       unique: true,
       required: true,
@@ -15,7 +15,7 @@ const handSchema = new Schema(
     },
     mouthVideo: {
       type: String,
-      required: true,
+      required: false,
     },
   },
   {

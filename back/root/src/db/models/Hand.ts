@@ -16,8 +16,8 @@ class MongoHandModel implements IHandModel {
   }
 
   // 수화 데이터 알파벳별로 가져오기
-  public async findByAlphabet(alphabet: string) {
-    const newHand = await Hand.find({ alphabet }).lean();
+  public async findByEnglish(english: string) {
+    const newHand = await Hand.find({ english }).lean();
     return newHand;
   }
 

@@ -4,8 +4,8 @@ import { IHand } from "../models";
 export default class HandService {
   constructor(private handModel: MongoHandModel) {}
 
-  public async get(alphabet: string) {
-    const hand = await this.handModel.findByAlphabet(alphabet);
+  public async get(english: string) {
+    const hand = await this.handModel.findByEnglish(english);
     if (hand.length === 0) {
       throw new Error("해당 알파벳 데이터를 찾을 수 없습니다.");
     }
