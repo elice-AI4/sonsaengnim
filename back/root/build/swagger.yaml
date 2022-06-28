@@ -12,6 +12,9 @@ tags:
     description: "Registering User"
   - name: Login User
     description: "Login User"
+  - name: Score Board
+    description: "Top ten scores"
+
 schemes:
   - "http"
 
@@ -207,6 +210,39 @@ paths:
       responses:
         "200":
           description: Return JSON
+  /scores:
+    post:
+      tags:
+        - Score Board
+      description: "putting score"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - name: authorization
+          in: header
+          type: string
+          required: true
+        - in: "body"
+          name: "body"
+          description: "Register score data"
+          required: true
+          schema:
+            $ref: "#/definitions/Score"
+      responses:
+        "201":
+          description: "POST Successful."
+        "405":
+          description: "Invalid input"
+  /scores/topten:
+    get:
+      tags:
+        - Score Board
+      description: "Get Top ten scores"
+      responses:
+        "200":
+          description: Return JSON
 
 securityDefinitions:
   petstore_auth:
@@ -245,6 +281,12 @@ definitions:
       mouthVideo:
         type: string
         example: "test mouth video"
+  Score:
+    type: object
+    properties:
+      score:
+        type: number
+        example: 50
 
 externalDocs:
   description: "Find out more about Swagger"
