@@ -215,7 +215,6 @@ const LearningGame = () => {
                 cameraOn={cameraOn}
                 handleOffMediapipe={handleOffMediapipe}
                 isCameraSettingOn={isCameraSettingOn}
-                isLoading={isLoading}
               />
               <StartButton onClick={handleClickButton} cameraOn={cameraOn}>
                 <StartTriangle cameraOn={cameraOn} />

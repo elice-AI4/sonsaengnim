@@ -31,7 +31,6 @@ interface WebCamProps {
   cameraOn: boolean;
   handleOffMediapipe: () => void;
   isCameraSettingOn: () => void;
-  isLoading: boolean;
 }
 
 interface MediapipeDataProps {
@@ -55,7 +54,6 @@ function MediaPipeWebCam({
   cameraOn,
   handleOffMediapipe,
   isCameraSettingOn,
-  isLoading,
 }: WebCamProps) {
   const webcamRef = useRef<Webcam>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -79,13 +77,10 @@ function MediaPipeWebCam({
     setMediapipeData((cur) => {
       const temp = [...cur];
       temp.push(data);
-<<<<<<< HEAD
       if (temp.length == 10) {
         socket?.emit("coordinate", temp);
         console.log(temp);
       }
-=======
->>>>>>> 30b6380dea606fc7516c2eac1e8b3384569cba08
       return temp;
     });
 
