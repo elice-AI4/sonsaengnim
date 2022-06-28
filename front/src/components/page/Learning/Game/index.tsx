@@ -23,8 +23,11 @@ import {
 import { useLocation } from "react-router";
 import * as Api from "../../../../api";
 import ButtonList from "./buttonList/ButtonList";
-import MediaPipeWebCam from "../../../MediaPipeWebCam";
+import MediaPipeWebCam, { ServerToClientData } from "../../../MediaPipeWebCam";
 import Loading from "../../../Loading";
+import Modal from "../../Modal";
+
+const ALPHABET_LENGTH = 26;
 
 interface VideoDataProps {
   _id: string;
@@ -44,7 +47,10 @@ const LearningGame = () => {
   const [wordList, setWordList] = useState<string[]>();
   const [isAlphabetLearningPage, setIsAlphabetLearningPage] = useState(true);
   const [cameraOn, setCameraOn] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [isHandVideo, setIsHandVideo] = useState(true);
+  const [socketAnswer, setSocketAnswer] = useState<ServerToClientData>();
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const lazyStartTimerId: { current: any } = useRef(null);
 
   const handleSetVideo = (index: number) => {
@@ -55,8 +61,8 @@ const LearningGame = () => {
       });
     } else {
       setCurVideo({
-        handVideo: videos[index + 26].handVideo,
-        mouthVideo: String(videos[index + 26].mouthVideo),
+        handVideo: videos[index + ALPHABET_LENGTH].handVideo,
+        mouthVideo: String(videos[index + ALPHABET_LENGTH].mouthVideo),
       });
     }
   };
@@ -64,13 +70,20 @@ const LearningGame = () => {
   const handleClickButton = () => {
     lazyStartTimerId.current = setTimeout(() => {
       setCameraOn(true);
-    }, 2000);
+    }, 1200);
+  };
+  const handleSetSocketAnswer = (answer: ServerToClientData) => {
+    setSocketAnswer(answer);
+    setIsModalOpen(false);
   };
   const getVideos = async (localIsAlphabet: boolean) => {
     const res = await Api.get("hands");
     setVideos(res.data);
 
-    const words: VideoDataProps[] = res.data.slice(26, res.data.length);
+    const words: VideoDataProps[] = res.data.slice(
+      ALPHABET_LENGTH,
+      res.data.length
+    );
     const wordList = words.map((word) => {
       return word.english;
     });
@@ -83,7 +96,7 @@ const LearningGame = () => {
       });
     } else {
       setCurVideo({
-        handVideo: res.data[26]?.handVideo,
+        handVideo: res.data[ALPHABET_LENGTH]?.handVideo,
         mouthVideo: "",
       });
     }
@@ -91,6 +104,9 @@ const LearningGame = () => {
 
   const handleOffMediapipe = () => {
     setCameraOn(false);
+  };
+  const openModal = () => {
+    setIsModalOpen(true);
   };
 
   useEffect(() => {
@@ -107,7 +123,6 @@ const LearningGame = () => {
     }
   }, []);
 
-  const [isLoading, setIsLoading] = useState(true);
   const isCameraSettingOn = () => {
     if (isLoading === false) return;
     setIsLoading(false);
@@ -123,6 +138,16 @@ const LearningGame = () => {
 
   return (
     <>
+      {isModalOpen && (
+        <Modal
+          visible={true}
+          closeModal={() => {
+            undefined;
+          }}
+        >
+          hello
+        </Modal>
+      )}
       {isLoading && <Loading />}
       <GameContainer>
         <Sidebar>
@@ -214,6 +239,8 @@ const LearningGame = () => {
                 cameraOn={cameraOn}
                 handleOffMediapipe={handleOffMediapipe}
                 isCameraSettingOn={isCameraSettingOn}
+                handleSetSocketAnswer={handleSetSocketAnswer}
+                openModal={openModal}
               />
               <StartButton onClick={handleClickButton} cameraOn={cameraOn}>
                 <StartTriangle cameraOn={cameraOn} />

@@ -26,11 +26,22 @@ holistic.setOptions({
   minDetectionConfidence: 0.5,
   minTrackingConfidence: 0.5,
 });
+export interface ServerToClientData {
+  data: string[];
+}
+interface ServerToClientEvents {
+  answer: (data: ServerToClientData) => void;
+}
+interface ClientToServerEvents {
+  coordinate: (hands: MediapipeDataProps[]) => void;
+}
 
 interface WebCamProps {
   cameraOn: boolean;
   handleOffMediapipe: () => void;
   isCameraSettingOn: () => void;
+  handleSetSocketAnswer?: (answer: ServerToClientData) => void;
+  openModal?: () => void;
 }
 
 interface MediapipeDataProps {
@@ -39,21 +50,12 @@ interface MediapipeDataProps {
   rightHandLandmarks: h.NormalizedLandmarkList;
 }
 
-interface ServerToClientData {
-  data: boolean;
-}
-
-interface ServerToClientEvents {
-  answer: (data: ServerToClientData) => void;
-}
-interface ClientToServerEvents {
-  coordinate: (hands: MediapipeDataProps[]) => void;
-}
-
 function MediaPipeWebCam({
   cameraOn,
   handleOffMediapipe,
   isCameraSettingOn,
+  handleSetSocketAnswer,
+  openModal,
 }: WebCamProps) {
   const webcamRef = useRef<Webcam>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -138,6 +140,7 @@ function MediaPipeWebCam({
   useEffect(() => {
     if (mediapipeData.length === 50) {
       startRef.current = new Date();
+      openModal && openModal();
       socket?.emit("coordinate", mediapipeData);
       middleRef.current = new Date();
       console.log("startRef 값 : ", startRef.current);
@@ -213,6 +216,7 @@ function MediaPipeWebCam({
     if (socket) {
       const func = (data: ServerToClientData) => {
         endRef.current = new Date();
+        handleSetSocketAnswer && handleSetSocketAnswer(data);
         setSocketAnswer(data);
         console.log("endRef 값 : ", endRef.current);
         console.log("둘의 차이 : ", endRef.current - startRef.current);
