@@ -121,6 +121,7 @@ const LearningGame = () => {
   const [isLoading, setIsLoading] = useState(true);
   const isCameraSettingOn = () => {
     if (isLoading === false) return;
+    console.log("ㅎㅇㅎㅇ");
     setIsLoading(false);
   };
 
