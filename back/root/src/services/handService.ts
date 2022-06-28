@@ -7,7 +7,7 @@ export default class HandService {
   public async get(english: string) {
     const hand = await this.handModel.findByEnglish(english);
     if (hand.length === 0) {
-      throw new Error("해당 알파벳 데이터를 찾을 수 없습니다.");
+      throw new Error("해당 수화 데이터를 찾을 수 없습니다.");
     }
     return hand;
   }
@@ -15,7 +15,7 @@ export default class HandService {
   async getAll() {
     const hand = await this.handModel.findAll();
     if (hand.length === 0) {
-      throw new Error("수화 데이터가 존재하지 않습니다.");
+      throw new Error("아무런 수화 데이터가 존재하지 않습니다.");
     }
     return hand;
   }

@@ -2,13 +2,13 @@ import { Router, Request, Response, NextFunction } from "express";
 import HandService from "../../services/handService";
 import { MongoHandModel } from "../../db/models/Hand";
 import { IHand } from "../../models";
-import { checkenglishParam, handValidate } from "../middlewares/validators";
+import { checkEnglishParam, handValidate } from "../middlewares/validators";
 
 const handRouter = Router();
 const handService = new HandService(new MongoHandModel());
 
-// 알파벳별 수화 데이터 가져오기
-handRouter.get("/:english", checkenglishParam, async (req: Request, res: Response, next: NextFunction) => {
+// 알파벳 혹은 단어별 수화 데이터 가져오기
+handRouter.get("/:english", checkEnglishParam, async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { english } = req.params;
     const data = await handService.get(english);

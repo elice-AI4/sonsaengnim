@@ -33,4 +33,4 @@ export const handValidate = [
   validate,
 ];
 
-export const checkenglishParam = [param("english").trim(), validate];
+export const checkEnglishParam = [param("english").trim(), validate];
