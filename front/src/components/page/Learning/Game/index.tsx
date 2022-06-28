@@ -28,30 +28,9 @@ import Loading from "../../../Loading";
 
 interface VideoDataProps {
   _id: string;
-  alphabet: string;
+  english: string;
   handVideo: string;
-  mouthVideo: string;
-}
-
-interface MediapipeDataProps {
-  poseLandmarks: {
-    x: number;
-    y: number;
-    z: number;
-    visibility: number | undefined;
-  };
-  leftHandLandmarks: {
-    x: number;
-    y: number;
-    z: number;
-    visibility: number | undefined;
-  };
-  rightHandLandmarks: {
-    x: number;
-    y: number;
-    z: number;
-    visibility: number | undefined;
-  };
+  mouthVideo?: string;
 }
 
 const LearningGame = () => {
@@ -62,29 +41,24 @@ const LearningGame = () => {
     handVideo: "",
     mouthVideo: "",
   });
+  const [wordList, setWordList] = useState<string[]>();
   const [isAlphabetLearningPage, setIsAlphabetLearningPage] = useState(true);
   const [cameraOn, setCameraOn] = useState(false);
   const [isHandVideo, setIsHandVideo] = useState(true);
   const lazyStartTimerId: { current: any } = useRef(null);
 
-  // useEffect(() => {
-  //   const sub = new Subject<MediapipeDataProps[]>();
-
-  //   sub?.subscribe({
-  //     next: (v) => console.log(`observerA: ${v}`),
-  //   });
-  //   setSubject(sub);
-
-  //   const clicks = fromEvent(document, "click");
-  //   const result = clicks.pipe(throttle(() => interval(1000)));
-  //   result.subscribe((x) => console.log(`observerA: ${x.AT_TARGET}`));
-  // }, []);
-
   const handleSetVideo = (index: number) => {
-    setCurVideo({
-      handVideo: videos[index].handVideo,
-      mouthVideo: videos[index].mouthVideo,
-    });
+    if (isAlphabetLearningPage) {
+      setCurVideo({
+        handVideo: videos[index].handVideo,
+        mouthVideo: String(videos[index].mouthVideo),
+      });
+    } else {
+      setCurVideo({
+        handVideo: videos[index + 26].handVideo,
+        mouthVideo: String(videos[index + 26].mouthVideo),
+      });
+    }
   };
 
   const handleClickButton = () => {
@@ -92,13 +66,27 @@ const LearningGame = () => {
       setCameraOn(true);
     }, 2000);
   };
-  const getVideos = async () => {
+  const getVideos = async (localIsAlphabet: boolean) => {
     const res = await Api.get("hands");
     setVideos(res.data);
-    setCurVideo({
-      handVideo: res.data[0]?.handVideo,
-      mouthVideo: res.data[0]?.mouthVideo,
+
+    const words: VideoDataProps[] = res.data.slice(26, res.data.length);
+    const wordList = words.map((word) => {
+      return word.english;
     });
+    setWordList(wordList);
+
+    if (localIsAlphabet) {
+      setCurVideo({
+        handVideo: res.data[0]?.handVideo,
+        mouthVideo: res.data[0]?.mouthVideo,
+      });
+    } else {
+      setCurVideo({
+        handVideo: res.data[26]?.handVideo,
+        mouthVideo: "",
+      });
+    }
   };
 
   const handleOffMediapipe = () => {
@@ -107,8 +95,9 @@ const LearningGame = () => {
 
   useEffect(() => {
     try {
-      getVideos();
-      if (pathname.includes("alphabet") === true) {
+      const localIsAlphabet = pathname.includes("alphabet") === true;
+      getVideos(localIsAlphabet);
+      if (localIsAlphabet) {
         setIsAlphabetLearningPage(true);
       } else {
         setIsAlphabetLearningPage(false);
@@ -121,7 +110,6 @@ const LearningGame = () => {
   const [isLoading, setIsLoading] = useState(true);
   const isCameraSettingOn = () => {
     if (isLoading === false) return;
-    console.log("ㅎㅇㅎㅇ");
     setIsLoading(false);
   };
 
@@ -145,12 +133,14 @@ const LearningGame = () => {
             >
               손모양
             </Button>
-            <Button
-              className={!isHandVideo ? "target" : "non-target"}
-              onClick={() => setIsHandVideo(!isHandVideo)}
-            >
-              입모양
-            </Button>
+            {isAlphabetLearningPage && (
+              <Button
+                className={!isHandVideo ? "target" : "non-target"}
+                onClick={() => setIsHandVideo(!isHandVideo)}
+              >
+                입모양
+              </Button>
+            )}
           </ButtonContainer>
           <ImageContainer>
             <Image>
@@ -181,7 +171,16 @@ const LearningGame = () => {
                   <></>
                 )
               ) : (
-                <></>
+                <video
+                  autoPlay
+                  loop
+                  controls
+                  width="430"
+                  key={curVideo.handVideo}
+                  style={{ borderRadius: "5px" }}
+                >
+                  <source src={curVideo.handVideo} type="video/mp4" />
+                </video>
               )}
             </Image>
             <ImageUnderLine />
@@ -195,6 +194,7 @@ const LearningGame = () => {
             <ButtonList
               handleSetVideo={handleSetVideo}
               isAlphabetLearningPage={isAlphabetLearningPage}
+              wordList={wordList}
             />
           )}
         </Sidebar>

@@ -21,6 +21,7 @@ export const ButtonContainer = styled.div`
   margin: auto;
 
   display: flex;
+  justify-content: center;
 
   font-size: 2rem;
   font-weight: 600;

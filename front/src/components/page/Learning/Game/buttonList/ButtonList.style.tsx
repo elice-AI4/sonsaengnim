@@ -46,3 +46,7 @@ export const Button = styled.div`
     background-color: white;
   }
 `;
+
+export const WordButton = styled(Button)`
+  width: 9rem;
+`;
