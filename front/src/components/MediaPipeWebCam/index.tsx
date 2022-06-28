@@ -64,6 +64,7 @@ function MediaPipeWebCam({
     useState<Socket<ServerToClientEvents, ClientToServerEvents>>();
   const [socketAnswer, setSocketAnswer] = useState<ServerToClientData>();
   const [mediapipeData, setMediapipeData] = useState<MediapipeDataProps[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   const onResults: h.ResultsListener = (results) => {
     if (!canvasRef.current || !webcamRef.current?.video || !cameraOn) {
@@ -78,10 +79,13 @@ function MediaPipeWebCam({
     setMediapipeData((cur) => {
       const temp = [...cur];
       temp.push(data);
+<<<<<<< HEAD
       if (temp.length == 10) {
         socket?.emit("coordinate", temp);
         console.log(temp);
       }
+=======
+>>>>>>> 30b6380dea606fc7516c2eac1e8b3384569cba08
       return temp;
     });
 
@@ -114,7 +118,7 @@ function MediaPipeWebCam({
 
     drawConnectors(canvasCtx, results.poseLandmarks, POSE_CONNECTIONS, {
       color: "#00FF00",
-      lineWidth: 4,
+      lineWidth: 3,
     });
     drawLandmarks(canvasCtx, results.poseLandmarks, {
       color: "#FF0000",
@@ -122,7 +126,7 @@ function MediaPipeWebCam({
     });
     drawConnectors(canvasCtx, results.leftHandLandmarks, HAND_CONNECTIONS, {
       color: "#CC0000",
-      lineWidth: 5,
+      lineWidth: 4,
     });
     drawLandmarks(canvasCtx, results.leftHandLandmarks, {
       color: "#00FF00",
@@ -130,17 +134,25 @@ function MediaPipeWebCam({
     });
     drawConnectors(canvasCtx, results.rightHandLandmarks, HAND_CONNECTIONS, {
       color: "#00CC00",
-      lineWidth: 5,
+      lineWidth: 4,
     });
     drawLandmarks(canvasCtx, results.rightHandLandmarks, {
       color: "#FF0000",
       lineWidth: 2,
     });
   };
+  const startRef: { current: any } = useRef<Date>();
+  const middleRef: { current: any } = useRef<Date>();
+  const endRef: { current: any } = useRef<Date>();
   useEffect(() => {
-    if (mediapipeData.length === 60) {
-      console.log("60개 채웠어요!");
+    if (mediapipeData.length === 50) {
+      startRef.current = new Date();
+      console.log("50개 채웠어요!");
       socket?.emit("coordinate", mediapipeData);
+      middleRef.current = new Date();
+      console.log("startRef 값 : ", startRef.current);
+      console.log("middleRef 값 : ", middleRef.current);
+
       handleOffMediapipe();
     }
   }, [mediapipeData]);
@@ -153,6 +165,12 @@ function MediaPipeWebCam({
       setMediapipeData([]);
     }
   }, [cameraOn]);
+
+  useEffect(() => {
+    if (!isLoading) {
+      isCameraSettingOn();
+    }
+  }, [isLoading]);
 
   useEffect(() => {
     let camera: cam.Camera | null = null;
@@ -172,7 +190,7 @@ function MediaPipeWebCam({
             return;
           }
           await holistic.send({ image: webcamRef.current?.video });
-          isCameraSettingOn();
+          setIsLoading(false);
         },
         width: 640,
         height: 480,
@@ -203,8 +221,11 @@ function MediaPipeWebCam({
   useEffect(() => {
     if (socket) {
       const func = (data: ServerToClientData) => {
+        endRef.current = new Date();
         setSocketAnswer(data);
-        console.log(data);
+        console.log("endRef 값 : ", endRef.current);
+        console.log("둘의 차이 : ", endRef.current - startRef.current);
+        console.log("넘어온 값: ", data);
       };
       socket.on("answer", func);
 
