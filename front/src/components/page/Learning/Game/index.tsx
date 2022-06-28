@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   Image,
   GameContainer,
@@ -24,6 +24,7 @@ import { useLocation } from "react-router";
 import * as Api from "../../../../api";
 import ButtonList from "./buttonList/ButtonList";
 import MediaPipeWebCam from "../../../MediaPipeWebCam";
+import Loading from "../../../Loading";
 
 interface VideoDataProps {
   _id: string;
@@ -64,6 +65,7 @@ const LearningGame = () => {
   const [isAlphabetLearningPage, setIsAlphabetLearningPage] = useState(true);
   const [cameraOn, setCameraOn] = useState(false);
   const [isHandVideo, setIsHandVideo] = useState(true);
+  const lazyStartTimerId: { current: any } = useRef(null);
 
   // useEffect(() => {
   //   const sub = new Subject<MediapipeDataProps[]>();
@@ -86,7 +88,9 @@ const LearningGame = () => {
   };
 
   const handleClickButton = () => {
-    setCameraOn(true);
+    lazyStartTimerId.current = setTimeout(() => {
+      setCameraOn(true);
+    }, 2000);
   };
   const getVideos = async () => {
     const res = await Api.get("hands");
@@ -95,6 +99,10 @@ const LearningGame = () => {
       handVideo: res.data[0]?.handVideo,
       mouthVideo: res.data[0]?.mouthVideo,
     });
+  };
+
+  const handleOffMediapipe = () => {
+    setCameraOn(false);
   };
 
   useEffect(() => {
@@ -110,99 +118,110 @@ const LearningGame = () => {
     }
   }, []);
 
-  useEffect(() => {
-    if (cameraOn === true) {
-      const timer = setTimeout(() => {
-        setCameraOn(false);
-      }, 5000);
+  const [isLoading, setIsLoading] = useState(true);
+  const isCameraSettingOn = () => {
+    if (isLoading === false) return;
+    setIsLoading(false);
+  };
 
-      return () => clearTimeout(timer);
-    }
-  }, [cameraOn]);
+  useEffect(() => {
+    return () => {
+      if (lazyStartTimerId !== null) {
+        clearTimeout(lazyStartTimerId.current);
+      }
+    };
+  }, []);
 
   return (
-    <GameContainer>
-      <Sidebar>
-        <ButtonContainer>
-          <Button
-            className={isHandVideo ? "target" : "non-target"}
-            onClick={() => setIsHandVideo(!isHandVideo)}
-          >
-            손모양
-          </Button>
-          <Button
-            className={!isHandVideo ? "target" : "non-target"}
-            onClick={() => setIsHandVideo(!isHandVideo)}
-          >
-            입모양
-          </Button>
-        </ButtonContainer>
-        <ImageContainer>
-          <Image>
-            {isAlphabetLearningPage ? (
-              isHandVideo ? (
-                <video
-                  autoPlay
-                  loop
-                  controls
-                  width="430"
-                  key={curVideo.handVideo}
-                  style={{ borderRadius: "5px" }}
-                >
-                  <source src={curVideo.handVideo} type="video/mp4" />
-                </video>
-              ) : !isHandVideo ? (
-                <video
-                  autoPlay
-                  loop
-                  controls
-                  width="430"
-                  key={curVideo.mouthVideo}
-                  style={{ borderRadius: "5px" }}
-                >
-                  <source src={curVideo.mouthVideo} type="video/mp4" />
-                </video>
+    <>
+      {isLoading && <Loading />}
+      <GameContainer>
+        <Sidebar>
+          <ButtonContainer>
+            <Button
+              className={isHandVideo ? "target" : "non-target"}
+              onClick={() => setIsHandVideo(!isHandVideo)}
+            >
+              손모양
+            </Button>
+            <Button
+              className={!isHandVideo ? "target" : "non-target"}
+              onClick={() => setIsHandVideo(!isHandVideo)}
+            >
+              입모양
+            </Button>
+          </ButtonContainer>
+          <ImageContainer>
+            <Image>
+              {isAlphabetLearningPage ? (
+                isHandVideo ? (
+                  <video
+                    autoPlay
+                    loop
+                    controls
+                    width="430"
+                    key={curVideo.handVideo}
+                    style={{ borderRadius: "5px" }}
+                  >
+                    <source src={curVideo.handVideo} type="video/mp4" />
+                  </video>
+                ) : !isHandVideo ? (
+                  <video
+                    autoPlay
+                    loop
+                    controls
+                    width="430"
+                    key={curVideo.mouthVideo}
+                    style={{ borderRadius: "5px" }}
+                  >
+                    <source src={curVideo.mouthVideo} type="video/mp4" />
+                  </video>
+                ) : (
+                  <></>
+                )
               ) : (
                 <></>
-              )
-            ) : (
-              <></>
-            )}
-          </Image>
-          <ImageUnderLine />
-        </ImageContainer>
-        {isAlphabetLearningPage === true ? (
-          <ButtonList
-            handleSetVideo={handleSetVideo}
-            isAlphabetLearningPage={isAlphabetLearningPage}
-          />
-        ) : (
-          <ButtonList
-            handleSetVideo={handleSetVideo}
-            isAlphabetLearningPage={isAlphabetLearningPage}
-          />
-        )}
-      </Sidebar>
-      <CameraContainer>
-        <Moniter>
-          <TopContainer>
-            <CircleContainer>
-              <RedCircle />
-              <GreenCircle />
-              <BlueCircle />
-            </CircleContainer>
-            <Explain>5초 동안 동작을 취해주세요.</Explain>
-            <HR />
-          </TopContainer>
-          <BottomContainer>
-            <MediaPipeWebCam cameraOn={cameraOn} />
-            <StartButton onClick={handleClickButton} cameraOn={cameraOn}>
-              <StartTriangle cameraOn={cameraOn} />
-            </StartButton>
-          </BottomContainer>
-        </Moniter>
-      </CameraContainer>
-    </GameContainer>
+              )}
+            </Image>
+            <ImageUnderLine />
+          </ImageContainer>
+          {isAlphabetLearningPage === true ? (
+            <ButtonList
+              handleSetVideo={handleSetVideo}
+              isAlphabetLearningPage={isAlphabetLearningPage}
+            />
+          ) : (
+            <ButtonList
+              handleSetVideo={handleSetVideo}
+              isAlphabetLearningPage={isAlphabetLearningPage}
+            />
+          )}
+        </Sidebar>
+        <CameraContainer>
+          <Moniter>
+            <TopContainer>
+              <CircleContainer>
+                <RedCircle />
+                <GreenCircle />
+                <BlueCircle />
+              </CircleContainer>
+              <Explain>오른손으로 동작을 취해주세요.</Explain>
+              <HR />
+            </TopContainer>
+            <BottomContainer>
+              <MediaPipeWebCam
+                cameraOn={cameraOn}
+                handleOffMediapipe={handleOffMediapipe}
+                isCameraSettingOn={isCameraSettingOn}
+              />
+              <StartButton onClick={handleClickButton} cameraOn={cameraOn}>
+                <StartTriangle cameraOn={cameraOn} />
+              </StartButton>
+            </BottomContainer>
+          </Moniter>
+        </CameraContainer>
+      </GameContainer>
+    </>
   );
 };
 
