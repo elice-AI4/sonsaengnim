@@ -6,12 +6,12 @@ info:
 host: "localhost:5000"
 basePath: "/"
 tags:
-  - name: Sign Language
-    description: "Sing Language in Alphabets API"
   - name: Register User
     description: "Registering User"
   - name: User
     description: "User API"
+  - name: Sign Language
+    description: "Sing Language in Alphabets API"
   - name: Score Board
     description: "Top ten scores"
 
@@ -57,10 +57,11 @@ paths:
       parameters:
         - in: "body"
           name: "body"
-          description: "Register User"
+          description: "Login User"
           required: true
           schema:
             $ref: "#/definitions/User"
+
       responses:
         "405":
           description: "Invalid input"
@@ -142,11 +143,7 @@ paths:
     get:
       tags:
         - User
-      description: "reissue jwt token "
-      consumes:
-        - "application/json"
-      produces:
-        - "application/json"
+      description: "reissue jwt token"
       parameters:
         - in: path
           name: token
