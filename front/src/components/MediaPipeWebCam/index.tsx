@@ -80,12 +80,6 @@ function MediaPipeWebCam({
       return temp;
     });
 
-    // subject?.pipe(throttle(() => interval(1000))).subscribe((data) => {
-    //   socket?.emit("coordinate", { data });
-    //   // console.log(data);
-    // });
-    // subject?.next(data);
-
     canvasRef.current.width = webcamRef.current?.video.videoWidth;
     canvasRef.current.height = webcamRef.current?.video.videoHeight;
 
@@ -144,7 +138,6 @@ function MediaPipeWebCam({
   useEffect(() => {
     if (mediapipeData.length === 50) {
       startRef.current = new Date();
-      console.log("50개 채웠어요!");
       socket?.emit("coordinate", mediapipeData);
       middleRef.current = new Date();
       console.log("startRef 값 : ", startRef.current);
@@ -205,7 +198,6 @@ function MediaPipeWebCam({
 
   useEffect(() => {
     setSocket(io("http://localhost:4000"));
-    // const socket: Socket<ServerToClientEvents, ClientToServerEvents> =
 
     return () => {
       socket?.disconnect();
