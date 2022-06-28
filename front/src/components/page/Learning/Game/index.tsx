@@ -120,7 +120,9 @@ const LearningGame = () => {
 
   const [isLoading, setIsLoading] = useState(true);
   const isCameraSettingOn = () => {
-    if (isLoading === false) return;
+    if (isLoading === false) {
+      return;
+    }
     setIsLoading(false);
   };
 
@@ -213,6 +215,7 @@ const LearningGame = () => {
                 cameraOn={cameraOn}
                 handleOffMediapipe={handleOffMediapipe}
                 isCameraSettingOn={isCameraSettingOn}
+                isLoading={isLoading}
               />
               <StartButton onClick={handleClickButton} cameraOn={cameraOn}>
                 <StartTriangle cameraOn={cameraOn} />

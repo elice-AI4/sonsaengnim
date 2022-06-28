@@ -31,6 +31,7 @@ interface WebCamProps {
   cameraOn: boolean;
   handleOffMediapipe: () => void;
   isCameraSettingOn: () => void;
+  isLoading: boolean;
 }
 
 interface MediapipeDataProps {
@@ -54,6 +55,7 @@ function MediaPipeWebCam({
   cameraOn,
   handleOffMediapipe,
   isCameraSettingOn,
+  isLoading,
 }: WebCamProps) {
   const webcamRef = useRef<Webcam>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);

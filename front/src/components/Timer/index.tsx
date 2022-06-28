@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
+import { TimerBox } from "./index.style";
 
 function Timer() {
   const [min, setMin] = useState(10);
@@ -26,11 +27,11 @@ function Timer() {
   return (
     <>
       {time.current <= 0 ? (
-        <h4>시간이 초과되었습니다.</h4>
+        <TimerBox>시간이 초과되었습니다.</TimerBox>
       ) : (
-        <div className="timer">
-          {min} : {sec}
-        </div>
+        <TimerBox>
+          남은 시간 {min} : {sec}
+        </TimerBox>
       )}
     </>
   );

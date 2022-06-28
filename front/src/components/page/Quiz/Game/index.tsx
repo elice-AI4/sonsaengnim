@@ -5,18 +5,25 @@ import {
   AnswerBox,
   QuizBox,
   ButtonBox,
-  AnswerImg,
+  StartButton,
 } from "./index.style";
 import Modal from "../../Modal";
+import SolveModal from "./SolveModal";
+import RecordModal from "./RecordModal";
 import { io, Socket } from "socket.io-client";
 import MediaPipeWebCam from "./../../../MediaPipeWebCam";
+import Timer from "../../../Timer";
 
-const MAX_COUNT = 10;
+export const MAX_COUNT = 1;
 interface TestData {
   x: number;
   y: number;
   z: number;
   visibility: undefined;
+}
+export interface Score {
+  ans: number;
+  cur: number;
 }
 
 interface ServerToClientData {
@@ -60,8 +67,10 @@ const ModalStyle = {
 
 function QuizGame() {
   const [modal, setModal] = useState<boolean>(false);
+  const [rank, setRank] = useState<boolean>(false);
   const [answer, setAnswer] = useState<boolean>(false);
-  const [score, setScore] = useState<number>(0);
+  const [score, setScore] = useState<Score>({ ans: 0, cur: 0 });
+  const [finish, setFinish] = useState<boolean>(false);
   const [timer, setTimer] = useState<boolean>(false);
   const [quizNumber, setQuizNumber] = useState<number>(
     Math.floor(Math.random() * 10) + 1
@@ -70,11 +79,19 @@ function QuizGame() {
 
   const [cameraOn, setCameraOn] = useState(false);
 
-  const [socket, setSocket] =
-    useState<Socket<ServerToClientEvents, ClientToServerEvents>>();
-
+  // const [socket, setSocket] =
+  //   useState<Socket<ServerToClientEvents, ClientToServerEvents>>();
+  const handleInitial = () => {
+    setScore({ ans: 0, cur: 0 });
+    setModal(false);
+    setRank(false);
+    setFinish(false);
+  };
   const closeModal = () => {
     setModal(false);
+  };
+  const closeRecord = () => {
+    setRank(false);
   };
 
   const nextQuiz = () => {
@@ -82,29 +99,29 @@ function QuizGame() {
     setModal(false);
   };
 
-  const [socketAnswer, setSocketAnswer] = useState<ServerToClientData>();
+  // const [socketAnswer, setSocketAnswer] = useState<ServerToClientData>();
 
-  useEffect(() => {
-    setSocket(io("http://localhost:4000"));
-    // const socket: Socket<ServerToClientEvents, ClientToServerEvents> =
+  // useEffect(() => {
+  //   setSocket(io("http://localhost:4000"));
+  //   // const socket: Socket<ServerToClientEvents, ClientToServerEvents> =
 
-    return () => {
-      socket?.disconnect();
-    };
-  }, []);
+  //   return () => {
+  //     socket?.disconnect();
+  //   };
+  // }, []);
 
-  useEffect(() => {
-    if (socket) {
-      const func = (data: ServerToClientData) => {
-        setSocketAnswer(data);
-      };
-      socket.on("answer", func);
+  // useEffect(() => {
+  //   if (socket) {
+  //     const func = (data: ServerToClientData) => {
+  //       setSocketAnswer(data);
+  //     };
+  //     socket.on("answer", func);
 
-      return () => {
-        socket.off("answer", func);
-      };
-    }
-  }, [socket]);
+  //     return () => {
+  //       socket.off("answer", func);
+  //     };
+  //   }
+  // }, [socket]);
 
   const isCameraSettingOn = () => {
     setIsLoading(false);
@@ -113,34 +130,38 @@ function QuizGame() {
     setCameraOn(false);
   };
 
+  useEffect(() => {
+    if (score.cur === MAX_COUNT) {
+      setFinish(true);
+    }
+  });
+
+  const MoveRecord = () => {
+    setModal(false);
+    setRank(true);
+  };
+
   return (
     <ProblemBox>
-      <Modal
-        visible={modal}
+      <RecordModal
+        rank={rank}
+        score={score}
+        handleInitial={handleInitial}
+      ></RecordModal>
+      <SolveModal
+        modal={modal}
         closeModal={closeModal}
-        style={ModalStyle as React.CSSProperties}
-      >
-        {answer ? (
-          <>
-            <h1>정답입니다!!!</h1>
-            <AnswerImg
-              src={`${process.env.PUBLIC_URL}/quizgamepic/answer.png`}
-            ></AnswerImg>
-          </>
-        ) : (
-          <>
-            <h1>틀렸네?~~</h1>
-            <AnswerImg
-              src={`${process.env.PUBLIC_URL}/quizgamepic/wrong.jpg`}
-            ></AnswerImg>
-          </>
-        )}
-        <h1>{`${score}/10`}</h1>
-        <div>
-          <button onClick={nextQuiz}>다음 문제 풀기</button>
-          <button onClick={closeModal}>포.기.하.기</button>
-        </div>
-      </Modal>
+        answer={answer}
+        finish={finish}
+        score={score}
+        nextQuiz={nextQuiz}
+        MoveRecord={MoveRecord}
+      ></SolveModal>
+      {timer ? (
+        <Timer></Timer>
+      ) : (
+        <StartButton onClick={() => setTimer(true)}>게임 시작</StartButton>
+      )}
       <QuizBox>
         <ProblemImg
           src={`${process.env.PUBLIC_URL}/quizgamepic/p${quizNumber}.jpg`}
@@ -150,6 +171,7 @@ function QuizGame() {
             cameraOn={cameraOn}
             handleOffMediapipe={handleOffMediapipe}
             isCameraSettingOn={isCameraSettingOn}
+            isLoading={isLoading}
           />
         </AnswerBox>
       </QuizBox>
@@ -165,6 +187,13 @@ function QuizGame() {
           onClick={() => {
             setModal(true);
             setAnswer(true);
+            setScore((cur): Score => {
+              const newScore: Score = { ...cur };
+              newScore["ans"] += 1;
+              newScore["cur"] += 1;
+              console.log(newScore);
+              return newScore;
+            });
           }}
         >
           정답
@@ -173,14 +202,19 @@ function QuizGame() {
           onClick={() => {
             setModal(true);
             setAnswer(false);
+            setScore((cur): Score => {
+              const newScore: Score = { ...cur };
+              newScore["cur"] += 1;
+              return newScore;
+            });
           }}
         >
           오답
         </button>
-        <button onClick={() => socket?.emit("coordinate", { testData })}>
+        {/* <button onClick={() => socket?.emit("coordinate", { testData })}>
           목업데이터 보내보기
-        </button>
-        <h1>{socketAnswer && socketAnswer.data}</h1>
+        </button> */}
+        {/* <h1>{socketAnswer && socketAnswer.data}</h1> */}
       </ButtonBox>
     </ProblemBox>
   );
