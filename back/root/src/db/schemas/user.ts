@@ -21,7 +21,12 @@ const userSchema = new Schema(
       required: true,
     },
     scores: {
-      type: Array<IScore>, // 수정 필요
+      type: Array[
+        { $type:
+          type: Schema.Types.ObjectId,
+          ref: "Score",
+        }
+      ], // 수정 필요
     },
   },
   {
