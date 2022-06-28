@@ -84,7 +84,7 @@ function QuizGame() {
   const [socketAnswer, setSocketAnswer] = useState<ServerToClientData>();
 
   useEffect(() => {
-    setSocket(io("http://localhost:5000"));
+    setSocket(io("http://localhost:4000"));
     // const socket: Socket<ServerToClientEvents, ClientToServerEvents> =
 
     return () => {

@@ -70,18 +70,12 @@ function MediaPipeWebCam({ cameraOn }: WebCamProps) {
     setMediapipeData((cur) => {
       const temp = [...cur];
       temp.push(data);
-      if (temp.length == 40) {
+      if (temp.length == 10) {
         socket?.emit("coordinate", temp);
         console.log(temp);
       }
       return temp;
     });
-
-    // subject?.pipe(throttle(() => interval(1000))).subscribe((data) => {
-    //   socket?.emit("coordinate", { data });
-    //   // console.log(data);
-    // });
-    // subject?.next(data);
 
     canvasRef.current.width = webcamRef.current?.video.videoWidth;
     canvasRef.current.height = webcamRef.current?.video.videoHeight;
@@ -179,8 +173,7 @@ function MediaPipeWebCam({ cameraOn }: WebCamProps) {
   }, []);
 
   useEffect(() => {
-    setSocket(io("http://localhost:5000"));
-    // const socket: Socket<ServerToClientEvents, ClientToServerEvents> =
+    setSocket(io("http://localhost:4000"));
 
     return () => {
       socket?.disconnect();
