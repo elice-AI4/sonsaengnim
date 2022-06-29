@@ -23,6 +23,9 @@ const userSchema = new Schema(
     scores: {
       type: Array<IScore>, // 수정 필요
     },
+    study: {
+      type : Array<String>,
+    }
   },
   {
     timestamps: true,

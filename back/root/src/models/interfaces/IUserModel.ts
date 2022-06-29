@@ -6,4 +6,5 @@ export interface IUserModel {
   updateUser: (username: string, email: string, password: string) => Promise<Partial<IUser>>;
   deleteUser: (userId) => Promise<Partial<IUser>>;
   findByEmail: (email: string) => Promise<Partial<IUser>>;
+  study: (userId: string, word: string) => Promise<Partial<IUser>>;
 }

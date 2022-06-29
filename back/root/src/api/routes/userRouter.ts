@@ -9,6 +9,20 @@ import checkLogin from "../middlewares/checkLogin";
 const userRouter = Router();
 const userService = new UserService(new MongoUserModel());
 
+userRouter.post("/study/:word", checkLogin, async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const word = req.params.word;
+    const userId = req.user;
+    console.log(word, userId);
+    const study = await userService.study(userId, word);
+    console.log(study);
+    res.status(200).json(study);
+  } catch (error) {
+    res.status(400);
+    next(error);
+  }
+});
+
 userRouter.get("/jwt/:token", async (req: Request, res: Response, next: NextFunction) => {
   try {
     const token = req.params.token;
