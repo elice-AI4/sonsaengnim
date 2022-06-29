@@ -1,7 +1,7 @@
 import { MongoScoreModel } from "../db";
 import { IScore } from "../models";
 
-export default class ScoreService {
+export class ScoreService {
   constructor(private scoreModel: MongoScoreModel) {}
 
   async addScore(scoreData: IScore) {

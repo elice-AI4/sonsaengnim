@@ -1,7 +1,7 @@
 import { Router, Request, Response, NextFunction } from "express";
 import { userValidateOptional, wordValidate } from "../middlewares/validators";
 
-import UserService from "../../services/userService";
+import { UserService } from "../../services";
 
 import { MongoUserModel } from "../../db";
 import checkLogin from "../middlewares/checkLogin";

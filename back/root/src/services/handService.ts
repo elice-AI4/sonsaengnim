@@ -1,7 +1,7 @@
 import { MongoHandModel } from "../db/models/Hand";
 import { IHand } from "../models";
 
-export default class HandService {
+export class HandService {
   constructor(private handModel: MongoHandModel) {}
 
   public async get(english: string) {

@@ -2,7 +2,7 @@ import { MongoUserModel } from "../db/index";
 
 import hashPassword from "../utils/hashPassword";
 
-export default class UserService {
+export class RegisterService {
   // eslint-disable-next-line no-unused-vars
   constructor(private userModel: MongoUserModel) {}
 
