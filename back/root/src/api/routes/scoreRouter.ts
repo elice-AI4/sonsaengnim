@@ -3,13 +3,14 @@ import { MongoScoreModel, MongoUserModel } from "../../db";
 import { ScoreService } from "../../services";
 import checkLogin from "../middlewares/checkLogin";
 import { v4 as uuid } from "uuid";
+import { scoreValidator, scoreValidatorForNonloginUser } from "../middlewares/validators/scoreValidator";
 
 const scoreRouter = Router();
 const scoreService = new ScoreService(new MongoScoreModel());
 const userModel = new MongoUserModel();
 
 // login User
-scoreRouter.post("/login", checkLogin, async (req, res, next) => {
+scoreRouter.post("/login", scoreValidator, checkLogin, async (req, res, next) => {
   try {
     const { score, time } = req.body;
     const userId = req.user;
@@ -24,7 +25,7 @@ scoreRouter.post("/login", checkLogin, async (req, res, next) => {
 });
 
 // non login user
-scoreRouter.post("/nonlogin", async (req, res, next) => {
+scoreRouter.post("/nologin", scoreValidatorForNonloginUser, async (req, res, next) => {
   try {
     const { username, score, time } = req.body;
     const UniqueUsername = username + "-" + uuid().split("-")[1];

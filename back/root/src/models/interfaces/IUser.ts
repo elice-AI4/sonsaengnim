@@ -6,6 +6,7 @@ export interface IUser {
   password: string;
   createdAt: string;
   updatedAt: string;
+  study?: Array<string>;
   errorMessage?;
   userId?: string;
   scores?: Array<IScore>;

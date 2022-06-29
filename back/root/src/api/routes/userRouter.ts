@@ -1,11 +1,34 @@
 import { Router, Request, Response, NextFunction } from "express";
-import { userValidateOptional } from "../middlewares/validators";
 import { UserService } from "../../services";
+import { userValidateOptional, wordValidate } from "../middlewares/validators";
 import { MongoUserModel } from "../../db";
 import checkLogin from "../middlewares/checkLogin";
 
 const userRouter = Router();
 const userService = new UserService(new MongoUserModel());
+
+userRouter.get("/studylist", checkLogin, async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const userId = req.user;
+    const studyList = await userService.studyList(userId);
+    res.status(200).json(studyList);
+  } catch (error) {
+    res.status(400);
+    next(error);
+  }
+});
+
+userRouter.post("/study/:word", checkLogin, wordValidate, async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const word = req.params.word;
+    const userId = req.user;
+    const study = await userService.study(userId, word);
+    res.status(200).json(study);
+  } catch (error) {
+    res.status(400);
+    next(error);
+  }
+});
 
 userRouter.get("/jwt/:token", async (req: Request, res: Response, next: NextFunction) => {
   try {
@@ -69,17 +92,6 @@ userRouter.delete("/", checkLogin, async (req: Request, res: Response, next: Nex
     res.status(200).json(deletedUser);
   } catch (error) {
     res.status(400);
-    next(error);
-  }
-});
-
-userRouter.post("/score", checkLogin, async (req, res, next) => {
-  try {
-    const { score, time } = req.body;
-    const userId: string = req.user;
-    const newUser = await userService.addScore(userId, score, time);
-    res.status(200).json(newUser);
-  } catch (error) {
     next(error);
   }
 });

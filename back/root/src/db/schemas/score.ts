@@ -19,7 +19,7 @@ const scoreSchema = new Schema(
       required: true,
     },
     time: {
-      // second
+      // unit second
       type: Number,
       required: true,
     },

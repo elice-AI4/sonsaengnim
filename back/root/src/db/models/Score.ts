@@ -13,13 +13,12 @@ export class MongoScoreModel implements IScoreModel {
       }
     }
     score = await Score.create(scoreData);
-    // const userModel = new MongoUserModel();
-    // userModel.pushScore(scoreData.userId);
     return score;
   }
 
   async getTopten() {
     return await Score.aggregate([
+      { $sort: { score: -1, time: 1 } },
       {
         $setWindowFields: {
           partitionBy: "$state",
