@@ -23,35 +23,18 @@ import {
 import { useLocation } from "react-router";
 import * as Api from "../../../../api";
 import ButtonList from "./buttonList/ButtonList";
-import MediaPipeWebCam from "../../../MediaPipeWebCam";
+import MediaPipeWebCam, { ServerToClientData } from "../../../MediaPipeWebCam";
 import Loading from "../../../Loading";
+import Modal from "../../Modal";
+import A from "../../../../src_assets/about/motivation.jpg";
+
+const ALPHABET_LENGTH = 26;
 
 interface VideoDataProps {
   _id: string;
-  alphabet: string;
+  english: string;
   handVideo: string;
-  mouthVideo: string;
-}
-
-interface MediapipeDataProps {
-  poseLandmarks: {
-    x: number;
-    y: number;
-    z: number;
-    visibility: number | undefined;
-  };
-  leftHandLandmarks: {
-    x: number;
-    y: number;
-    z: number;
-    visibility: number | undefined;
-  };
-  rightHandLandmarks: {
-    x: number;
-    y: number;
-    z: number;
-    visibility: number | undefined;
-  };
+  mouthVideo?: string;
 }
 
 const LearningGame = () => {
@@ -62,53 +45,89 @@ const LearningGame = () => {
     handVideo: "",
     mouthVideo: "",
   });
+  const [wordList, setWordList] = useState<string[]>();
   const [isAlphabetLearningPage, setIsAlphabetLearningPage] = useState(true);
   const [cameraOn, setCameraOn] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [isHandVideo, setIsHandVideo] = useState(true);
+  const [socketAnswer, setSocketAnswer] = useState<ServerToClientData>();
+  const [isLoadingModalOpen, setIsLoadingModalOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [curSelectedButton, setCurSelectedButton] = useState("");
+
   const lazyStartTimerId: { current: any } = useRef(null);
 
-  // useEffect(() => {
-  //   const sub = new Subject<MediapipeDataProps[]>();
-
-  //   sub?.subscribe({
-  //     next: (v) => console.log(`observerA: ${v}`),
-  //   });
-  //   setSubject(sub);
-
-  //   const clicks = fromEvent(document, "click");
-  //   const result = clicks.pipe(throttle(() => interval(1000)));
-  //   result.subscribe((x) => console.log(`observerA: ${x.AT_TARGET}`));
-  // }, []);
-
   const handleSetVideo = (index: number) => {
-    setCurVideo({
-      handVideo: videos[index].handVideo,
-      mouthVideo: videos[index].mouthVideo,
-    });
+    if (isAlphabetLearningPage) {
+      setCurVideo({
+        handVideo: videos[index].handVideo,
+        mouthVideo: String(videos[index].mouthVideo),
+      });
+    } else {
+      setCurVideo({
+        handVideo: videos[index + ALPHABET_LENGTH].handVideo,
+        mouthVideo: String(videos[index + ALPHABET_LENGTH].mouthVideo),
+      });
+    }
   };
 
   const handleClickButton = () => {
+    setIsLoadingModalOpen(true);
+
     lazyStartTimerId.current = setTimeout(() => {
       setCameraOn(true);
+      setIsLoadingModalOpen(false);
     }, 2000);
   };
-  const getVideos = async () => {
+  const handleSetSocketAnswer = (answer: ServerToClientData) => {
+    setSocketAnswer(answer);
+    setIsModalOpen(false);
+  };
+  const getVideos = async (localIsAlphabet: boolean) => {
     const res = await Api.get("hands");
     setVideos(res.data);
-    setCurVideo({
-      handVideo: res.data[0]?.handVideo,
-      mouthVideo: res.data[0]?.mouthVideo,
+
+    const words: VideoDataProps[] = res.data.slice(
+      ALPHABET_LENGTH,
+      res.data.length
+    );
+    const wordList = words.map((word) => {
+      return word.english;
     });
+    setWordList(wordList);
+
+    if (localIsAlphabet) {
+      setCurVideo({
+        handVideo: res.data[0]?.handVideo,
+        mouthVideo: res.data[0]?.mouthVideo,
+      });
+    } else {
+      setCurVideo({
+        handVideo: res.data[ALPHABET_LENGTH]?.handVideo,
+        mouthVideo: "",
+      });
+    }
   };
 
   const handleOffMediapipe = () => {
     setCameraOn(false);
   };
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+  const handleSetCurSelectedButton = (word: string) => {
+    setCurSelectedButton(word);
+  };
+
+  useEffect(() => {
+    console.log(curSelectedButton);
+  }, [curSelectedButton]);
 
   useEffect(() => {
     try {
-      getVideos();
-      if (pathname.includes("alphabet") === true) {
+      const localIsAlphabet = pathname.includes("alphabet") === true;
+      getVideos(localIsAlphabet);
+      if (localIsAlphabet) {
         setIsAlphabetLearningPage(true);
       } else {
         setIsAlphabetLearningPage(false);
@@ -118,11 +137,8 @@ const LearningGame = () => {
     }
   }, []);
 
-  const [isLoading, setIsLoading] = useState(true);
   const isCameraSettingOn = () => {
-    if (isLoading === false) {
-      return;
-    }
+    if (isLoading === false) return;
     setIsLoading(false);
   };
 
@@ -136,6 +152,16 @@ const LearningGame = () => {
 
   return (
     <>
+      <Modal
+        visible={isLoadingModalOpen}
+        style={{
+          width: "800px",
+          height: "500px",
+        }}
+      >
+        <img src={A} alt="" width="100%" height="100%" />
+      </Modal>
+      <Modal visible={isModalOpen}>정답을 기다리고 있어요!</Modal>
       {isLoading && <Loading />}
       <GameContainer>
         <Sidebar>
@@ -146,12 +172,14 @@ const LearningGame = () => {
             >
               손모양
             </Button>
-            <Button
-              className={!isHandVideo ? "target" : "non-target"}
-              onClick={() => setIsHandVideo(!isHandVideo)}
-            >
-              입모양
-            </Button>
+            {isAlphabetLearningPage && (
+              <Button
+                className={!isHandVideo ? "target" : "non-target"}
+                onClick={() => setIsHandVideo(!isHandVideo)}
+              >
+                입모양
+              </Button>
+            )}
           </ButtonContainer>
           <ImageContainer>
             <Image>
@@ -182,7 +210,16 @@ const LearningGame = () => {
                   <></>
                 )
               ) : (
-                <></>
+                <video
+                  autoPlay
+                  loop
+                  controls
+                  width="430"
+                  key={curVideo.handVideo}
+                  style={{ borderRadius: "5px" }}
+                >
+                  <source src={curVideo.handVideo} type="video/mp4" />
+                </video>
               )}
             </Image>
             <ImageUnderLine />
@@ -191,11 +228,14 @@ const LearningGame = () => {
             <ButtonList
               handleSetVideo={handleSetVideo}
               isAlphabetLearningPage={isAlphabetLearningPage}
+              handleSetCurSelectedButton={handleSetCurSelectedButton}
             />
           ) : (
             <ButtonList
               handleSetVideo={handleSetVideo}
               isAlphabetLearningPage={isAlphabetLearningPage}
+              wordList={wordList}
+              handleSetCurSelectedButton={handleSetCurSelectedButton}
             />
           )}
         </Sidebar>
@@ -207,7 +247,7 @@ const LearningGame = () => {
                 <GreenCircle />
                 <BlueCircle />
               </CircleContainer>
-              <Explain>오른손으로 동작을 취해주세요.</Explain>
+              <Explain>오른손으로 학습해봐요.</Explain>
               <HR />
             </TopContainer>
             <BottomContainer>
@@ -215,6 +255,8 @@ const LearningGame = () => {
                 cameraOn={cameraOn}
                 handleOffMediapipe={handleOffMediapipe}
                 isCameraSettingOn={isCameraSettingOn}
+                handleSetSocketAnswer={handleSetSocketAnswer}
+                openModal={openModal}
               />
               <StartButton onClick={handleClickButton} cameraOn={cameraOn}>
                 <StartTriangle cameraOn={cameraOn} />

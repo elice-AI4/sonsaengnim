@@ -19,11 +19,12 @@ export const AboutContainer = styled.div`
   position: relative;
   transform: translateX(300px);
   width: calc(100vw - 300px);
-  min-width: 1500px;
 `;
 
 export const AboutMainPage = styled.div`
-  width: 100%;
+  margin: 0 auto 0 auto;
+  width: 80%;
+  min-width: 1700px;
 `;
 
 export const Description = styled.p`
@@ -40,6 +41,8 @@ export const ImpactWord = styled.span`
 export const Section = styled.section`
   display: flex;
   padding: 3rem;
+  max-width: 90%;
+  margin: auto;
   &.target {
     animation: 1.8s ${sectionAnimation};
   }
@@ -62,12 +65,19 @@ export const Section = styled.section`
 export const LeftSection = styled.div`
   padding: 2rem;
   flex: 0.4;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
   /* border: 1px solid; */
 `;
 export const RightSection = styled.div`
   padding: 2rem;
   flex: 0.6;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 `;
 
 export const Img = styled.img`
@@ -90,6 +100,7 @@ export const SecondSectionLeft = styled(LeftSection)`
 `;
 export const SecondSectionRight = styled(RightSection)`
   margin: auto 0 auto 0;
+  align-items: flex-start;
 `;
 
 export const ThirdSectionLeft = styled(LeftSection)`

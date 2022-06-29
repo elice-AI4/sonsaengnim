@@ -26,11 +26,22 @@ holistic.setOptions({
   minDetectionConfidence: 0.5,
   minTrackingConfidence: 0.5,
 });
+export interface ServerToClientData {
+  data: string[];
+}
+interface ServerToClientEvents {
+  answer: (data: ServerToClientData) => void;
+}
+interface ClientToServerEvents {
+  coordinate: (hands: MediapipeDataProps[]) => void;
+}
 
 interface WebCamProps {
   cameraOn: boolean;
   handleOffMediapipe: () => void;
   isCameraSettingOn: () => void;
+  handleSetSocketAnswer?: (answer: ServerToClientData) => void;
+  openModal?: () => void;
 }
 
 interface MediapipeDataProps {
@@ -39,28 +50,18 @@ interface MediapipeDataProps {
   rightHandLandmarks: h.NormalizedLandmarkList;
 }
 
-interface ServerToClientData {
-  data: boolean;
-}
-
-interface ServerToClientEvents {
-  answer: (data: ServerToClientData) => void;
-}
-interface ClientToServerEvents {
-  coordinate: (hands: MediapipeDataProps[]) => void;
-}
-
 function MediaPipeWebCam({
   cameraOn,
   handleOffMediapipe,
   isCameraSettingOn,
+  handleSetSocketAnswer,
+  openModal,
 }: WebCamProps) {
   const webcamRef = useRef<Webcam>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [subject, setSubject] = useState<Subject<MediapipeDataProps>>();
   const [socket, setSocket] =
     useState<Socket<ServerToClientEvents, ClientToServerEvents>>();
-  const [socketAnswer, setSocketAnswer] = useState<ServerToClientData>();
   const [mediapipeData, setMediapipeData] = useState<MediapipeDataProps[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -77,10 +78,6 @@ function MediaPipeWebCam({
     setMediapipeData((cur) => {
       const temp = [...cur];
       temp.push(data);
-      if (temp.length == 10) {
-        socket?.emit("coordinate", temp);
-        console.log(temp);
-      }
       return temp;
     });
 
@@ -142,7 +139,8 @@ function MediaPipeWebCam({
   useEffect(() => {
     if (mediapipeData.length === 50) {
       startRef.current = new Date();
-      console.log("50개 채웠어요!");
+      // 50개가 다 차면 정답을 기다리는 모달을 띄우기 위함
+      openModal && openModal();
       socket?.emit("coordinate", mediapipeData);
       middleRef.current = new Date();
       console.log("startRef 값 : ", startRef.current);
@@ -203,6 +201,7 @@ function MediaPipeWebCam({
 
   useEffect(() => {
     setSocket(io("http://localhost:4000"));
+
     return () => {
       socket?.disconnect();
     };
@@ -217,11 +216,13 @@ function MediaPipeWebCam({
     if (socket) {
       const func = (data: ServerToClientData) => {
         endRef.current = new Date();
-        setSocketAnswer(data);
+        // 소켓 답변 매개변수로 넘겨주는 함수
+        handleSetSocketAnswer && handleSetSocketAnswer(data);
         console.log("endRef 값 : ", endRef.current);
         console.log("둘의 차이 : ", endRef.current - startRef.current);
         console.log("넘어온 값: ", data);
       };
+      // 소켓 답변 얻어오는 함수
       socket.on("answer", func);
 
       return () => {

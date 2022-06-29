@@ -21,6 +21,7 @@ export const ButtonContainer = styled.div`
   margin: auto;
 
   display: flex;
+  justify-content: center;
 
   font-size: 2rem;
   font-weight: 600;
@@ -179,9 +180,7 @@ export const StartButton = styled.div<StartButtonProp>`
   height: 7rem;
   border-radius: 1.5rem;
   position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
+
   ${({ theme }) => {
     return css`
       background-color: ${theme.learning.play.darkBlue};

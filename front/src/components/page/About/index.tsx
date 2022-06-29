@@ -103,16 +103,12 @@ const About = () => {
               <Description>
                 실시간 인터렉티브 <ImpactWord>학습</ImpactWord> 사이트입니다.
               </Description>
-              <h1></h1>
             </FirstSectionRight>
           </Section>
           <Section
             ref={section_1}
             className={curIndex === 1 ? "target" : "non-target"}
           >
-            <SecondSectionLeft>
-              <SecondImg src={imgMotivation} alt="baby studying" />
-            </SecondSectionLeft>
             <SecondSectionRight>
               <Description>손생님은...</Description>
               <Description>
@@ -127,6 +123,9 @@ const About = () => {
                 탄생했습니다.
               </Description>
             </SecondSectionRight>
+            <SecondSectionLeft>
+              <SecondImg src={imgMotivation} alt="baby studying" />
+            </SecondSectionLeft>
           </Section>
           <Section
             ref={section_2}

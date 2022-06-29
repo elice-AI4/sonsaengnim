@@ -1,4 +1,4 @@
-import React, { ReactElement } from "react";
+import React from "react";
 import { ModalWrapper, ModalOverlay, ModalInner } from "./index.style";
 import PropTypes from "prop-types";
 
@@ -8,11 +8,6 @@ interface ModalState {
   closeModal?: () => void;
   style?: React.CSSProperties;
   children: React.ReactNode;
-  // children: ReactElement | ReactElement[];
-  /* 질문용 주석
-  // children: JSX.Element | JSX.Element[];
-  // children : string | HTMLImageElement;
-  */
 }
 
 function Modal({

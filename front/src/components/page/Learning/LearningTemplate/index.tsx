@@ -25,9 +25,6 @@ interface LearningTemplateProps {
 
 const LearningTemplate = ({ imgs, title, children }: LearningTemplateProps) => {
   const { pathname } = useLocation();
-
-  console.log(pathname);
-
   return (
     <TemplateContainer>
       <ContentContainer>
@@ -48,7 +45,9 @@ const LearningTemplate = ({ imgs, title, children }: LearningTemplateProps) => {
           <CardTemplate src="" alt="" />
           <CardTemplate src="" alt="" />
         </CardContainer>
-          <ButtonLink to={`${pathname}/${ROUTE.GAME.link}/${ROUTE.PLAY.link}` }>따라해보기</ButtonLink>
+        <ButtonLink to={`${pathname}/${ROUTE.GAME.link}/${ROUTE.PLAY.link}`}>
+          따라해보기
+        </ButtonLink>
       </ContentContainer>
     </TemplateContainer>
   );
