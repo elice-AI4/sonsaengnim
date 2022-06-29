@@ -11,7 +11,11 @@ export default class UserService {
 
   async studyList(userId) {
     const studyList = await this.userModel.studyList(userId);
-    return studyList;
+    let point: number = 0;
+    studyList.study.forEach(item => {
+      point += item.length > 1 ? 20 : 10;
+    });
+    return { studyList, point };
   }
 
   async study(userId, word) {

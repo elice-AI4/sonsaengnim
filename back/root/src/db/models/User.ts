@@ -2,7 +2,7 @@ import User from "../schemas/user";
 import { IUserModel } from "../../models";
 export class MongoUserModel implements IUserModel {
   async studyList(userId: string) {
-    const studyList = await User.findById(userId, { study: 1 });
+    const studyList = await User.findById(userId, { _id: 0, study: 1 });
     return studyList;
   }
 
