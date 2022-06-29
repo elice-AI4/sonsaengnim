@@ -1,4 +1,6 @@
 export interface IScore {
-  userId: string;
+  username?: string;
+  userId?: string;
   score: number;
+  time: number;
 }
