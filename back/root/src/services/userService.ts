@@ -5,7 +5,7 @@ import issueJwtToken from "../utils/issueJwtToken";
 import hashPassword from "../utils/hashPassword";
 import { tokenReissue } from "../utils/tokenReissue";
 
-export default class UserService {
+export class UserService {
   // eslint-disable-next-line no-unused-vars
   constructor(private userModel: MongoUserModel) {}
 
