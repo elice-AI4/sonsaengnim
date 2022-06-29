@@ -5,9 +5,10 @@ import PropTypes from "prop-types";
 interface ModalState {
   className?: string;
   visible: boolean;
-  children: ReactElement | ReactElement[];
   closeModal(): void;
   style?: React.CSSProperties;
+  children: React.ReactNode;
+  // children: ReactElement | ReactElement[];
   /* 질문용 주석
   // children: JSX.Element | JSX.Element[];
   // children : string | HTMLImageElement;

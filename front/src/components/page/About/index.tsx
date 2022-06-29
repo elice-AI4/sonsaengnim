@@ -20,7 +20,7 @@ import ScrollList from "../../scrollList/ScrollList";
 const scrollNames = ["수화", "지화", "손생님"];
 
 const About = () => {
-  const [section, setSection] = useState<HTMLElement[]>([]);
+  const [section, setSection] = useState<(HTMLElement | null)[]>([]);
   const section_0 = useRef<HTMLElement>(null);
   const section_1 = useRef<HTMLElement>(null);
   const section_2 = useRef<HTMLElement>(null);
@@ -29,9 +29,9 @@ const About = () => {
   const handleOnClick = (num: number) => {
     let top = 0;
     if (num !== 0) {
-      top = section[num]?.offsetTop + 70;
+      top = (section[num]?.offsetTop || 0) + 70;
     } else {
-      top = section[num]?.offsetTop;
+      top = section[num]?.offsetTop || 0;
     }
 
     window.scrollTo({
@@ -45,8 +45,11 @@ const About = () => {
     const height = window.innerHeight / 1.5;
     for (let i = 0; section.length; i++) {
       if (
-        y > section[i]?.offsetTop - height &&
-        y <= section[i]?.offsetTop - height + section[i]?.offsetHeight
+        y > Number(section[i]?.offsetTop) - height &&
+        y <=
+          Number(section[i]?.offsetTop) -
+            height +
+            Number(section[i]?.offsetHeight)
       ) {
         setCurIndex(i);
         break;
@@ -60,11 +63,7 @@ const About = () => {
   }, [handleScrollEvent]);
 
   useEffect(() => {
-    const arr = [
-      section_0.current,
-      section_1.current,
-      section_2.current,
-    ] as HTMLElement[];
+    const arr = [section_0.current, section_1.current, section_2.current];
 
     setSection([...arr]);
   }, []);

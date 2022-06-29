@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import AlphabetList from "./alphabetList/AlphabetList";
 import {
   Image,
   GameContainer,
@@ -21,51 +20,105 @@ import {
   BottomContainer,
   StartTriangle,
 } from "./index.style";
-import { alphabetImgs } from "../learningData";
-import { wordImgs } from "../learningData";
-import { handAlphabetVideo } from "../handData";
 import { useLocation } from "react-router";
-import WordList from "./WordList";
+import * as Api from "../../../../api";
+import ButtonList from "./buttonList/ButtonList";
+import MediaPipeWebCam from "../../../MediaPipeWebCam";
 
-const LeaningGame = () => {
+interface VideoDataProps {
+  _id: string;
+  alphabet: string;
+  handVideo: string;
+  mouthVideo: string;
+}
+
+interface MediapipeDataProps {
+  poseLandmarks: {
+    x: number;
+    y: number;
+    z: number;
+    visibility: number | undefined;
+  };
+  leftHandLandmarks: {
+    x: number;
+    y: number;
+    z: number;
+    visibility: number | undefined;
+  };
+  rightHandLandmarks: {
+    x: number;
+    y: number;
+    z: number;
+    visibility: number | undefined;
+  };
+}
+
+const LearningGame = () => {
   const { pathname } = useLocation();
 
-  const [src, setSrc] = useState("");
+  const [videos, setVideos] = useState<VideoDataProps[]>([]);
+  const [curVideo, setCurVideo] = useState({
+    handVideo: "",
+    mouthVideo: "",
+  });
   const [isAlphabetLearningPage, setIsAlphabetLearningPage] = useState(true);
-  const [isPlayWebcam, setIsPlayWebcam] = useState(false);
+  const [cameraOn, setCameraOn] = useState(false);
   const [isHandVideo, setIsHandVideo] = useState(true);
 
-  const handleSetSrc = (index: number) => {
-    setSrc(
-      isAlphabetLearningPage === true
-        ? alphabetImgs[index].src
-        : wordImgs[index].src
-    );
+  // useEffect(() => {
+  //   const sub = new Subject<MediapipeDataProps[]>();
+
+  //   sub?.subscribe({
+  //     next: (v) => console.log(`observerA: ${v}`),
+  //   });
+  //   setSubject(sub);
+
+  //   const clicks = fromEvent(document, "click");
+  //   const result = clicks.pipe(throttle(() => interval(1000)));
+  //   result.subscribe((x) => console.log(`observerA: ${x.AT_TARGET}`));
+  // }, []);
+
+  const handleSetVideo = (index: number) => {
+    setCurVideo({
+      handVideo: videos[index].handVideo,
+      mouthVideo: videos[index].mouthVideo,
+    });
   };
 
   const handleClickButton = () => {
-    setIsPlayWebcam(true);
+    setCameraOn(true);
+  };
+  const getVideos = async () => {
+    const res = await Api.get("hands");
+    setVideos(res.data);
+    setCurVideo({
+      handVideo: res.data[0]?.handVideo,
+      mouthVideo: res.data[0]?.mouthVideo,
+    });
   };
 
   useEffect(() => {
-    if (pathname.includes("alphabet") === true) {
-      setSrc(alphabetImgs[0].src);
-      setIsAlphabetLearningPage(true);
-    } else {
-      setSrc(wordImgs[1].src);
-      setIsAlphabetLearningPage(false);
+    try {
+      getVideos();
+      if (pathname.includes("alphabet") === true) {
+        setIsAlphabetLearningPage(true);
+      } else {
+        setIsAlphabetLearningPage(false);
+      }
+    } catch (e: any) {
+      throw new Error(e);
     }
   }, []);
 
   useEffect(() => {
-    if (isPlayWebcam === true) {
+    if (cameraOn === true) {
       const timer = setTimeout(() => {
-        setIsPlayWebcam(false);
+        setCameraOn(false);
       }, 5000);
 
       return () => clearTimeout(timer);
     }
-  }, [isPlayWebcam]);
+  }, [cameraOn]);
 
   return (
     <GameContainer>
@@ -86,21 +139,48 @@ const LeaningGame = () => {
         </ButtonContainer>
         <ImageContainer>
           <Image>
-            {/* <img src={src} alt="learningImage" /> */}
-            <video autoPlay loop controls width="300">
-              <source
-                src={handAlphabetVideo[0].src}
-                type={handAlphabetVideo[0].type}
-              />
-            </video>
+            {isAlphabetLearningPage ? (
+              isHandVideo ? (
+                <video
+                  autoPlay
+                  loop
+                  controls
+                  width="430"
+                  key={curVideo.handVideo}
+                  style={{ borderRadius: "5px" }}
+                >
+                  <source src={curVideo.handVideo} type="video/mp4" />
+                </video>
+              ) : !isHandVideo ? (
+                <video
+                  autoPlay
+                  loop
+                  controls
+                  width="430"
+                  key={curVideo.mouthVideo}
+                  style={{ borderRadius: "5px" }}
+                >
+                  <source src={curVideo.mouthVideo} type="video/mp4" />
+                </video>
+              ) : (
+                <></>
+              )
+            ) : (
+              <></>
+            )}
           </Image>
           <ImageUnderLine />
         </ImageContainer>
         {isAlphabetLearningPage === true ? (
-          <AlphabetList handleSetSrc={handleSetSrc} />
+          <ButtonList
+            handleSetVideo={handleSetVideo}
+            isAlphabetLearningPage={isAlphabetLearningPage}
+          />
         ) : (
-          // <WordList />
-          <AlphabetList handleSetSrc={handleSetSrc} />
+          <ButtonList
+            handleSetVideo={handleSetVideo}
+            isAlphabetLearningPage={isAlphabetLearningPage}
+          />
         )}
       </Sidebar>
       <CameraContainer>
@@ -115,11 +195,9 @@ const LeaningGame = () => {
             <HR />
           </TopContainer>
           <BottomContainer>
-            <StartButton
-              onClick={handleClickButton}
-              isPlayWebcam={isPlayWebcam}
-            >
-              <StartTriangle isPlayWebcam={isPlayWebcam} />
+            <MediaPipeWebCam cameraOn={cameraOn} />
+            <StartButton onClick={handleClickButton} cameraOn={cameraOn}>
+              <StartTriangle cameraOn={cameraOn} />
             </StartButton>
           </BottomContainer>
         </Moniter>
@@ -128,4 +206,4 @@ const LeaningGame = () => {
   );
 };
 
-export default LeaningGame;
+export default LearningGame;

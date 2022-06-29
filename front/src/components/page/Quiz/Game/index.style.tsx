@@ -1,15 +1,5 @@
 import styled, { css } from "styled-components";
 
-export const UserCanvas = styled.canvas`
-  position: absolute;
-  margin-left: auto;
-  margin-right: auto;
-  text-align: center;
-  z-index: 9;
-  width: 640px;
-  height: 480px;
-`;
-
 export const ProblemBox = styled.div`
   width: 100%;
   height: 100vh;
@@ -31,7 +21,10 @@ export const AnswerBox = styled.div`
 
 export const QuizBox = styled.div`
   border: 1px solid red;
+  height: 480px;
+  width: 1400px;
   display: flex;
+  justify-content: space-around;
 `;
 
 export const ButtonBox = styled.div`

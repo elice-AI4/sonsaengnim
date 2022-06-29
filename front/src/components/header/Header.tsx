@@ -18,7 +18,6 @@ import { loginAtom } from "../../state";
 const Header = () => {
   const [login] = useAtom(loginAtom);
   const { pathname } = useLocation();
-
   const checkPathname = (pathname: string) => {
     if (
       pathname === `/${ROUTE.LEARNING.link}/${ROUTE.ALPHABET.link}` ||
