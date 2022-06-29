@@ -9,8 +9,8 @@ from model_load_HS import prediction
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret!'
-socket = SocketIO(app)
-CORS(app, cors_allowed_origins='*', engineio_logger=True)
+CORS(app)
+socket = SocketIO(app, cors_allowed_origins='*', engineio_logger=False)
 
 # prediction generator
 class HandSignModel:
@@ -53,4 +53,4 @@ def disconnect_socket(payload):
 
 
 if __name__ == '__main__':
-    socket.run(app)
+    socket.run(app, port=4000)
