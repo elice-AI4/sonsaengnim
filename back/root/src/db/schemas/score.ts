@@ -5,8 +5,9 @@ import { model, Schema } from "mongoose";
 const scoreSchema = new Schema(
   {
     uerId: {
-      tyoe: Schema.Types.ObjectId,
+      type: Schema.Types.ObjectId,
       required: false,
+      unique: true,
     },
     username: {
       type: String,
