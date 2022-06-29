@@ -1,8 +1,6 @@
 import { Router, Request, Response, NextFunction } from "express";
 import { userValidateOptional } from "../middlewares/validators";
-
-import UserService from "../../services/userService";
-
+import { UserService } from "../../services";
 import { MongoUserModel } from "../../db";
 import checkLogin from "../middlewares/checkLogin";
 
@@ -77,9 +75,9 @@ userRouter.delete("/", checkLogin, async (req: Request, res: Response, next: Nex
 
 userRouter.post("/score", checkLogin, async (req, res, next) => {
   try {
-    const { score } = req.body;
+    const { score, time } = req.body;
     const userId: string = req.user;
-    const newUser = await userService.addScore(userId, score);
+    const newUser = await userService.addScore(userId, score, time);
     res.status(200).json(newUser);
   } catch (error) {
     next(error);

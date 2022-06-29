@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { MongoScoreModel, MongoUserModel } from "../../db";
-import ScoreService from "../../services/scoreService";
+import { ScoreService } from "../../services";
 import checkLogin from "../middlewares/checkLogin";
 import { v4 as uuid } from "uuid";
 

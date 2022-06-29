@@ -1,5 +1,5 @@
 import { Router, Request, Response, NextFunction } from "express";
-import HandService from "../../services/handService";
+import { HandService } from "../../services/handService";
 import { MongoHandModel } from "../../db/models/Hand";
 import { IHand } from "../../models";
 import { checkEnglishParam, handValidate } from "../middlewares/validators";
