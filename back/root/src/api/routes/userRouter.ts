@@ -1,5 +1,5 @@
 import { Router, Request, Response, NextFunction } from "express";
-import { userValidateOptional } from "../middlewares/validators";
+import { userValidateOptional, wordValidate } from "../middlewares/validators";
 
 import UserService from "../../services/userService";
 
@@ -8,6 +8,29 @@ import checkLogin from "../middlewares/checkLogin";
 
 const userRouter = Router();
 const userService = new UserService(new MongoUserModel());
+
+userRouter.get("/studylist", checkLogin, async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const userId = req.user;
+    const studyList = await userService.studyList(userId);
+    res.status(200).json(studyList);
+  } catch (error) {
+    res.status(400);
+    next(error);
+  }
+});
+
+userRouter.post("/study/:word", checkLogin, wordValidate, async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const word = req.params.word;
+    const userId = req.user;
+    const study = await userService.study(userId, word);
+    res.status(200).json(study);
+  } catch (error) {
+    res.status(400);
+    next(error);
+  }
+});
 
 userRouter.get("/jwt/:token", async (req: Request, res: Response, next: NextFunction) => {
   try {

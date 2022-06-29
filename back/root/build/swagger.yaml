@@ -154,6 +154,39 @@ paths:
       responses:
         "200":
           description: Return JSON
+  /user/studylist:
+    get:
+      tags:
+        - User
+      description: "user studylist return"
+      parameters:
+        - name: authorization
+          in: header
+          type: string
+          required: true
+      responses:
+        "200":
+          description: Return JSON
+
+  /user/study/{word}:
+    post:
+      tags:
+        - User
+      description: "user Study record"
+      parameters:
+        - in: path
+          name: word
+          schema:
+            type: string
+          required: true
+          description: get word
+        - name: authorization
+          in: header
+          type: string
+          required: true
+      responses:
+        "200":
+          description: Return JSON
 
   /hands:
     post:

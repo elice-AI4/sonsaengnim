@@ -24,6 +24,9 @@ const userSchema = new Schema(
         ref: "Score",
       },
     ],
+    study: {
+      type : Array<String>,
+    }
   },
   {
     timestamps: true,

@@ -1,6 +1,22 @@
 import User from "../schemas/user";
 import { IUserModel } from "../../models";
 export class MongoUserModel implements IUserModel {
+  async studyList(userId: string) {
+    const studyList = await User.findById(userId, { _id: 0, study: 1 });
+    return studyList;
+  }
+
+  async study(userId: string, word: string) {
+    const user = await User.findById(userId);
+    if (user.study.indexOf(word) !== -1) {
+      throw new Error("이미 학습한 데이터 입니다.");
+    } else {
+      user.study.push(word);
+      user.save();
+      return user;
+    }
+  }
+
   async createUser(userData) {
     const user = await User.create(userData);
     return user;

@@ -9,6 +9,19 @@ export default class UserService {
   // eslint-disable-next-line no-unused-vars
   constructor(private userModel: MongoUserModel) {}
 
+  async studyList(userId) {
+    const studyList = await this.userModel.studyList(userId);
+    let point: number = 0;
+    studyList.study.forEach(item => {
+      point += item.length > 1 ? 20 : 10;
+    });
+    return { studyList, point };
+  }
+
+  async study(userId, word) {
+    const study = await this.userModel.study(userId, word);
+    return study;
+  }
   // token 다시 받기
   async getToken(token: string) {
     const accessToken = tokenReissue(token);
