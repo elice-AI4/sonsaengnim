@@ -11,7 +11,6 @@ import SearchLogo from "./search.png";
 import { useAtom } from "jotai";
 import { reg, userAtom } from "../../../state";
 import { useNavigate } from "react-router";
-
 import ReactTooltip from "react-tooltip";
 
 function Main() {
