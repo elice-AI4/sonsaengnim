@@ -1,4 +1,4 @@
-import { MongoScoreModel } from "../db/models/Score";
+import { MongoScoreModel } from "../db";
 import { IScore } from "../models";
 
 export default class ScoreService {
