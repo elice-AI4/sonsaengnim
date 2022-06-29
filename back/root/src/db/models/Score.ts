@@ -13,8 +13,6 @@ export class MongoScoreModel implements IScoreModel {
       }
     }
     score = await Score.create(scoreData);
-    // const userModel = new MongoUserModel();
-    // userModel.pushScore(scoreData.userId);
     return score;
   }
 
@@ -23,7 +21,7 @@ export class MongoScoreModel implements IScoreModel {
       {
         $setWindowFields: {
           partitionBy: "$state",
-          sortBy: { score: -1 },
+          sortBy: { score: -1, time: 1 },
           output: {
             rank: {
               $rank: {},
