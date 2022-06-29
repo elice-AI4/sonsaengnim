@@ -4,12 +4,12 @@ import { IScore } from "../models";
 export class ScoreService {
   constructor(private scoreModel: MongoScoreModel) {}
 
-  async addScore(scoreData: IScore) {
+  public async addScore(scoreData: IScore) {
     const newScore = await this.scoreModel.createScore(scoreData);
     return newScore;
   }
 
-  async getTopten() {
+  public async getTopten() {
     const topten = await this.scoreModel.getTopten();
     return topten;
   }

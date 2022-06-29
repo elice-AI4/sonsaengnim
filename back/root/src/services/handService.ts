@@ -12,7 +12,7 @@ export class HandService {
     return hand;
   }
 
-  async getAll() {
+  public async getAll() {
     const hand = await this.handModel.findAll();
     if (hand.length === 0) {
       throw new Error("아무런 수화 데이터가 존재하지 않습니다.");
@@ -20,7 +20,7 @@ export class HandService {
     return hand;
   }
 
-  async create(newHandData: IHand) {
+  public async create(newHandData: IHand) {
     const newHand = await this.handModel.create(newHandData);
     if (!newHand) {
       throw new Error("수화 데이터 생성에 실패했습니다.");
