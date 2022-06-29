@@ -115,11 +115,7 @@ function QuizGame() {
 
   return (
     <ProblemBox>
-      <Modal
-        visible={modal}
-        closeModal={closeModal}
-        style={ModalStyle as React.CSSProperties}
-      >
+      <Modal visible={modal} style={ModalStyle as React.CSSProperties}>
         {answer ? (
           <>
             <h1>정답입니다!!!</h1>

@@ -26,6 +26,7 @@ import ButtonList from "./buttonList/ButtonList";
 import MediaPipeWebCam, { ServerToClientData } from "../../../MediaPipeWebCam";
 import Loading from "../../../Loading";
 import Modal from "../../Modal";
+import A from "../../../../src_assets/about/motivation.jpg";
 
 const ALPHABET_LENGTH = 26;
 
@@ -50,7 +51,10 @@ const LearningGame = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [isHandVideo, setIsHandVideo] = useState(true);
   const [socketAnswer, setSocketAnswer] = useState<ServerToClientData>();
+  const [isLoadingModalOpen, setIsLoadingModalOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [curSelectedButton, setCurSelectedButton] = useState("");
+
   const lazyStartTimerId: { current: any } = useRef(null);
 
   const handleSetVideo = (index: number) => {
@@ -68,13 +72,16 @@ const LearningGame = () => {
   };
 
   const handleClickButton = () => {
+    setIsLoadingModalOpen(true);
+
     lazyStartTimerId.current = setTimeout(() => {
       setCameraOn(true);
-    }, 1200);
+      setIsLoadingModalOpen(false);
+    }, 2000);
   };
   const handleSetSocketAnswer = (answer: ServerToClientData) => {
     setSocketAnswer(answer);
-    setIsModalOpen(false);
+    // setIsModalOpen(false);
   };
   const getVideos = async (localIsAlphabet: boolean) => {
     const res = await Api.get("hands");
@@ -108,6 +115,13 @@ const LearningGame = () => {
   const openModal = () => {
     setIsModalOpen(true);
   };
+  const handleSetCurSelectedButton = (word: string) => {
+    setCurSelectedButton(word);
+  };
+
+  useEffect(() => {
+    console.log(curSelectedButton);
+  }, [curSelectedButton]);
 
   useEffect(() => {
     try {
@@ -138,16 +152,16 @@ const LearningGame = () => {
 
   return (
     <>
-      {isModalOpen && (
-        <Modal
-          visible={true}
-          closeModal={() => {
-            undefined;
-          }}
-        >
-          hello
-        </Modal>
-      )}
+      <Modal
+        visible={isLoadingModalOpen}
+        style={{
+          width: "800px",
+          height: "500px",
+        }}
+      >
+        <img src={A} alt="" width="100%" height="100%" />
+      </Modal>
+      <Modal visible={isModalOpen}>정답입니다!</Modal>
       {isLoading && <Loading />}
       <GameContainer>
         <Sidebar>
@@ -214,12 +228,14 @@ const LearningGame = () => {
             <ButtonList
               handleSetVideo={handleSetVideo}
               isAlphabetLearningPage={isAlphabetLearningPage}
+              handleSetCurSelectedButton={handleSetCurSelectedButton}
             />
           ) : (
             <ButtonList
               handleSetVideo={handleSetVideo}
               isAlphabetLearningPage={isAlphabetLearningPage}
               wordList={wordList}
+              handleSetCurSelectedButton={handleSetCurSelectedButton}
             />
           )}
         </Sidebar>
@@ -231,7 +247,7 @@ const LearningGame = () => {
                 <GreenCircle />
                 <BlueCircle />
               </CircleContainer>
-              <Explain>오른손으로 동작을 취해주세요.</Explain>
+              <Explain>오른손으로 학습해봐요.</Explain>
               <HR />
             </TopContainer>
             <BottomContainer>

@@ -34,12 +34,14 @@ interface ButtonListProps {
   handleSetVideo: (index: number) => void;
   isAlphabetLearningPage: boolean;
   wordList?: string[];
+  handleSetCurSelectedButton: (word: string) => void;
 }
 
 const ButtonList = ({
   handleSetVideo,
   isAlphabetLearningPage,
   wordList,
+  handleSetCurSelectedButton,
 }: ButtonListProps) => {
   const [curIndex, setIcurIndex] = useState(0);
   return (
@@ -52,6 +54,7 @@ const ButtonList = ({
                 onClick={() => {
                   handleSetVideo(index);
                   setIcurIndex(index);
+                  handleSetCurSelectedButton(alpha);
                 }}
                 className={curIndex === index ? "target" : "non-target"}
               >
@@ -66,6 +69,7 @@ const ButtonList = ({
                 onClick={() => {
                   handleSetVideo(index);
                   setIcurIndex(index);
+                  handleSetCurSelectedButton(word);
                 }}
                 className={curIndex === index ? "target" : "non-target"}
               >
