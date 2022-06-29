@@ -12,6 +12,8 @@ import { useAtom } from "jotai";
 import { reg, userAtom } from "../../../state";
 import { useNavigate } from "react-router";
 
+import ReactTooltip from "react-tooltip";
+
 function Main() {
   const [user, setUser] = useAtom(userAtom);
   const navigate = useNavigate();
@@ -30,16 +32,40 @@ function Main() {
           ></ServiceImg>
           {/* <a href='https://kr.freepik.com/vectors/book'>Book 벡터는 pch.vector - kr.freepik.com가 제작함</a> */}
           <h2>알파벳 수어를 배우러 가볼까요?</h2>
-          <MoveButton onClick={() => handleClickButton("learning")}>
+          <MoveButton
+            onClick={() => handleClickButton("learning")}
+            data-tip="main-learning"
+            data-for="main-learning"
+          >
             공부하러 가기
+            <ReactTooltip id="main-learning" place="bottom">
+              <video autoPlay width="400" muted loop>
+                <source
+                  src="http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20200812/728438/MOV000248732_700X466.mp4"
+                  type="video/mp4"
+                />
+              </video>
+            </ReactTooltip>
           </MoveButton>
         </ServiceBox>
         <ServiceBox color={"#FFD700"}>
           <ServiceImg src={GameLogo}></ServiceImg>
           {/* <a href='https://kr.freepik.com/vectors/wood'>Wood 벡터는 pch.vector - kr.freepik.com가 제작함</a> */}
           <h2>공부한 내용을 확인해볼까요?</h2>
-          <MoveButton onClick={() => handleClickButton("quiz")}>
+          <MoveButton
+            onClick={() => handleClickButton("quiz")}
+            data-tip="main-quiz"
+            data-for="main-quiz"
+          >
             게임하러 가기
+            <ReactTooltip id="main-quiz" place="bottom">
+              <video autoPlay width="400" muted loop>
+                <source
+                  src="http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20160325/271687/MOV000273302_700X466.mp4"
+                  type="video/mp4"
+                />
+              </video>
+            </ReactTooltip>
           </MoveButton>
         </ServiceBox>
         <ServiceBox color={"#6495ED"}>
