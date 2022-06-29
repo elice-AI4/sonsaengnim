@@ -1,14 +1,11 @@
 import { body, param } from "express-validator";
 import { validate } from "./result";
 
-export const wordValidate = [
-  param("word").exists().trim().isLength({ min: 1 }).not().equals("{word}").withMessage("공백은 안 됩니다."),
-  validate,
-];
+export const wordValidate = [param("word").exists().trim().notEmpty().withMessage("공백은 안 됩니다."), validate];
 
 export const userValidateOptional = [
   body("email").optional().trim().isEmail().withMessage("이메일 형식으로 입력하세요."),
-  body("username").optional().trim().notEmpty().withMessage("공백은 안됩니다."),
+  body("username").optional().trim().isString().notEmpty().withMessage("공백은 안됩니다."),
   body("password")
     .optional()
     .trim()
@@ -35,6 +32,7 @@ export const userValidate = [
     .withMessage("username 항목이 없습니다.")
     .bail()
     .trim()
+    .isString()
     .notEmpty()
     .withMessage("공백은 안됩니다. username을 입력해주세요."),
   body("password")

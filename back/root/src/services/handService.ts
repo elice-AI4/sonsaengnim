@@ -12,7 +12,7 @@ export class HandService {
     return hand;
   }
 
-  async getAll() {
+  public async getAll() {
     const hand = await this.handModel.findAll();
     return hand;
   }
