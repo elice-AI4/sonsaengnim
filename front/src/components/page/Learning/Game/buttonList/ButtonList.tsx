@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { curSelectedButtonProps } from "..";
 import { BlankButton, Button, Container, WordButton } from "./ButtonList.style";
 
 const Alphabet = [
@@ -34,7 +35,7 @@ interface ButtonListProps {
   handleSetVideo: (index: number) => void;
   isAlphabetLearningPage: boolean;
   wordList?: string[];
-  handleSetCurSelectedButton: (word: string) => void;
+  handleSetCurSelectedButton: (data: curSelectedButtonProps) => void;
 }
 
 const ButtonList = ({
@@ -54,7 +55,10 @@ const ButtonList = ({
                 onClick={() => {
                   handleSetVideo(index);
                   setIcurIndex(index);
-                  handleSetCurSelectedButton(alpha);
+                  handleSetCurSelectedButton({
+                    word: alpha,
+                    index,
+                  });
                 }}
                 className={curIndex === index ? "target" : "non-target"}
               >
@@ -69,7 +73,10 @@ const ButtonList = ({
                 onClick={() => {
                   handleSetVideo(index);
                   setIcurIndex(index);
-                  handleSetCurSelectedButton(word);
+                  handleSetCurSelectedButton({
+                    word,
+                    index,
+                  });
                 }}
                 className={curIndex === index ? "target" : "non-target"}
               >

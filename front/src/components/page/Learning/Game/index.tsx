@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import {
-  Image,
+  FrontImage,
   GameContainer,
   Sidebar,
   ImageUnderLine,
@@ -20,6 +20,9 @@ import {
   BottomContainer,
   StartTriangle,
   PointBox,
+  ImageRotateContainer,
+  NoneDisplay,
+  BackImage,
 } from "./index.style";
 import { useLocation } from "react-router";
 import * as Api from "../../../../api";
@@ -29,10 +32,8 @@ import Loading from "../../../Loading";
 import Modal from "../../Modal";
 import A from "../../../../src_assets/about/motivation.jpg";
 import Footer from "../../../Footer";
-import {
-  learningCopyRights,
-  learningGamecopyRights,
-} from "../../../copyRights/copyRights";
+import { learningGamecopyRights } from "../../../copyRights/copyRights";
+import { imgSrc } from "./wordImageSrc";
 
 const ALPHABET_LENGTH = 26;
 
@@ -41,6 +42,11 @@ interface VideoDataProps {
   english: string;
   handVideo: string;
   mouthVideo?: string;
+}
+
+export interface curSelectedButtonProps {
+  word: string;
+  index: number;
 }
 
 const LearningGame = () => {
@@ -62,7 +68,11 @@ const LearningGame = () => {
     waitingModal: false,
     pointModal: false,
   });
-  const [curSelectedButton, setCurSelectedButton] = useState("");
+  const [curSelectedButton, setCurSelectedButton] =
+    useState<curSelectedButtonProps>({
+      word: "",
+      index: 0,
+    });
 
   const lazyStartTimerId: { current: any } = useRef(null);
 
@@ -100,7 +110,6 @@ const LearningGame = () => {
   };
   const handleSetSocketAnswer = (answer: ServerToClientData) => {
     setSocketAnswer(answer);
-    console.log("in game 넘어온 값", answer);
   };
   const getVideos = async (localIsAlphabet: boolean) => {
     const res = await Api.get("hands");
@@ -139,8 +148,8 @@ const LearningGame = () => {
       };
     });
   };
-  const handleSetCurSelectedButton = (word: string) => {
-    setCurSelectedButton(word);
+  const handleSetCurSelectedButton = (data: curSelectedButtonProps) => {
+    setCurSelectedButton(data);
   };
 
   useEffect(() => {
@@ -153,10 +162,16 @@ const LearningGame = () => {
       getVideos(localIsAlphabet);
       if (localIsAlphabet) {
         setIsAlphabetLearningPage(true);
-        setCurSelectedButton("A");
+        setCurSelectedButton({
+          word: "A",
+          index: 0,
+        });
       } else {
         setIsAlphabetLearningPage(false);
-        setCurSelectedButton("angel");
+        setCurSelectedButton({
+          word: "angel",
+          index: 0,
+        });
       }
     } catch (e: any) {
       throw new Error(e);
@@ -178,10 +193,8 @@ const LearningGame = () => {
 
   const checkAnswer = (): boolean | undefined => {
     if (Array.isArray(socketAnswer)) {
-      console.log("여기 호출", socketAnswer);
-
       return socketAnswer.find((answer: string) => {
-        return answer === curSelectedButton.toLowerCase();
+        return answer === curSelectedButton.word.toLowerCase();
       });
     }
   };
@@ -278,60 +291,63 @@ const LearningGame = () => {
           <ButtonContainer>
             <Button
               className={isHandVideo ? "target" : "non-target"}
-              onClick={() => setIsHandVideo(!isHandVideo)}
+              onClick={() => {
+                setIsHandVideo(!isHandVideo);
+              }}
             >
               손모양
             </Button>
-            {isAlphabetLearningPage && (
+            {isAlphabetLearningPage ? (
               <Button
                 className={!isHandVideo ? "target" : "non-target"}
-                onClick={() => setIsHandVideo(!isHandVideo)}
+                onClick={() => {
+                  setIsHandVideo(!isHandVideo);
+                }}
               >
                 입모양
+              </Button>
+            ) : (
+              <Button
+                className={!isHandVideo ? "target" : "non-target"}
+                onClick={() => {
+                  setIsHandVideo(!isHandVideo);
+                }}
+              >
+                그림
               </Button>
             )}
           </ButtonContainer>
           <ImageContainer>
-            <Image>
-              {isAlphabetLearningPage ? (
-                isHandVideo ? (
-                  <video
-                    autoPlay
-                    loop
-                    controls
-                    width="430"
-                    key={curVideo.handVideo}
-                    style={{ borderRadius: "5px" }}
-                  >
-                    <source src={curVideo.handVideo} type="video/mp4" />
-                  </video>
-                ) : !isHandVideo ? (
-                  <video
-                    autoPlay
-                    loop
-                    controls
-                    width="430"
-                    key={curVideo.mouthVideo}
-                    style={{ borderRadius: "5px" }}
-                  >
-                    <source src={curVideo.mouthVideo} type="video/mp4" />
-                  </video>
-                ) : (
-                  <></>
-                )
-              ) : (
-                <video
-                  autoPlay
-                  loop
-                  controls
-                  width="430"
-                  key={curVideo.handVideo}
-                  style={{ borderRadius: "5px" }}
-                >
-                  <source src={curVideo.handVideo} type="video/mp4" />
-                </video>
-              )}
-            </Image>
+            <NoneDisplay />
+            {!isAlphabetLearningPage && (
+              <>
+                <FrontImage isHandVideo={isHandVideo}>
+                  {isHandVideo && (
+                    <video
+                      autoPlay
+                      loop
+                      controls
+                      width="430"
+                      key={curVideo.handVideo}
+                      style={{ borderRadius: "5px" }}
+                    >
+                      <source src={curVideo.handVideo} type="video/mp4" />
+                    </video>
+                  )}
+                </FrontImage>
+                <BackImage isHandVideo={isHandVideo}>
+                  {!isHandVideo && (
+                    <img
+                      src={imgSrc[curSelectedButton.index]}
+                      alt=""
+                      width="430"
+                      height="auto"
+                    />
+                  )}
+                </BackImage>
+              </>
+            )}
+
             <ImageUnderLine />
           </ImageContainer>
           {isAlphabetLearningPage === true ? (
@@ -357,7 +373,10 @@ const LearningGame = () => {
                 <GreenCircle />
                 <BlueCircle />
               </CircleContainer>
-              <Explain>오른손으로 학습해봐요.</Explain>
+              <div style={{ position: "relative" }}>
+                {/* <ImageTooltip imgSrc={imgSrc[curSelectedButton.index]} /> */}
+                <Explain>오른손으로 학습해봐요.</Explain>
+              </div>
               <HR />
             </TopContainer>
             <BottomContainer>

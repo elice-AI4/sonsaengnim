@@ -56,17 +56,63 @@ export const ImageContainer = styled.div`
   flex-direction: column;
   align-items: center;
   margin-bottom: 5rem;
+  position: relative;
 `;
 
-export const Image = styled.div`
+export const ImageRotateContainer = styled.div`
+  transform-style: preserve-3d;
+  cursor: pointer;
+`;
+
+export const NoneDisplay = styled.div`
+  width: 440px;
+  height: 330px;
+  border-radius: 10px;
+  margin-bottom: 3rem;
+`;
+
+export const FrontImage = styled.div<{ isHandVideo: boolean }>`
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+  transition: transform ease 500ms;
+  transform: rotateY(0deg);
+  position: absolute;
+  z-index: 2;
   width: 440px;
   height: 330px;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: white;
   border-radius: 10px;
   margin-bottom: 3rem;
+
+  transform: ${({ isHandVideo }) =>
+    isHandVideo ? "rotateY(0deg)" : "rotateY(180deg)"};
+
+  ${({ theme }) => {
+    return css`
+      border: 5px solid ${theme.learning.play.darkBlue};
+    `;
+  }}
+`;
+
+export const BackImage = styled.div<{ isHandVideo: boolean }>`
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+  transition: transform ease 500ms;
+  transform: rotateY(-180deg);
+  position: absolute;
+  z-index: 2;
+  width: 440px;
+  height: 330px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  margin-bottom: 3rem;
+
+  transform: ${(props) =>
+    props.isHandVideo ? "rotateY(-180deg)" : "rotateY(0deg)"};
 
   ${({ theme }) => {
     return css`
@@ -164,7 +210,7 @@ export const Explain = styled.h1`
 `;
 
 export const HR = styled.div`
-  width: 40%;
+  width: 50%;
   height: 0.5rem;
   border-radius: 0.5rem;
   margin: auto;
@@ -201,7 +247,10 @@ export const StartButton = styled.div<StartButtonProp>`
 `;
 
 export const TopContainer = styled.div`
+  width: 100%;
   flex: 0.2;
+  display: flex;
+  flex-direction: column;
 `;
 
 export const BottomContainer = styled.div`
