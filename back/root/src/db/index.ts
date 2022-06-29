@@ -3,6 +3,7 @@ import config from "../config";
 
 export * from "./models/User";
 export * from "./models/Hand";
+export * from "./models/Score";
 
 mongoose
   .connect(config.MONGO_URL)
