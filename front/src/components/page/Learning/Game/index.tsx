@@ -19,6 +19,7 @@ import {
   TopContainer,
   BottomContainer,
   StartTriangle,
+  PointBox,
 } from "./index.style";
 import { useLocation } from "react-router";
 import * as Api from "../../../../api";
@@ -51,8 +52,11 @@ const LearningGame = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [isHandVideo, setIsHandVideo] = useState(true);
   const [socketAnswer, setSocketAnswer] = useState<ServerToClientData>();
-  const [isLoadingModalOpen, setIsLoadingModalOpen] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState({
+    loadingModal: false,
+    waitingModal: false,
+    pointModal: false,
+  });
   const [curSelectedButton, setCurSelectedButton] = useState("");
 
   const lazyStartTimerId: { current: any } = useRef(null);
@@ -72,16 +76,26 @@ const LearningGame = () => {
   };
 
   const handleClickButton = () => {
-    setIsLoadingModalOpen(true);
+    setIsModalOpen((cur) => {
+      return {
+        ...cur,
+        loadingModal: true,
+      };
+    });
 
     lazyStartTimerId.current = setTimeout(() => {
       setCameraOn(true);
-      setIsLoadingModalOpen(false);
+      setIsModalOpen((cur) => {
+        return {
+          ...cur,
+          loadingModal: false,
+        };
+      });
     }, 2000);
   };
   const handleSetSocketAnswer = (answer: ServerToClientData) => {
     setSocketAnswer(answer);
-    setIsModalOpen(false);
+    console.log("in game 넘어온 값", answer);
   };
   const getVideos = async (localIsAlphabet: boolean) => {
     const res = await Api.get("hands");
@@ -113,7 +127,12 @@ const LearningGame = () => {
     setCameraOn(false);
   };
   const openModal = () => {
-    setIsModalOpen(true);
+    setIsModalOpen((cur) => {
+      return {
+        ...cur,
+        waitingModal: true,
+      };
+    });
   };
   const handleSetCurSelectedButton = (word: string) => {
     setCurSelectedButton(word);
@@ -129,8 +148,10 @@ const LearningGame = () => {
       getVideos(localIsAlphabet);
       if (localIsAlphabet) {
         setIsAlphabetLearningPage(true);
+        setCurSelectedButton("A");
       } else {
         setIsAlphabetLearningPage(false);
+        setCurSelectedButton("angel");
       }
     } catch (e: any) {
       throw new Error(e);
@@ -150,10 +171,20 @@ const LearningGame = () => {
     };
   }, []);
 
+  const checkAnswer = (): boolean | undefined => {
+    if (Array.isArray(socketAnswer)) {
+      console.log("여기 호출", socketAnswer);
+
+      return socketAnswer.find((answer: string) => {
+        return answer === curSelectedButton.toLowerCase();
+      });
+    }
+  };
+
   return (
     <>
       <Modal
-        visible={isLoadingModalOpen}
+        visible={isModalOpen.loadingModal}
         style={{
           width: "800px",
           height: "500px",
@@ -161,7 +192,81 @@ const LearningGame = () => {
       >
         <img src={A} alt="" width="100%" height="100%" />
       </Modal>
-      <Modal visible={isModalOpen}>정답을 기다리고 있어요!</Modal>
+
+      <Modal
+        visible={isModalOpen.waitingModal}
+        style={{
+          width: "800px",
+          height: "500px",
+        }}
+      >
+        {!socketAnswer ? (
+          <p>정답을 기다리고 있어요!</p>
+        ) : checkAnswer() !== undefined ? (
+          <>
+            <p>정답이에요!</p>
+            <button
+              onClick={() => {
+                setIsModalOpen((cur) => {
+                  return {
+                    ...cur,
+                    waitingModal: false,
+                  };
+                });
+                setSocketAnswer(undefined);
+              }}
+            >
+              닫기
+            </button>
+            <PointBox
+              initial={{ scale: 0, borderRadius: 0, rotate: 0 }}
+              animate={{
+                rotate: 360,
+                scale: 1,
+                borderRadius: "50%",
+              }}
+              transition={{
+                type: "spring",
+                stiffness: 260,
+                damping: 14,
+              }}
+            >
+              <span>100점!</span>
+            </PointBox>
+          </>
+        ) : (
+          <>
+            <p>다시 해 볼까요?</p>
+            <button
+              onClick={() => {
+                setIsModalOpen((cur) => {
+                  return {
+                    ...cur,
+                    waitingModal: false,
+                  };
+                });
+                setSocketAnswer(undefined);
+              }}
+            >
+              닫기
+            </button>
+            <button
+              onClick={() => {
+                setIsModalOpen((cur) => {
+                  return {
+                    ...cur,
+                    waitingModal: false,
+                  };
+                });
+                handleClickButton();
+                setSocketAnswer(undefined);
+              }}
+            >
+              다시하기
+            </button>
+          </>
+        )}
+      </Modal>
       {isLoading && <Loading />}
       <GameContainer>
         <Sidebar>

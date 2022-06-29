@@ -1,4 +1,5 @@
-import styled, { css } from "styled-components";
+import { motion } from "framer-motion";
+import styled, { css, keyframes } from "styled-components";
 import backgroundImg from "../../../../src_assets/learning/play/playPage.png";
 
 export const GameContainer = styled.div`
@@ -217,4 +218,28 @@ export const StartTriangle = styled.div<StartTriangleProp>`
   border-left: 30px solid white;
   transition: opacity 0.5s ease;
   opacity: ${(props) => (props.cameraOn ? 0 : 1)};
+`;
+
+const BounceAnimation = keyframes`
+  50% {
+    transform: translateX(200px)
+  }
+  100% {
+    transform: translateX(200px)
+  }
+`;
+
+export const PointBox = styled(motion.div)`
+  width: 15rem;
+  height: 15rem;
+  background-color: orange;
+  position: absolute;
+  right: -75px;
+  top: -75px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 3rem;
+  font-weight: bold;
 `;
