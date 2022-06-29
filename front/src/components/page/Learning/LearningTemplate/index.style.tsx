@@ -30,7 +30,6 @@ export const ContentContainer = styled.div`
   text-align: center;
 `;
 
-
 export const ButtonLink = styled(Link)`
   display: flex;
   justify-content: center;
@@ -45,7 +44,6 @@ export const ButtonLink = styled(Link)`
   font-weight: 600;
   border-radius: 10px;
   margin-bottom: 10rem;
-
 `;
 
 export const DescriptionContainer = styled.section`
@@ -65,5 +63,3 @@ export const CardContainer = styled.div`
   flex: 0.6;
   padding: 4rem;
 `;
-
-export const MotionDiv = styled.div``;

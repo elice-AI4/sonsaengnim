@@ -13,6 +13,8 @@ import { InputContainer } from "../Word/index.style";
 import { motion } from "framer-motion";
 import { useLocation } from "react-router";
 import { ROUTE } from "../../../route/route";
+import Footer from "../../../Footer";
+import { learningTemplatecopyRights } from "../../../copyRights/copyRights";
 
 interface LearningTemplateProps {
   imgs: {
@@ -49,6 +51,10 @@ const LearningTemplate = ({ imgs, title, children }: LearningTemplateProps) => {
           따라해보기
         </ButtonLink>
       </ContentContainer>
+      <Footer
+        aLinks={learningTemplatecopyRights.aLinks}
+        contents={learningTemplatecopyRights.contents}
+      />
     </TemplateContainer>
   );
 };

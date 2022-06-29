@@ -28,6 +28,11 @@ import MediaPipeWebCam, { ServerToClientData } from "../../../MediaPipeWebCam";
 import Loading from "../../../Loading";
 import Modal from "../../Modal";
 import A from "../../../../src_assets/about/motivation.jpg";
+import Footer from "../../../Footer";
+import {
+  learningCopyRights,
+  learningGamecopyRights,
+} from "../../../copyRights/copyRights";
 
 const ALPHABET_LENGTH = 26;
 
@@ -369,6 +374,10 @@ const LearningGame = () => {
             </BottomContainer>
           </Moniter>
         </CameraContainer>
+        <Footer
+          aLinks={learningGamecopyRights.aLinks}
+          contents={learningGamecopyRights.contents}
+        />
       </GameContainer>
     </>
   );
