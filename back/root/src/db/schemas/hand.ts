@@ -4,12 +4,14 @@ import { IHand } from "../../models";
 const handSchema = new Schema(
   {
     english: {
+      // word
       type: String,
       unique: true,
       required: true,
       index: true,
     },
     handVideo: {
+      // handVideoURL
       type: String,
       required: true,
     },
