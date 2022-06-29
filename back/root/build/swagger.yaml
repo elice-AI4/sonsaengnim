@@ -207,11 +207,11 @@ paths:
       responses:
         "200":
           description: Return JSON
-  /scores:
+  /scores/login:
     post:
       tags:
         - Score Board
-      description: "putting score"
+      description: "login user putting score"
       consumes:
         - "application/json"
       produces:
@@ -232,6 +232,33 @@ paths:
           description: "POST Successful."
         "405":
           description: "Invalid input"
+
+    /scores/nonlogin:
+    post:
+      tags:
+        - Score Board
+      description: "login user putting score"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - name: authorization
+          in: header
+          type: string
+          required: true
+        - in: "body"
+          name: "body"
+          description: "Register score data"
+          required: true
+          schema:
+            $ref: "#/definitions/Score"
+      responses:
+        "201":
+          description: "POST Successful."
+        "405":
+          description: "Invalid input"
+
   /scores/topten:
     get:
       tags:
