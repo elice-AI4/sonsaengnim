@@ -373,11 +373,11 @@ const LearningGame = () => {
               </StartButton>
             </BottomContainer>
           </Moniter>
+          <Footer
+            aLinks={learningGamecopyRights.aLinks}
+            contents={learningGamecopyRights.contents}
+          />
         </CameraContainer>
-        <Footer
-          aLinks={learningGamecopyRights.aLinks}
-          contents={learningGamecopyRights.contents}
-        />
       </GameContainer>
     </>
   );

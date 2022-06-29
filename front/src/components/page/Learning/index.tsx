@@ -60,11 +60,11 @@ const Learning = () => {
           </WordContainer>
           <ButtonTitle>단어</ButtonTitle>
         </WordButton>
+        <Footer
+          aLinks={learningCopyRights.aLinks}
+          contents={learningCopyRights.contents}
+        />
       </ContentsContainer>
-      <Footer
-        aLinks={learningCopyRights.aLinks}
-        contents={learningCopyRights.contents}
-      />
     </LearningContainer>
   );
 };

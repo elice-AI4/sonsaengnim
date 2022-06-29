@@ -6,7 +6,6 @@ export const GameContainer = styled.div`
   width: 100vw;
   min-height: 100vh;
   display: flex;
-  position: relative;
 `;
 
 export const Sidebar = styled.aside`
@@ -95,6 +94,11 @@ export const CameraContainer = styled.section`
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
+
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 export const AlphabetContainer = styled.section`
@@ -113,10 +117,8 @@ export const Moniter = styled.section`
 
   display: flex;
   flex-direction: column;
+  align-items: center;
 
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
   border-radius: 5rem;
 
   padding: 4rem;
@@ -126,6 +128,7 @@ export const Moniter = styled.section`
     `;
   }}
 `;
+export const CopyRightsWrapper = styled.div``;
 
 export const Circle = styled.div`
   width: 5rem;

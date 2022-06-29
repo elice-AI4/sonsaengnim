@@ -18,6 +18,14 @@ export const TemplateContainer = styled.div`
   min-height: 100vh;
 `;
 
+export const CopoyRightWrapper = styled.div`
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
 export const ContentContainer = styled.div`
   width: 65vw;
   min-width: 1100px;

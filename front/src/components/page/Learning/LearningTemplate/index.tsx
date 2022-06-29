@@ -50,11 +50,11 @@ const LearningTemplate = ({ imgs, title, children }: LearningTemplateProps) => {
         <ButtonLink to={`${pathname}/${ROUTE.GAME.link}/${ROUTE.PLAY.link}`}>
           따라해보기
         </ButtonLink>
+        <Footer
+          aLinks={learningTemplatecopyRights.aLinks}
+          contents={learningTemplatecopyRights.contents}
+        />
       </ContentContainer>
-      <Footer
-        aLinks={learningTemplatecopyRights.aLinks}
-        contents={learningTemplatecopyRights.contents}
-      />
     </TemplateContainer>
   );
 };
