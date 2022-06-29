@@ -80,8 +80,8 @@ function QuizGame() {
 
   const [cameraOn, setCameraOn] = useState(false);
 
-  // const [socket, setSocket] =
-  //   useState<Socket<ServerToClientEvents, ClientToServerEvents>>();
+  const [socket, setSocket] =
+    useState<Socket<ServerToClientEvents, ClientToServerEvents>>();
   const handleInitial = () => {
     setScore({ ans: 0, cur: 0 });
     setModal(false);
@@ -100,29 +100,29 @@ function QuizGame() {
     setModal(false);
   };
 
-  // const [socketAnswer, setSocketAnswer] = useState<ServerToClientData>();
+  const [socketAnswer, setSocketAnswer] = useState<ServerToClientData>();
 
-  // useEffect(() => {
-  //   setSocket(io("http://localhost:4000"));
-  //   // const socket: Socket<ServerToClientEvents, ClientToServerEvents> =
+  useEffect(() => {
+    setSocket(io("http://localhost:4000"));
+    // const socket: Socket<ServerToClientEvents, ClientToServerEvents> =
 
-  //   return () => {
-  //     socket?.disconnect();
-  //   };
-  // }, []);
+    return () => {
+      socket?.disconnect();
+    };
+  }, []);
 
-  // useEffect(() => {
-  //   if (socket) {
-  //     const func = (data: ServerToClientData) => {
-  //       setSocketAnswer(data);
-  //     };
-  //     socket.on("answer", func);
+  useEffect(() => {
+    if (socket) {
+      const func = (data: ServerToClientData) => {
+        setSocketAnswer(data);
+      };
+      socket.on("answer", func);
 
-  //     return () => {
-  //       socket.off("answer", func);
-  //     };
-  //   }
-  // }, [socket]);
+      return () => {
+        socket.off("answer", func);
+      };
+    }
+  }, [socket]);
 
   const isCameraSettingOn = () => {
     if (isLoading === false) {
@@ -148,7 +148,9 @@ function QuizGame() {
   return (
     <>
       {isLoading && <Loading />}
-      <ProblemBox>
+      <ProblemBox
+        quizBackImg={`${process.env.PUBLIC_URL}/quizgamepic/quizback3.jpg`}
+      >
         <RecordModal
           rank={rank}
           score={score}
@@ -164,7 +166,7 @@ function QuizGame() {
           MoveRecord={MoveRecord}
         ></SolveModal>
         {timer ? (
-          <Timer></Timer>
+          <Timer finish={finish}></Timer>
         ) : (
           <StartButton onClick={() => setTimer(true)}>게임 시작</StartButton>
         )}

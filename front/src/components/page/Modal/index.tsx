@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 interface ModalState {
   className?: string;
   visible: boolean;
-  // closeModal(): void;
+  closeModal?: () => void;
   style?: React.CSSProperties;
   children: React.ReactNode;
   // children: ReactElement | ReactElement[];
@@ -19,7 +19,7 @@ function Modal({
   className,
   visible,
   children,
-  // closeModal,
+  closeModal,
   style,
 }: ModalState) {
   return (
@@ -29,7 +29,7 @@ function Modal({
         className={className}
         tabIndex={-1}
         visible={visible}
-        // onClick={closeModal}
+        onClick={closeModal && closeModal}
       >
         <ModalInner
           tabIndex={0}

@@ -1,6 +1,9 @@
 import styled, { css } from "styled-components";
 
-export const ProblemBox = styled.div`
+export const ProblemBox = styled.div<{ quizBackImg: string }>`
+  background-image: ${(props) => `url(${props.quizBackImg})`};
+  background-repeat: no-repeat;
+  background-size: cover;
   width: 100%;
   height: 100vh;
   display: flex;

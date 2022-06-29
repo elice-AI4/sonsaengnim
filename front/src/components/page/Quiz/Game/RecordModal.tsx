@@ -9,7 +9,7 @@ import {
   RecordBox,
 } from "./index.style";
 import { useAtom } from "jotai";
-import { loginAtom, userAtom } from "../../../../state";
+import { loginAtom, userAtom, saveTimeAtom } from "../../../../state";
 
 interface RecordProps {
   rank: boolean;
@@ -29,6 +29,7 @@ const ModalStyle = {
 function RecordModal({ rank, score, handleInitial }: RecordProps) {
   const [login] = useAtom(loginAtom);
   const [user] = useAtom(userAtom);
+  const [saveTime] = useAtom(saveTimeAtom);
 
   const [rankName, setRankName] = useState<string>(login ? user.username : "");
 
@@ -50,7 +51,13 @@ function RecordModal({ rank, score, handleInitial }: RecordProps) {
         </RecordBox>
         <RecordBox>
           <h2>점수</h2>
-          <RecordScore>{`${score.ans * 10}점`}</RecordScore>
+          <RecordScore>{`${score.ans * 10}점/100점`}</RecordScore>
+        </RecordBox>
+        <RecordBox>
+          <h2>시간</h2>
+          <RecordScore>{`${Math.floor(saveTime / 60)}분 ${
+            saveTime % 60
+          }초`}</RecordScore>
         </RecordBox>
         <RecordButton onClick={handleInitial}>점수 기록</RecordButton>
       </RecordBoard>
