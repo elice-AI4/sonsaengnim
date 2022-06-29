@@ -1,5 +1,5 @@
 import { Router, Request, Response, NextFunction } from "express";
-import { userValidateOptional } from "../middlewares/validators";
+import { userValidateOptional, wordValidate } from "../middlewares/validators";
 
 import UserService from "../../services/userService";
 
@@ -20,7 +20,7 @@ userRouter.get("/studylist", checkLogin, async (req: Request, res: Response, nex
   }
 });
 
-userRouter.post("/study/:word", checkLogin, async (req: Request, res: Response, next: NextFunction) => {
+userRouter.post("/study/:word", checkLogin, wordValidate, async (req: Request, res: Response, next: NextFunction) => {
   try {
     const word = req.params.word;
     const userId = req.user;

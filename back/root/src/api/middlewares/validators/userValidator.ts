@@ -1,5 +1,10 @@
-import { body } from "express-validator";
+import { body, param } from "express-validator";
 import { validate } from "./result";
+
+export const wordValidate = [
+  param("word").exists().trim().isLength({ min: 1 }).not().equals("{word}").withMessage("공백은 안 됩니다."),
+  validate,
+];
 
 export const userValidateOptional = [
   body("email").optional().trim().isEmail().withMessage("이메일 형식으로 입력하세요."),

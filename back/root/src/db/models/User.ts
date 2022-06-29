@@ -8,9 +8,13 @@ export class MongoUserModel implements IUserModel {
 
   async study(userId: string, word: string) {
     const user = await User.findById(userId);
-    user.study.push(word);
-    user.save();
-    return user;
+    if (user.study.indexOf(word) !== -1) {
+      throw new Error("이미 학습한 데이터 입니다.");
+    } else {
+      user.study.push(word);
+      user.save();
+      return user;
+    }
   }
 
   async createUser(userData) {
