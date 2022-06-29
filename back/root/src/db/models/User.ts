@@ -1,6 +1,11 @@
 import User from "../schemas/user";
 import { IUserModel } from "../../models";
 export class MongoUserModel implements IUserModel {
+  async studyList(userId: string) {
+    const studyList = await User.findById(userId, { study: 1 });
+    return studyList;
+  }
+
   async study(userId: string, word: string) {
     const user = await User.findById(userId);
     user.study.push(word);
