@@ -319,6 +319,38 @@ const LearningGame = () => {
           </ButtonContainer>
           <ImageContainer>
             <NoneDisplay />
+            {isAlphabetLearningPage && (
+              <>
+                <FrontImage isHandVideo={isHandVideo}>
+                  {isHandVideo && (
+                    <video
+                      autoPlay
+                      loop
+                      controls
+                      width="430"
+                      key={curVideo.handVideo}
+                      style={{ borderRadius: "5px" }}
+                    >
+                      <source src={curVideo.handVideo} type="video/mp4" />
+                    </video>
+                  )}
+                </FrontImage>
+                <BackImage isHandVideo={isHandVideo}>
+                  {!isHandVideo && (
+                    <video
+                      autoPlay
+                      loop
+                      controls
+                      width="430"
+                      key={curVideo.mouthVideo}
+                      style={{ borderRadius: "5px" }}
+                    >
+                      <source src={curVideo.mouthVideo} type="video/mp4" />
+                    </video>
+                  )}
+                </BackImage>
+              </>
+            )}
             {!isAlphabetLearningPage && (
               <>
                 <FrontImage isHandVideo={isHandVideo}>
