@@ -282,7 +282,7 @@ paths:
           description: "Register score data"
           required: true
           schema:
-            ref: "#/definitions/NonloginUserScore"
+            $ref: "#/definitions/NonloginUserScore"
       responses:
         "201":
           description: "POST Successful."
@@ -349,10 +349,13 @@ definitions:
     properties:
       username:
         type: string
+        example: "noname"
       score:
         type: number
+        example: 80
       time:
         type: number
+        example: 300
 
 externalDocs:
   description: "Find out more about Swagger"
