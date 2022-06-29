@@ -17,7 +17,7 @@ function Rank() {
   ];
   return (
     <RankBox>
-      <TropyImg src={`${process.env.PUBLIC_URL}/rank/tropy.jpg`}></TropyImg>
+      <TropyImg src={`${process.env.PUBLIC_URL}/rank/tropy.png`}></TropyImg>
       <RankBoard rankBoardImg={`${process.env.PUBLIC_URL}/rank/blackboard.png`}>
         <div>
           {rank.map((data, index) => (
