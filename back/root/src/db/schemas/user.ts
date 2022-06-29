@@ -1,8 +1,6 @@
 import { IUser } from "../../models";
 import { model, Schema } from "mongoose";
-import { IScore } from "../../models/interfaces/IScore";
 
-// 1. Create an interface representing a document in MongoDB.
 const userSchema = new Schema(
   {
     username: {
@@ -20,9 +18,12 @@ const userSchema = new Schema(
       type: String,
       required: true,
     },
-    scores: {
-      type: Array<IScore>, // 수정 필요
-    },
+    scores: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Score",
+      },
+    ],
     study: {
       type : Array<String>,
     }

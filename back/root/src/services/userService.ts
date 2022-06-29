@@ -66,8 +66,8 @@ export default class UserService {
     return updatedUser;
   }
 
-  async addScore(userId: string, score: number) {
-    const user = await this.userModel.pushScore(userId, score);
+  async addScore(userId: string, score: number, time: number) {
+    const user = await this.userModel.pushScore(userId, score, time);
     return user;
   }
 

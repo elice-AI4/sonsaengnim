@@ -98,15 +98,4 @@ userRouter.delete("/", checkLogin, async (req: Request, res: Response, next: Nex
   }
 });
 
-userRouter.post("/score", checkLogin, async (req, res, next) => {
-  try {
-    const { score } = req.body;
-    const userId: string = req.user;
-    const newUser = await userService.addScore(userId, score);
-    res.status(200).json(newUser);
-  } catch (error) {
-    next(error);
-  }
-});
-
 export { userRouter };

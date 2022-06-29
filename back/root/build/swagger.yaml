@@ -240,11 +240,12 @@ paths:
       responses:
         "200":
           description: Return JSON
-  /scores:
+
+  /scores/login:
     post:
       tags:
         - Score Board
-      description: "putting score"
+      description: "login user putting score"
       consumes:
         - "application/json"
       produces:
@@ -265,6 +266,29 @@ paths:
           description: "POST Successful."
         "405":
           description: "Invalid input"
+
+  /scores/nologin:
+    post:
+      tags:
+        - Score Board
+      description: "Nonlogin user putting score"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Register score data"
+          required: true
+          schema:
+            ref: "#/definitions/NonloginUserScore"
+      responses:
+        "201":
+          description: "POST Successful."
+        "405":
+          description: "Invalid input"
+
   /scores/topten:
     get:
       tags:
@@ -317,6 +341,18 @@ definitions:
       score:
         type: number
         example: 50
+      time:
+        type: number
+        example: 300
+  NonloginUserScore:
+    type: object
+    properties:
+      username:
+        type: string
+      score:
+        type: number
+      time:
+        type: number
 
 externalDocs:
   description: "Find out more about Swagger"
