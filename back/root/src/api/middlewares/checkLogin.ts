@@ -22,6 +22,7 @@ const checkLogin = (req: Request, res: Response, next: NextFunction) => {
           message: "Method must be 'Bearer'",
         });
       }
+      // 토큰 있는지 확인
       const token = req.headers["authorization"].split(" ")[1];
       const decoded = jwt.verify(token, config.JWT_KEY) as jwt.JwtPayload;
       req.user = decoded.ObjectId;
