@@ -34,6 +34,7 @@ import A from "../../../../src_assets/about/motivation.jpg";
 import Footer from "../../../Footer";
 import { learningGamecopyRights } from "../../../copyRights/copyRights";
 import { imgSrc } from "./wordImageSrc";
+import ReactTooltip from "react-tooltip";
 
 const ALPHABET_LENGTH = 26;
 
@@ -294,8 +295,19 @@ const LearningGame = () => {
               onClick={() => {
                 setIsHandVideo(!isHandVideo);
               }}
+              data-tip="game-hand"
+              data-for="game-hand"
             >
               손모양
+              <ReactTooltip id="game-hand">
+                <video autoPlay width="200" muted loop>
+                  <source
+                    src="http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20200824/735192/MOV000258245_700X466.mp4"
+                    type="video/mp4"
+                  />
+                </video>
+                <p style={{ textAlign: "right" }}>출처: 국립국어원</p>
+              </ReactTooltip>
             </Button>
             {isAlphabetLearningPage ? (
               <Button
@@ -303,8 +315,19 @@ const LearningGame = () => {
                 onClick={() => {
                   setIsHandVideo(!isHandVideo);
                 }}
+                data-tip="game-mouth"
+                data-for="game-mouth"
               >
                 입모양
+                <ReactTooltip id="game-mouth">
+                  <video autoPlay width="200" muted loop>
+                    <source
+                      src="http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20191028/631921/MOV000251816_700X466.mp4"
+                      type="video/mp4"
+                    />
+                  </video>
+                  <p style={{ textAlign: "right" }}>출처: 국립국어원</p>
+                </ReactTooltip>
               </Button>
             ) : (
               <Button
