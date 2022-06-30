@@ -14,6 +14,7 @@ import { io, Socket } from "socket.io-client";
 import MediaPipeWebCam from "./../../../MediaPipeWebCam";
 import Timer from "../../../Timer";
 import Loading from "../../../Loading";
+import ReactTooltip from "react-tooltip";
 
 export const MAX_COUNT = 1;
 interface TestData {
@@ -168,7 +169,22 @@ function QuizGame() {
         {timer ? (
           <Timer finish={finish}></Timer>
         ) : (
-          <StartButton onClick={() => setTimer(true)}>게임 시작</StartButton>
+          <StartButton
+            onClick={() => setTimer(true)}
+            data-tip="quiz-game"
+            data-for="quiz-game"
+          >
+            게임 시작
+            <ReactTooltip id="quiz-game" place="bottom">
+              <video autoPlay width="300" muted loop>
+                <source
+                  src="http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20191101/633265/MOV000256711_700X466.mp4"
+                  type="video/mp4"
+                />
+              </video>
+              <p style={{ textAlign: "right" }}>출처: 국립국어원</p>
+            </ReactTooltip>
+          </StartButton>
         )}
         <QuizBox>
           <ProblemImg
