@@ -58,6 +58,16 @@ export interface curSelectedButtonProps {
   index: number;
 }
 
+const modalStyle = {
+  width: "800px",
+  height: "500px",
+  display: "flex",
+  "flex-direction": "column",
+  justifyContent: "center",
+  alignItems: "center",
+  borderRadius: "0",
+};
+
 const LearningGame = () => {
   const { pathname } = useLocation();
 
@@ -74,7 +84,9 @@ const LearningGame = () => {
   const [socketAnswer, setSocketAnswer] = useState<ServerToClientData>();
   const [isModalOpen, setIsModalOpen] = useState({
     loadingModal: false,
-    waitingModal: false,
+    waitingAnswerModal: false,
+    correctModal: false,
+    wrongModal: false,
   });
   const [curSelectedButton, setCurSelectedButton] =
     useState<curSelectedButtonProps>({
@@ -120,12 +132,23 @@ const LearningGame = () => {
   // socket에서 보내온 응답을 저장한다. ["a", "b", "c"]
   const handleSetSocketAnswer = (answer: ServerToClientData) => {
     setSocketAnswer(answer);
-    setIsModalOpen((cur) => {
-      return {
-        ...cur,
-        loadingModal: false,
-      };
-    });
+    if (checkAnswer(answer) !== undefined) {
+      setIsModalOpen((cur) => {
+        return {
+          ...cur,
+          waitingAnswerModal: false,
+          correctModal: true,
+        };
+      });
+    } else {
+      setIsModalOpen((cur) => {
+        return {
+          ...cur,
+          waitingAnswerModal: false,
+          wrongModal: true,
+        };
+      });
+    }
   };
   const getVideos = async (localIsAlphabet: boolean) => {
     const res = await Api.get("hands");
@@ -160,7 +183,7 @@ const LearningGame = () => {
     setIsModalOpen((cur) => {
       return {
         ...cur,
-        waitingModal: true,
+        waitingAnswerModal: true,
       };
     });
   };
@@ -207,120 +230,114 @@ const LearningGame = () => {
     };
   }, []);
 
-  const checkAnswer = (): boolean | undefined => {
-    if (Array.isArray(socketAnswer)) {
-      return socketAnswer.find((answer: string) => {
-        return answer === curSelectedButton.word.toLowerCase();
+  const checkAnswer = (answer: ServerToClientData): boolean | undefined => {
+    if (Array.isArray(answer)) {
+      return answer.find((ans: string) => {
+        return ans === curSelectedButton.word.toLowerCase();
       });
     }
   };
 
   return (
     <>
-      <Modal
-        visible={isModalOpen.loadingModal}
-        style={{
-          width: "800px",
-          height: "500px",
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          alignItems: "center",
-          borderRadius: "0",
-        }}
-      >
+      <Modal visible={isModalOpen.loadingModal} style={modalStyle}>
         <img src={ai_loading} alt="ai가 켜지길 기다리는중" />
       </Modal>
 
-      <Modal
-        visible={isModalOpen.waitingModal}
-        style={{
-          width: "800px",
-          height: "500px",
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          alignItems: "center",
-          borderRadius: "0",
-        }}
-      >
-        {!socketAnswer ? (
-          <img src={grading} alt="채점중인 로봇" />
-        ) : checkAnswer() !== undefined ? (
-          <>
-            {isLogin && (
-              <img src={user_correct} alt="로그인 유저가 정답인 경우!" />
-            )}
-            {!isLogin && (
-              <img src={none_user_correct} alt="버그인 유저가 정답인 경우!" />
-            )}
-            <ModalButtonContainer>
-              <ModalButton
-                onClick={() => {
-                  setIsModalOpen((cur) => {
-                    return {
-                      ...cur,
-                      waitingModal: false,
-                    };
-                  });
-                  setSocketAnswer(undefined);
-                }}
-              >
-                닫기
-              </ModalButton>
-            </ModalButtonContainer>
-            <PointBox
-              initial={{ scale: 0, borderRadius: 0, rotate: 0 }}
-              animate={{
-                rotate: 360,
-                scale: 1,
-                borderRadius: "50%",
-              }}
-              transition={{
-                type: "spring",
-                stiffness: 260,
-                damping: 14,
-              }}
-            >
-              <span>100점!</span>
-            </PointBox>
-          </>
-        ) : (
-          <>
-            <img src={wrong_answer} alt="오답이라고 알려주는 로봇" />
-            <ModalButtonContainer>
-              <ModalButton
-                onClick={() => {
-                  setIsModalOpen((cur) => {
-                    return {
-                      ...cur,
-                      waitingModal: false,
-                    };
-                  });
-                  setSocketAnswer(undefined);
-                }}
-              >
-                닫기
-              </ModalButton>
-              <ModalButton
-                onClick={() => {
-                  setIsModalOpen((cur) => {
-                    return {
-                      ...cur,
-                      waitingModal: false,
-                    };
-                  });
-                  handleClickButton();
-                  setSocketAnswer(undefined);
-                }}
-              >
-                다시하기
-              </ModalButton>
-            </ModalButtonContainer>
-          </>
+      <Modal visible={isModalOpen.correctModal} style={modalStyle}>
+        {isLogin && <img src={user_correct} alt="로그인 유저가 정답인 경우!" />}
+        {!isLogin && (
+          <img src={none_user_correct} alt="비로그인 유저가 정답인 경우!" />
+        )}
+        <ModalButtonContainer>
+          <ModalButton
+            onClick={() => {
+              setIsModalOpen((cur) => {
+                return {
+                  ...cur,
+                  correctModal: false,
+                };
+              });
+              setSocketAnswer(undefined);
+            }}
+          >
+            닫기
+          </ModalButton>
+          <ModalButton
+            onClick={() => {
+              setIsModalOpen((cur) => {
+                return {
+                  ...cur,
+                  correctModal: false,
+                };
+              });
+              setSocketAnswer(undefined);
+              handleClickButton();
+            }}
+          >
+            다시하기
+          </ModalButton>
+        </ModalButtonContainer>
+
+        {isModalOpen.correctModal && (
+          <PointBox
+            initial={{ scale: 0, borderRadius: 0, rotate: 0 }}
+            animate={{
+              rotate: 360,
+              scale: 1,
+              borderRadius: "50%",
+            }}
+            transition={{
+              type: "spring",
+              stiffness: 260,
+              damping: 14,
+              delay: 0.8,
+            }}
+          >
+            <span>100점!</span>
+          </PointBox>
         )}
       </Modal>
+
+      <Modal visible={isModalOpen.wrongModal} style={modalStyle}>
+        <img src={wrong_answer} alt="오답인 경우!" />
+        <ModalButtonContainer>
+          <ModalButton
+            onClick={() => {
+              setIsModalOpen((cur) => {
+                return {
+                  ...cur,
+                  wrongModal: false,
+                };
+              });
+              setSocketAnswer(undefined);
+            }}
+          >
+            닫기
+          </ModalButton>
+          <ModalButton
+            onClick={() => {
+              setIsModalOpen((cur) => {
+                return {
+                  ...cur,
+                  wrongModal: false,
+                };
+              });
+              setSocketAnswer(undefined);
+              handleClickButton();
+            }}
+          >
+            다시하기
+          </ModalButton>
+        </ModalButtonContainer>
+      </Modal>
+
+      <Modal visible={isModalOpen.waitingAnswerModal} style={modalStyle}>
+        {!socketAnswer && <img src={grading} alt="채점중인 로봇" />}
+      </Modal>
+
       {isLoading && <Loading />}
+
       <GameContainer>
         <Sidebar>
           <ButtonContainer>
