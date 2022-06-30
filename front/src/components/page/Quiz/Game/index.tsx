@@ -13,6 +13,7 @@ import MediaPipeWebCam from "../../../MediaPipeWebCam";
 import Timer from "../../../Timer";
 import Loading from "../../../Loading";
 import ReactTooltip from "react-tooltip";
+import * as Api from "../../../../api";
 
 import { StartButton, StartTriangle } from "../../Learning/Game/index.style";
 
@@ -67,10 +68,6 @@ function QuizGame() {
     if (socketAnswer === undefined || socketAnswer.length === 0) {
       return;
     }
-    console.log(socketAnswer);
-    console.log(typeof socketAnswer[0]);
-    console.log(problemList);
-    console.log(socketAnswer.includes(problemList));
     if (socketAnswer.includes(problemList)) {
       console.log("정답");
       setAnswer(true);
