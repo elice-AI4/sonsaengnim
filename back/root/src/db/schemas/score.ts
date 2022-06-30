@@ -7,7 +7,6 @@ const scoreSchema = new Schema(
     uerId: {
       type: Schema.Types.ObjectId,
       required: false,
-      unique: true,
     },
     username: {
       type: String,
