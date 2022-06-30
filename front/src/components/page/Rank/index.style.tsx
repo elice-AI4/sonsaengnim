@@ -1,6 +1,9 @@
 import styled from "styled-components";
 
-export const RankBox = styled.div`
+export const RankBox = styled.div<{ rankBack: string }>`
+  background-image: ${(props) => `url(${props.rankBack})`};
+  background-repeat: no-repeat;
+  background-size: cover;
   width: 100%;
   height: 100vh;
   display: flex;
