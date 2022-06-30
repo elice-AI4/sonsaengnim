@@ -335,8 +335,19 @@ const LearningGame = () => {
                 onClick={() => {
                   setIsHandVideo(!isHandVideo);
                 }}
+                data-tip="game-meaning"
+                data-for="game-meaning"
               >
                 그림
+                <ReactTooltip id="game-meaning">
+                  <video autoPlay width="200" muted loop>
+                    <source
+                      src="http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20191029/632415/MOV000250158_700X466.mp4"
+                      type="video/mp4"
+                    />
+                  </video>
+                  <p style={{ textAlign: "right" }}>출처: 국립국어원</p>
+                </ReactTooltip>
               </Button>
             )}
           </ButtonContainer>
