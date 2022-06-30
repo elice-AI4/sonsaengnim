@@ -3,7 +3,7 @@ import Score from "../schemas/score";
 import { IScore, IScoreModel } from "../../models";
 
 export class MongoScoreModel implements IScoreModel {
-  async createScore(scoreData: IScore) {
+  public async createScore(scoreData: IScore) {
     const existUser = await Score.find({ username: scoreData.username });
     let score;
     if (existUser.length !== 0) {
@@ -16,7 +16,7 @@ export class MongoScoreModel implements IScoreModel {
     return score;
   }
 
-  async getTopten() {
+  public async getTopten() {
     return await Score.aggregate([
       { $sort: { score: -1, time: 1 } },
       {
