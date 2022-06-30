@@ -23,6 +23,8 @@ import imgS from "../../../src_assets/alphabet/S.png";
 import imgX from "../../../src_assets/alphabet/X.png";
 import imgY from "../../../src_assets/alphabet/Y.png";
 import { ROUTE } from "../../route/route";
+import Footer from "../../Footer";
+import { quizCopyRights } from "../../copyRights/copyRights";
 const imgSize = {
   width: "130px",
   height: "130px",
@@ -82,6 +84,10 @@ const Quiz = () => {
           </Button>
         </ButtonCotainer>
       </ImageContainer>
+      <Footer
+        aLinks={quizCopyRights.aLinks}
+        contents={quizCopyRights.contents}
+      />
     </QuizContainer>
   );
 };

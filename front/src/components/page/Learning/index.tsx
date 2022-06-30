@@ -1,5 +1,7 @@
 import React from "react";
 import { useLocation, useNavigate } from "react-router";
+import { learningCopyRights } from "../../copyRights/copyRights";
+import Footer from "../../Footer";
 import {
   AlphabetContainer,
   ImageA,
@@ -58,6 +60,10 @@ const Learning = () => {
           </WordContainer>
           <ButtonTitle>단어</ButtonTitle>
         </WordButton>
+        <Footer
+          aLinks={learningCopyRights.aLinks}
+          contents={learningCopyRights.contents}
+        />
       </ContentsContainer>
     </LearningContainer>
   );

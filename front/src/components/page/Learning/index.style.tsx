@@ -38,6 +38,7 @@ const bounceImageWord = keyframes`
 `;
 
 export const LearningContainer = styled.div`
+  position: relative;
   background-image: url(${learningPage});
   background-repeat: no-repeat;
   background-size: cover;
