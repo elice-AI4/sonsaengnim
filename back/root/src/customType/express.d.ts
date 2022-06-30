@@ -9,6 +9,7 @@ declare global {
     // eslint-disable-next-line no-unused-vars
     interface Request {
       user?: string;
+      userId?: string;
     }
   }
 }
