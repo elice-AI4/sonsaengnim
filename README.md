@@ -1,10 +1,12 @@
 # 영어 알파벳 수화 학습 사이트, 손생님🤙
 
-> 배포 도메인: `http://kdt-ai4-team05.elicecoding.com/`
+![android-chrome-512x512](/uploads/89ec7acee833e95b7b9995a407d1fc16/android-chrome-512x512.png)
+
+> 배포 도메인: http://kdt-ai4-team05.elicecoding.com/
 
 ## 0. 서비스 시작 전에 앞서
 
-**모든 사용자꼐서 주목해주세요~!**
+**모든 사용자께서 주목해주세요~!**
 
 엘리스에서 제공한 도메인이 http이기에 웹캠에 바로 접근할 수 없습니다. 
 
@@ -43,7 +45,7 @@ cd final-project
 ```
 cd
 cd front
-yarn add 또는 npm install
+yarn install
 yarn start
 ```
 
@@ -52,7 +54,7 @@ yarn start
 ```
 cd
 cd back
-yarn add 또는 npm install
+yarn install
 yarn start
 ```
 
@@ -146,7 +148,7 @@ Hand pose estimation을 통한 영어 알파벳 수화 학습 사이트
 |**Team** :metal: | ![image](https://img.shields.io/badge/GitLab-330F63?style=for-the-badge&logo=gitlab&logoColor=white) ![image](https://img.shields.io/badge/Notion-000000?style=for-the-badge&logo=notion&logoColor=white) ![image](https://img.shields.io/badge/Discord-5865F2?style=for-the-badge&logo=discord&logoColor=white) ![image](https://img.shields.io/badge/Figma-F24E1E?style=for-the-badge&logo=figma&logoColor=white) SpreadSheet |
 |**FE** :ok_hand: | ![image](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB) ![image](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white) ![image](https://img.shields.io/badge/styled--components-DB7093?style=for-the-badge&logo=styled-components&logoColor=white) ![image](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white) ![image](https://img.shields.io/badge/Nginx-009639?style=for-the-badge&logo=nginx&logoColor=white) ![image](https://img.shields.io/badge/Socket.io-010101?&style=for-the-badge&logo=Socket.io&logoColor=white) jotai mediapipe* |
 |**BE** :raised_back_of_hand: | ![image](https://img.shields.io/badge/Express.js-000000?style=for-the-badge&logo=express&logoColor=white) ![image](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white) ![image](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white) ![image](https://img.shields.io/badge/Docker-2CA5E0?style=for-the-badge&logo=docker&logoColor=white) ![image](https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white)|
-|**AI** :fingers_crossed: | ![image](https://img.shields.io/badge/TensorFlow-FF6F00?style=flat-square&logo=TensorFlow&logoColor=white) ![image](https://img.shields.io/badge/Python-FFD43B?style=for-the-badge&logo=python&logoColor=blue) ![image](https://img.shields.io/badge/Flask-000000?style=for-the-badge&logo=flask&logoColor=white) ![image](https://img.shields.io/badge/Docker-2CA5E0?style=for-the-badge&logo=docker&logoColor=white) ![image](https://img.shields.io/badge/Socket.io-010101?&style=for-the-badge&logo=Socket.io&logoColor=white) mediapipe* LSTM|          
+|**AI** :fingers_crossed: | ![image](https://img.shields.io/badge/TensorFlow-FF6F00?style=flat-square&logo=TensorFlow&logoColor=white) ![image](https://img.shields.io/badge/Python-FFD43B?style=for-the-badge&logo=python&logoColor=blue) ![image](https://img.shields.io/badge/Flask-000000?style=for-the-badge&logo=flask&logoColor=white) ![image](https://img.shields.io/badge/Docker-2CA5E0?style=for-the-badge&logo=docker&logoColor=white) ![image](https://img.shields.io/badge/Socket.io-010101?&style=for-the-badge&logo=Socket.io&logoColor=white) mediapipe* LSTM, gunicorn|          
 
 > mediapipe는 구글의 머신러닝 오픈소스 프레임워크로, face, hand, pose 등 여러 인식과 관련된 작업을 처리할 수 있습니다. 수화를 인식할 수 있는 서비스를 만들기 위해 손의 움직임을 탐지하는 부분은 mediapipe를 활용했습니다. 해당 움직임이 맞는 수화인지 인식하는 부분은 프로젝트 중 인공지능 모델로 구축하였습니다. <br> [참고]([google의 mediapipe](https://google.github.io/mediapipe/solutions/hands#python-solution-api) )
 
@@ -164,3 +166,5 @@ Hand pose estimation을 통한 영어 알파벳 수화 학습 사이트
 |김유진|백엔드/디스코드 관리||
 |김채정|인공지능/팀장|1. 인공지능 모델 학습 <br> 2. 단어 이미지 디자인, 모달창 이미지 디자인|
 |유혜선|인공지능/노션 관리|1. 인공지능 모델 학습 <br> 2. AI Docker 배포|
+
+## 6. 데모
