@@ -12,6 +12,8 @@ import { UserCanvas } from "./index.style";
 import { Socket, io } from "socket.io-client";
 import { interval, Subject, throttle } from "rxjs";
 
+const flaskUrl = String(process.env.REACT_APP_FLASKPORT);
+
 const holistic = new Holistic({
   locateFile: (file) => {
     return `https://cdn.jsdelivr.net/npm/@mediapipe/holistic/${file}`;
@@ -213,7 +215,7 @@ function MediaPipeWebCam({
   }, []);
 
   useEffect(() => {
-    setSocket(io("http://localhost:4000"));
+    setSocket(io(flaskUrl));
 
     return () => {
       socket?.disconnect();
@@ -242,7 +244,7 @@ function MediaPipeWebCam({
         socket.off("answer", func);
       };
     }
-  }, [socket]);
+  }, [socket, handleSetSocketAnswer]);
 
   return (
     <>

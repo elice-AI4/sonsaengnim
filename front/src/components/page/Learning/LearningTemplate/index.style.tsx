@@ -45,13 +45,12 @@ export const ButtonLink = styled(Link)`
   line-height: 2rem;
   text-decoration: none;
   color: white;
-  width: 20rem;
-  height: 5rem;
+  width: 23rem;
+  height: 6rem;
   background-color: rgb(70, 51, 255);
-  font-size: 2rem;
+  font-size: 3rem;
   font-weight: 600;
   border-radius: 10px;
-  margin-bottom: 10rem;
 `;
 
 export const DescriptionContainer = styled.section`
@@ -70,4 +69,5 @@ export const CardContainer = styled.div`
   max-width: 1000px;
   flex: 0.6;
   padding: 4rem;
+  margin-bottom: 4rem;
 `;

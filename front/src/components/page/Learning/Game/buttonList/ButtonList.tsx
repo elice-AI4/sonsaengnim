@@ -2,34 +2,11 @@ import React, { useState } from "react";
 import { curSelectedButtonProps } from "..";
 import { BlankButton, Button, Container, WordButton } from "./ButtonList.style";
 
-const Alphabet = [
-  "A",
-  "B",
-  "C",
-  "D",
-  "E",
-  "F",
-  "G",
-  "H",
-  "I",
-  "J",
-  "K",
-  "L",
-  "M",
-  "N",
-  "O",
-  "P",
-  "Q",
-  "R",
-  "S",
-  "T",
-  "U",
-  "V",
-  "W",
-  "X",
-  "Y",
-  "Z",
-];
+const Alphabet = Array.from(Array(26))
+  .map((e, i) => i + 65)
+  .map((x) => String.fromCharCode(x));
+
+console.log(Array(26));
 
 interface ButtonListProps {
   handleSetVideo: (index: number) => void;

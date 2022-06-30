@@ -13,11 +13,9 @@ const Footer = ({ aLinks, contents }: FooterProps) => {
 
       {aLinks?.map((link, index) => {
         return (
-          <>
-            <FooterContent key={`${index} link`} href={link}>
-              {contents[index]}
-            </FooterContent>
-          </>
+          <div key={`${index} link`}>
+            <FooterContent href={link}>{contents[index]}</FooterContent>
+          </div>
         );
       })}
     </FooterContainer>

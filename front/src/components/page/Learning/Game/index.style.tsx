@@ -77,7 +77,6 @@ export const FrontImage = styled.div<{ isHandVideo: boolean }>`
   transition: transform ease 500ms;
   transform: rotateY(0deg);
   position: absolute;
-  z-index: 2;
   width: 440px;
   height: 330px;
   display: flex;
@@ -102,7 +101,6 @@ export const BackImage = styled.div<{ isHandVideo: boolean }>`
   transition: transform ease 500ms;
   transform: rotateY(-180deg);
   position: absolute;
-  z-index: 2;
   width: 440px;
   height: 330px;
   display: flex;
@@ -273,15 +271,6 @@ export const StartTriangle = styled.div<StartTriangleProp>`
   opacity: ${(props) => (props.cameraOn ? 0 : 1)};
 `;
 
-const BounceAnimation = keyframes`
-  50% {
-    transform: translateX(200px)
-  }
-  100% {
-    transform: translateX(200px)
-  }
-`;
-
 export const PointBox = styled(motion.div)`
   width: 15rem;
   height: 15rem;
@@ -295,4 +284,22 @@ export const PointBox = styled(motion.div)`
   align-items: center;
   font-size: 3rem;
   font-weight: bold;
+`;
+
+export const ModalButtonContainer = styled.div`
+  display: flex;
+  width: 800px;
+  background-color: white;
+  padding: 5px 0 5px 0;
+`;
+
+export const ModalButton = styled.div`
+  display: inline-block;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  width: 100%;
+  font-size: 3rem;
+  text-align: center;
+  color: #3a86ff;
 `;
