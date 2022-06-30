@@ -38,6 +38,7 @@ def build_model(actions):
 
     return model
 
+
 def extract_keypoints(results):
     """
     pose(33), left_hand(21), right_hand(21) 의 모든 인덱스를 flatten하는 함수
