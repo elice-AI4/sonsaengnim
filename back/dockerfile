@@ -9,6 +9,11 @@ RUN yarn install
 
 COPY . .
 
+RUN yarn build
+
+# 앞에 인자를 뒤에 복사한다.
+COPY .env ./
+
 EXPOSE 5000
 
 CMD [ "yarn", "start" ]
