@@ -37,7 +37,7 @@ export const ButtonBox = styled.div`
 `;
 
 export const AnswerImg = styled.img`
-  width: 500px;
+  width: 800px;
   height: 500px;
 `;
 
@@ -83,7 +83,7 @@ export const RecordBox = styled.div`
   align-items: center;
 `;
 
-export const StartButton = styled.button`
+export const TimerStartButton = styled.button`
   width: 200px;
   height: 50px;
   background-color: skyblue;

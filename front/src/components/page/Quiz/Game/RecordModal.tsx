@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Modal from "../../Modal";
 import { Score } from "./index";
 import {
@@ -10,6 +11,7 @@ import {
 } from "./index.style";
 import { useAtom } from "jotai";
 import { loginAtom, userAtom, saveTimeAtom } from "../../../../state";
+import * as Api from "../../../../api";
 
 interface RecordProps {
   rank: boolean;
@@ -27,11 +29,21 @@ const ModalStyle = {
 };
 
 function RecordModal({ rank, score, handleInitial }: RecordProps) {
+  const navigate = useNavigate();
   const [login] = useAtom(loginAtom);
   const [user] = useAtom(userAtom);
   const [saveTime] = useAtom(saveTimeAtom);
 
   const [rankName, setRankName] = useState<string>(login ? user.username : "");
+
+  const handleRecord = async () => {
+    // const data = { username: rankName, score: score.ans * 10, time: saveTime };
+    // const res = await Api.post("scores/nologin", data);
+    // console.log(res);
+    navigate("/rank");
+
+    // handleInitial();
+  };
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setRankName(e.target.value);
@@ -59,7 +71,7 @@ function RecordModal({ rank, score, handleInitial }: RecordProps) {
             saveTime % 60
           }초`}</RecordScore>
         </RecordBox>
-        <RecordButton onClick={handleInitial}>점수 기록</RecordButton>
+        <RecordButton onClick={handleRecord}>점수 기록</RecordButton>
       </RecordBoard>
     </Modal>
   );

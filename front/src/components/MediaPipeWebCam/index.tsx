@@ -30,7 +30,7 @@ export interface ServerToClientData {
   data: string[];
 }
 interface ServerToClientEvents {
-  answer: (data: ServerToClientData) => void;
+  answer: (data: string[]) => void;
 }
 interface ClientToServerEvents {
   coordinate: (hands: MediapipeDataProps[]) => void;
@@ -40,7 +40,7 @@ interface WebCamProps {
   cameraOn: boolean;
   handleOffMediapipe: () => void;
   isCameraSettingOn: () => void;
-  handleSetSocketAnswer?: (answer: ServerToClientData) => void;
+  handleSetSocketAnswer?: (answer: string[]) => void;
   openModal?: () => void;
 }
 
@@ -149,19 +149,19 @@ function MediaPipeWebCam({
       handleOffMediapipe();
     }
   }, [mediapipeData]);
-  // useEffect(() => {
-  //   if (mediapipeData.length === 50) {
-  //     console.log("50개 채웠어요!");
-  //     startRef.current = new Date();
-  //     openModal && openModal();
-  //     console.log("startRef 값 : ", startRef.current);
-  //     for (let i = 0; i < mediapipeData.length - 30; i = i + 4) {
-  //       console.log(i, "번째 socket 보냅니다!");
-  //       socket?.emit("coordinate", mediapipeData.slice(i, i + 30));
-  //     }
-  //     handleOffMediapipe();
-  //   }
-  // }, [mediapipeData]);
+  useEffect(() => {
+    if (mediapipeData.length === 50) {
+      console.log("50개 채웠어요!");
+      startRef.current = new Date();
+      openModal && openModal();
+      console.log("startRef 값 : ", startRef.current);
+      for (let i = 0; i < mediapipeData.length - 30; i = i + 4) {
+        console.log(i, "번째 socket 보냅니다!");
+        socket?.emit("coordinate", mediapipeData.slice(i, i + 30));
+      }
+      handleOffMediapipe();
+    }
+  }, [mediapipeData]);
 
   useEffect(() => {
     if (cameraOn) {
@@ -227,7 +227,7 @@ function MediaPipeWebCam({
 
   useEffect(() => {
     if (socket) {
-      const func = (data: ServerToClientData) => {
+      const func = (data: string[]) => {
         endRef.current = new Date();
         // 소켓 답변 매개변수로 넘겨주는 함수
         handleSetSocketAnswer && handleSetSocketAnswer(data);

@@ -62,7 +62,7 @@ const LearningGame = () => {
   const [cameraOn, setCameraOn] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [isHandVideo, setIsHandVideo] = useState(true);
-  const [socketAnswer, setSocketAnswer] = useState<ServerToClientData>();
+  const [socketAnswer, setSocketAnswer] = useState<string[]>();
   const [isModalOpen, setIsModalOpen] = useState({
     loadingModal: false,
     waitingModal: false,
@@ -108,7 +108,7 @@ const LearningGame = () => {
       });
     }, 2000);
   };
-  const handleSetSocketAnswer = (answer: ServerToClientData) => {
+  const handleSetSocketAnswer = (answer: string[]) => {
     setSocketAnswer(answer);
   };
   const getVideos = async (localIsAlphabet: boolean) => {
@@ -192,11 +192,12 @@ const LearningGame = () => {
   }, []);
 
   const checkAnswer = (): boolean | undefined => {
-    if (Array.isArray(socketAnswer)) {
-      return socketAnswer.find((answer: string) => {
-        return answer === curSelectedButton.word.toLowerCase();
-      });
-    }
+    // if (Array.isArray(socketAnswer)) {
+    //   return socketAnswer.find((answer: string) => {
+    //     return answer === curSelectedButton.word.toLowerCase();
+    //   });
+    // }
+    return true;
   };
 
   return (

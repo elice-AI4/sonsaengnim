@@ -5,66 +5,25 @@ import {
   AnswerBox,
   QuizBox,
   ButtonBox,
-  StartButton,
+  TimerStartButton,
 } from "./index.style";
-import Modal from "../../Modal";
 import SolveModal from "./SolveModal";
 import RecordModal from "./RecordModal";
-import { io, Socket } from "socket.io-client";
-import MediaPipeWebCam from "./../../../MediaPipeWebCam";
+import MediaPipeWebCam from "../../../MediaPipeWebCam";
 import Timer from "../../../Timer";
 import Loading from "../../../Loading";
 
-export const MAX_COUNT = 1;
-interface TestData {
-  x: number;
-  y: number;
-  z: number;
-  visibility: undefined;
-}
+import { StartButton, StartTriangle } from "../../Learning/Game/index.style";
+
+export const MAX_COUNT = 3;
+
+// const problemList = ["angle", "banana", "cry", "dance", "egg", "fun"];
+const problemList = "angel";
+
 export interface Score {
   ans: number;
   cur: number;
 }
-
-interface ServerToClientData {
-  data: number;
-}
-
-interface ServerToClientEvents {
-  answer: (data: ServerToClientData) => void;
-}
-interface ClientToServerEvents {
-  coordinate: (hands: { testData: TestData[] }) => void;
-}
-
-const testData: TestData[] = [
-  {
-    x: Math.random(),
-    y: Math.random(),
-    z: Math.random(),
-    visibility: undefined,
-  },
-  {
-    x: Math.random(),
-    y: Math.random(),
-    z: Math.random(),
-    visibility: undefined,
-  },
-  {
-    x: Math.random(),
-    y: Math.random(),
-    z: Math.random(),
-    visibility: undefined,
-  },
-];
-const ModalStyle = {
-  width: "1000px",
-  height: "900px",
-  display: "flex",
-  flexDirection: "column",
-  alignItems: "center",
-};
 
 function QuizGame() {
   const [modal, setModal] = useState<boolean>(false);
@@ -74,55 +33,55 @@ function QuizGame() {
   const [finish, setFinish] = useState<boolean>(false);
   const [timer, setTimer] = useState<boolean>(false);
   const [quizNumber, setQuizNumber] = useState<number>(
-    Math.floor(Math.random() * 10) + 1
+    Math.floor(Math.random() * 0)
   );
   const [isLoading, setIsLoading] = useState(true);
 
   const [cameraOn, setCameraOn] = useState(false);
 
-  const [socket, setSocket] =
-    useState<Socket<ServerToClientEvents, ClientToServerEvents>>();
   const handleInitial = () => {
     setScore({ ans: 0, cur: 0 });
     setModal(false);
     setRank(false);
     setFinish(false);
+    setTimer(false);
   };
   const closeModal = () => {
     setModal(false);
   };
-  const closeRecord = () => {
-    setRank(false);
-  };
+  // const closeRecord = () => {
+  //   setRank(false);
+  // };
 
   const nextQuiz = () => {
-    setQuizNumber(Math.floor(Math.random() * 10) + 1);
+    setQuizNumber(Math.floor(Math.random() * 0));
     setModal(false);
   };
 
-  const [socketAnswer, setSocketAnswer] = useState<ServerToClientData>();
-
+  const [socketAnswer, setSocketAnswer] = useState<string[]>();
+  const handleSetSocketAnswer = (answer: string[]) => {
+    setSocketAnswer(answer);
+  };
   useEffect(() => {
-    setSocket(io("http://localhost:4000"));
-    // const socket: Socket<ServerToClientEvents, ClientToServerEvents> =
-
-    return () => {
-      socket?.disconnect();
-    };
-  }, []);
-
-  useEffect(() => {
-    if (socket) {
-      const func = (data: ServerToClientData) => {
-        setSocketAnswer(data);
-      };
-      socket.on("answer", func);
-
-      return () => {
-        socket.off("answer", func);
-      };
+    if (socketAnswer === undefined || socketAnswer.length === 0) {
+      return;
     }
-  }, [socket]);
+    console.log(socketAnswer);
+    console.log(typeof socketAnswer[0]);
+    console.log(problemList);
+    console.log(socketAnswer.includes(problemList));
+    if (socketAnswer.includes(problemList)) {
+      console.log("정답");
+      setAnswer(true);
+      setScore((cur): Score => {
+        const newScore: Score = { ...cur };
+        newScore["ans"] += 1;
+        newScore["cur"] += 1;
+        return newScore;
+      });
+      setModal(true);
+    }
+  }, [socketAnswer]);
 
   const isCameraSettingOn = () => {
     if (isLoading === false) {
@@ -168,17 +127,20 @@ function QuizGame() {
         {timer ? (
           <Timer finish={finish}></Timer>
         ) : (
-          <StartButton onClick={() => setTimer(true)}>게임 시작</StartButton>
+          <TimerStartButton onClick={() => setTimer(true)}>
+            게임 시작
+          </TimerStartButton>
         )}
         <QuizBox>
           <ProblemImg
-            src={`${process.env.PUBLIC_URL}/quizgamepic/p${quizNumber}.jpg`}
+            src={`${process.env.PUBLIC_URL}/quizgamepic/p1.jpg`}
           ></ProblemImg>
           <AnswerBox>
             <MediaPipeWebCam
               cameraOn={cameraOn}
               handleOffMediapipe={handleOffMediapipe}
               isCameraSettingOn={isCameraSettingOn}
+              handleSetSocketAnswer={handleSetSocketAnswer}
             />
           </AnswerBox>
         </QuizBox>
@@ -198,7 +160,6 @@ function QuizGame() {
                 const newScore: Score = { ...cur };
                 newScore["ans"] += 1;
                 newScore["cur"] += 1;
-                console.log(newScore);
                 return newScore;
               });
             }}
@@ -218,6 +179,7 @@ function QuizGame() {
           >
             오답
           </button>
+          <h2>{problemList}</h2>
           {/* <button onClick={() => socket?.emit("coordinate", { testData })}>
             목업데이터 보내보기
           </button> */}

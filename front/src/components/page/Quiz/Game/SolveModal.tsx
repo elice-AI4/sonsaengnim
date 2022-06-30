@@ -38,14 +38,12 @@ function SolveModal({
     >
       {answer ? (
         <>
-          <h1>정답입니다!!!</h1>
           <AnswerImg
-            src={`${process.env.PUBLIC_URL}/quizgamepic/answer.png`}
+            src={`${process.env.PUBLIC_URL}/quizgamepic/answer1.jpg`}
           ></AnswerImg>
         </>
       ) : (
         <>
-          <h1>틀렸네?~~</h1>
           <AnswerImg
             src={`${process.env.PUBLIC_URL}/quizgamepic/wrong.jpg`}
           ></AnswerImg>
