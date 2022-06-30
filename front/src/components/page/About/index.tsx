@@ -92,16 +92,20 @@ const About = () => {
             </FirstSectionLeft>
             <FirstSectionRight>
               <Description>
-                영어를 배우고 싶어하는 <ImpactWord>유치부</ImpactWord>,
-                <ImpactWord> 초등부</ImpactWord> 청각장애인이
+                영어를 배우고 싶어하는{" "}
+                <ImpactWord>
+                  <br />
+                  유치부
+                </ImpactWord>
+                ,<ImpactWord> 초등부</ImpactWord> 청각장애인이
               </Description>
 
               <Description>
-                웹에서 <ImpactWord>지화</ImpactWord>를 학습하고 맞는지 확인까지
-                할 수 있는
+                웹에서 <ImpactWord>지화</ImpactWord>를 학습하고 맞는지
+                <br /> 확인까지 할 수 있는
               </Description>
               <Description>
-                실시간 인터렉티브 <ImpactWord>학습</ImpactWord> 사이트입니다.
+                실시간 인터렉티브 <ImpactWord>학습</ImpactWord>사이트입니다.
               </Description>
             </FirstSectionRight>
           </Section>
@@ -116,7 +120,8 @@ const About = () => {
               </Description>
               <Description>
                 <ImpactWord>장소</ImpactWord>와 <ImpactWord>시간</ImpactWord>에
-                구애받지 않고 학습할 수 있기 위해
+                구애받지 않고 학습할 수 <br />
+                있기 위해
               </Description>
               <Description>
                 <ImpactWord>즐겁게</ImpactWord> 학습 할 수 있기 위해

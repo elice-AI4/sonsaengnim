@@ -1,12 +1,9 @@
-import { motion } from "framer-motion";
 import styled from "styled-components";
-
-import Oimg from "../../src_assets/alphabet/O.png";
 
 export const StyledLoading = styled.div`
   width: 100vw;
   height: 100vh;
-  z-index: 13;
+  z-index: 12;
 
   position: fixed;
   background-color: white;

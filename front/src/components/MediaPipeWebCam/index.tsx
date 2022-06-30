@@ -246,7 +246,7 @@ function MediaPipeWebCam({
           marginLeft: "auto",
           marginRight: "auto",
           textAlign: "center",
-          zIndex: 9,
+          zIndex: 3,
           width: 640,
           height: 480,
         }}

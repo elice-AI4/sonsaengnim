@@ -1,15 +1,18 @@
 import { motion } from "framer-motion";
 import styled from "styled-components";
 
-export const Card = styled(motion.div)<{ src: string }>`
-  width: 125px;
-  height: 100px;
+interface CardProps {
+  src: string;
+  check: boolean;
+}
+
+export const Card = styled(motion.div)<CardProps>`
+  width: ${(props) => (props.check ? "10rem" : "16rem")};
+  height: ${(props) => (props.check ? "10rem" : "12rem")};
   text-align: center;
   border-radius: 5px;
 
   margin: 1rem;
-
-  /* transition: all 0.5s ease; */
 
   cursor: pointer;
   &:hover {

@@ -1,8 +1,7 @@
 import styled, { css } from "styled-components";
 
 export const ListWrapper = styled.div`
-  /* display: flex; */
-  width: 300px;
+  width: 150px;
   height: 200px;
   position: fixed;
   transform: translate(0, 50%);
