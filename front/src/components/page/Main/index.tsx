@@ -44,6 +44,7 @@ function Main() {
                   type="video/mp4"
                 />
               </video>
+              <p style={{ textAlign: "right" }}>출처: 국립국어원</p>
             </ReactTooltip>
           </MoveButton>
         </ServiceBox>
@@ -64,6 +65,7 @@ function Main() {
                   type="video/mp4"
                 />
               </video>
+              <p style={{ textAlign: "right" }}>출처: 국립국어원</p>
             </ReactTooltip>
           </MoveButton>
         </ServiceBox>
