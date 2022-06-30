@@ -15,6 +15,7 @@ import {
   WordContainer,
   ButtonTitle,
 } from "./index.style";
+import ReactTooltip from "react-tooltip";
 
 const Learning = () => {
   const { pathname } = useLocation();
@@ -32,7 +33,20 @@ const Learning = () => {
     <LearningContainer>
       <ContentsContainer />
       <ContentsContainer>
-        <AlphabetButton onClick={handleClickAlphabet}>
+        <AlphabetButton
+          onClick={handleClickAlphabet}
+          data-tip="learning-alphabet"
+          data-for="learning-alphabet"
+        >
+          <ReactTooltip id="learning-alphabet">
+            <video autoPlay width="400" muted loop>
+              <source
+                src="http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20160325/286089/MOV000286853_700X466.mp4"
+                type="video/mp4"
+              />
+            </video>
+            <p style={{ textAlign: "right" }}>출처: 국립국어원</p>
+          </ReactTooltip>
           <AlphabetContainer>
             <ImageA
               src={process.env.PUBLIC_URL + "/alphabet/alpha_1.png"}
@@ -48,8 +62,22 @@ const Learning = () => {
             />
           </AlphabetContainer>
           <ButtonTitle>알파벳</ButtonTitle>
+          <div></div>
         </AlphabetButton>
-        <WordButton onClick={handleClickWord}>
+        <WordButton
+          onClick={handleClickWord}
+          data-tip="learning-word"
+          data-for="learning-word"
+        >
+          <ReactTooltip id="learning-word">
+            <video autoPlay width="400" muted loop>
+              <source
+                src="http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20191028/631991/MOV000251028_700X466.mp4"
+                type="video/mp4"
+              />
+            </video>
+            <p style={{ textAlign: "right" }}>출처: 국립국어원</p>
+          </ReactTooltip>
           <WordContainer>
             <ImageWord
               src={process.env.PUBLIC_URL + "/alphabet/word.png"}
