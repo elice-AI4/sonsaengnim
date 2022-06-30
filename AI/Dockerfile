@@ -1,4 +1,4 @@
-FROM python:3.8-alpine
+FROM python:3.8-slim-buster
 MAINTAINER Hyesun Yoo <yoohs7974@gmail.com>
 
 # Set working directory
