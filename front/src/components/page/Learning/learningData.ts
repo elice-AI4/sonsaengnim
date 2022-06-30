@@ -25,6 +25,28 @@ import X from "../../../src_assets/alphabet/X.png";
 import Y from "../../../src_assets/alphabet/Y.png";
 import Z from "../../../src_assets/alphabet/Z.png";
 
+import angel from "../../../src_assets/word/angel.jpg";
+import banana from "../../../src_assets/word/banana.jpg";
+import cry from "../../../src_assets/word/cry.jpg";
+import dance from "../../../src_assets/word/dance.jpg";
+import egg from "../../../src_assets/word/egg.jpg";
+import fun from "../../../src_assets/word/fun.jpg";
+import game from "../../../src_assets/word/game.jpg";
+import house from "../../../src_assets/word/house.jpg";
+import internet from "../../../src_assets/word/internet.jpg";
+import jump from "../../../src_assets/word/jump.jpg";
+import key from "../../../src_assets/word/key.jpg";
+import love from "../../../src_assets/word/love.jpg";
+import music from "../../../src_assets/word/music.jpg";
+import name from "../../../src_assets/word/name.jpg";
+import open from "../../../src_assets/word/open.jpg";
+import paper from "../../../src_assets/word/paper.jpg";
+import rabbit from "../../../src_assets/word/rabbit.jpg";
+import school from "../../../src_assets/word/school.jpg";
+import tiger from "../../../src_assets/word/tiger.jpg";
+import video from "../../../src_assets/word/video.jpg";
+import walk from "../../../src_assets/word/walk.jpg";
+
 export const alphabetImgs = [
   {
     src: A,
@@ -132,109 +154,89 @@ export const alphabetImgs = [
   },
 ];
 
-export const wordImgs = [
+export const imgSrc = [
   {
-    src: A,
-    alt: "ant",
+    src: angel,
+    alt: "angel",
   },
   {
-    src: B,
+    src: banana,
     alt: "banana",
   },
   {
-    src: C,
+    src: cry,
     alt: "cry",
   },
   {
-    src: D,
+    src: dance,
     alt: "dance",
   },
   {
-    src: E,
+    src: egg,
     alt: "egg",
   },
   {
-    src: F,
+    src: fun,
     alt: "fun",
   },
   {
-    src: G,
+    src: game,
     alt: "game",
   },
   {
-    src: H,
+    src: house,
     alt: "house",
   },
   {
-    src: I,
+    src: internet,
     alt: "internet",
   },
   {
-    src: J,
+    src: jump,
     alt: "jump",
   },
   {
-    src: K,
+    src: key,
     alt: "key",
   },
   {
-    src: L,
+    src: love,
     alt: "love",
   },
   {
-    src: M,
-    alt: "mother",
+    src: music,
+    alt: "music",
   },
   {
-    src: N,
+    src: name,
     alt: "name",
   },
   {
-    src: O,
+    src: open,
     alt: "open",
   },
   {
-    src: P,
+    src: paper,
     alt: "paper",
   },
   {
-    src: Q,
-    alt: "Q",
-  },
-  {
-    src: R,
+    src: rabbit,
     alt: "rabbit",
   },
   {
-    src: S,
+    src: school,
     alt: "school",
   },
   {
-    src: T,
+    src: tiger,
     alt: "tiger",
   },
   {
-    src: U,
-    alt: "U",
-  },
-  {
-    src: V,
+    src: video,
     alt: "video",
   },
   {
-    src: W,
+    src: walk,
     alt: "walk",
-  },
-  {
-    src: X,
-    alt: "X",
-  },
-  {
-    src: Y,
-    alt: "Y",
-  },
-  {
-    src: Z,
-    alt: "Z",
   },
 ];

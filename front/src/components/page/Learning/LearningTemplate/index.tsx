@@ -36,18 +36,6 @@ const LearningTemplate = ({ imgs, title, children }: LearningTemplateProps) => {
           <Underline />
           {children && <InputContainer>{children}</InputContainer>}
         </DescriptionContainer>
-        <CardContainer>
-          {imgs.map((img, index) => {
-            return (
-              <CardTemplate src={img.src} alt={img.alt} key={`img ${index}`} />
-            );
-          })}
-
-          <CardTemplate src="" alt="" />
-          <CardTemplate src="" alt="" />
-          <CardTemplate src="" alt="" />
-          <CardTemplate src="" alt="" />
-        </CardContainer>
         <ButtonLink
           to={`${pathname}/${ROUTE.GAME.link}/${ROUTE.PLAY.link}`}
           data-tip="learningTemplate-follow"
@@ -64,6 +52,18 @@ const LearningTemplate = ({ imgs, title, children }: LearningTemplateProps) => {
             <p style={{ textAlign: "right" }}>출처: 국립국어원</p>
           </ReactTooltip>
         </ButtonLink>
+        <CardContainer>
+          {imgs.map((img, index) => {
+            return (
+              <CardTemplate src={img.src} alt={img.alt} key={`img ${index}`} />
+            );
+          })}
+
+          <CardTemplate src="" alt="" />
+          <CardTemplate src="" alt="" />
+          <CardTemplate src="" alt="" />
+          <CardTemplate src="" alt="" />
+        </CardContainer>
         <Footer
           aLinks={learningTemplatecopyRights.aLinks}
           contents={learningTemplatecopyRights.contents}

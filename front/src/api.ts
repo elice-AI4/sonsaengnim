@@ -2,7 +2,7 @@ import axios from "axios";
 import { useAtom } from "jotai";
 import { userAtom } from "./state";
 
-const serverUrl = "http://localhost:5000/";
+const serverUrl = String(process.env.REACT_APP_BACKPORT);
 
 async function get(endpoint: string, params = "") {
   console.log(
