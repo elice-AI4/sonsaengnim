@@ -15,6 +15,7 @@ def create_app():
     app.config['SECRET_KEY'] = 'secret!'
 
     socket.init_app(app, async_mode='eventlet', cors_allowed_origins='*', engineio_logger=True)
+    model = HandSignModel()
 
     # Handle the webapp 
     @app.route("/")
@@ -28,7 +29,6 @@ def create_app():
 
     @socket.on('coordinate')
     def handle_coordinate(data):
-        model = HandSignModel()
         seq_results = []
         # 60 프레임을 4 steps 30 프레임씩 검사
         if len(data) == 30:

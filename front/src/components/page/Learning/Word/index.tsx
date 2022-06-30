@@ -1,11 +1,10 @@
 import React from "react";
 import LearningTemplate from "../LearningTemplate";
-import { wordImgs } from "../learningData";
-import { Input } from "./index.style";
+import { imgSrc } from "../learningData";
 
 const Word = () => {
   return (
-    <LearningTemplate imgs={wordImgs} title="여러 단어를 함께 알아가 볼까요?" />
+    <LearningTemplate imgs={imgSrc} title="여러 단어를 함께 알아가 볼까요?" />
   );
 };
 

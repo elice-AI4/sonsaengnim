@@ -1,4 +1,5 @@
-import styled, { css } from "styled-components";
+import { motion } from "framer-motion";
+import styled, { css, keyframes } from "styled-components";
 import backgroundImg from "../../../../src_assets/learning/play/playPage.png";
 
 export const GameContainer = styled.div`
@@ -21,6 +22,7 @@ export const ButtonContainer = styled.div`
   margin: auto;
 
   display: flex;
+  justify-content: center;
 
   font-size: 2rem;
   font-weight: 600;
@@ -54,17 +56,61 @@ export const ImageContainer = styled.div`
   flex-direction: column;
   align-items: center;
   margin-bottom: 5rem;
+  position: relative;
 `;
 
-export const Image = styled.div`
+export const ImageRotateContainer = styled.div`
+  transform-style: preserve-3d;
+  cursor: pointer;
+`;
+
+export const NoneDisplay = styled.div`
+  width: 440px;
+  height: 330px;
+  border-radius: 10px;
+  margin-bottom: 3rem;
+`;
+
+export const FrontImage = styled.div<{ isHandVideo: boolean }>`
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+  transition: transform ease 500ms;
+  transform: rotateY(0deg);
+  position: absolute;
   width: 440px;
   height: 330px;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: white;
   border-radius: 10px;
   margin-bottom: 3rem;
+
+  transform: ${({ isHandVideo }) =>
+    isHandVideo ? "rotateY(0deg)" : "rotateY(180deg)"};
+
+  ${({ theme }) => {
+    return css`
+      border: 5px solid ${theme.learning.play.darkBlue};
+    `;
+  }}
+`;
+
+export const BackImage = styled.div<{ isHandVideo: boolean }>`
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+  transition: transform ease 500ms;
+  transform: rotateY(-180deg);
+  position: absolute;
+  width: 440px;
+  height: 330px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  margin-bottom: 3rem;
+
+  transform: ${(props) =>
+    props.isHandVideo ? "rotateY(-180deg)" : "rotateY(0deg)"};
 
   ${({ theme }) => {
     return css`
@@ -92,6 +138,11 @@ export const CameraContainer = styled.section`
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
+
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 export const AlphabetContainer = styled.section`
@@ -110,10 +161,8 @@ export const Moniter = styled.section`
 
   display: flex;
   flex-direction: column;
+  align-items: center;
 
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
   border-radius: 5rem;
 
   padding: 4rem;
@@ -123,6 +172,7 @@ export const Moniter = styled.section`
     `;
   }}
 `;
+export const CopyRightsWrapper = styled.div``;
 
 export const Circle = styled.div`
   width: 5rem;
@@ -158,7 +208,7 @@ export const Explain = styled.h1`
 `;
 
 export const HR = styled.div`
-  width: 40%;
+  width: 50%;
   height: 0.5rem;
   border-radius: 0.5rem;
   margin: auto;
@@ -179,9 +229,7 @@ export const StartButton = styled.div<StartButtonProp>`
   height: 7rem;
   border-radius: 1.5rem;
   position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
+
   ${({ theme }) => {
     return css`
       background-color: ${theme.learning.play.darkBlue};
@@ -197,7 +245,10 @@ export const StartButton = styled.div<StartButtonProp>`
 `;
 
 export const TopContainer = styled.div`
+  width: 100%;
   flex: 0.2;
+  display: flex;
+  flex-direction: column;
 `;
 
 export const BottomContainer = styled.div`
@@ -218,4 +269,37 @@ export const StartTriangle = styled.div<StartTriangleProp>`
   border-left: 30px solid white;
   transition: opacity 0.5s ease;
   opacity: ${(props) => (props.cameraOn ? 0 : 1)};
+`;
+
+export const PointBox = styled(motion.div)`
+  width: 15rem;
+  height: 15rem;
+  background-color: orange;
+  position: absolute;
+  right: -75px;
+  top: -75px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 3rem;
+  font-weight: bold;
+`;
+
+export const ModalButtonContainer = styled.div`
+  display: flex;
+  width: 800px;
+  background-color: white;
+  padding: 5px 0 5px 0;
+`;
+
+export const ModalButton = styled.div`
+  display: inline-block;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  width: 100%;
+  font-size: 3rem;
+  text-align: center;
+  color: #3a86ff;
 `;

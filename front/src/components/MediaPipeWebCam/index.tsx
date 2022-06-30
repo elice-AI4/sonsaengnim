@@ -10,7 +10,8 @@ import Webcam from "react-webcam";
 import { drawConnectors, drawLandmarks } from "@mediapipe/drawing_utils";
 import { UserCanvas } from "./index.style";
 import { Socket, io } from "socket.io-client";
-import { interval, Subject, throttle } from "rxjs";
+
+const flaskUrl = String(process.env.REACT_APP_FLASKPORT);
 
 const holistic = new Holistic({
   locateFile: (file) => {
@@ -27,8 +28,19 @@ holistic.setOptions({
   minTrackingConfidence: 0.5,
 });
 
+interface ServerToClientEvents {
+  answer: (data: string[]) => void;
+}
+interface ClientToServerEvents {
+  coordinate: (hands: MediapipeDataProps[]) => void;
+}
+
 interface WebCamProps {
   cameraOn: boolean;
+  handleOffMediapipe: () => void;
+  isCameraSettingOn: () => void;
+  handleSetSocketAnswer?: (answer: string[]) => void;
+  openModal?: () => void;
 }
 
 interface MediapipeDataProps {
@@ -37,25 +49,19 @@ interface MediapipeDataProps {
   rightHandLandmarks: h.NormalizedLandmarkList;
 }
 
-interface ServerToClientData {
-  data: boolean;
-}
-
-interface ServerToClientEvents {
-  answer: (data: ServerToClientData) => void;
-}
-interface ClientToServerEvents {
-  coordinate: (hands: MediapipeDataProps[]) => void;
-}
-
-function MediaPipeWebCam({ cameraOn }: WebCamProps) {
+function MediaPipeWebCam({
+  cameraOn,
+  handleOffMediapipe,
+  isCameraSettingOn,
+  handleSetSocketAnswer,
+  openModal,
+}: WebCamProps) {
   const webcamRef = useRef<Webcam>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [subject, setSubject] = useState<Subject<MediapipeDataProps>>();
   const [socket, setSocket] =
     useState<Socket<ServerToClientEvents, ClientToServerEvents>>();
-  const [socketAnswer, setSocketAnswer] = useState<ServerToClientData>();
   const [mediapipeData, setMediapipeData] = useState<MediapipeDataProps[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   const onResults: h.ResultsListener = (results) => {
     if (!canvasRef.current || !webcamRef.current?.video || !cameraOn) {
@@ -70,18 +76,8 @@ function MediaPipeWebCam({ cameraOn }: WebCamProps) {
     setMediapipeData((cur) => {
       const temp = [...cur];
       temp.push(data);
-      if (temp.length == 30) {
-        console.log(temp);
-        socket?.emit("coordinate", temp);
-      }
       return temp;
     });
-
-    // subject?.pipe(throttle(() => interval(1000))).subscribe((data) => {
-    //   socket?.emit("coordinate", { data });
-    //   // console.log(data);
-    // });
-    // subject?.next(data);
 
     canvasRef.current.width = webcamRef.current?.video.videoWidth;
     canvasRef.current.height = webcamRef.current?.video.videoHeight;
@@ -112,7 +108,7 @@ function MediaPipeWebCam({ cameraOn }: WebCamProps) {
 
     drawConnectors(canvasCtx, results.poseLandmarks, POSE_CONNECTIONS, {
       color: "#00FF00",
-      lineWidth: 4,
+      lineWidth: 3,
     });
     drawLandmarks(canvasCtx, results.poseLandmarks, {
       color: "#FF0000",
@@ -120,7 +116,7 @@ function MediaPipeWebCam({ cameraOn }: WebCamProps) {
     });
     drawConnectors(canvasCtx, results.leftHandLandmarks, HAND_CONNECTIONS, {
       color: "#CC0000",
-      lineWidth: 5,
+      lineWidth: 4,
     });
     drawLandmarks(canvasCtx, results.leftHandLandmarks, {
       color: "#00FF00",
@@ -128,13 +124,42 @@ function MediaPipeWebCam({ cameraOn }: WebCamProps) {
     });
     drawConnectors(canvasCtx, results.rightHandLandmarks, HAND_CONNECTIONS, {
       color: "#00CC00",
-      lineWidth: 5,
+      lineWidth: 4,
     });
     drawLandmarks(canvasCtx, results.rightHandLandmarks, {
       color: "#FF0000",
       lineWidth: 2,
     });
   };
+  const startRef: { current: any } = useRef<Date>();
+  const middleRef: { current: any } = useRef<Date>();
+  const endRef: { current: any } = useRef<Date>();
+  useEffect(() => {
+    if (mediapipeData.length === 50) {
+      startRef.current = new Date();
+      // 50개가 다 차면 정답을 기다리는 모달을 띄우기 위함
+      openModal && openModal();
+      socket?.emit("coordinate", mediapipeData);
+      middleRef.current = new Date();
+      console.log("startRef 값 : ", startRef.current);
+      console.log("middleRef 값 : ", middleRef.current);
+
+      handleOffMediapipe();
+    }
+  }, [mediapipeData]);
+  // useEffect(() => {
+  //   if (mediapipeData.length === 50) {
+  //     console.log("50개 채웠어요!");
+  //     startRef.current = new Date();
+  //     openModal && openModal();
+  //     console.log("startRef 값 : ", startRef.current);
+  //     for (let i = 0; i < mediapipeData.length - 30; i = i + 4) {
+  //       console.log(i, "번째 socket 보냅니다!");
+  //       socket?.emit("coordinate", mediapipeData.slice(i, i + 30));
+  //     }
+  //     handleOffMediapipe();
+  //   }
+  // }, [mediapipeData]);
 
   useEffect(() => {
     if (cameraOn) {
@@ -144,6 +169,12 @@ function MediaPipeWebCam({ cameraOn }: WebCamProps) {
       setMediapipeData([]);
     }
   }, [cameraOn]);
+
+  useEffect(() => {
+    if (!isLoading) {
+      isCameraSettingOn();
+    }
+  }, [isLoading]);
 
   useEffect(() => {
     let camera: cam.Camera | null = null;
@@ -163,6 +194,7 @@ function MediaPipeWebCam({ cameraOn }: WebCamProps) {
             return;
           }
           await holistic.send({ image: webcamRef.current?.video });
+          setIsLoading(false);
         },
         width: 640,
         height: 480,
@@ -179,8 +211,7 @@ function MediaPipeWebCam({ cameraOn }: WebCamProps) {
   }, []);
 
   useEffect(() => {
-    setSocket(io("http://localhost:4000"));
-    // const socket: Socket<ServerToClientEvents, ClientToServerEvents> =
+    setSocket(io(flaskUrl));
 
     return () => {
       socket?.disconnect();
@@ -188,23 +219,23 @@ function MediaPipeWebCam({ cameraOn }: WebCamProps) {
   }, []);
 
   useEffect(() => {
-    const sub = new Subject<MediapipeDataProps>();
-    setSubject(sub);
-  }, []);
-
-  useEffect(() => {
     if (socket) {
-      const func = (data: ServerToClientData) => {
-        setSocketAnswer(data);
-        console.log(data);
+      const func = (data: string[]) => {
+        endRef.current = new Date();
+        // 소켓 답변 매개변수로 넘겨주는 함수
+        handleSetSocketAnswer && handleSetSocketAnswer(data);
+        console.log("endRef 값 : ", endRef.current);
+        console.log("둘의 차이 : ", endRef.current - startRef.current);
+        console.log("넘어온 값: ", data);
       };
+      // 소켓 답변 얻어오는 함수
       socket.on("answer", func);
 
       return () => {
         socket.off("answer", func);
       };
     }
-  }, [socket]);
+  }, [socket, handleSetSocketAnswer]);
 
   return (
     <>
@@ -221,7 +252,6 @@ function MediaPipeWebCam({ cameraOn }: WebCamProps) {
         }}
       />
       {cameraOn && <UserCanvas ref={canvasRef} />}
-      <h1>{socketAnswer && socketAnswer.data}</h1>
     </>
   );
 }

@@ -29,6 +29,9 @@ const CardTemplate = ({ src, alt }: CardTemplateProps) => {
         whileTap="tab"
         dragElastic={0.5} /* force Elastic : 마우스에 탄성 */
         dragConstraints={constraintsRef}
+        style={{
+          borderRadius: "30px",
+        }}
       />
     </Card>
   );
