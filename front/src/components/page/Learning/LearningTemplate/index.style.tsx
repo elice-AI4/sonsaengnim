@@ -18,6 +18,14 @@ export const TemplateContainer = styled.div`
   min-height: 100vh;
 `;
 
+export const CopoyRightWrapper = styled.div`
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
 export const ContentContainer = styled.div`
   width: 65vw;
   min-width: 1100px;
@@ -29,7 +37,6 @@ export const ContentContainer = styled.div`
 
   text-align: center;
 `;
-
 
 export const ButtonLink = styled(Link)`
   display: flex;
@@ -45,7 +52,6 @@ export const ButtonLink = styled(Link)`
   font-weight: 600;
   border-radius: 10px;
   margin-bottom: 10rem;
-
 `;
 
 export const DescriptionContainer = styled.section`
@@ -65,5 +71,3 @@ export const CardContainer = styled.div`
   flex: 0.6;
   padding: 4rem;
 `;
-
-export const MotionDiv = styled.div``;
