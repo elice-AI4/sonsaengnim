@@ -73,7 +73,18 @@ function Main() {
           <ServiceImg src={SearchLogo}></ServiceImg>
           {/* <a href='https://kr.freepik.com/vectors/school'>School 벡터는 pch.vector - kr.freepik.com가 제작함</a> */}
           <h2>찾고싶은 내용이 있나요?</h2>
-          <MoveButton>검색하러 가기</MoveButton>
+          <MoveButton data-tip="main-search" data-for="main-search">
+            검색하러 가기
+          </MoveButton>
+          <ReactTooltip id="main-search" place="bottom">
+            <video autoPlay width="400" muted loop>
+              <source
+                src="http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20160325/251010/MOV000262948_700X466.mp4"
+                type="video/mp4"
+              />
+            </video>
+            <p style={{ textAlign: "right" }}>출처: 국립국어원</p>
+          </ReactTooltip>
         </ServiceBox>
       </MainBackGround>
     </>
