@@ -23,6 +23,8 @@ import {
   ImageRotateContainer,
   NoneDisplay,
   BackImage,
+  ModalButton,
+  ModalButtonContainer,
 } from "./index.style";
 import { useLocation } from "react-router";
 import * as Api from "../../../../api";
@@ -34,6 +36,13 @@ import A from "../../../../src_assets/about/motivation.jpg";
 import Footer from "../../../Footer";
 import { learningGamecopyRights } from "../../../copyRights/copyRights";
 import { imgSrc } from "./wordImageSrc";
+import ai_loading from "../../../../src_assets/modal/ai_loading.jpg";
+import grading from "../../../../src_assets/modal/grading.jpg";
+import none_user_correct from "../../../../src_assets/modal/none_user_correct.jpg";
+import user_correct from "../../../../src_assets/modal/user_correct.jpg";
+import wrong_answer from "../../../../src_assets/modal/wrong_answer.jpg";
+import { useAtom } from "jotai";
+import { loginAtom } from "../../../../state";
 
 const ALPHABET_LENGTH = 26;
 
@@ -66,15 +75,14 @@ const LearningGame = () => {
   const [isModalOpen, setIsModalOpen] = useState({
     loadingModal: false,
     waitingModal: false,
-    pointModal: false,
   });
   const [curSelectedButton, setCurSelectedButton] =
     useState<curSelectedButtonProps>({
       word: "",
       index: 0,
     });
-
   const lazyStartTimerId: { current: any } = useRef(null);
+  const [isLogin] = useAtom(loginAtom);
 
   const handleSetVideo = (index: number) => {
     if (isAlphabetLearningPage) {
@@ -108,8 +116,16 @@ const LearningGame = () => {
       });
     }, 2000);
   };
+
+  // socket에서 보내온 응답을 저장한다. ["a", "b", "c"]
   const handleSetSocketAnswer = (answer: ServerToClientData) => {
     setSocketAnswer(answer);
+    setIsModalOpen((cur) => {
+      return {
+        ...cur,
+        loadingModal: false,
+      };
+    });
   };
   const getVideos = async (localIsAlphabet: boolean) => {
     const res = await Api.get("hands");
@@ -206,9 +222,14 @@ const LearningGame = () => {
         style={{
           width: "800px",
           height: "500px",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+          borderRadius: "0",
         }}
       >
-        <img src={A} alt="" width="100%" height="100%" />
+        <img src={ai_loading} alt="ai가 켜지길 기다리는중" />
       </Modal>
 
       <Modal
@@ -216,26 +237,38 @@ const LearningGame = () => {
         style={{
           width: "800px",
           height: "500px",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+          borderRadius: "0",
         }}
       >
         {!socketAnswer ? (
-          <p>정답을 기다리고 있어요!</p>
+          <img src={grading} alt="채점중인 로봇" />
         ) : checkAnswer() !== undefined ? (
           <>
-            <p>정답이에요!</p>
-            <button
-              onClick={() => {
-                setIsModalOpen((cur) => {
-                  return {
-                    ...cur,
-                    waitingModal: false,
-                  };
-                });
-                setSocketAnswer(undefined);
-              }}
-            >
-              닫기
-            </button>
+            {isLogin && (
+              <img src={user_correct} alt="로그인 유저가 정답인 경우!" />
+            )}
+            {!isLogin && (
+              <img src={none_user_correct} alt="버그인 유저가 정답인 경우!" />
+            )}
+            <ModalButtonContainer>
+              <ModalButton
+                onClick={() => {
+                  setIsModalOpen((cur) => {
+                    return {
+                      ...cur,
+                      waitingModal: false,
+                    };
+                  });
+                  setSocketAnswer(undefined);
+                }}
+              >
+                닫기
+              </ModalButton>
+            </ModalButtonContainer>
             <PointBox
               initial={{ scale: 0, borderRadius: 0, rotate: 0 }}
               animate={{
@@ -254,34 +287,36 @@ const LearningGame = () => {
           </>
         ) : (
           <>
-            <p>다시 해 볼까요?</p>
-            <button
-              onClick={() => {
-                setIsModalOpen((cur) => {
-                  return {
-                    ...cur,
-                    waitingModal: false,
-                  };
-                });
-                setSocketAnswer(undefined);
-              }}
-            >
-              닫기
-            </button>
-            <button
-              onClick={() => {
-                setIsModalOpen((cur) => {
-                  return {
-                    ...cur,
-                    waitingModal: false,
-                  };
-                });
-                handleClickButton();
-                setSocketAnswer(undefined);
-              }}
-            >
-              다시하기
-            </button>
+            <img src={wrong_answer} alt="오답이라고 알려주는 로봇" />
+            <ModalButtonContainer>
+              <ModalButton
+                onClick={() => {
+                  setIsModalOpen((cur) => {
+                    return {
+                      ...cur,
+                      waitingModal: false,
+                    };
+                  });
+                  setSocketAnswer(undefined);
+                }}
+              >
+                닫기
+              </ModalButton>
+              <ModalButton
+                onClick={() => {
+                  setIsModalOpen((cur) => {
+                    return {
+                      ...cur,
+                      waitingModal: false,
+                    };
+                  });
+                  handleClickButton();
+                  setSocketAnswer(undefined);
+                }}
+              >
+                다시하기
+              </ModalButton>
+            </ModalButtonContainer>
           </>
         )}
       </Modal>

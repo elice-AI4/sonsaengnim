@@ -35,6 +35,9 @@ const LearningTemplate = ({ imgs, title, children }: LearningTemplateProps) => {
           <Underline />
           {children && <InputContainer>{children}</InputContainer>}
         </DescriptionContainer>
+        <ButtonLink to={`${pathname}/${ROUTE.GAME.link}/${ROUTE.PLAY.link}`}>
+          따라해보기
+        </ButtonLink>
         <CardContainer>
           {imgs.map((img, index) => {
             return (
@@ -47,9 +50,6 @@ const LearningTemplate = ({ imgs, title, children }: LearningTemplateProps) => {
           <CardTemplate src="" alt="" />
           <CardTemplate src="" alt="" />
         </CardContainer>
-        <ButtonLink to={`${pathname}/${ROUTE.GAME.link}/${ROUTE.PLAY.link}`}>
-          따라해보기
-        </ButtonLink>
         <Footer
           aLinks={learningTemplatecopyRights.aLinks}
           contents={learningTemplatecopyRights.contents}
