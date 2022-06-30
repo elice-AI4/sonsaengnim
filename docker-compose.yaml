@@ -8,13 +8,11 @@ services:
     container_name: "server-sonsangnim"
     ports:
       - 5000:5000
-    links:
-      - ai_server
 
   ai_server:
     restart: "on-failure"
     build:
-      context: "./ai"
+      context: "./AI"
       dockerfile: Dockerfile
     container_name: "ai-sonsangnim"
     ports:
