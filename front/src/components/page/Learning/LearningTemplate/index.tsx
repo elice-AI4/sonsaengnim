@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React from "react";
 import {
   ButtonLink,
   CardContainer,
@@ -10,7 +10,6 @@ import {
 import CardTemplate from "./CardTemplate";
 import { ReactComponent as Underline } from "../../../../src_assets/Underline.svg";
 import { InputContainer } from "../Word/index.style";
-import { motion } from "framer-motion";
 import { useLocation } from "react-router";
 import { ROUTE } from "../../../route/route";
 import Footer from "../../../Footer";
@@ -64,6 +63,7 @@ const LearningTemplate = ({ imgs, title, children }: LearningTemplateProps) => {
           <CardTemplate src="" alt="" />
           <CardTemplate src="" alt="" />
         </CardContainer>
+
         <Footer
           aLinks={learningTemplatecopyRights.aLinks}
           contents={learningTemplatecopyRights.contents}

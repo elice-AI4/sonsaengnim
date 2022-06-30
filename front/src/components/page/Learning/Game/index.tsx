@@ -28,10 +28,9 @@ import {
 import { useLocation } from "react-router";
 import * as Api from "../../../../api";
 import ButtonList from "./buttonList/ButtonList";
-import MediaPipeWebCam, { ServerToClientData } from "../../../MediaPipeWebCam";
+import MediaPipeWebCam from "../../../MediaPipeWebCam";
 import Loading from "../../../Loading";
 import Modal from "../../Modal";
-import A from "../../../../src_assets/about/motivation.jpg";
 import Footer from "../../../Footer";
 import { learningGamecopyRights } from "../../../copyRights/copyRights";
 import { imgSrc } from "../learningData";
@@ -127,10 +126,9 @@ const LearningGame = () => {
       });
     }, 2000);
   };
-  // const handleSetSocketAnswer = (answer: string[]) => {
 
   // socket에서 넘어온 데이터 중에 내가 최근 선택한 값이 들어있는지 확인
-  const checkAnswer = (answer: ServerToClientData): boolean | undefined => {
+  const checkAnswer = (answer: string[]) => {
     if (Array.isArray(answer)) {
       return answer.find((ans: string) => {
         console.log("for 문 안에서 ", curSelectedButton.word);
@@ -141,10 +139,8 @@ const LearningGame = () => {
   };
 
   // socket에서 보내온 응답을 저장한다. ["a", "b", "c"]
-  const handleSetSocketAnswer = (answer: ServerToClientData) => {
-    // setSocketAnswer(answer);
-    console.log("답 체크 ================ ", checkAnswer(answer));
-    console.log("최근 내가 누른 버튼 ================ ", curSelectedButton);
+  const handleSetSocketAnswer = (answer: string[]) => {
+    setSocketAnswer(answer);
     if (checkAnswer(answer) !== undefined) {
       setIsModalOpen((cur) => {
         return {
@@ -497,7 +493,6 @@ const LearningGame = () => {
                 <BlueCircle />
               </CircleContainer>
               <div style={{ position: "relative" }}>
-                {/* <ImageTooltip imgSrc={imgSrc[curSelectedButton.index]} /> */}
                 <Explain>오른손으로 학습해봐요.</Explain>
               </div>
               <HR />
@@ -507,7 +502,7 @@ const LearningGame = () => {
                 cameraOn={cameraOn}
                 handleOffMediapipe={handleOffMediapipe}
                 isCameraSettingOn={isCameraSettingOn}
-                // handleSetSocketAnswer={handleSetSocketAnswer}
+                handleSetSocketAnswer={handleSetSocketAnswer}
                 openModal={openModal}
               />
               <StartButton onClick={handleClickButton} cameraOn={cameraOn}>

@@ -10,7 +10,6 @@ import Webcam from "react-webcam";
 import { drawConnectors, drawLandmarks } from "@mediapipe/drawing_utils";
 import { UserCanvas } from "./index.style";
 import { Socket, io } from "socket.io-client";
-import { interval, Subject, throttle } from "rxjs";
 
 const flaskUrl = String(process.env.REACT_APP_FLASKPORT);
 
@@ -28,9 +27,7 @@ holistic.setOptions({
   minDetectionConfidence: 0.5,
   minTrackingConfidence: 0.5,
 });
-export interface ServerToClientData {
-  data: string[];
-}
+
 interface ServerToClientEvents {
   answer: (data: string[]) => void;
 }
@@ -61,7 +58,6 @@ function MediaPipeWebCam({
 }: WebCamProps) {
   const webcamRef = useRef<Webcam>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [subject, setSubject] = useState<Subject<MediapipeDataProps>>();
   const [socket, setSocket] =
     useState<Socket<ServerToClientEvents, ClientToServerEvents>>();
   const [mediapipeData, setMediapipeData] = useState<MediapipeDataProps[]>([]);
@@ -151,19 +147,19 @@ function MediaPipeWebCam({
       handleOffMediapipe();
     }
   }, [mediapipeData]);
-  useEffect(() => {
-    if (mediapipeData.length === 50) {
-      console.log("50개 채웠어요!");
-      startRef.current = new Date();
-      openModal && openModal();
-      console.log("startRef 값 : ", startRef.current);
-      for (let i = 0; i < mediapipeData.length - 30; i = i + 4) {
-        console.log(i, "번째 socket 보냅니다!");
-        socket?.emit("coordinate", mediapipeData.slice(i, i + 30));
-      }
-      handleOffMediapipe();
-    }
-  }, [mediapipeData]);
+  // useEffect(() => {
+  //   if (mediapipeData.length === 50) {
+  //     console.log("50개 채웠어요!");
+  //     startRef.current = new Date();
+  //     openModal && openModal();
+  //     console.log("startRef 값 : ", startRef.current);
+  //     for (let i = 0; i < mediapipeData.length - 30; i = i + 4) {
+  //       console.log(i, "번째 socket 보냅니다!");
+  //       socket?.emit("coordinate", mediapipeData.slice(i, i + 30));
+  //     }
+  //     handleOffMediapipe();
+  //   }
+  // }, [mediapipeData]);
 
   useEffect(() => {
     if (cameraOn) {
@@ -220,11 +216,6 @@ function MediaPipeWebCam({
     return () => {
       socket?.disconnect();
     };
-  }, []);
-
-  useEffect(() => {
-    const sub = new Subject<MediapipeDataProps>();
-    setSubject(sub);
   }, []);
 
   useEffect(() => {
