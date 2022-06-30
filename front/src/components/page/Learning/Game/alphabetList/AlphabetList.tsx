@@ -31,10 +31,10 @@ const Alphabet = [
 ];
 
 interface AlphabetListProps {
-  handleSetSrc: (index: number) => void;
+  handleSetAlphabet: (index: number) => void;
 }
 
-const AlphabetList = ({ handleSetSrc }: AlphabetListProps) => {
+const AlphabetList = ({ handleSetAlphabet }: AlphabetListProps) => {
   const [curIndex, setIcurIndex] = useState(0);
   return (
     <Container>
@@ -43,7 +43,7 @@ const AlphabetList = ({ handleSetSrc }: AlphabetListProps) => {
           <AlphabetButton
             key={`${alpha} ${index}`}
             onClick={() => {
-              handleSetSrc(index);
+              handleSetAlphabet(index);
               setIcurIndex(index);
             }}
             className={curIndex === index ? "target" : "non-target"}

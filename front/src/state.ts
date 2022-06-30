@@ -1,4 +1,5 @@
 import { atomWithStorage } from "jotai/utils";
+import { atom } from "jotai";
 
 interface User {
   email: string;
@@ -18,3 +19,4 @@ export const userAtom = atomWithStorage<User>("user", {
 });
 
 export const loginAtom = atomWithStorage<boolean>("login", false);
+export const saveTimeAtom = atom(600);

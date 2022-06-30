@@ -1,0 +1,10 @@
+@font-face {
+  font-family: "WandohopeB";
+  src: url("../../../fonts/WandohopeB.ttf");
+}
+
+.rankfont {
+  font-family: "WandohopeB";
+  font-size: 21px;
+  color: white;
+}

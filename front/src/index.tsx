@@ -12,12 +12,12 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <Provider>
-    <React.StrictMode>
-      <ThemeProvider theme={theme}>
-        <GlobalStyle />
-        <App />
-      </ThemeProvider>
-    </React.StrictMode>
+    {/* <React.StrictMode> */}
+    <ThemeProvider theme={theme}>
+      <GlobalStyle />
+      <App />
+    </ThemeProvider>
+    {/* </React.StrictMode> */}
   </Provider>
 );
 

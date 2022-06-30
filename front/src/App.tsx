@@ -13,7 +13,8 @@ import Quiz from "./components/page/Quiz";
 import Header from "./components/header/Header";
 import QuizGame from "./components/page/Quiz/Game";
 import About from "./components/page/About";
-import LeaningGame from "./components/page/Learning/Game";
+import LearningGame from "./components/page/Learning/Game";
+import Rank from "./components/page/Rank";
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
           />
           <Route path={`/${ROUTE.ABOUT.link}`} element={<About />} />
           <Route path={`/${ROUTE.LEARNING.link}`} element={<Learning />} />
+          <Route path={`/${ROUTE.RANK.link}`} element={<Rank />} />
           <Route
             path={`/${ROUTE.LEARNING.link}/${ROUTE.ALPHABET.link}`}
             element={
@@ -41,11 +43,11 @@ function App() {
           />
           <Route
             path={`/${ROUTE.LEARNING.link}/${ROUTE.ALPHABET.link}/${ROUTE.GAME.link}/${ROUTE.PLAY.link}`}
-            element={<LeaningGame />}
+            element={<LearningGame />}
           />
           <Route
             path={`/${ROUTE.LEARNING.link}/${ROUTE.WORD.link}/${ROUTE.GAME.link}/${ROUTE.PLAY.link}`}
-            element={<LeaningGame />}
+            element={<LearningGame />}
           />
 
           <Route

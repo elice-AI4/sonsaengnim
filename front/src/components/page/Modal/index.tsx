@@ -1,17 +1,13 @@
-import React, { ReactElement } from "react";
+import React from "react";
 import { ModalWrapper, ModalOverlay, ModalInner } from "./index.style";
 import PropTypes from "prop-types";
 
 interface ModalState {
   className?: string;
   visible: boolean;
-  children: ReactElement | ReactElement[];
-  closeModal(): void;
+  closeModal?: () => void;
   style?: React.CSSProperties;
-  /* 질문용 주석
-  // children: JSX.Element | JSX.Element[];
-  // children : string | HTMLImageElement;
-  */
+  children: React.ReactNode;
 }
 
 function Modal({
@@ -28,7 +24,7 @@ function Modal({
         className={className}
         tabIndex={-1}
         visible={visible}
-        onClick={closeModal}
+        onClick={closeModal && closeModal}
       >
         <ModalInner
           tabIndex={0}
