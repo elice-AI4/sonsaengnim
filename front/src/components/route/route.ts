@@ -29,4 +29,7 @@ export const ROUTE = {
   RANK: {
     link: "rank",
   },
+  SEARCH: {
+    link: "search"
+  }
 };
