@@ -3,13 +3,14 @@
     "outDir": "dist" /* 출력될 디렉토리 설정 */,
     "target": "es2017",
     "noImplicitAny": false /* 명시적이지 않은 'any' 유형으로 표현식 및 선언 사용 시 오류 발생 */,
-    "module": "commonjs",
+    "module": "CommonJS",
     /* 생성될 모듈 코드 설정: 'none', 'commonjs', 'amd', 'system', 'umd', 'es2015', 'es2020', or 'ESNext'. */
     "sourceMap": true /* 소스맵 '.map' 파일 생성 설정 */,
     "noUnusedLocals": true /* 사용되지 않은 로컬이 있을 경우, 오류로 보고 */,
     "noUnusedParameters": false /* 사용되지 않은 매개변수가 있을 경우, 오류로 보고 */,
     "typeRoots": ["node_modules/@types", "./src/customType"] /* 유형 정의를 포함할 디렉토리 목록 */,
-    "esModuleInterop": true /* 모든 가져오기에 대한 네임스페이스 객체 생성을 통해 CommonJS와 ES 모듈 간의 상호 운용성을 제공. 'allowSyntheticDefaultImports' 암시 */
+    "esModuleInterop": true /* 모든 가져오기에 대한 네임스페이스 객체 생성을 통해 CommonJS와 ES 모듈 간의 상호 운용성을 제공. 'allowSyntheticDefaultImports' 암시 */,
+    "moduleResolution": "node"
   },
   "include": ["root/**/*"],
   "exclude": ["node_modules", "**/*.spec.ts"]
