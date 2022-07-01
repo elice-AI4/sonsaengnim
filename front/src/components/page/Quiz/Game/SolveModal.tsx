@@ -39,11 +39,7 @@ function SolveModal({
   timeOver,
 }: SolveProps) {
   return (
-    <Modal
-      visible={modal}
-      //   closeModal={closeModal}
-      style={ModalStyle as React.CSSProperties}
-    >
+    <Modal visible={modal} style={ModalStyle as React.CSSProperties}>
       {answer ? (
         <>
           <AnswerImg

@@ -23,6 +23,7 @@ import Footer from "../../../Footer";
 import { quizBackgroundCopyRights } from "../../../copyRights/copyRights";
 import { saveTimeAtom } from "../../../../state";
 import { useAtom } from "jotai";
+import { useNavigate } from "react-router-dom";
 
 export const MAX_COUNT = 2;
 
@@ -46,6 +47,7 @@ const modalStyle = {
 };
 
 function QuizGame() {
+  const navigate = useNavigate();
   const [modal, setModal] = useState<boolean>(false);
   const [rank, setRank] = useState<boolean>(false);
   const [answer, setAnswer] = useState<boolean>(false);
@@ -104,6 +106,7 @@ function QuizGame() {
 
   const closeModal = () => {
     setModal(false);
+    navigate("/");
   };
   const nextQuiz = () => {
     if (quizNumber === undefined) return;

@@ -29,7 +29,7 @@ interface LoginValid {
 
 function Login() {
   const navigate = useNavigate();
-  const [, setUser] = useAtom(userAtom);
+  const [user, setUser] = useAtom(userAtom);
   const [, setLogin] = useAtom(loginAtom);
 
   const [loginInfo, setLoginInfo] = useState<UserLogin>({
@@ -51,6 +51,7 @@ function Login() {
       token: res.data.token,
     });
     setLogin(true);
+    console.log(user);
     sessionStorage.setItem("userToken", res.data.token);
     navigate("/");
   };

@@ -241,11 +241,11 @@ const LearningGame = () => {
   }, []);
 
   useEffect(() => {
-    const postPoint = async () => {
-      await Api.post(`user/study/`, { word: curSelectedButton.word });
-    };
     if (isModalOpen.correctModal) {
-      postPoint();
+      if (isLogin)
+        Api.post(`user/study/` + curSelectedButton.word, {}).then((res) =>
+          console.log(res)
+        );
     }
   }, [isModalOpen.correctModal]);
 
