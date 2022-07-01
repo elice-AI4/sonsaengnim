@@ -27,37 +27,66 @@ const Search = () => {
   const [compareWord, setCompareWord] = useState("");
   const [find, setFind] = useState(false);
 
-  const [videos, setVideos] = useState<VideoDataProps[]>([]);
+  const [searchedImage, setSearchedImage] = useState({
+    src: "",
+    alt: "",
+  });
 
+  const [videos, setVideos] = useState<VideoDataProps[]>([]);
   const [videoSrc, setVideoSrc] = useState<string[]>([]);
+
+  // const [compareAlt, setCompareAlt] = useState<string[]>([]);
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchWord(e.target.value);
   };
 
   const handleOnClick = () => {
-    setCompareWord(searchWord);
+    //이미지 찾기
+    const tempImg = imgSrc.filter((img, index) => {
+      if (searchWord === img.name) return img;
+    });
+    setSearchedImage({
+      src: tempImg[0].src,
+      alt: tempImg[0].alt,
+    });
 
-    const compareAlt = imgSrc
+    const temp = imgSrc.filter((data) => {
+      return data.name === searchWord;
+    });
+
+    const mapped = temp.map((data) => data.alt);
+    //비디오 찾기
+    const temp2 = videos
       .filter((data) => {
-        if (data.name === compareWord) {
+        if (data.english === mapped[0]) {
           return data;
         }
       })
-      .map((data) => data.alt);
-    setVideoSrc(
-      videos
-        .filter((data) => {
-          if (data.english === compareAlt[0]) {
-            return data;
-          }
-        })
-        .map((data) => {
-          console.log("data.handVideo", data.handVideo);
-          return data.handVideo;
-        })
-    );
+      .map((data) => {
+        return data.handVideo;
+      });
+
+    setVideoSrc(temp2);
+    // setCompareAlt(temp);
   };
+
+  // useEffect(() => {
+  //   const temp2 = videos
+  //     .filter((data) => {
+  //       console.log("filterd", data.english, compareAlt[0]);
+  //       if (data.english === compareAlt[0]) {
+  //         return data;
+  //       }
+  //     })
+  //     .map((data) => {
+  //       console.log("data.handVideo", data.handVideo);
+  //       return data.handVideo;
+  //     });
+  //   console.log("temp2", temp2);
+
+  //   setVideoSrc(temp2);
+  // }, [compareAlt]);
 
   const getVideos = async () => {
     const res = await Api.get("hands");
@@ -66,8 +95,11 @@ const Search = () => {
 
   useEffect(() => {
     setFind(true);
-    console.log("검색!", compareWord);
   }, [searchWord]);
+
+  useEffect(() => {
+    console.log("video", videoSrc);
+  }, [videoSrc]);
 
   useEffect(() => {
     getVideos();
@@ -83,32 +115,22 @@ const Search = () => {
         />
 
         <SearchButton onClick={handleOnClick}>검색!</SearchButton>
-        {find && (
+        {searchWord && <></>}
+        {find && videoSrc.length >= 1 && (
           <>
             <CardContainer>
-              {imgSrc
-                .filter((img, index) => {
-                  if (compareWord === img.name) return img;
-                })
-                .map((img, index) => {
-                  console.log("엥", videoSrc);
-                  return (
-                    <CardTemplate
-                      src={img.src}
-                      alt={img.alt}
-                      key={`img ${index}`}
-                    />
-                  );
-                })}
+              <CardTemplate src={searchedImage.src} alt={searchedImage.alt} />
             </CardContainer>
             <video
               autoPlay
+              controls
               width="300"
               muted
               loop
               style={{ borderRadius: "5px" }}
+              key={videoSrc[0]}
             >
-              <source src={videoSrc && videoSrc[0]} type="video/mp4" />
+              <source src={videoSrc[0]} type="video/mp4" />
             </video>
           </>
         )}
