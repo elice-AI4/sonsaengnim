@@ -40,7 +40,7 @@ const LearningTemplate = ({ imgs, title, children }: LearningTemplateProps) => {
           data-tip="learningTemplate-follow"
           data-for="learningTemplate-follow"
         >
-          따라해보기
+          따라해 보기
           <ReactTooltip id="learningTemplate-follow">
             <video autoPlay width="400" muted loop>
               <source
