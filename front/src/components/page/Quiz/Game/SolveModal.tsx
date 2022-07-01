@@ -25,6 +25,7 @@ interface SolveProps {
   score: Score;
   nextQuiz(): void;
   MoveRecord(): void;
+  timeOver: boolean;
 }
 
 function SolveModal({
@@ -35,6 +36,7 @@ function SolveModal({
   score,
   nextQuiz,
   MoveRecord,
+  timeOver,
 }: SolveProps) {
   return (
     <Modal
@@ -71,6 +73,7 @@ function SolveModal({
       <TextP>{`남은 문제 : ${
         MAX_COUNT - score.cur >= 0 && MAX_COUNT - score.cur
       }`}</TextP>
+      {timeOver && <TextP>시간 초과</TextP>}
     </Modal>
   );
 }

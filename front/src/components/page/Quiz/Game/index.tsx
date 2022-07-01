@@ -18,6 +18,12 @@ import * as Api from "../../../../api";
 import Modal from "../../Modal";
 import ai_loading from "../../../../src_assets/modal/ai_loading.jpg";
 import grading from "../../../../src_assets/modal/grading.jpg";
+
+import Footer from "../../../Footer";
+import { quizBackgroundCopyRights } from "../../../copyRights/copyRights";
+import { saveTimeAtom } from "../../../../state";
+import { useAtom } from "jotai";
+
 export const MAX_COUNT = 2;
 
 export interface Score {
@@ -50,8 +56,9 @@ function QuizGame() {
   const [quizNumber, setQuizNumber] = useState<number>(0);
   const [isLoading, setIsLoading] = useState(true);
   const [problem, setProblem] = useState<Word>({ word: "", wordImageURL: "" });
-
+  const [timeOver, setTimeOver] = useState<boolean>(false);
   const [cameraOn, setCameraOn] = useState(false);
+  const [saveTime, setSaveTime] = useAtom(saveTimeAtom);
 
   const [isModalOpen, setIsModalOpen] = useState({
     loadingModal: false,
@@ -114,6 +121,22 @@ function QuizGame() {
       setQuizNumber(res.data.length);
     });
   }, []);
+  // useEffect(() => {
+  //   if (saveTime <= 0) {
+  //     console.log("time");
+  //     setModal(true);
+  //     setAnswer(false);
+  //     setFinish(true);
+  //     setTimeOver(true);
+  //   }
+  // }, [saveTime]);
+
+  const handleTimeOver = () => {
+    setModal(true);
+    setAnswer(false);
+    setFinish(true);
+    setTimeOver(true);
+  };
 
   useEffect(() => {
     nextQuiz();
@@ -127,7 +150,7 @@ function QuizGame() {
     setProblem(quiz[quizNumber]);
   }, [quizNumber]);
   useEffect(() => {
-    if (socketAnswer === undefined || socketAnswer.length === 0) {
+    if (socketAnswer === undefined || socketAnswer.length === 0 || timeOver) {
       return;
     }
     if (socketAnswer.includes(problem.word)) {
@@ -205,9 +228,10 @@ function QuizGame() {
           score={score}
           nextQuiz={nextQuiz}
           MoveRecord={MoveRecord}
+          timeOver={timeOver}
         ></SolveModal>
         {timer ? (
-          <Timer finish={finish}></Timer>
+          <Timer finish={finish} handleTimeOver={handleTimeOver}></Timer>
         ) : (
           <TimerStartButton
             onClick={() => setTimer(true)}
@@ -244,6 +268,10 @@ function QuizGame() {
           </AnswerBox>
         </QuizBox>
       </ProblemBox>
+      <Footer
+        aLinks={quizBackgroundCopyRights.aLinks}
+        contents={quizBackgroundCopyRights.contents}
+      />
     </>
   );
 }

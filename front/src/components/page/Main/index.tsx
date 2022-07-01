@@ -4,6 +4,7 @@ import {
   ServiceBox,
   MoveButton,
   ServiceImg,
+  FooterBox,
 } from "./index.style";
 import StudyLogo from "./study.png";
 import GameLogo from "./game.png";
@@ -12,6 +13,12 @@ import { useAtom } from "jotai";
 import { reg, userAtom } from "../../../state";
 import { useNavigate } from "react-router";
 import ReactTooltip from "react-tooltip";
+import Footer from "../../Footer";
+import {
+  beaverCopyRights,
+  foxCopyRights,
+  earthwormCopyRights,
+} from "../../copyRights/copyRights";
 
 function Main() {
   const [user, setUser] = useAtom(userAtom);
@@ -47,6 +54,10 @@ function Main() {
               <p style={{ textAlign: "right" }}>출처: 국립국어원</p>
             </ReactTooltip>
           </MoveButton>
+          <Footer
+            aLinks={foxCopyRights.aLinks}
+            contents={foxCopyRights.contents}
+          />
         </ServiceBox>
         <ServiceBox color={"#FFD700"}>
           <ServiceImg src={GameLogo}></ServiceImg>
@@ -68,6 +79,10 @@ function Main() {
               <p style={{ textAlign: "right" }}>출처: 국립국어원</p>
             </ReactTooltip>
           </MoveButton>
+          <Footer
+            aLinks={beaverCopyRights.aLinks}
+            contents={beaverCopyRights.contents}
+          />
         </ServiceBox>
         <ServiceBox color={"#6495ED"}>
           <ServiceImg src={SearchLogo}></ServiceImg>
@@ -85,6 +100,10 @@ function Main() {
             </video>
             <p style={{ textAlign: "right" }}>출처: 국립국어원</p>
           </ReactTooltip>
+          <Footer
+            aLinks={earthwormCopyRights.aLinks}
+            contents={earthwormCopyRights.contents}
+          />
         </ServiceBox>
       </MainBackGround>
     </>

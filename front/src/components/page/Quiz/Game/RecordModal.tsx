@@ -36,10 +36,11 @@ function RecordModal({ rank, score, handleInitial }: RecordProps) {
 
   const [rankName, setRankName] = useState<string>(login ? user.username : "");
 
-  const handleRecord = async () => {
-    // const data = { username: rankName, score: score.ans * 10, time: saveTime };
-    // const res = await Api.post("scores/nologin", data);
-    // console.log(res);
+  const handleRecord: React.FormEventHandler<HTMLFormElement> = async (e) => {
+    e.preventDefault();
+    const data = { username: rankName, score: score.ans * 10, time: saveTime };
+    const res = await Api.post("scores/nologin", data);
+    console.log(res);
     navigate("/rank");
 
     // handleInitial();
@@ -52,6 +53,7 @@ function RecordModal({ rank, score, handleInitial }: RecordProps) {
     <Modal visible={rank} style={ModalStyle}>
       <RecordBoard
         recordImg={`${process.env.PUBLIC_URL}/quizgamepic/record.png`}
+        onSubmit={handleRecord}
       >
         <RecordBox>
           <h2>이름</h2>
@@ -71,7 +73,7 @@ function RecordModal({ rank, score, handleInitial }: RecordProps) {
             saveTime % 60
           }초`}</RecordScore>
         </RecordBox>
-        <RecordButton onClick={handleRecord}>점수 기록</RecordButton>
+        <RecordButton>점수 기록</RecordButton>
       </RecordBoard>
     </Modal>
   );

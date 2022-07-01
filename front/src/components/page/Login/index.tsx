@@ -14,6 +14,9 @@ import { useAtom } from "jotai";
 import { reg, userAtom, loginAtom } from "../../../state";
 import * as Api from "../../../api";
 
+import Footer from "../../Footer";
+import { loginCopyRights } from "../../copyRights/copyRights";
+
 interface UserLogin {
   email: string;
   password: string;
@@ -127,6 +130,10 @@ function Login() {
           </LoginForm>
         </LoginBackground>
       </LoginPage>
+      <Footer
+        aLinks={loginCopyRights.aLinks}
+        contents={loginCopyRights.contents}
+      />
     </>
   );
 }

@@ -20,6 +20,8 @@ export const Navbar = styled.nav`
 export const TitleContainer = styled.div`
   padding: 1rem;
   cursor: pointer;
+  display: flex;
+  justify-content: center;
 `;
 
 export const Title = styled.p`
@@ -35,7 +37,6 @@ export const Title = styled.p`
 export const List = styled.div`
   display: flex;
   justify-content: center;
-  align-items: center;
   margin-right: 1rem;
 `;
 
@@ -109,4 +110,9 @@ export const Offset = styled.div`
       height: ${theme.navbar.height};
     `;
   }}
+`;
+
+export const WelcomeBox = styled.h2`
+  text-align: center;
+  padding-top: 25px;
 `;

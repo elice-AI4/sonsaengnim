@@ -9,16 +9,22 @@ import {
   ThickLine,
   ThinLine,
   Offset,
+  WelcomeBox,
 } from "./Header.style";
 import title from "../../src_assets/navbar/title.png";
 import { useLocation } from "react-router";
 import { useAtom } from "jotai";
-import { loginAtom } from "../../state";
+import { loginAtom, userAtom } from "../../state";
 import ReactTooltip from "react-tooltip";
 
 const Header = () => {
-  const [login] = useAtom(loginAtom);
+  const [login, setLogin] = useAtom(loginAtom);
+  const [user, setUser] = useAtom(userAtom);
   const { pathname } = useLocation();
+  const HandleLogout = () => {
+    setLogin(false);
+    setUser({ email: "", username: "", password: "", token: "" });
+  };
   const checkPathname = (pathname: string) => {
     if (
       pathname === `/${ROUTE.LEARNING.link}/${ROUTE.ALPHABET.link}` ||
@@ -40,6 +46,7 @@ const Header = () => {
           <HomeLink to="/">
             <img src={title} alt="title 손생님" width="180px" height="100%" />
           </HomeLink>
+          {login && <WelcomeBox>{`${user.username}님 환영합니다!`}</WelcomeBox>}
         </TitleContainer>
         <List>
           {!login && (
@@ -78,7 +85,11 @@ const Header = () => {
               </StyledLink>
             </>
           )}
-
+          {login && (
+            <StyledLink onClick={HandleLogout} to={"/"}>
+              로그아웃
+            </StyledLink>
+          )}
           <StyledLink to={ROUTE.ABOUT.link}>ABOUT</StyledLink>
           <StyledLink
             to={ROUTE.LEARNING.link}
@@ -112,6 +123,7 @@ const Header = () => {
               <p style={{ textAlign: "right" }}>출처: 국립국어원</p>
             </ReactTooltip>
           </StyledLink>
+          <StyledLink to={ROUTE.RANK.link}>랭킹</StyledLink>
         </List>
       </Navbar>
       {checkPathname(pathname) === true ? (
