@@ -170,9 +170,7 @@ const Search = () => {
               </div>
             </CardContainer>
             <VideoContainer>
-              <div
-                style={{ maxWidth: "500px", minWidth: "500px", zIndex: "2" }}
-              >
+              <div style={{ maxWidth: "500px", minWidth: "500px" }}>
                 <video
                   autoPlay
                   controls
