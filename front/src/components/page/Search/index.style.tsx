@@ -1,32 +1,5 @@
 import styled, { css, keyframes } from "styled-components";
-import learningPage from "../../../src_assets/learning/learningPage.jpg";
-
-const bounceImageA = keyframes`
-    from {
-        transform: translateY(5px) rotateZ(-45deg)
-    }    
-    to {
-        transform: translateY(30px) rotateZ(-45deg)
-    }
-`;
-
-const bounceImageB = keyframes`
-    from {
-        transform: translateY(-10px) rotateZ(10deg)
-    }
-    to {
-        transform: translateY(25px) rotateZ(10deg)
-    }
-`;
-
-const bounceImageC = keyframes`
-    from {
-        transform: translateY(5px) rotateZ(40deg)
-    }
-    to {
-        transform:translateY(30px) rotateZ(40deg)
-    }
-`;
+import searchPage from "../../../src_assets/search/searchPage.jpg";
 
 const bounceImageWord = keyframes`
     from {
@@ -39,7 +12,7 @@ const bounceImageWord = keyframes`
 
 export const LearningContainer = styled.div`
   position: relative;
-  background-image: url(${learningPage});
+  background-image: url(${searchPage});
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
@@ -65,82 +38,6 @@ export const ContentsContainer = styled.div`
   }
 `;
 
-export const ButtonSection = styled.section`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-
-  margin: 2rem;
-
-  cursor: pointer;
-
-  border-radius: 20px;
-
-  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
-    rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
-
-  &:hover {
-    box-shadow: rgb(60, 64, 67, 0.3) 3px 3px 6px 0px inset,
-      rgba(60, 64, 67, 0.15) -3px -3px 6px 1px inset;
-  }
-
-  ${({ theme }) => {
-    return css`
-      width: ${theme.learning.button.width};
-      height: ${theme.learning.button.height};
-
-      @media (max-width: 1800px) {
-        width: ${theme.learning.button.mediumWidth};
-        height: ${theme.learning.button.mediumHeight};
-      }
-      @media (max-width: 1200px) {
-        width: ${theme.learning.button.smallWidth};
-        height: ${theme.learning.button.smallHeight};
-      }
-    `;
-  }}
-`;
-
-export const AlphabetButton = styled(ButtonSection)`
-  background-color: #e2d2d2;
-`;
-
-export const AlphabetContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-export const Image = styled.img`
-  width: 10rem;
-  height: 10rem;
-  @media (max-width: 1800px) {
-    width: 8rem;
-    height: 8rem;
-  }
-  @media (max-width: 1200px) {
-    width: 7rem;
-    height: 8rem;
-  }
-`;
-
-export const ImageA = styled(Image)`
-  animation: ${bounceImageA} 1s linear alternate infinite;
-`;
-
-export const ImageB = styled(Image)`
-  animation: ${bounceImageB} 1s linear alternate infinite;
-`;
-
-export const ImageC = styled(Image)`
-  animation: ${bounceImageC} 1s linear alternate infinite;
-`;
-
-export const WordButton = styled(ButtonSection)`
-  background-color: #bfc8d7;
-`;
-
 export const ButtonTitle = styled.h1`
   ${({ theme }) => {
     return css`
@@ -158,17 +55,11 @@ export const WordContainer = styled.div`
   align-items: center;
 `;
 
-export const ImageWord = styled(Image)`
-  width: 35rem;
-  animation: ${bounceImageWord} 1s linear alternate infinite;
-`;
-
-// ///////////////////////////
 export const SearchBar = styled.input`
   font-size: 40px;
   padding: 10px;
   margin: 10px;
-  background: papayawhip;
+  background: white;
   border: none;
   border-radius: 3px;
   ::placeholder {
@@ -193,12 +84,35 @@ export const SearchButton = styled.button`
 
 export const CardContainer = styled.div`
   display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: center;
+  align-items: center;
+  flex: 0.5;
   margin: auto;
-  width: 80%;
-  max-width: 1000px;
-  flex: 0.6;
-  padding: 4rem;
-  margin-bottom: 4rem;
+`;
+
+export const SearchContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 0.3;
+`;
+
+export const ResultContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const VideoContainer = styled.div`
+  padding: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 0.5;
+`;
+
+export const H1 = styled.h1`
+  margin-bottom: 1rem;
+  justify-content: center;
+  align-items: center;
 `;

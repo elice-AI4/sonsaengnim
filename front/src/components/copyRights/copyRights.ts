@@ -37,3 +37,8 @@ export const quizCopyRights = {
   aLinks: [`https://www.freepik.com/vectors/cute-kids`],
   contents: [`Cute kids vector created by mamewmy - www.freepik.com`],
 };
+
+export const searchCopyRights = {
+  aLinks: [`https://www.freepik.com/vectors/kids-event`],
+  contents: [`Kids event vector created by freepik - www.freepik.com`],
+};

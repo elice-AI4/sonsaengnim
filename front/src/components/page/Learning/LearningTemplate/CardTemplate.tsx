@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { CSSProperties, useRef } from "react";
 import { Card } from "./CardTemplate.style";
 import { motion } from "framer-motion";
 import { useLocation } from "react-router";
@@ -6,6 +6,7 @@ import { useLocation } from "react-router";
 interface CardTemplateProps {
   src: string;
   alt: string;
+  style?: CSSProperties;
 }
 
 const boxVariants = {
@@ -14,7 +15,7 @@ const boxVariants = {
   drag: { backgroundColor: "rgb(46,123,250)", transition: { duration: 2 } },
 };
 
-const CardTemplate = ({ src, alt }: CardTemplateProps) => {
+const CardTemplate = ({ src, alt, style }: CardTemplateProps) => {
   const constraintsRef = useRef<HTMLDivElement>(null);
   const { pathname } = useLocation();
   const checkPathname = () => {
@@ -24,7 +25,12 @@ const CardTemplate = ({ src, alt }: CardTemplateProps) => {
     return false;
   };
   return (
-    <Card src={src} ref={constraintsRef} check={checkPathname()}>
+    <Card
+      src={src}
+      ref={constraintsRef}
+      check={checkPathname()}
+      style={style && style}
+    >
       <motion.img
         src={src}
         alt={alt}
