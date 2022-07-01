@@ -200,9 +200,6 @@ const LearningGame = () => {
   };
 
   useEffect(() => {
-  }, [curSelectedButton]);
-
-  useEffect(() => {
     try {
       const localIsAlphabet = pathname.includes("alphabet") === true;
       getVideos(localIsAlphabet);
@@ -239,9 +236,7 @@ const LearningGame = () => {
 
   useEffect(() => {
     if (isModalOpen.correctModal) {
-      if (isLogin)
-        Api.post(`user/study/` + curSelectedButton.word, {}).then((res) =>
-        );
+      if (isLogin) Api.post(`user/study/` + curSelectedButton.word, {});
     }
   }, [isModalOpen.correctModal]);
 

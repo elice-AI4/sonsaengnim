@@ -18,10 +18,6 @@ import Rank from "./components/page/Rank";
 import Search from "./components/page/Search";
 
 function App() {
-  if (process.env.NODE_ENV === "production") {
-    console.log = function no_console() {};
-    console.warn = function no_console() {};
-  }
   return (
     <>
       <Router>
