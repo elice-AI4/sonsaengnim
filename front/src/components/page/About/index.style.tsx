@@ -17,19 +17,20 @@ const sectionAnimation = keyframes`
 
 export const AboutContainer = styled.div`
   position: relative;
-  transform: translateX(300px);
-  width: calc(100vw - 300px);
+  transform: translateX(150px);
+  width: calc(100vw - 150px);
+  overflow-x: scroll;
 `;
 
 export const AboutMainPage = styled.div`
   margin: 0 auto 0 auto;
-  width: 80%;
-  min-width: 1700px;
+  min-width: 1000px;
 `;
 
 export const Description = styled.p`
   font-size: 3rem;
   font-weight: bold;
+  margin: 1rem;
 `;
 
 export const ImpactWord = styled.span`
@@ -41,7 +42,7 @@ export const ImpactWord = styled.span`
 export const Section = styled.section`
   display: flex;
   padding: 3rem;
-  max-width: 90%;
+  width: 1400px;
   margin: auto;
   &.target {
     animation: 1.8s ${sectionAnimation};
@@ -64,20 +65,17 @@ export const Section = styled.section`
 
 export const LeftSection = styled.div`
   padding: 2rem;
-  flex: 0.4;
+  flex: 0.5;
   display: flex;
   justify-content: center;
   align-items: center;
-
-  /* border: 1px solid; */
 `;
 export const RightSection = styled.div`
   padding: 2rem;
-  flex: 0.6;
+  flex: 0.5;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  justify-content: space-around;
 `;
 
 export const Img = styled.img`

@@ -1,6 +1,12 @@
 import React from "react";
 import { Score, MAX_COUNT } from "./index";
-import { AnswerImg } from "./index.style";
+import {
+  AnswerImg,
+  NextButton,
+  StopButton,
+  TextP,
+  RankRegisterButton,
+} from "./index.style";
 import Modal from "../../Modal";
 
 const ModalStyle = {
@@ -52,15 +58,19 @@ function SolveModal({
       <h1>{`${score.ans}/${MAX_COUNT}`}</h1>
       {finish ? (
         <div>
-          <button onClick={MoveRecord}>순위 등록하러가기</button>
+          <RankRegisterButton onClick={MoveRecord}>
+            순위 등록하러가기
+          </RankRegisterButton>
         </div>
       ) : (
         <div>
-          <button onClick={nextQuiz}>다음 문제 풀기</button>
-          <button onClick={closeModal}>포.기.하.기</button>
+          <NextButton onClick={nextQuiz}>다음 문제 풀기</NextButton>
+          <StopButton onClick={closeModal}>그만하기</StopButton>
         </div>
       )}
-      <h2>{`남은 문제 : ${MAX_COUNT - score.cur}`}</h2>
+      <TextP>{`남은 문제 : ${
+        MAX_COUNT - score.cur >= 0 && MAX_COUNT - score.cur
+      }`}</TextP>
     </Modal>
   );
 }

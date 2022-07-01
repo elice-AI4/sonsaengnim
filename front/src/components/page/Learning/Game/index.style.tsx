@@ -6,6 +6,7 @@ export const GameContainer = styled.div`
   width: 100vw;
   min-height: 100vh;
   display: flex;
+  overflow: hidden;
 `;
 
 export const Sidebar = styled.aside`
@@ -131,7 +132,7 @@ export const ImageUnderLine = styled.div`
 `;
 
 export const CameraContainer = styled.section`
-  width: 100%;
+  width: 100vw;
   min-width: 1000px;
   min-height: 100vh;
   background-image: url(${backgroundImg});
@@ -224,7 +225,7 @@ interface StartButtonProp {
 }
 
 export const StartButton = styled.div<StartButtonProp>`
-  z-index: 10;
+  z-index: 9;
   width: 10rem;
   height: 7rem;
   border-radius: 1.5rem;

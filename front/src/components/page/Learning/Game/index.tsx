@@ -493,7 +493,11 @@ const LearningGame = () => {
                 <BlueCircle />
               </CircleContainer>
               <div style={{ position: "relative" }}>
-                <Explain>오른손으로 학습해봐요.</Explain>
+                {isAlphabetLearningPage ? (
+                  <Explain>오른손으로 학습해봐요.</Explain>
+                ) : (
+                  <Explain>양손으로 학습해봐요.</Explain>
+                )}
               </div>
               <HR />
             </TopContainer>
