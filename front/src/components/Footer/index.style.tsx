@@ -8,7 +8,7 @@ export const FooterContainer = styled.footer`
   align-items: center;
   position: absolute;
   bottom: 1rem;
-  z-index: 5;
+  z-index: 7;
 `;
 
 export const FooterContent = styled.a`

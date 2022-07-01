@@ -62,7 +62,7 @@ function Main() {
         <ServiceBox color={"#FFD700"}>
           <ServiceImg src={GameLogo}></ServiceImg>
           {/* <a href='https://kr.freepik.com/vectors/wood'>Wood 벡터는 pch.vector - kr.freepik.com가 제작함</a> */}
-          <h2>공부한 내용을 확인해볼까요?</h2>
+          <h2>공부한 내용을 확인해 볼까요?</h2>
           <MoveButton
             onClick={() => handleClickButton("quiz")}
             data-tip="main-quiz"
@@ -87,7 +87,7 @@ function Main() {
         <ServiceBox color={"#6495ED"}>
           <ServiceImg src={SearchLogo}></ServiceImg>
           {/* <a href='https://kr.freepik.com/vectors/school'>School 벡터는 pch.vector - kr.freepik.com가 제작함</a> */}
-          <h2>찾고싶은 내용이 있나요?</h2>
+          <h2>찾고 싶은 내용이 있나요?</h2>
           <MoveButton
             onClick={() => handleClickButton("search")}
             data-tip="main-search"
