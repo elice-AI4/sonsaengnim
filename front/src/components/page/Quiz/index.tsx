@@ -80,7 +80,7 @@ const Quiz = () => {
         <ButtonCotainer>
           <QuizImg src={imgQuiz} width="400px" height="120px" alt="quiz" />
           <Button onClick={() => navigate(`${ROUTE.GAME.link}`)}>
-            퀴즈 맞추러 가기
+            퀴즈 풀러 가기
           </Button>
         </ButtonCotainer>
       </ImageContainer>
