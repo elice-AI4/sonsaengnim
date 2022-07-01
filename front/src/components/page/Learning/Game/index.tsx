@@ -240,6 +240,15 @@ const LearningGame = () => {
     };
   }, []);
 
+  useEffect(() => {
+    const postPoint = async () => {
+      await Api.post(`user/study/`, { word: curSelectedButton.word });
+    };
+    if (isModalOpen.correctModal) {
+      postPoint();
+    }
+  }, [isModalOpen.correctModal]);
+
   return (
     <>
       <Modal visible={isModalOpen.loadingModal} style={modalStyle}>
