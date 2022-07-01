@@ -40,7 +40,6 @@ function Register() {
   const handleRegister = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const res = await Api.post("register", registerInfo);
-    console.log(res);
     setRegisterInfo({
       email: "",
       password: "",

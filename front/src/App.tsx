@@ -15,9 +15,13 @@ import QuizGame from "./components/page/Quiz/Game";
 import About from "./components/page/About";
 import LearningGame from "./components/page/Learning/Game";
 import Rank from "./components/page/Rank";
-import Search from "./components/page/Search"
+import Search from "./components/page/Search";
 
 function App() {
+  if (process.env.NODE_ENV === "production") {
+    console.log = function no_console() {};
+    console.warn = function no_console() {};
+  }
   return (
     <>
       <Router>

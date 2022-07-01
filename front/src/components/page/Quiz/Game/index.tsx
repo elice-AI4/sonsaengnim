@@ -151,7 +151,6 @@ function QuizGame() {
     }
     if (socketAnswer.includes(problem.word) && one) {
       setOne(false);
-      console.log("정답");
       setAnswer(true);
       setScore((cur): Score => {
         const newScore: Score = { ...cur };
@@ -163,7 +162,6 @@ function QuizGame() {
       setSocketAnswer(undefined);
     } else {
       setOne(false);
-      console.log("오답");
       setAnswer(false);
       setScore((cur): Score => {
         const newScore: Score = { ...cur };

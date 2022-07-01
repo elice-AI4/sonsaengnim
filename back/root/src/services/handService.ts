@@ -21,7 +21,6 @@ export class HandService {
     try {
       return await this.handModel.create(newHandData);
     } catch (error) {
-      console.log(error);
       throw new Error("수화 데이터 생성에 실패했습니다.");
     }
   }
