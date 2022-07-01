@@ -202,7 +202,7 @@ export const Explain = styled.h1`
     return css`
       color: ${theme.learning.play.darkBlue};
       text-align: center;
-      font-size: 3rem;
+      font-size: 2.5rem;
       font-weight: 700;
     `;
   }}

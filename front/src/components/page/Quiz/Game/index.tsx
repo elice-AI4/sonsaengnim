@@ -25,7 +25,7 @@ import { saveTimeAtom } from "../../../../state";
 import { useAtom } from "jotai";
 import { useNavigate } from "react-router-dom";
 
-export const MAX_COUNT = 2;
+export const MAX_COUNT = 10;
 
 export interface Score {
   ans: number;
