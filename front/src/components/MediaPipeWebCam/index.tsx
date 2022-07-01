@@ -146,7 +146,7 @@ function MediaPipeWebCam({
 
       handleOffMediapipe();
     }
-  }, [mediapipeData]);
+  }, [mediapipeData, openModal]);
   // useEffect(() => {
   //   if (mediapipeData.length === 50) {
   //     console.log("50개 채웠어요!");

@@ -68,8 +68,6 @@ export const LeftSection = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-
-  /* border: 1px solid; */
 `;
 export const RightSection = styled.div`
   padding: 2rem;

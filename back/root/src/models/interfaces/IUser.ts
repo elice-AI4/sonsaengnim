@@ -1,3 +1,4 @@
+import { IScore } from "./IScore";
 export interface IUser {
   _id: string;
   username: string;
@@ -5,6 +6,8 @@ export interface IUser {
   password: string;
   createdAt: string;
   updatedAt: string;
+  study?: Array<string>;
   errorMessage?;
   userId?: string;
+  scores?: Array<IScore>;
 }

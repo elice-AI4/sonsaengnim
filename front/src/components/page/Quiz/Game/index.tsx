@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import {
   ProblemBox,
   ProblemImg,
   AnswerBox,
   QuizBox,
-  ButtonBox,
   TimerStartButton,
+  StartButton,
+  StartTriangle,
 } from "./index.style";
 import SolveModal from "./SolveModal";
 import RecordModal from "./RecordModal";
@@ -14,18 +15,29 @@ import Timer from "../../../Timer";
 import Loading from "../../../Loading";
 import ReactTooltip from "react-tooltip";
 import * as Api from "../../../../api";
-
-import { StartButton, StartTriangle } from "../../Learning/Game/index.style";
-
-export const MAX_COUNT = 3;
-
-// const problemList = ["angle", "banana", "cry", "dance", "egg", "fun"];
-const problemList = "angel";
+import Modal from "../../Modal";
+import ai_loading from "../../../../src_assets/modal/ai_loading.jpg";
+import grading from "../../../../src_assets/modal/grading.jpg";
+export const MAX_COUNT = 2;
 
 export interface Score {
   ans: number;
   cur: number;
 }
+
+interface Word {
+  word: string;
+  wordImageURL: string;
+}
+const modalStyle = {
+  width: "800px",
+  height: "500px",
+  display: "flex",
+  "flex-direction": "column",
+  justifyContent: "center",
+  alignItems: "center",
+  borderRadius: "0",
+};
 
 function QuizGame() {
   const [modal, setModal] = useState<boolean>(false);
@@ -34,12 +46,20 @@ function QuizGame() {
   const [score, setScore] = useState<Score>({ ans: 0, cur: 0 });
   const [finish, setFinish] = useState<boolean>(false);
   const [timer, setTimer] = useState<boolean>(false);
-  const [quizNumber, setQuizNumber] = useState<number>(
-    Math.floor(Math.random() * 0)
-  );
+  const [quiz, setQuiz] = useState<Word[]>([]);
+  const [quizNumber, setQuizNumber] = useState<number>(0);
   const [isLoading, setIsLoading] = useState(true);
+  const [problem, setProblem] = useState<Word>({ word: "", wordImageURL: "" });
 
   const [cameraOn, setCameraOn] = useState(false);
+
+  const [isModalOpen, setIsModalOpen] = useState({
+    loadingModal: false,
+    waitingAnswerModal: false,
+    correctModal: false,
+    wrongModal: false,
+  });
+  const lazyStartTimerId: { current: any } = useRef(null);
 
   const handleInitial = () => {
     setScore({ ans: 0, cur: 0 });
@@ -48,15 +68,39 @@ function QuizGame() {
     setFinish(false);
     setTimer(false);
   };
+  const openModal = () => {
+    setIsModalOpen((cur) => {
+      return {
+        ...cur,
+        waitingAnswerModal: true,
+      };
+    });
+  };
+  const handleClickButton = () => {
+    setIsModalOpen((cur) => {
+      return {
+        ...cur,
+        loadingModal: true,
+      };
+    });
+
+    lazyStartTimerId.current = setTimeout(() => {
+      setCameraOn(true);
+      setIsModalOpen((cur) => {
+        return {
+          ...cur,
+          loadingModal: false,
+        };
+      });
+    }, 2000);
+  };
+
   const closeModal = () => {
     setModal(false);
   };
-  // const closeRecord = () => {
-  //   setRank(false);
-  // };
-
   const nextQuiz = () => {
-    setQuizNumber(Math.floor(Math.random() * 0));
+    if (quizNumber === undefined) return;
+    setQuizNumber(Math.floor(Math.random() * quizNumber));
     setModal(false);
   };
 
@@ -65,10 +109,28 @@ function QuizGame() {
     setSocketAnswer(answer);
   };
   useEffect(() => {
+    Api.get("quiz").then((res) => {
+      setQuiz(res.data);
+      setQuizNumber(res.data.length);
+    });
+  }, []);
+
+  useEffect(() => {
+    nextQuiz();
+    setProblem(quiz[quizNumber]);
+  }, [quiz]);
+
+  useEffect(() => {
+    if (!quiz[quizNumber]?.word || !quiz[quizNumber]?.wordImageURL) {
+      return;
+    }
+    setProblem(quiz[quizNumber]);
+  }, [quizNumber]);
+  useEffect(() => {
     if (socketAnswer === undefined || socketAnswer.length === 0) {
       return;
     }
-    if (socketAnswer.includes(problemList)) {
+    if (socketAnswer.includes(problem.word)) {
       console.log("정답");
       setAnswer(true);
       setScore((cur): Score => {
@@ -78,7 +140,23 @@ function QuizGame() {
         return newScore;
       });
       setModal(true);
+    } else {
+      console.log("오답");
+      setModal(true);
+      setAnswer(false);
+      setScore((cur): Score => {
+        const newScore: Score = { ...cur };
+        newScore["cur"] += 1;
+        return newScore;
+      });
     }
+    setIsModalOpen((cur) => {
+      return {
+        ...cur,
+        waitingAnswerModal: false,
+      };
+    });
+    setSocketAnswer(undefined);
   }, [socketAnswer]);
 
   const isCameraSettingOn = () => {
@@ -105,6 +183,12 @@ function QuizGame() {
   return (
     <>
       {isLoading && <Loading />}
+      <Modal visible={isModalOpen.loadingModal} style={modalStyle}>
+        <img src={ai_loading} alt="ai가 켜지길 기다리는중" />
+      </Modal>
+      <Modal visible={isModalOpen.waitingAnswerModal} style={modalStyle}>
+        {!socketAnswer && <img src={grading} alt="채점중인 로봇" />}
+      </Modal>
       <ProblemBox
         quizBackImg={`${process.env.PUBLIC_URL}/quizgamepic/quizback3.jpg`}
       >
@@ -143,59 +227,22 @@ function QuizGame() {
           </TimerStartButton>
         )}
         <QuizBox>
-          <ProblemImg
-            src={`${process.env.PUBLIC_URL}/quizgamepic/p1.jpg`}
-          ></ProblemImg>
+          <ProblemImg src={problem?.wordImageURL}></ProblemImg>
           <AnswerBox>
             <MediaPipeWebCam
               cameraOn={cameraOn}
               handleOffMediapipe={handleOffMediapipe}
               isCameraSettingOn={isCameraSettingOn}
               handleSetSocketAnswer={handleSetSocketAnswer}
+              openModal={openModal}
             />
+            {timer && (
+              <StartButton onClick={handleClickButton} cameraOn={cameraOn}>
+                <StartTriangle cameraOn={cameraOn} />
+              </StartButton>
+            )}
           </AnswerBox>
         </QuizBox>
-        <ButtonBox>
-          <button
-            onClick={() => {
-              setCameraOn(() => !cameraOn);
-            }}
-          >
-            문제풀기
-          </button>
-          <button
-            onClick={() => {
-              setModal(true);
-              setAnswer(true);
-              setScore((cur): Score => {
-                const newScore: Score = { ...cur };
-                newScore["ans"] += 1;
-                newScore["cur"] += 1;
-                return newScore;
-              });
-            }}
-          >
-            정답
-          </button>
-          <button
-            onClick={() => {
-              setModal(true);
-              setAnswer(false);
-              setScore((cur): Score => {
-                const newScore: Score = { ...cur };
-                newScore["cur"] += 1;
-                return newScore;
-              });
-            }}
-          >
-            오답
-          </button>
-          <h2>{problemList}</h2>
-          {/* <button onClick={() => socket?.emit("coordinate", { testData })}>
-            목업데이터 보내보기
-          </button> */}
-          {/* <h1>{socketAnswer && socketAnswer.data}</h1> */}
-        </ButtonBox>
       </ProblemBox>
     </>
   );
