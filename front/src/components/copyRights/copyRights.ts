@@ -71,3 +71,8 @@ export const rankBackgroundCopyRights = {
   aLinks: [`https://kr.freepik.com/vectors/background`],
   contents: [`Background 벡터는 rawpixel.com - kr.freepik.com가 제작함`],
 };
+
+export const searchCopyRights = {
+  aLinks: [`https://www.freepik.com/vectors/kids-event`],
+  contents: [`Kids event vector created by freepik - www.freepik.com`],
+};

@@ -88,7 +88,11 @@ function Main() {
           <ServiceImg src={SearchLogo}></ServiceImg>
           {/* <a href='https://kr.freepik.com/vectors/school'>School 벡터는 pch.vector - kr.freepik.com가 제작함</a> */}
           <h2>찾고싶은 내용이 있나요?</h2>
-          <MoveButton data-tip="main-search" data-for="main-search">
+          <MoveButton
+            onClick={() => handleClickButton("search")}
+            data-tip="main-search"
+            data-for="main-search"
+          >
             검색하러 가기
           </MoveButton>
           <ReactTooltip id="main-search" place="bottom">
