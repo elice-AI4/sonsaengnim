@@ -60,7 +60,6 @@ function QuizGame() {
   const [problem, setProblem] = useState<Word>({ word: "", wordImageURL: "" });
   const [timeOver, setTimeOver] = useState<boolean>(false);
   const [cameraOn, setCameraOn] = useState(false);
-  const [saveTime, setSaveTime] = useAtom(saveTimeAtom);
 
   const [isModalOpen, setIsModalOpen] = useState({
     loadingModal: false,
@@ -124,15 +123,6 @@ function QuizGame() {
       setQuizNumber(res.data.length);
     });
   }, []);
-  // useEffect(() => {
-  //   if (saveTime <= 0) {
-  //     console.log("time");
-  //     setModal(true);
-  //     setAnswer(false);
-  //     setFinish(true);
-  //     setTimeOver(true);
-  //   }
-  // }, [saveTime]);
 
   const handleTimeOver = () => {
     setModal(true);
