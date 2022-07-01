@@ -18,7 +18,6 @@ export class MongoScoreModel implements IScoreModel {
 
   public async getTopten() {
     return await Score.aggregate([
-      { $sort: { score: -1, time: 1 } },
       {
         $setWindowFields: {
           partitionBy: "$state",
@@ -30,6 +29,7 @@ export class MongoScoreModel implements IScoreModel {
           },
         },
       },
+      { $sort: { score: -1, time: 1 } },
     ]).limit(10);
   }
 }
