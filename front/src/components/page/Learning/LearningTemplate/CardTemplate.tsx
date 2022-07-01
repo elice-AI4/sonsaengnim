@@ -1,6 +1,7 @@
 import React, { useRef } from "react";
 import { Card } from "./CardTemplate.style";
 import { motion } from "framer-motion";
+import { useLocation } from "react-router";
 
 interface CardTemplateProps {
   src: string;
@@ -15,13 +16,19 @@ const boxVariants = {
 
 const CardTemplate = ({ src, alt }: CardTemplateProps) => {
   const constraintsRef = useRef<HTMLDivElement>(null);
+  const { pathname } = useLocation();
+  const checkPathname = () => {
+    if (pathname.includes("alphabet")) {
+      return true;
+    }
+    return false;
+  };
   return (
-    <Card src={src} ref={constraintsRef}>
+    <Card src={src} ref={constraintsRef} check={checkPathname()}>
       <motion.img
         src={src}
         alt={alt}
-        width="100px"
-        height="100px"
+        width={"100%"}
         drag
         variants={boxVariants}
         whileHover="hover"
