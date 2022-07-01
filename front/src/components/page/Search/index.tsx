@@ -1,5 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { learningCopyRights } from "../../copyRights/copyRights";
+import { motion } from "framer-motion";
+
 import Footer from "../../Footer";
 import {
   LearningContainer,
@@ -26,9 +28,16 @@ interface VideoDataProps {
   mouthVideo?: string;
 }
 
+const boxVariants = {
+  hover: { scale: 1.3, rotateZ: "360deg" },
+  tab: { borderRadius: "100px", scale: 1.2 },
+  drag: { backgroundColor: "rgb(46,123,250)", transition: { duration: 2 } },
+};
+
 const Search = () => {
   const [searchWord, setSearchWord] = useState("");
   const [find, setFind] = useState(false);
+  const constraintsRef = useRef<HTMLDivElement>(null);
 
   const [searchedImage, setSearchedImage] = useState({
     src: "",
@@ -135,31 +144,47 @@ const Search = () => {
           <p style={{ textAlign: "right" }}>출처: 국립국어원</p>
         </ReactTooltip>
       </SearchContainer>
-
+      {isEmpty && isFirst && <H1>공부했던 것을 찾아볼까요?</H1>}
       <ResultContainer>
-        {isEmpty && isFirst && <H1>공부했던 것을 찾아볼까요?</H1>}
         {isEmpty && !isFirst && <H1>검색 결과가 없습니다!</H1>}
         {!isEmpty && find && videoSrc.length >= 1 && (
           <>
             <CardContainer>
-              <CardTemplate
-                src={searchedImage.src}
-                alt={searchedImage.alt}
-                style={{ width: "300px" }}
-              />
+              <div ref={constraintsRef} style={{ width: "500px" }}>
+                <motion.img
+                  src={searchedImage.src}
+                  alt={searchedImage.alt}
+                  drag
+                  variants={boxVariants}
+                  whileHover="hover"
+                  whileDrag="drag"
+                  whileTap="tab"
+                  dragElastic={0.5} /* force Elastic : 마우스에 탄성 */
+                  dragConstraints={constraintsRef}
+                  style={{
+                    borderRadius: "30px",
+                    maxWidth: "500px",
+                    minWidth: "350px",
+                  }}
+                />
+              </div>
             </CardContainer>
             <VideoContainer>
-              <video
-                autoPlay
-                controls
-                width="300"
-                muted
-                loop
-                style={{ borderRadius: "5px" }}
-                key={videoSrc[0]}
+              <div
+                style={{ maxWidth: "500px", minWidth: "500px", zIndex: "2" }}
               >
-                <source src={videoSrc[0]} type="video/mp4" />
-              </video>
+                <video
+                  autoPlay
+                  controls
+                  width="500"
+                  muted
+                  loop
+                  style={{ borderRadius: "5px" }}
+                  key={videoSrc[0]}
+                >
+                  <source src={videoSrc[0]} type="video/mp4" />
+                </video>
+              </div>
             </VideoContainer>
           </>
         )}
