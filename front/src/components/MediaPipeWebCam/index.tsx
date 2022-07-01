@@ -211,8 +211,8 @@ function MediaPipeWebCam({
   }, []);
 
   useEffect(() => {
-    setSocket(io(flaskUrl));
-
+    setSocket(io(`${flaskUrl}`));
+    console.log(flaskUrl);
     return () => {
       socket?.disconnect();
     };

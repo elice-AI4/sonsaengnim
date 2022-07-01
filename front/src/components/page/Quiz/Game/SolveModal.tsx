@@ -25,6 +25,7 @@ interface SolveProps {
   score: Score;
   nextQuiz(): void;
   MoveRecord(): void;
+  timeOver: boolean;
 }
 
 function SolveModal({
@@ -35,13 +36,10 @@ function SolveModal({
   score,
   nextQuiz,
   MoveRecord,
+  timeOver,
 }: SolveProps) {
   return (
-    <Modal
-      visible={modal}
-      //   closeModal={closeModal}
-      style={ModalStyle as React.CSSProperties}
-    >
+    <Modal visible={modal} style={ModalStyle as React.CSSProperties}>
       {answer ? (
         <>
           <AnswerImg
@@ -71,6 +69,7 @@ function SolveModal({
       <TextP>{`남은 문제 : ${
         MAX_COUNT - score.cur >= 0 && MAX_COUNT - score.cur
       }`}</TextP>
+      {timeOver && <TextP>시간 초과</TextP>}
     </Modal>
   );
 }

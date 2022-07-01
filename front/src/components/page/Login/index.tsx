@@ -14,6 +14,9 @@ import { useAtom } from "jotai";
 import { reg, userAtom, loginAtom } from "../../../state";
 import * as Api from "../../../api";
 
+import Footer from "../../Footer";
+import { loginCopyRights } from "../../copyRights/copyRights";
+
 interface UserLogin {
   email: string;
   password: string;
@@ -26,7 +29,7 @@ interface LoginValid {
 
 function Login() {
   const navigate = useNavigate();
-  const [, setUser] = useAtom(userAtom);
+  const [user, setUser] = useAtom(userAtom);
   const [, setLogin] = useAtom(loginAtom);
 
   const [loginInfo, setLoginInfo] = useState<UserLogin>({
@@ -48,6 +51,7 @@ function Login() {
       token: res.data.token,
     });
     setLogin(true);
+    console.log(user);
     sessionStorage.setItem("userToken", res.data.token);
     navigate("/");
   };
@@ -127,6 +131,10 @@ function Login() {
           </LoginForm>
         </LoginBackground>
       </LoginPage>
+      <Footer
+        aLinks={loginCopyRights.aLinks}
+        contents={loginCopyRights.contents}
+      />
     </>
   );
 }

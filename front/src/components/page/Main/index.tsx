@@ -4,6 +4,7 @@ import {
   ServiceBox,
   MoveButton,
   ServiceImg,
+  FooterBox,
 } from "./index.style";
 import StudyLogo from "./study.png";
 import GameLogo from "./game.png";
@@ -12,6 +13,12 @@ import { useAtom } from "jotai";
 import { reg, userAtom } from "../../../state";
 import { useNavigate } from "react-router";
 import ReactTooltip from "react-tooltip";
+import Footer from "../../Footer";
+import {
+  beaverCopyRights,
+  foxCopyRights,
+  earthwormCopyRights,
+} from "../../copyRights/copyRights";
 
 function Main() {
   const [user, setUser] = useAtom(userAtom);
@@ -47,6 +54,10 @@ function Main() {
               <p style={{ textAlign: "right" }}>출처: 국립국어원</p>
             </ReactTooltip>
           </MoveButton>
+          <Footer
+            aLinks={foxCopyRights.aLinks}
+            contents={foxCopyRights.contents}
+          />
         </ServiceBox>
         <ServiceBox color={"#FFD700"}>
           <ServiceImg src={GameLogo}></ServiceImg>
@@ -68,12 +79,20 @@ function Main() {
               <p style={{ textAlign: "right" }}>출처: 국립국어원</p>
             </ReactTooltip>
           </MoveButton>
+          <Footer
+            aLinks={beaverCopyRights.aLinks}
+            contents={beaverCopyRights.contents}
+          />
         </ServiceBox>
         <ServiceBox color={"#6495ED"}>
           <ServiceImg src={SearchLogo}></ServiceImg>
           {/* <a href='https://kr.freepik.com/vectors/school'>School 벡터는 pch.vector - kr.freepik.com가 제작함</a> */}
           <h2>찾고싶은 내용이 있나요?</h2>
-          <MoveButton data-tip="main-search" data-for="main-search">
+          <MoveButton
+            onClick={() => handleClickButton("search")}
+            data-tip="main-search"
+            data-for="main-search"
+          >
             검색하러 가기
           </MoveButton>
           <ReactTooltip id="main-search" place="bottom">
@@ -85,6 +104,10 @@ function Main() {
             </video>
             <p style={{ textAlign: "right" }}>출처: 국립국어원</p>
           </ReactTooltip>
+          <Footer
+            aLinks={earthwormCopyRights.aLinks}
+            contents={earthwormCopyRights.contents}
+          />
         </ServiceBox>
       </MainBackGround>
     </>

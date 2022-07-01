@@ -15,6 +15,7 @@ import QuizGame from "./components/page/Quiz/Game";
 import About from "./components/page/About";
 import LearningGame from "./components/page/Learning/Game";
 import Rank from "./components/page/Rank";
+import Search from "./components/page/Search"
 
 function App() {
   return (
@@ -55,6 +56,7 @@ function App() {
             element={<Word />}
           />
           <Route path={`/${ROUTE.QUIZ.link}`} element={<Quiz />} />
+          <Route path={`/${ROUTE.SEARCH.link}`} element={<Search />} />
           <Route path="/*" element={<NotFound />} />
         </Routes>
       </Router>

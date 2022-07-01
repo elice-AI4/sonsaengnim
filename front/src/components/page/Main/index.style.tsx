@@ -35,3 +35,11 @@ export const ServiceImg = styled.img`
   height: 300px;
   /* padding-left:; */
 `;
+
+export const FooterBox = styled.div`
+  border: 1px solid black;
+  width: 100%;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+`;

@@ -240,6 +240,15 @@ const LearningGame = () => {
     };
   }, []);
 
+  useEffect(() => {
+    if (isModalOpen.correctModal) {
+      if (isLogin)
+        Api.post(`user/study/` + curSelectedButton.word, {}).then((res) =>
+          console.log(res)
+        );
+    }
+  }, [isModalOpen.correctModal]);
+
   return (
     <>
       <Modal visible={isModalOpen.loadingModal} style={modalStyle}>

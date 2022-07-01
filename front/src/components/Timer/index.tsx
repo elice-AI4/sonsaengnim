@@ -5,9 +5,10 @@ import { saveTimeAtom } from "../../state";
 
 interface TimerPorps {
   finish: boolean;
+  handleTimeOver: () => void;
 }
 
-function Timer({ finish }: TimerPorps) {
+function Timer({ finish, handleTimeOver }: TimerPorps) {
   const [min, setMin] = useState(10);
   const [sec, setSec] = useState(0);
   const [saveTime, setSaveTime] = useAtom(saveTimeAtom);
@@ -28,6 +29,7 @@ function Timer({ finish }: TimerPorps) {
     if (time.current <= 0) {
       console.log("타임 아웃");
       setSaveTime(600);
+      handleTimeOver();
       clearInterval(timerId.current);
       // dispatch event
     } else if (finish === true) {
