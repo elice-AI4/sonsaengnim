@@ -61,7 +61,7 @@ function QuizGame() {
   const [timeOver, setTimeOver] = useState<boolean>(false);
   const [cameraOn, setCameraOn] = useState(false);
   const [problemCount, setProblemCount] = useState<number>(0);
-
+  const [one, setOne] = useState<boolean>(true);
   const [isModalOpen, setIsModalOpen] = useState({
     loadingModal: false,
     waitingAnswerModal: false,
@@ -111,7 +111,7 @@ function QuizGame() {
   const nextQuiz = () => {
     if (quizNumber === undefined) return;
     setQuizNumber(Math.floor(Math.random() * problemCount));
-    console.log(quizNumber);
+    setOne(true);
     setModal(false);
   };
 
@@ -149,7 +149,8 @@ function QuizGame() {
     if (socketAnswer === undefined || socketAnswer.length === 0 || timeOver) {
       return;
     }
-    if (socketAnswer.includes(problem.word)) {
+    if (socketAnswer.includes(problem.word) && one) {
+      setOne(false);
       console.log("정답");
       setAnswer(true);
       setScore((cur): Score => {
@@ -161,6 +162,7 @@ function QuizGame() {
       setModal(true);
       setSocketAnswer(undefined);
     } else {
+      setOne(false);
       console.log("오답");
       setAnswer(false);
       setScore((cur): Score => {

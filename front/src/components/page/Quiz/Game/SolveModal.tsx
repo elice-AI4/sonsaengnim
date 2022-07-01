@@ -67,7 +67,7 @@ function SolveModal({
         </div>
       )}
       <TextP>{`남은 문제 : ${
-        MAX_COUNT - score.cur >= 0 && MAX_COUNT - score.cur
+        MAX_COUNT - score.cur > 0 && MAX_COUNT - score.cur
       }`}</TextP>
       {timeOver && <TextP>시간 초과</TextP>}
     </Modal>
