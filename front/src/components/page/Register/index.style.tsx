@@ -16,7 +16,7 @@ export const RegisterForm = styled.form`
   width: 500px;
   height: 300px;
   margin-bottom: 140px;
-  background-color: rgba(255, 255, 255, 0.5);
+  background-color: rgba(255, 255, 255, 0.8);
   border-radius: 20px;
   display: flex;
   flex-direction: column;

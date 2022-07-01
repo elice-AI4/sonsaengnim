@@ -50,6 +50,7 @@ export const SearchContainer = styled.div`
   align-items: center;
   transform: translateY(10rem);
   flex: 0.3;
+  z-index: 2;
 `;
 
 export const ResultContainer = styled.div`
