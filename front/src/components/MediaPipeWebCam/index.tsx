@@ -147,19 +147,6 @@ function MediaPipeWebCam({
       handleOffMediapipe();
     }
   }, [mediapipeData, openModal]);
-  // useEffect(() => {
-  //   if (mediapipeData.length === 50) {
-  //     console.log("50개 채웠어요!");
-  //     startRef.current = new Date();
-  //     openModal && openModal();
-  //     console.log("startRef 값 : ", startRef.current);
-  //     for (let i = 0; i < mediapipeData.length - 30; i = i + 4) {
-  //       console.log(i, "번째 socket 보냅니다!");
-  //       socket?.emit("coordinate", mediapipeData.slice(i, i + 30));
-  //     }
-  //     handleOffMediapipe();
-  //   }
-  // }, [mediapipeData]);
 
   useEffect(() => {
     if (cameraOn) {
