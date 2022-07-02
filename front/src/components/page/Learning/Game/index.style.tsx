@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import styled, { css, keyframes } from "styled-components";
+import styled, { css } from "styled-components";
 import backgroundImg from "../../../../src_assets/learning/play/playPage.png";
 
 export const GameContainer = styled.div`

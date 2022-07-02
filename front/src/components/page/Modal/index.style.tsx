@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
 export const ModalWrapper = styled.div<{ visible: boolean }>`
   box-sizing: border-box;

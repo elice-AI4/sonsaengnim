@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from "react";
-import { learningCopyRights } from "../../copyRights/copyRights";
 import { motion } from "framer-motion";
 
 import Footer from "../../Footer";
@@ -13,7 +12,6 @@ import {
   SearchButton,
   H1,
 } from "./index.style";
-import CardTemplate from "../Learning/LearningTemplate/CardTemplate";
 
 import { searchCopyRights } from "../../copyRights/copyRights";
 import ReactTooltip from "react-tooltip";
@@ -57,11 +55,9 @@ const Search = () => {
   const handleOnClick = () => {
     setIsFirst(false);
     //이미지 찾기
-    const tempImg = imgSrc.filter((img, index) => {
+    const tempImg = imgSrc.filter((img) => {
       if (searchWord === img.name) return img;
     });
-
-    console.log(tempImg);
 
     if (tempImg.length > 0) {
       setSearchedImage({
@@ -70,7 +66,6 @@ const Search = () => {
       });
       setIsEmpty(false);
     } else {
-      console.log("hey");
       setSearchedImage({
         src: "",
         alt: "",
@@ -109,10 +104,6 @@ const Search = () => {
   useEffect(() => {
     setFind(true);
   }, [searchWord]);
-
-  useEffect(() => {
-    console.log("video", videoSrc);
-  }, [videoSrc]);
 
   useEffect(() => {
     getVideos();

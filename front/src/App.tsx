@@ -15,7 +15,7 @@ import QuizGame from "./components/page/Quiz/Game";
 import About from "./components/page/About";
 import LearningGame from "./components/page/Learning/Game";
 import Rank from "./components/page/Rank";
-import Search from "./components/page/Search"
+import Search from "./components/page/Search";
 
 function App() {
   return (
