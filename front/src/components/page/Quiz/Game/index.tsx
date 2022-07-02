@@ -149,29 +149,31 @@ function QuizGame() {
     if (socketAnswer === undefined || socketAnswer.length === 0 || timeOver) {
       return;
     }
-    if (socketAnswer.includes(problem.word) && one) {
-      setOne(false);
-      console.log("정답");
-      setAnswer(true);
-      setScore((cur): Score => {
-        const newScore: Score = { ...cur };
-        newScore["ans"] += 1;
-        newScore["cur"] += 1;
-        return newScore;
-      });
-      setModal(true);
-      setSocketAnswer(undefined);
-    } else {
-      setOne(false);
-      console.log("오답");
-      setAnswer(false);
-      setScore((cur): Score => {
-        const newScore: Score = { ...cur };
-        newScore["cur"] += 1;
-        return newScore;
-      });
-      setModal(true);
-      setSocketAnswer(undefined);
+    if (one) {
+      if (socketAnswer.includes(problem.word)) {
+        setOne(false);
+        console.log("정답");
+        setAnswer(true);
+        setScore((cur): Score => {
+          const newScore: Score = { ...cur };
+          newScore["ans"] += 1;
+          newScore["cur"] += 1;
+          return newScore;
+        });
+        setModal(true);
+        setSocketAnswer(undefined);
+      } else {
+        setOne(false);
+        console.log("오답");
+        setAnswer(false);
+        setScore((cur): Score => {
+          const newScore: Score = { ...cur };
+          newScore["cur"] += 1;
+          return newScore;
+        });
+        setModal(true);
+        setSocketAnswer(undefined);
+      }
     }
     setIsModalOpen((cur) => {
       return {
