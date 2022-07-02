@@ -4,33 +4,7 @@
 
 > 배포 도메인: http://kdt-ai4-team05.elicecoding.com/
 
-## 0. 서비스 시작 전에 앞서
-
-**모든 사용자께서 주목해주세요~!**
-
-엘리스에서 제공한 도메인이 http이기에 웹캠에 바로 접근할 수 없습니다.
-
-그래서 저희 서비스를 이용하고자 하시는 분들께선
-
-다음 가이드를 따라해주세요. 1분이면 충분합니다!
-
-1. `chrome://flags/#unsafely-treat-insecure-origin-as-secure` 접속합니다.
-
-2. `Insecure origins treated as secure`를 활성화(enabled)합니다.
-
-3. 아래 이미지를 따라 주소를 복사해서 넣어주세요.
-
-`http://kdt-ai4-team05.elicecoding.com/`
-
-![image](/uploads/9c1bda2e4737486166f5457b3857f11a/image.png)
-
-4. 화면 아래 `relaunch`를 클릭해주세요.
-
-![image](/uploads/a6765d796acdf4f9a93fa298414a1cbd/image.png)
-
-5. chrome이 재실행되고 다시 접속해주세요.
-
-### 0-1) 파일 실행 방법
+## 0. 서비스 실행
 
 ```
 git clone https://kdt-gitlab.elice.io/ai_track/class_04/ai_project/team5/final-project.git
