@@ -53,7 +53,7 @@ function SolveModal({
           ></AnswerImg>
         </>
       )}
-      <h1>{`${score.ans}/${MAX_COUNT}`}</h1>
+      <h1>{`맞힌 개수 ${score.ans}/${MAX_COUNT}`}</h1>
       {finish ? (
         <div>
           <RankRegisterButton onClick={MoveRecord}>
@@ -67,7 +67,7 @@ function SolveModal({
         </div>
       )}
       <TextP>{`남은 문제 : ${
-        MAX_COUNT - score.cur > 0 && MAX_COUNT - score.cur
+        MAX_COUNT - score.cur >= 0 && MAX_COUNT - score.cur
       }`}</TextP>
       {timeOver && <TextP>시간 초과</TextP>}
     </Modal>
