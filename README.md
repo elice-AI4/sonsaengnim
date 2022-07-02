@@ -10,7 +10,6 @@
 git clone https://kdt-gitlab.elice.io/ai_track/class_04/ai_project/team5/final-project.git
 
 cd final-project
-
 ```
 
 - **Front**
@@ -164,3 +163,9 @@ Hand pose estimation을 통한 영어 알파벳 수화 학습 사이트
 
 
 ## 6. 데모
+
+### 학습 중 맞혔을 때
+![readme_demo_alpha_correct](/uploads/c4843bf0389dc1aead0914fa619bff21/readme_demo_alpha_correct.gif)
+
+### 학습 중 틀렸을 때
+![readme_demo_alpha_incorrect](/uploads/a9ece6aca12a4b7516c9e47043815c2c/readme_demo_alpha_incorrect.gif)
