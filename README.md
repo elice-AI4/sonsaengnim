@@ -141,13 +141,13 @@ Hand pose estimation을 통한 영어 알파벳 수화 학습 사이트
 
 > mediapipe는 구글의 머신러닝 오픈소스 프레임워크로, face, hand, pose 등 여러 인식과 관련된 작업을 처리할 수 있습니다. 수화를 인식할 수 있는 서비스를 만들기 위해 손의 움직임을 탐지하는 부분은 mediapipe를 활용했습니다. 해당 움직임이 맞는 수화인지 인식하는 부분은 프로젝트 중 인공지능 모델로 구축하였습니다. <br> [참고]([google의 mediapipe](https://google.github.io/mediapipe/solutions/hands#python-solution-api) )
 
-![image](/uploads/8ed435f133ac546386098ede13ea212d/image.png)
+![기술스택](/uploads/55d9dcdf6e0af57482ec0df24eda0f15/기술스택.png)
 
 ## 4. 시스템 아키텍쳐
 
 ### 4-1) 개발 구조
 
-![servicebody](/uploads/b63085c157814831b68422e69074b716/2.PNG)
+![image](/uploads/31770b539ae8ca2a115b33351b8bcaec/image.png)
 
 ## 5. 프로젝트 팀원 소개
 
