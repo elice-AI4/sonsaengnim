@@ -2,7 +2,7 @@ import axios from "axios";
 import { useAtom } from "jotai";
 import { userAtom } from "./state";
 
-const serverUrl = "http://localhost:5000/";
+const serverUrl = String(process.env.REACT_APP_BACKPORT);
 
 async function get(endpoint: string, params = "") {
   console.log(
@@ -22,7 +22,7 @@ async function post(endpoint: string, data: object) {
   const bodyData = JSON.stringify(data);
   console.log(`%cPOST 요청: ${serverUrl + endpoint}`, "color: #296aba;");
   console.log(`%cPOST 요청 데이터: ${bodyData}`, "color: #296aba;");
-
+  console.log(serverUrl + endpoint);
   return axios.post(serverUrl + endpoint, bodyData, {
     headers: {
       "Content-Type": "application/json",

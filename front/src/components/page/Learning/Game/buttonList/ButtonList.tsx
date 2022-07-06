@@ -1,65 +1,64 @@
 import React, { useState } from "react";
-import { BlankButton, Button, Container } from "./ButtonList.style";
+import { curSelectedButtonProps } from "..";
+import { BlankButton, Button, Container, WordButton } from "./ButtonList.style";
 
-const Alphabet = [
-  "A",
-  "B",
-  "C",
-  "D",
-  "E",
-  "F",
-  "G",
-  "H",
-  "I",
-  "J",
-  "K",
-  "L",
-  "M",
-  "N",
-  "O",
-  "P",
-  "Q",
-  "R",
-  "S",
-  "T",
-  "U",
-  "V",
-  "W",
-  "X",
-  "Y",
-  "Z",
-];
+const Alphabet = Array.from(Array(26))
+  .map((e, i) => i + 65)
+  .map((x) => String.fromCharCode(x));
 
 interface ButtonListProps {
   handleSetVideo: (index: number) => void;
   isAlphabetLearningPage: boolean;
+  wordList?: string[];
+  handleSetCurSelectedButton: (data: curSelectedButtonProps) => void;
 }
 
 const ButtonList = ({
   handleSetVideo,
   isAlphabetLearningPage,
+  wordList,
+  handleSetCurSelectedButton,
 }: ButtonListProps) => {
   const [curIndex, setIcurIndex] = useState(0);
   return (
     <Container>
-      {isAlphabetLearningPage ? (
-        Alphabet.map((alpha: string, index: number) => {
-          return (
-            <Button
-              key={`${alpha} ${index}`}
-              onClick={() => {
-                handleSetVideo(index);
-                setIcurIndex(index);
-              }}
-              className={curIndex === index ? "target" : "non-target"}
-            >
-              {alpha}
-            </Button>
-          );
-        })
-      ) : (
-        <></>
-      )}
+      {isAlphabetLearningPage
+        ? Alphabet.map((alpha: string, index: number) => {
+            return (
+              <Button
+                key={`${alpha} ${index}`}
+                onClick={() => {
+                  handleSetVideo(index);
+                  setIcurIndex(index);
+                  handleSetCurSelectedButton({
+                    word: alpha,
+                    index,
+                  });
+                }}
+                className={curIndex === index ? "target" : "non-target"}
+              >
+                {alpha}
+              </Button>
+            );
+          })
+        : wordList?.map((word: string, index: number) => {
+            return (
+              <WordButton
+                key={`${word} ${index}`}
+                onClick={() => {
+                  handleSetVideo(index);
+                  setIcurIndex(index);
+                  handleSetCurSelectedButton({
+                    word,
+                    index,
+                  });
+                }}
+                className={curIndex === index ? "target" : "non-target"}
+              >
+                {word}
+              </WordButton>
+            );
+          })}
       <BlankButton />
       <BlankButton />
     </Container>

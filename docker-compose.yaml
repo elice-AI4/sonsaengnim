@@ -1,0 +1,21 @@
+version: "3.3"
+services:
+  backend_server:
+    restart: "on-failure"
+    build:
+      context: "./back"
+      dockerfile: Dockerfile
+    container_name: "server-sonsangnim"
+    ports:
+      - 5000:5000
+
+  ai_server:
+    restart: "on-failure"
+    build:
+      context: "./AI"
+      dockerfile: Dockerfile
+    container_name: "ai-sonsangnim"
+    ports:
+      - 5005:5005
+    links:
+      - backend_server

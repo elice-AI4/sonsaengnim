@@ -3,11 +3,32 @@ import { MongoUserModel } from "../db";
 import bcrypt from "bcrypt";
 import issueJwtToken from "../utils/issueJwtToken";
 import hashPassword from "../utils/hashPassword";
-export default class UserService {
+import { tokenReissue } from "../utils/tokenReissue";
+
+export class UserService {
   // eslint-disable-next-line no-unused-vars
   constructor(private userModel: MongoUserModel) {}
 
-  async login(email: string, password: string) {
+  public async studyList(userId) {
+    const studyList = await this.userModel.studyList(userId);
+    let point: number = 0;
+    studyList.study.forEach(item => {
+      point += item.length > 1 ? 20 : 10;
+    });
+    return { studyList, point };
+  }
+
+  public async study(userId, word) {
+    const study = await this.userModel.study(userId, word);
+    return study;
+  }
+  // token 다시 받기
+  public async getToken(token: string) {
+    const accessToken = tokenReissue(token);
+    return accessToken;
+  }
+
+  public async login(email: string, password: string) {
     try {
       const user = await this.userModel.findByEmail(email);
 
@@ -28,7 +49,7 @@ export default class UserService {
     }
   }
 
-  async updateUser(userId: string, email?: string, username?: string) {
+  public async updateUser(userId: string, email?: string, username?: string) {
     let user = await this.userModel.findById(userId);
 
     const filter = { _id: userId };
@@ -39,7 +60,7 @@ export default class UserService {
     return updatedUser;
   }
 
-  async changePassword(userId: string, password: string) {
+  public async changePassword(userId: string, password: string) {
     let user = await this.userModel.findById(userId);
     const hashedPassword = await hashPassword(password);
 
@@ -50,7 +71,12 @@ export default class UserService {
     return updatedUser;
   }
 
-  async deleteUser(userId: string) {
+  public async addScore(userId: string, score: number, time: number) {
+    const user = await this.userModel.pushScore(userId, score, time);
+    return user;
+  }
+
+  public async deleteUser(userId: string) {
     const deletedUser = await this.userModel.deleteUser(userId);
     return { deletedUser, status: "succ" };
   }

@@ -6,12 +6,15 @@ info:
 host: "localhost:5000"
 basePath: "/"
 tags:
-  - name: Sign Language
-    description: "Sing Language in Alphabets"
   - name: Register User
     description: "Registering User"
-  - name: Login User
-    description: "Login User"
+  - name: User
+    description: "User API"
+  - name: Sign Language
+    description: "American Sing Language API"
+  - name: Score Board
+    description: "Top ten scores"
+
 schemes:
   - "http"
 
@@ -42,7 +45,7 @@ paths:
   /user:
     post:
       tags:
-        - Login User
+        - User
       summary: "Login User"
       description: ""
       consumes:
@@ -54,42 +57,18 @@ paths:
       parameters:
         - in: "body"
           name: "body"
-          description: "Register User"
+          description: "Login User"
           required: true
           schema:
             $ref: "#/definitions/User"
+
       responses:
         "405":
           description: "Invalid input"
     put:
       tags:
-        - Login User
-      summary: "Login User"
-      description: ""
-      consumes:
-        - "application/json"
-        - "application/xml"
-      produces:
-        - "application/xml"
-        - "application/json"
-      parameters:
-        - name: authorization
-          in: header
-          type: string
-          required: true
-        - in: "body"
-          name: "body"
-          description: "Register User"
-          required: true
-          schema:
-            $ref: "#/definitions/User"
-      responses:
-        "405":
-          description: "Invalid input"
-    patch:
-      tags:
-        - Login User
-      summary: "Login User"
+        - User
+      summary: "modify User information"
       description: ""
       consumes:
         - "application/json"
@@ -113,8 +92,8 @@ paths:
           description: "Invalid input"
     delete:
       tags:
-        - Login User
-      summary: "Login User"
+        - User
+      summary: "Delete User"
       description: ""
       consumes:
         - "application/json"
@@ -132,6 +111,82 @@ paths:
       responses:
         "405":
           description: "Invalid input"
+
+  /user/password:
+    put:
+      tags:
+        - User
+      summary: "user password modify"
+      description: ""
+      consumes:
+        - "application/json"
+        - "application/xml"
+      produces:
+        - "application/xml"
+        - "application/json"
+      parameters:
+        - name: authorization
+          in: header
+          type: string
+          required: true
+        - in: "body"
+          name: "body"
+          description: "Register User"
+          required: true
+          schema:
+            $ref: "#/definitions/User"
+      responses:
+        "405":
+          description: "Invalid input"
+
+  /user/jwt/{token}:
+    get:
+      tags:
+        - User
+      description: "reissue jwt token"
+      parameters:
+        - in: path
+          name: token
+          schema:
+            type: string
+          required: true
+          description: get token
+      responses:
+        "200":
+          description: Return JSON
+  /user/studylist:
+    get:
+      tags:
+        - User
+      description: "user studylist return"
+      parameters:
+        - name: authorization
+          in: header
+          type: string
+          required: true
+      responses:
+        "200":
+          description: Return JSON
+
+  /user/study/{word}:
+    post:
+      tags:
+        - User
+      description: "user Study record"
+      parameters:
+        - in: path
+          name: word
+          schema:
+            type: string
+          required: true
+          description: get word
+        - name: authorization
+          in: header
+          type: string
+          required: true
+      responses:
+        "200":
+          description: Return JSON
 
   /hands:
     post:
@@ -157,7 +212,7 @@ paths:
     get:
       tags:
         - Sign Language
-      description: "getting all alphabet dataset"
+      description: "getting all english dataset"
       consumes:
         - "application/json"
       produces:
@@ -166,22 +221,79 @@ paths:
         "200":
           description: Return JSON
 
-  /hands/{alphabet}:
+  /hands/{english}:
     get:
       tags:
         - Sign Language
-      description: "getting all alphabet dataset"
+      description: "getting all english dataset"
       consumes:
         - "applicaion/json"
       produces:
         - "applicaion/json"
       parameters:
         - in: path
-          name: alphabet
+          name: english
           schema:
             type: string
           required: true
-          description: alphabet string
+          description: english string
+      responses:
+        "200":
+          description: Return JSON
+
+  /scores/login:
+    post:
+      tags:
+        - Score Board
+      description: "login user putting score"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - name: authorization
+          in: header
+          type: string
+          required: true
+        - in: "body"
+          name: "body"
+          description: "Register score data"
+          required: true
+          schema:
+            $ref: "#/definitions/Score"
+      responses:
+        "201":
+          description: "POST Successful."
+        "405":
+          description: "Invalid input"
+
+  /scores/nologin:
+    post:
+      tags:
+        - Score Board
+      description: "Nonlogin user putting score"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Register score data"
+          required: true
+          schema:
+            $ref: "#/definitions/NonloginUserScore"
+      responses:
+        "201":
+          description: "POST Successful."
+        "405":
+          description: "Invalid input"
+
+  /scores/topten:
+    get:
+      tags:
+        - Score Board
+      description: "Get Top ten scores"
       responses:
         "200":
           description: Return JSON
@@ -214,7 +326,7 @@ definitions:
   Hand:
     type: object
     properties:
-      alphabet:
+      english:
         type: string
         example: "test"
       handImage:
@@ -222,10 +334,28 @@ definitions:
         example: "test hand image"
       mouthImage:
         type: string
-        example: "test mouth image"
-      video:
+        example: "test mouth video"
+  Score:
+    type: object
+    properties:
+      score:
+        type: number
+        example: 50
+      time:
+        type: number
+        example: 300
+  NonloginUserScore:
+    type: object
+    properties:
+      username:
         type: string
-        example: "test video"
+        example: "noname"
+      score:
+        type: number
+        example: 80
+      time:
+        type: number
+        example: 300
 
 externalDocs:
   description: "Find out more about Swagger"

@@ -14,6 +14,9 @@ import { useAtom } from "jotai";
 import { reg, userAtom, loginAtom } from "../../../state";
 import * as Api from "../../../api";
 
+import Footer from "../../Footer";
+import { loginCopyRights } from "../../copyRights/copyRights";
+
 interface UserLogin {
   email: string;
   password: string;
@@ -26,7 +29,7 @@ interface LoginValid {
 
 function Login() {
   const navigate = useNavigate();
-  const [, setUser] = useAtom(userAtom);
+  const [user, setUser] = useAtom(userAtom);
   const [, setLogin] = useAtom(loginAtom);
 
   const [loginInfo, setLoginInfo] = useState<UserLogin>({
@@ -40,7 +43,6 @@ function Login() {
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const res = await Api.post("user", loginInfo);
-    console.log(res.data);
     setUser({
       email: res.data.user.email,
       username: res.data.user.username,
@@ -127,6 +129,10 @@ function Login() {
           </LoginForm>
         </LoginBackground>
       </LoginPage>
+      <Footer
+        aLinks={loginCopyRights.aLinks}
+        contents={loginCopyRights.contents}
+      />
     </>
   );
 }

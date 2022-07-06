@@ -12,6 +12,8 @@ import { reg } from "../../../state";
 import { useNavigate } from "react-router-dom";
 import * as Api from "../../../api";
 
+import Footer from "../../Footer";
+import { registerCopyRights } from "../../copyRights/copyRights";
 interface UserRegister {
   email: string;
   password: string;
@@ -38,7 +40,6 @@ function Register() {
   const handleRegister = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const res = await Api.post("register", registerInfo);
-    console.log(res);
     setRegisterInfo({
       email: "",
       password: "",
@@ -78,7 +79,7 @@ function Register() {
     if (registerInfo.password != "") {
       setValid({
         ...valid,
-        pwValid: registerInfo.password.length >= 4 ? true : false,
+        pwValid: registerInfo.password.length >= 8 ? true : false,
       });
     } else {
       setValid({
@@ -116,7 +117,7 @@ function Register() {
             />
           </InputBox>
           {!valid.pwValid && (
-            <ValidWord>비밀번호 4글자 이상 필요합니다.</ValidWord>
+            <ValidWord>비밀번호 8글자 이상 필요합니다.</ValidWord>
           )}
           <InputBox>
             <RegisterText>이름</RegisterText>
@@ -135,6 +136,10 @@ function Register() {
           ></RegisterButton>
         </RegisterForm>
       </RegisterBackground>
+      <Footer
+        aLinks={registerCopyRights.aLinks}
+        contents={registerCopyRights.contents}
+      />
     </>
   );
 }

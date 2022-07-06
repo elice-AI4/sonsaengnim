@@ -26,4 +26,10 @@ export const ROUTE = {
   REGISTER: {
     link: "register",
   },
+  RANK: {
+    link: "rank",
+  },
+  SEARCH: {
+    link: "search"
+  }
 };

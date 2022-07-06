@@ -1,8 +1,17 @@
 import React, { useState, useRef, useEffect } from "react";
+import { TimerBox } from "./index.style";
+import { useAtom } from "jotai";
+import { saveTimeAtom } from "../../state";
 
-function Timer() {
+interface TimerPorps {
+  finish: boolean;
+  handleTimeOver: () => void;
+}
+
+function Timer({ finish, handleTimeOver }: TimerPorps) {
   const [min, setMin] = useState(10);
   const [sec, setSec] = useState(0);
+  const [saveTime, setSaveTime] = useAtom(saveTimeAtom);
   const time = useRef(600);
   const timerId: { current: any } = useRef(null);
 
@@ -18,19 +27,23 @@ function Timer() {
   useEffect(() => {
     // 만약 타임 아웃이 발생했을 경우
     if (time.current <= 0) {
-      console.log("타임 아웃");
+      setSaveTime(600);
+      handleTimeOver();
       clearInterval(timerId.current);
       // dispatch event
+    } else if (finish === true) {
+      setSaveTime(600 - time.current);
+      clearInterval(timerId.current);
     }
   }, [sec]);
   return (
     <>
       {time.current <= 0 ? (
-        <h4>시간이 초과되었습니다.</h4>
+        <TimerBox>시간이 초과되었습니다.</TimerBox>
       ) : (
-        <div className="timer">
-          {min} : {sec}
-        </div>
+        <TimerBox>
+          남은 시간 {min} : {sec}
+        </TimerBox>
       )}
     </>
   );

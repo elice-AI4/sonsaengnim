@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React from "react";
 import {
   ButtonLink,
   CardContainer,
@@ -10,9 +10,11 @@ import {
 import CardTemplate from "./CardTemplate";
 import { ReactComponent as Underline } from "../../../../src_assets/Underline.svg";
 import { InputContainer } from "../Word/index.style";
-import { motion } from "framer-motion";
 import { useLocation } from "react-router";
 import { ROUTE } from "../../../route/route";
+import Footer from "../../../Footer";
+import { learningTemplatecopyRights } from "../../../copyRights/copyRights";
+import ReactTooltip from "react-tooltip";
 
 interface LearningTemplateProps {
   imgs: {
@@ -25,9 +27,6 @@ interface LearningTemplateProps {
 
 const LearningTemplate = ({ imgs, title, children }: LearningTemplateProps) => {
   const { pathname } = useLocation();
-
-  console.log(pathname);
-
   return (
     <TemplateContainer>
       <ContentContainer>
@@ -36,6 +35,22 @@ const LearningTemplate = ({ imgs, title, children }: LearningTemplateProps) => {
           <Underline />
           {children && <InputContainer>{children}</InputContainer>}
         </DescriptionContainer>
+        <ButtonLink
+          to={`${pathname}/${ROUTE.GAME.link}/${ROUTE.PLAY.link}`}
+          data-tip="learningTemplate-follow"
+          data-for="learningTemplate-follow"
+        >
+          따라해 보기
+          <ReactTooltip id="learningTemplate-follow">
+            <video autoPlay width="400" muted loop>
+              <source
+                src="http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20200811/727699/MOV000240877_700X466.mp4"
+                type="video/mp4"
+              />
+            </video>
+            <p style={{ textAlign: "right" }}>출처: 국립국어원</p>
+          </ReactTooltip>
+        </ButtonLink>
         <CardContainer>
           {imgs.map((img, index) => {
             return (
@@ -48,7 +63,11 @@ const LearningTemplate = ({ imgs, title, children }: LearningTemplateProps) => {
           <CardTemplate src="" alt="" />
           <CardTemplate src="" alt="" />
         </CardContainer>
-          <ButtonLink to={`${pathname}/${ROUTE.GAME.link}/${ROUTE.PLAY.link}` }>따라해보기</ButtonLink>
+
+        <Footer
+          aLinks={learningTemplatecopyRights.aLinks}
+          contents={learningTemplatecopyRights.contents}
+        />
       </ContentContainer>
     </TemplateContainer>
   );

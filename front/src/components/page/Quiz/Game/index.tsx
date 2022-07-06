@@ -1,176 +1,279 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import {
   ProblemBox,
   ProblemImg,
   AnswerBox,
   QuizBox,
-  ButtonBox,
-  AnswerImg,
+  TimerStartButton,
+  StartButton,
+  StartTriangle,
 } from "./index.style";
+import SolveModal from "./SolveModal";
+import RecordModal from "./RecordModal";
+import MediaPipeWebCam from "../../../MediaPipeWebCam";
+import Timer from "../../../Timer";
+import Loading from "../../../Loading";
+import ReactTooltip from "react-tooltip";
+import * as Api from "../../../../api";
 import Modal from "../../Modal";
-import { io, Socket } from "socket.io-client";
-import MediaPipeWebCam from "./../../../MediaPipeWebCam";
+import ai_loading from "../../../../src_assets/modal/ai_loading.jpg";
+import grading from "../../../../src_assets/modal/grading.jpg";
 
-const MAX_COUNT = 10;
-interface TestData {
-  x: number;
-  y: number;
-  z: number;
-  visibility: undefined;
+import Footer from "../../../Footer";
+import { quizBackgroundCopyRights } from "../../../copyRights/copyRights";
+import { saveTimeAtom } from "../../../../state";
+import { useAtom } from "jotai";
+import { useNavigate } from "react-router-dom";
+
+export const MAX_COUNT = 10;
+
+export interface Score {
+  ans: number;
+  cur: number;
 }
 
-interface ServerToClientData {
-  data: number;
+interface Word {
+  word: string;
+  wordImageURL: string;
 }
-
-interface ServerToClientEvents {
-  answer: (data: ServerToClientData) => void;
-}
-interface ClientToServerEvents {
-  coordinate: (hands: { testData: TestData[] }) => void;
-}
-
-const testData: TestData[] = [
-  {
-    x: Math.random(),
-    y: Math.random(),
-    z: Math.random(),
-    visibility: undefined,
-  },
-  {
-    x: Math.random(),
-    y: Math.random(),
-    z: Math.random(),
-    visibility: undefined,
-  },
-  {
-    x: Math.random(),
-    y: Math.random(),
-    z: Math.random(),
-    visibility: undefined,
-  },
-];
-const ModalStyle = {
-  width: "1000px",
-  height: "900px",
+const modalStyle = {
+  width: "800px",
+  height: "500px",
   display: "flex",
-  flexDirection: "column",
+  "flex-direction": "column",
+  justifyContent: "center",
   alignItems: "center",
+  borderRadius: "0",
 };
 
 function QuizGame() {
+  const navigate = useNavigate();
   const [modal, setModal] = useState<boolean>(false);
+  const [rank, setRank] = useState<boolean>(false);
   const [answer, setAnswer] = useState<boolean>(false);
-  const [score, setScore] = useState<number>(0);
+  const [score, setScore] = useState<Score>({ ans: 0, cur: 0 });
+  const [finish, setFinish] = useState<boolean>(false);
   const [timer, setTimer] = useState<boolean>(false);
-  const [quizNumber, setQuizNumber] = useState<number>(
-    Math.floor(Math.random() * 10) + 1
-  );
-
+  const [quiz, setQuiz] = useState<Word[]>([]);
+  const [quizNumber, setQuizNumber] = useState<number>(0);
+  const [isLoading, setIsLoading] = useState(true);
+  const [problem, setProblem] = useState<Word>({ word: "", wordImageURL: "" });
+  const [timeOver, setTimeOver] = useState<boolean>(false);
   const [cameraOn, setCameraOn] = useState(false);
+  const [problemCount, setProblemCount] = useState<number>(0);
+  const [one, setOne] = useState<boolean>(true);
+  const [isModalOpen, setIsModalOpen] = useState({
+    loadingModal: false,
+    waitingAnswerModal: false,
+    correctModal: false,
+    wrongModal: false,
+  });
+  const lazyStartTimerId: { current: any } = useRef(null);
 
-  const [socket, setSocket] =
-    useState<Socket<ServerToClientEvents, ClientToServerEvents>>();
+  const handleInitial = () => {
+    setScore({ ans: 0, cur: 0 });
+    setModal(false);
+    setRank(false);
+    setFinish(false);
+    setTimer(false);
+  };
+  const openModal = () => {
+    setIsModalOpen((cur) => {
+      return {
+        ...cur,
+        waitingAnswerModal: true,
+      };
+    });
+  };
+  const handleClickButton = () => {
+    setIsModalOpen((cur) => {
+      return {
+        ...cur,
+        loadingModal: true,
+      };
+    });
+
+    lazyStartTimerId.current = setTimeout(() => {
+      setCameraOn(true);
+      setIsModalOpen((cur) => {
+        return {
+          ...cur,
+          loadingModal: false,
+        };
+      });
+    }, 2000);
+  };
 
   const closeModal = () => {
     setModal(false);
+    navigate("/");
   };
-
   const nextQuiz = () => {
-    setQuizNumber(Math.floor(Math.random() * 10) + 1);
+    if (quizNumber === undefined) return;
+    setQuizNumber(Math.floor(Math.random() * problemCount));
+    setOne(true);
     setModal(false);
   };
 
-  const [socketAnswer, setSocketAnswer] = useState<ServerToClientData>();
-
+  const [socketAnswer, setSocketAnswer] = useState<string[]>();
+  const handleSetSocketAnswer = (answer: string[]) => {
+    setSocketAnswer(answer);
+  };
   useEffect(() => {
-    setSocket(io("http://localhost:5000"));
-    // const socket: Socket<ServerToClientEvents, ClientToServerEvents> =
-
-    return () => {
-      socket?.disconnect();
-    };
+    Api.get("quiz").then((res) => {
+      setQuiz(res.data);
+      setProblemCount(res.data.length);
+      setQuizNumber(Math.floor(Math.random() * problemCount));
+    });
   }, []);
 
-  useEffect(() => {
-    if (socket) {
-      const func = (data: ServerToClientData) => {
-        setSocketAnswer(data);
-      };
-      socket.on("answer", func);
+  const handleTimeOver = () => {
+    setModal(true);
+    setAnswer(false);
+    setFinish(true);
+    setTimeOver(true);
+  };
 
-      return () => {
-        socket.off("answer", func);
-      };
+  useEffect(() => {
+    nextQuiz();
+    setProblem(quiz[quizNumber]);
+  }, [quiz]);
+
+  useEffect(() => {
+    if (!quiz[quizNumber]?.word || !quiz[quizNumber]?.wordImageURL) {
+      return;
     }
-  }, [socket]);
+    setProblem(quiz[quizNumber]);
+  }, [quizNumber]);
+  useEffect(() => {
+    if (socketAnswer === undefined || socketAnswer.length === 0 || timeOver) {
+      return;
+    }
+    if (one) {
+      if (socketAnswer.includes(problem.word)) {
+        setOne(false);
+        console.log("정답");
+        setAnswer(true);
+        setScore((cur): Score => {
+          const newScore: Score = { ...cur };
+          newScore["ans"] += 1;
+          newScore["cur"] += 1;
+          return newScore;
+        });
+        setModal(true);
+        setSocketAnswer(undefined);
+      } else {
+        setOne(false);
+        console.log("오답");
+        setAnswer(false);
+        setScore((cur): Score => {
+          const newScore: Score = { ...cur };
+          newScore["cur"] += 1;
+          return newScore;
+        });
+        setModal(true);
+        setSocketAnswer(undefined);
+      }
+    }
+    setIsModalOpen((cur) => {
+      return {
+        ...cur,
+        waitingAnswerModal: false,
+      };
+    });
+  }, [socketAnswer]);
+
+  const isCameraSettingOn = () => {
+    if (isLoading === false) {
+      return;
+    }
+    setIsLoading(false);
+  };
+  const handleOffMediapipe = () => {
+    setCameraOn(false);
+  };
+
+  useEffect(() => {
+    if (score.cur === MAX_COUNT) {
+      setFinish(true);
+    }
+  });
+
+  const MoveRecord = () => {
+    setModal(false);
+    setRank(true);
+  };
 
   return (
-    <ProblemBox>
-      <Modal
-        visible={modal}
-        closeModal={closeModal}
-        style={ModalStyle as React.CSSProperties}
-      >
-        {answer ? (
-          <>
-            <h1>정답입니다!!!</h1>
-            <AnswerImg
-              src={`${process.env.PUBLIC_URL}/quizgamepic/answer.png`}
-            ></AnswerImg>
-          </>
-        ) : (
-          <>
-            <h1>틀렸네?~~</h1>
-            <AnswerImg
-              src={`${process.env.PUBLIC_URL}/quizgamepic/wrong.jpg`}
-            ></AnswerImg>
-          </>
-        )}
-        <h1>{`${score}/10`}</h1>
-        <div>
-          <button onClick={nextQuiz}>다음 문제 풀기</button>
-          <button onClick={closeModal}>포.기.하.기</button>
-        </div>
+    <>
+      {isLoading && <Loading />}
+      <Modal visible={isModalOpen.loadingModal} style={modalStyle}>
+        <img src={ai_loading} alt="ai가 켜지길 기다리는중" />
       </Modal>
-      <QuizBox>
-        <ProblemImg
-          src={`${process.env.PUBLIC_URL}/quizgamepic/p${quizNumber}.jpg`}
-        ></ProblemImg>
-        <AnswerBox>
-          <MediaPipeWebCam cameraOn={cameraOn} />
-        </AnswerBox>
-      </QuizBox>
-      <ButtonBox>
-        <button
-          onClick={() => {
-            setCameraOn(() => !cameraOn);
-          }}
-        >
-          문제풀기
-        </button>
-        <button
-          onClick={() => {
-            setModal(true);
-            setAnswer(true);
-          }}
-        >
-          정답
-        </button>
-        <button
-          onClick={() => {
-            setModal(true);
-            setAnswer(false);
-          }}
-        >
-          오답
-        </button>
-        <button onClick={() => socket?.emit("coordinate", { testData })}>
-          목업데이터 보내보기
-        </button>
-        <h1>{socketAnswer && socketAnswer.data}</h1>
-      </ButtonBox>
-    </ProblemBox>
+      <Modal visible={isModalOpen.waitingAnswerModal} style={modalStyle}>
+        {!socketAnswer && <img src={grading} alt="채점중인 로봇" />}
+      </Modal>
+      <ProblemBox
+        quizBackImg={`${process.env.PUBLIC_URL}/quizgamepic/quizback3.jpg`}
+      >
+        <RecordModal
+          rank={rank}
+          score={score}
+          handleInitial={handleInitial}
+        ></RecordModal>
+        <SolveModal
+          modal={modal}
+          closeModal={closeModal}
+          answer={answer}
+          finish={finish}
+          score={score}
+          nextQuiz={nextQuiz}
+          MoveRecord={MoveRecord}
+          timeOver={timeOver}
+        ></SolveModal>
+        {timer ? (
+          <Timer finish={finish} handleTimeOver={handleTimeOver}></Timer>
+        ) : (
+          <TimerStartButton
+            onClick={() => setTimer(true)}
+            data-tip="quiz-game"
+            data-for="quiz-game"
+          >
+            게임 시작
+            <ReactTooltip id="quiz-game" place="bottom">
+              <video autoPlay width="300" muted loop>
+                <source
+                  src="http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20191101/633265/MOV000256711_700X466.mp4"
+                  type="video/mp4"
+                />
+              </video>
+              <p style={{ textAlign: "right" }}>출처: 국립국어원</p>
+            </ReactTooltip>
+          </TimerStartButton>
+        )}
+        <QuizBox>
+          <ProblemImg src={problem?.wordImageURL}></ProblemImg>
+          <AnswerBox>
+            <MediaPipeWebCam
+              cameraOn={cameraOn}
+              handleOffMediapipe={handleOffMediapipe}
+              isCameraSettingOn={isCameraSettingOn}
+              handleSetSocketAnswer={handleSetSocketAnswer}
+              openModal={openModal}
+            />
+            {timer && (
+              <StartButton onClick={handleClickButton} cameraOn={cameraOn}>
+                <StartTriangle cameraOn={cameraOn} />
+              </StartButton>
+            )}
+          </AnswerBox>
+        </QuizBox>
+      </ProblemBox>
+      <Footer
+        aLinks={quizBackgroundCopyRights.aLinks}
+        contents={quizBackgroundCopyRights.contents}
+      />
+    </>
   );
 }
 

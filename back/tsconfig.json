@@ -3,7 +3,7 @@
     "outDir": "dist" /* 출력될 디렉토리 설정 */,
     "target": "es2017",
     "noImplicitAny": false /* 명시적이지 않은 'any' 유형으로 표현식 및 선언 사용 시 오류 발생 */,
-    "module": "commonjs",
+    "module": "CommonJS",
     /* 생성될 모듈 코드 설정: 'none', 'commonjs', 'amd', 'system', 'umd', 'es2015', 'es2020', or 'ESNext'. */
     "sourceMap": true /* 소스맵 '.map' 파일 생성 설정 */,
     "noUnusedLocals": true /* 사용되지 않은 로컬이 있을 경우, 오류로 보고 */,
