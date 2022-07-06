@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import styled, { css, keyframes } from "styled-components";
+import styled, { css } from "styled-components";
 import backgroundImg from "../../../../src_assets/learning/play/playPage.png";
 
 export const GameContainer = styled.div`
@@ -202,7 +202,7 @@ export const Explain = styled.h1`
     return css`
       color: ${theme.learning.play.darkBlue};
       text-align: center;
-      font-size: 3rem;
+      font-size: 2.5rem;
       font-weight: 700;
     `;
   }}

@@ -39,8 +39,7 @@ function RecordModal({ rank, score, handleInitial }: RecordProps) {
   const handleRecord: React.FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
     const data = { username: rankName, score: score.ans * 10, time: saveTime };
-    const res = await Api.post("scores/nologin", data);
-    console.log(res);
+    await Api.post("scores/nologin", data);
     navigate("/rank");
 
     // handleInitial();

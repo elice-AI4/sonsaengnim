@@ -27,7 +27,6 @@ function Timer({ finish, handleTimeOver }: TimerPorps) {
   useEffect(() => {
     // 만약 타임 아웃이 발생했을 경우
     if (time.current <= 0) {
-      console.log("타임 아웃");
       setSaveTime(600);
       handleTimeOver();
       clearInterval(timerId.current);

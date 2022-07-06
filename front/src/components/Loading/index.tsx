@@ -1,6 +1,5 @@
 import React from "react";
 import { Img, StyledLoading } from "./index.style";
-import { motion } from "framer-motion";
 import Limg from "../../src_assets/alphabet/L.png";
 import Oimg from "../../src_assets/alphabet/O.png";
 import Aimg from "../../src_assets/alphabet/A.png";
@@ -20,7 +19,7 @@ const Loading = () => {
         <Img src={Nimg} />
         <Img src={Gimg} />
       </div>
-      <h1>카메라가 준비중이에요.</h1>
+      <h1>카메라가 준비 중이에요.</h1>
     </StyledLoading>
   );
 };

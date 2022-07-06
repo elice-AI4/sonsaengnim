@@ -43,7 +43,6 @@ function Login() {
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const res = await Api.post("user", loginInfo);
-    console.log(res.data);
     setUser({
       email: res.data.user.email,
       username: res.data.user.username,
@@ -51,7 +50,6 @@ function Login() {
       token: res.data.token,
     });
     setLogin(true);
-    console.log(user);
     sessionStorage.setItem("userToken", res.data.token);
     navigate("/");
   };

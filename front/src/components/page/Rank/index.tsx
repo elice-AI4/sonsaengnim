@@ -15,14 +15,7 @@ function Rank() {
   const [rankList, setRankList] = useState<Array<RankState>>([]);
   useEffect(() => {
     Api.get("scores/topten").then((res) => {
-      setRankList((): Array<RankState> => {
-        const newList = res.data;
-        for (let i = 0; i < res.data.length; i++) {
-          newList[i].username = newList[i].username.split("-")[0];
-        }
-        return newList;
-      });
-      console.log(rankList);
+      setRankList(res.data);
     });
   }, []);
 

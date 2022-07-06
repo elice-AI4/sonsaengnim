@@ -131,8 +131,6 @@ const LearningGame = () => {
   const checkAnswer = (answer: string[]) => {
     if (Array.isArray(answer)) {
       return answer.find((ans: string) => {
-        console.log("for 문 안에서 ", curSelectedButton.word);
-
         return ans === curSelectedButton.word.toLowerCase();
       });
     }
@@ -202,10 +200,6 @@ const LearningGame = () => {
   };
 
   useEffect(() => {
-    console.log("바뀐 버튼", curSelectedButton);
-  }, [curSelectedButton]);
-
-  useEffect(() => {
     try {
       const localIsAlphabet = pathname.includes("alphabet") === true;
       getVideos(localIsAlphabet);
@@ -242,10 +236,7 @@ const LearningGame = () => {
 
   useEffect(() => {
     if (isModalOpen.correctModal) {
-      if (isLogin)
-        Api.post(`user/study/` + curSelectedButton.word, {}).then((res) =>
-          console.log(res)
-        );
+      if (isLogin) Api.post(`user/study/` + curSelectedButton.word, {});
     }
   }, [isModalOpen.correctModal]);
 
@@ -507,6 +498,7 @@ const LearningGame = () => {
                 ) : (
                   <Explain>양손으로 학습해봐요.</Explain>
                 )}
+                <Explain>얼굴을 카메라 중앙에 맞추세요</Explain>
               </div>
               <HR />
             </TopContainer>

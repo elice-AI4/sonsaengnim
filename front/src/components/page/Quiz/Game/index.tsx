@@ -25,7 +25,7 @@ import { saveTimeAtom } from "../../../../state";
 import { useAtom } from "jotai";
 import { useNavigate } from "react-router-dom";
 
-export const MAX_COUNT = 2;
+export const MAX_COUNT = 10;
 
 export interface Score {
   ans: number;
@@ -60,7 +60,8 @@ function QuizGame() {
   const [problem, setProblem] = useState<Word>({ word: "", wordImageURL: "" });
   const [timeOver, setTimeOver] = useState<boolean>(false);
   const [cameraOn, setCameraOn] = useState(false);
-
+  const [problemCount, setProblemCount] = useState<number>(0);
+  const [one, setOne] = useState<boolean>(true);
   const [isModalOpen, setIsModalOpen] = useState({
     loadingModal: false,
     waitingAnswerModal: false,
@@ -109,7 +110,8 @@ function QuizGame() {
   };
   const nextQuiz = () => {
     if (quizNumber === undefined) return;
-    setQuizNumber(Math.floor(Math.random() * quizNumber));
+    setQuizNumber(Math.floor(Math.random() * problemCount));
+    setOne(true);
     setModal(false);
   };
 
@@ -120,7 +122,8 @@ function QuizGame() {
   useEffect(() => {
     Api.get("quiz").then((res) => {
       setQuiz(res.data);
-      setQuizNumber(res.data.length);
+      setProblemCount(res.data.length);
+      setQuizNumber(Math.floor(Math.random() * problemCount));
     });
   }, []);
 
@@ -146,25 +149,31 @@ function QuizGame() {
     if (socketAnswer === undefined || socketAnswer.length === 0 || timeOver) {
       return;
     }
-    if (socketAnswer.includes(problem.word)) {
-      console.log("정답");
-      setAnswer(true);
-      setScore((cur): Score => {
-        const newScore: Score = { ...cur };
-        newScore["ans"] += 1;
-        newScore["cur"] += 1;
-        return newScore;
-      });
-      setModal(true);
-    } else {
-      console.log("오답");
-      setModal(true);
-      setAnswer(false);
-      setScore((cur): Score => {
-        const newScore: Score = { ...cur };
-        newScore["cur"] += 1;
-        return newScore;
-      });
+    if (one) {
+      if (socketAnswer.includes(problem.word)) {
+        setOne(false);
+        console.log("정답");
+        setAnswer(true);
+        setScore((cur): Score => {
+          const newScore: Score = { ...cur };
+          newScore["ans"] += 1;
+          newScore["cur"] += 1;
+          return newScore;
+        });
+        setModal(true);
+        setSocketAnswer(undefined);
+      } else {
+        setOne(false);
+        console.log("오답");
+        setAnswer(false);
+        setScore((cur): Score => {
+          const newScore: Score = { ...cur };
+          newScore["cur"] += 1;
+          return newScore;
+        });
+        setModal(true);
+        setSocketAnswer(undefined);
+      }
     }
     setIsModalOpen((cur) => {
       return {
@@ -172,7 +181,6 @@ function QuizGame() {
         waitingAnswerModal: false,
       };
     });
-    setSocketAnswer(undefined);
   }, [socketAnswer]);
 
   const isCameraSettingOn = () => {

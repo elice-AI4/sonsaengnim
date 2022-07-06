@@ -1,14 +1,5 @@
-import styled, { css, keyframes } from "styled-components";
+import styled from "styled-components";
 import searchPage from "../../../src_assets/search/searchPage.jpg";
-
-const bounceImageWord = keyframes`
-    from {
-        transform: translateY(10px)
-    }
-    to {
-        transform: translateY(40px)
-    }
-`;
 
 export const LearningContainer = styled.div`
   position: relative;
@@ -22,37 +13,8 @@ export const LearningContainer = styled.div`
 
   display: flex;
   justify-content: center;
+  align-items: center;
   flex-direction: column;
-`;
-
-export const ContentsContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  &:nth-child(1) {
-    flex: 0.75;
-  }
-  &:nth-child(2) {
-    flex: 0.25;
-  }
-`;
-
-export const ButtonTitle = styled.h1`
-  ${({ theme }) => {
-    return css`
-      font-size: ${theme.learning.button.title};
-      @media (max-width: 1800px) {
-        font-size: ${theme.learning.button.mediumTitle};
-      }
-    `;
-  }}
-`;
-
-export const WordContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
 `;
 
 export const SearchBar = styled.input`
@@ -82,33 +44,37 @@ export const SearchButton = styled.button`
   border-radius: 10px;
 `;
 
-export const CardContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex: 0.5;
-  margin: auto;
-`;
-
 export const SearchContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  transform: translateY(10rem);
   flex: 0.3;
+  z-index: 2;
 `;
 
 export const ResultContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  flex: 0.7;
+  width: 100vw;
 `;
 
-export const VideoContainer = styled.div`
-  padding: 40px;
+export const CardContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  flex: 0.5;
+  flex: 0.4;
+  margin: 3rem;
+`;
+
+export const VideoContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 0.4;
+  margin: 3rem;
 `;
 
 export const H1 = styled.h1`

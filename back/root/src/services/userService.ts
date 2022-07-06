@@ -25,7 +25,6 @@ export class UserService {
   // token 다시 받기
   public async getToken(token: string) {
     const accessToken = tokenReissue(token);
-    console.log(accessToken);
     return accessToken;
   }
 

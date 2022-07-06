@@ -6,8 +6,6 @@ const Alphabet = Array.from(Array(26))
   .map((e, i) => i + 65)
   .map((x) => String.fromCharCode(x));
 
-console.log(Array(26));
-
 interface ButtonListProps {
   handleSetVideo: (index: number) => void;
   isAlphabetLearningPage: boolean;

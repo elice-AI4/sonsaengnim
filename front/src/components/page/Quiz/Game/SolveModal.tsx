@@ -53,7 +53,7 @@ function SolveModal({
           ></AnswerImg>
         </>
       )}
-      <h1>{`${score.ans}/${MAX_COUNT}`}</h1>
+      <h1>{`맞힌 개수 ${score.ans}/${MAX_COUNT}`}</h1>
       {finish ? (
         <div>
           <RankRegisterButton onClick={MoveRecord}>
