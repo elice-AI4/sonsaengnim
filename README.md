@@ -1,6 +1,6 @@
 # 영어 알파벳 수화 학습 사이트, 손생님🤙
 
-![android-chrome-512x512](/uploads/89ec7acee833e95b7b9995a407d1fc16/android-chrome-512x512.png)
+![바운스손생님](https://user-images.githubusercontent.com/92101831/177501364-48f3f720-466f-44f0-a1e2-20fdfa7d557e.gif)
 
 > 배포 도메인: http://kdt-ai4-team05.elicecoding.com/
 
@@ -86,7 +86,7 @@ Hand pose estimation을 통한 영어 알파벳 수화 학습 사이트
   - 제한 시간 동안 10개 문제
   - 맞힌 문제를 점수로 변환하여 순위표 등극
 
-![alphabet_word_hover](/uploads/3dd2b83c93a8bd9bf625f85a452bcff0/alphabet_word_hover.gif)
+![alphabet_word_hover](https://user-images.githubusercontent.com/92101831/177501548-6d575427-9dc6-4b1a-94ba-3d0458db4d76.gif)
 
 ### 2-2) 서브 기능
 
@@ -95,6 +95,8 @@ Hand pose estimation을 통한 영어 알파벳 수화 학습 사이트
   - 다양한 색감과 둥근 디자인으로 사용자 친화적인 UI 구성
   - 학습 직전 페이지, 학습 완료 모달창 등 애니메이션 효과 부여
   - 핵심 단어에 대한 수어를 확인할 수 있도록 tooltip 추가
+
+![card_flip](https://user-images.githubusercontent.com/92101831/177501597-5cf4d2ba-6de6-4e8c-a5b4-e5b61a8a7274.gif)
 
 ![tootip_hover](/uploads/7b221d1acfae0888933f4bf29f984494/tootip_hover.gif)
 
@@ -141,13 +143,13 @@ Hand pose estimation을 통한 영어 알파벳 수화 학습 사이트
 
 > mediapipe는 구글의 머신러닝 오픈소스 프레임워크로, face, hand, pose 등 여러 인식과 관련된 작업을 처리할 수 있습니다. 수화를 인식할 수 있는 서비스를 만들기 위해 손의 움직임을 탐지하는 부분은 mediapipe를 활용했습니다. 해당 움직임이 맞는 수화인지 인식하는 부분은 프로젝트 중 인공지능 모델로 구축하였습니다. <br> [참고]([google의 mediapipe](https://google.github.io/mediapipe/solutions/hands#python-solution-api) )
 
-![기술스택](/uploads/55d9dcdf6e0af57482ec0df24eda0f15/기술스택.png)
+![기술스택](https://user-images.githubusercontent.com/92101831/177501646-e277bca2-b803-4556-9cf4-3c2a4aba2d78.png)
 
 ## 4. 시스템 아키텍쳐
 
 ### 4-1) 개발 구조
 
-![image](/uploads/31770b539ae8ca2a115b33351b8bcaec/image.png)
+![서비스 구조도](https://user-images.githubusercontent.com/92101831/177500790-1a8f3580-940b-4d0a-9fcb-5c6ee38a8182.png)
 
 ## 5. 프로젝트 팀원 소개
 
@@ -164,8 +166,12 @@ Hand pose estimation을 통한 영어 알파벳 수화 학습 사이트
 
 ## 6. 데모
 
+### 메인 페이지
+![tootip_hover](https://user-images.githubusercontent.com/92101831/177502168-0355a36e-f897-408c-9803-18c169899ac4.gif)
+
+
 ### 학습 중 맞혔을 때
-![readme_demo_alpha_correct](/uploads/c4843bf0389dc1aead0914fa619bff21/readme_demo_alpha_correct.gif)
+![readme_demo_alpha_correct](https://user-images.githubusercontent.com/92101831/177502145-f45b1ec2-0ab2-488b-b9d3-1770e3129dd5.gif)
 
 ### 학습 중 틀렸을 때
-![readme_demo_alpha_incorrect](/uploads/a9ece6aca12a4b7516c9e47043815c2c/readme_demo_alpha_incorrect.gif)
+![readme_demo_alpha_incorrect](https://user-images.githubusercontent.com/92101831/177502162-a4f28130-cec6-4469-82d1-0a927e9e7fc2.gif)
