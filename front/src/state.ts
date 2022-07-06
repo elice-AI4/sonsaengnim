@@ -20,3 +20,4 @@ export const userAtom = atomWithStorage<User>("user", {
 
 export const loginAtom = atomWithStorage<boolean>("login", false);
 export const saveTimeAtom = atom(600);
+export const webcamExistAtom = atom(false);

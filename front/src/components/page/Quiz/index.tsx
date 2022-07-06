@@ -25,12 +25,16 @@ import imgY from "../../../src_assets/alphabet/Y.png";
 import { ROUTE } from "../../route/route";
 import Footer from "../../Footer";
 import { quizCopyRights } from "../../copyRights/copyRights";
+import { useAtom } from "jotai";
+import { webcamExistAtom } from "../../../state";
+import ReactTooltip from "react-tooltip";
 const imgSize = {
   width: "130px",
   height: "130px",
 };
 
 const Quiz = () => {
+  const [webcamExist] = useAtom(webcamExistAtom);
   const navigate = useNavigate();
   return (
     <QuizContainer>
@@ -79,8 +83,23 @@ const Quiz = () => {
         />
         <ButtonCotainer>
           <QuizImg src={imgQuiz} width="400px" height="120px" alt="quiz" />
-          <Button onClick={() => navigate(`${ROUTE.GAME.link}`)}>
+          <Button
+            onClick={() => {
+              if (webcamExist === true) {
+                navigate(`${ROUTE.GAME.link}`);
+              }
+            }}
+            data-tip="quiz-webcamExist"
+            data-for="quiz-webcamExist"
+          >
             퀴즈 맞추러 가기
+            {webcamExist === false && (
+              <>
+                <ReactTooltip id="quiz-webcamExist" place="bottom">
+                  <p>웹캠이 없습니다.</p>
+                </ReactTooltip>
+              </>
+            )}
           </Button>
         </ButtonCotainer>
       </ImageContainer>

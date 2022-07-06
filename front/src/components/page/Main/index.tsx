@@ -1,16 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   MainBackGround,
   ServiceBox,
   MoveButton,
   ServiceImg,
-  FooterBox,
 } from "./index.style";
 import StudyLogo from "./study.png";
 import GameLogo from "./game.png";
 import SearchLogo from "./search.png";
-import { useAtom } from "jotai";
-import { reg, userAtom } from "../../../state";
 import { useNavigate } from "react-router";
 import ReactTooltip from "react-tooltip";
 import Footer from "../../Footer";
@@ -19,15 +16,34 @@ import {
   foxCopyRights,
   earthwormCopyRights,
 } from "../../copyRights/copyRights";
+import { useAtom } from "jotai";
+import { webcamExistAtom } from "../../../state";
 
 function Main() {
-  const [user, setUser] = useAtom(userAtom);
   const navigate = useNavigate();
-
+  const [, setWebcamExist] = useAtom(webcamExistAtom);
   const handleClickButton = (path: string) => {
     navigate(path);
   };
 
+  useEffect(() => {
+    async function getMedia() {
+      let stream = null;
+
+      try {
+        stream = await navigator.mediaDevices.getUserMedia({ video: true });
+        console.log(stream);
+        if (stream !== null) {
+          setWebcamExist(true);
+        }
+        /* 스트림 사용 */
+      } catch (err) {
+        /* 오류 처리 */
+        setWebcamExist(false);
+      }
+    }
+    getMedia();
+  }, []);
   return (
     <>
       <MainBackGround>
@@ -36,7 +52,6 @@ function Main() {
             src={StudyLogo}
             style={{ paddingLeft: "65px" }}
           ></ServiceImg>
-          {/* <a href='https://kr.freepik.com/vectors/book'>Book 벡터는 pch.vector - kr.freepik.com가 제작함</a> */}
           <h2>알파벳 수어를 배우러 가볼까요?</h2>
           <MoveButton
             onClick={() => handleClickButton("learning")}
@@ -61,8 +76,7 @@ function Main() {
         </ServiceBox>
         <ServiceBox color={"#FFD700"}>
           <ServiceImg src={GameLogo}></ServiceImg>
-          {/* <a href='https://kr.freepik.com/vectors/wood'>Wood 벡터는 pch.vector - kr.freepik.com가 제작함</a> */}
-          <h2>공부한 내용을 확인해볼까요?</h2>
+          <h2>공부한 내용을 확인해 볼까요?</h2>
           <MoveButton
             onClick={() => handleClickButton("quiz")}
             data-tip="main-quiz"
@@ -86,8 +100,7 @@ function Main() {
         </ServiceBox>
         <ServiceBox color={"#6495ED"}>
           <ServiceImg src={SearchLogo}></ServiceImg>
-          {/* <a href='https://kr.freepik.com/vectors/school'>School 벡터는 pch.vector - kr.freepik.com가 제작함</a> */}
-          <h2>찾고싶은 내용이 있나요?</h2>
+          <h2>찾고 싶은 내용이 있나요?</h2>
           <MoveButton
             onClick={() => handleClickButton("search")}
             data-tip="main-search"
