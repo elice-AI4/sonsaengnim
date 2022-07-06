@@ -1,12 +1,12 @@
-import styled, { css } from "styled-components";
-import img from "./main_background.jpg";
+import styled from "styled-components";
 
 export const MainBackGround = styled.div`
   width: 100vw;
   min-width: 120rem;
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
   justify-content: center;
+  overflow: hidden;
 `;
 
 export const ServiceBox = styled.div`
@@ -16,7 +16,6 @@ export const ServiceBox = styled.div`
   justify-content: center;
   align-items: center;
 
-  /* height: 100%; */
   background-color: ${(props) => props.color};
 `;
 

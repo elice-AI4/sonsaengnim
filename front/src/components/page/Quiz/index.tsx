@@ -96,7 +96,7 @@ const Quiz = () => {
             {webcamExist === false && (
               <>
                 <ReactTooltip id="quiz-webcamExist" place="bottom">
-                  <p>웹캠이 없습니다.</p>
+                  <h2>웹캠이 없습니다.</h2>
                 </ReactTooltip>
               </>
             )}

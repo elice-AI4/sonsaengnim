@@ -135,11 +135,11 @@ function Register() {
             disabled={!(valid.idValid && valid.pwValid)}
           ></RegisterButton>
         </RegisterForm>
+        <Footer
+          aLinks={registerCopyRights.aLinks}
+          contents={registerCopyRights.contents}
+        />
       </RegisterBackground>
-      <Footer
-        aLinks={registerCopyRights.aLinks}
-        contents={registerCopyRights.contents}
-      />
     </>
   );
 }

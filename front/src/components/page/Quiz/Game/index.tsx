@@ -268,11 +268,11 @@ function QuizGame() {
             )}
           </AnswerBox>
         </QuizBox>
+        <Footer
+          aLinks={quizBackgroundCopyRights.aLinks}
+          contents={quizBackgroundCopyRights.contents}
+        />
       </ProblemBox>
-      <Footer
-        aLinks={quizBackgroundCopyRights.aLinks}
-        contents={quizBackgroundCopyRights.contents}
-      />
     </>
   );
 }
