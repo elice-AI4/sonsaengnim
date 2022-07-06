@@ -31,7 +31,8 @@
     "start": "tsc-watch --onSuccess \"node dist/index.js\"",
     "lint": "npx eslint root --ext .ts",
     "swagger": "cp -r ./build /back/dist",
-    "test": "yarn mocha root/__test__/**/*.ts --exit -r ts-node/register"
+    "test": "yarn mocha root/__test__/**/*.ts --exit -r ts-node/register",
+    "test2": "yarn mocha dist/__test__ --exit"
   },
   "devDependencies": {
     "@babel/core": "^7.18.5",
@@ -41,7 +42,6 @@
     "@types/chai": "^4.3.1",
     "@types/cors": "^2.8.12",
     "@types/express": "^4.17.13",
-    "@types/jest": "^28.1.1",
     "@types/jsonwebtoken": "^8.5.8",
     "@types/mocha": "^9.1.1",
     "@types/morgan": "^1.9.3",
@@ -50,16 +50,13 @@
     "@types/yamljs": "^0.2.31",
     "@typescript-eslint/eslint-plugin": "^5.27.1",
     "@typescript-eslint/parser": "^5.27.1",
-    "babel-jest": "^28.1.1",
     "chai": "^4.3.6",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-react": "^7.30.0",
     "express-validator": "^6.14.1",
-    "jest": "^28.1.1",
     "mocha": "^10.0.0",
     "morgan": "^1.10.0",
     "should": "^13.2.3",
-    "ts-jest": "^28.0.5",
     "ts-mocha": "^10.0.0"
   }
 }
