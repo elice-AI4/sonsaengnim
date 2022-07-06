@@ -498,7 +498,7 @@ const LearningGame = () => {
                 ) : (
                   <Explain>양손으로 학습해봐요.</Explain>
                 )}
-                <Explain>얼굴을 카메라 중앙에 맞추세요</Explain>
+                <Explain>얼굴을 카메라 중앙에 맞춰 주세요.</Explain>
               </div>
               <HR />
             </TopContainer>

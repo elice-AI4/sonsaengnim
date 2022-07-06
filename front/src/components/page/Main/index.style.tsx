@@ -2,22 +2,21 @@ import styled, { css } from "styled-components";
 import img from "./main_background.jpg";
 
 export const MainBackGround = styled.div`
-  width: 100%;
+  width: 100vw;
+  min-width: 120rem;
   height: 100vh;
   display: flex;
-  /* background-image: url(${img});
-  background-repeat: no-repeat;
-  background-size: cover; */
+  justify-content: center;
 `;
 
 export const ServiceBox = styled.div`
+  flex: 0.333333;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 
-  width: calc(100% / 3);
-  height: 100%;
+  /* height: 100%; */
   background-color: ${(props) => props.color};
 `;
 

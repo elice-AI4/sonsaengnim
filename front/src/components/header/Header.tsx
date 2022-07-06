@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import { ROUTE } from "../route/route";
+import hamburger from "../../src_assets/hamburger/hamburger.png";
+
 import {
   TitleContainer,
   List,
@@ -10,6 +12,7 @@ import {
   ThinLine,
   Offset,
   WelcomeBox,
+  Hamburder,
 } from "./Header.style";
 import title from "../../src_assets/navbar/title.png";
 import { useLocation } from "react-router";
@@ -25,6 +28,7 @@ const Header = () => {
     setLogin(false);
     setUser({ email: "", username: "", password: "", token: "" });
   };
+  const [fold, setFold] = useState(true);
   const checkPathname = (pathname: string) => {
     if (
       pathname === `/${ROUTE.LEARNING.link}/${ROUTE.ALPHABET.link}` ||
@@ -42,13 +46,20 @@ const Header = () => {
   return (
     <>
       <Navbar>
+        <Hamburder
+          src={hamburger}
+          alt="navber 접이 버튼"
+          onClick={() => {
+            setFold(!fold);
+          }}
+        />
         <TitleContainer>
           <HomeLink to="/">
             <img src={title} alt="title 손생님" width="180px" height="100%" />
           </HomeLink>
           {login && <WelcomeBox>{`${user.username}님 환영합니다!`}</WelcomeBox>}
         </TitleContainer>
-        <List>
+        <List fold={fold}>
           {!login && (
             <>
               <StyledLink
