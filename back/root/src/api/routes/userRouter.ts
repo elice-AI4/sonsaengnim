@@ -35,7 +35,7 @@ userRouter.get("/jwt/:token", async (req: Request, res: Response, next: NextFunc
   try {
     const token = req.params.token;
     const accessToken = await userService.getToken(token);
-    res.status(201).json({ message: "토큰을 재발급 하였습니다.", accessToken });
+    res.status(200).json({ message: "토큰을 재발급 하였습니다.", accessToken });
   } catch (error) {
     res.status(400);
     next(error);
