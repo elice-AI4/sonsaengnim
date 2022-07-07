@@ -66,17 +66,22 @@ userRouter.put("/", checkLogin, userValidateOptional, async (req: Request, res: 
   }
 });
 
-userRouter.patch("/", checkLogin, userValidateOptional, async (req: Request, res: Response, next: NextFunction) => {
-  try {
-    const { password } = req.body;
-    const userId = req.user;
+userRouter.put(
+  "/password",
+  checkLogin,
+  userValidateOptional,
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { password } = req.body;
+      const userId = req.user;
 
-    const updatedUser = await userService.changePassword(userId, password);
-    res.status(200).json(updatedUser);
-  } catch (error) {
-    next(error);
-  }
-});
+      const updatedUser = await userService.changePassword(userId, password);
+      res.status(200).json(updatedUser);
+    } catch (error) {
+      next(error);
+    }
+  },
+);
 
 userRouter.delete("/", checkLogin, async (req: Request, res: Response, next: NextFunction) => {
   try {
