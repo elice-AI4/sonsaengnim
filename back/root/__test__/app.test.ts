@@ -84,7 +84,7 @@ describe("integration test", () => {
           });
       });
 
-      it("email 형식 x+ 400error 반환", done => {
+      it("email 형식 x + 400error 반환", done => {
         const user = { email: "testst.com", password: "12341234" };
         request(app)
           .post("/user")
@@ -97,7 +97,7 @@ describe("integration test", () => {
           });
       });
 
-      it("비밀번호 틀림 +400 error 반환 ", done => {
+      it("비밀번호 틀림 + 400 error 반환 ", done => {
         const user = { email: "test@test.com", password: "12345678" };
         request(app)
           .post("/user")
@@ -201,6 +201,38 @@ describe("integration test", () => {
             res.body.should.be.instanceof(Object);
             done();
           });
+      });
+    });
+  });
+
+  describe("DELETE /user", () => {
+    let token;
+    beforeEach(done => {
+      const user = { email: "test1@test.com", password: "12345678" };
+      request(app)
+        .post("/user")
+        .send(user)
+        .end((err, res) => {
+          token = res.body.token;
+          done();
+        });
+    });
+
+    describe("성공 시", () => {
+      it("deleteUser has status property", done => {
+        request(app)
+          .delete("/user")
+          .set({ Authorization: `Bearer ${token}` })
+          .expect(200)
+          .end((err, res) => {
+            res.body.should.have.property("status", "succ");
+            done();
+          });
+      });
+    });
+    describe("실패 시", () => {
+      it("400 Error", done => {
+        request(app).delete("/user").expect(401).end(done);
       });
     });
   });
