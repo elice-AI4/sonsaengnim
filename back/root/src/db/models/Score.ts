@@ -16,11 +16,11 @@ export class MongoScoreModel implements IScoreModel {
   }
 
   public async getTopten() {
-    return await Score.aggregate([
+    let scores = await Score.aggregate([
       {
         $setWindowFields: {
-          partitionBy: "$state",
-          sortBy: { score: -1 },
+          partitionBy: "$score",
+          sortBy: { time: 1 },
           output: {
             rank: {
               $rank: {},
@@ -29,6 +29,33 @@ export class MongoScoreModel implements IScoreModel {
         },
       },
       { $sort: { score: -1, time: 1 } },
-    ]).limit(10);
+      { $limit: 10 },
+    ]);
+    // let add = 0;
+    // for (let i = 0; i < 9; i++) {
+    //   console.log(scores[i].score, scores[i].score);
+    //   if (scores[i].score >= scores[i + 1].score) {
+    //     console.log(i);
+    //     console.log(scores[i].rank, scores[i + 1].rank);
+    //     console.log("add: ", add);
+    //     scores[i + 1].rank += add;
+    //     add++;
+    //   } else {
+    //     add = 0;
+    //   }
+    // }
+    return scores;
+    // return await Score.aggregate([
+    //   { $sort: { score: -1, time: 1 } },
+    //   {
+    //     $group: {
+    //       _id: "$score",
+    //       items: { $push: "$$ROOT" },
+    //     },
+    //   },
+    //   { $unwind: { path: "$items", includeArrayIndex: "items.rank" } },
+    //   { $replaceRoot: { newRoot: "$items" } },
+    //   { $sort: { score: -1, time: 1 } },
+    // ]);
   }
 }
