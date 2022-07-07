@@ -1,5 +1,4 @@
 import Score from "../schemas/score";
-// import { MongoUserModel } from "./User";
 import { IScore, IScoreModel } from "../../models";
 
 export class MongoScoreModel implements IScoreModel {
