@@ -79,6 +79,7 @@ userRouter.put(
       const updatedUser = await userService.changePassword(userId, password);
       res.status(200).json(updatedUser);
     } catch (error) {
+      res.statusCode = 400;
       next(error);
     }
   },

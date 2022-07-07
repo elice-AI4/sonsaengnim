@@ -135,6 +135,7 @@ describe("integration test", () => {
           done();
         });
     });
+
     describe("변경 실패 시 ", () => {
       it("400Error", done => {
         const user = { email: "test" };
@@ -154,6 +155,47 @@ describe("integration test", () => {
           .put("/user")
           .set({ Authorization: `Bearer ${token}` })
           .send(user)
+          .expect(200)
+          .end((err, res) => {
+            res.body.should.be.instanceof(Object);
+            done();
+          });
+      });
+    });
+  });
+
+  describe("PUT /user/password", () => {
+    let token;
+    beforeEach(done => {
+      const user = { email: "test1@test.com", password: "12341234" };
+      request(app)
+        .post("/user")
+        .send(user)
+        .end((err, res) => {
+          token = res.body.token;
+          done();
+        });
+    });
+
+    describe("실패 시", () => {
+      it("400 error 반환", done => {
+        const updatePassword = { password: "1234" };
+        request(app)
+          .put("/user/password")
+          .set({ Authorization: `Bearer ${token}` })
+          .send(updatePassword)
+          .expect(400)
+          .end(done);
+      });
+    });
+
+    describe("성공 시 ", () => {
+      it("바뀐 비밀번호 user object + 200 반환", done => {
+        const updatePassword = { password: "12345678" };
+        request(app)
+          .put("/user/password")
+          .set({ Authorization: `Bearer ${token}` })
+          .send(updatePassword)
           .expect(200)
           .end((err, res) => {
             res.body.should.be.instanceof(Object);
