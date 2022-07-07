@@ -33,19 +33,23 @@ describe("integration test", () => {
     });
   });
 
-  describe("post /register", () => {
-    describe("GET /register", () => {
-      describe("성공 시", () => {
-        it("가입 유저 반환", done => {
-          const user = { email: "test@test.com", password: "12341234", username: "kim" };
-          request(app)
-            .post("/register")
-            .send(user)
-            .end((err, res) => {
-              res.body.should.be.instanceof(Object);
-              done();
-            });
-        });
+  describe("POST /register", () => {
+    describe("성공 시", () => {
+      it("가입 유저 반환", done => {
+        const user = { email: "test@test.com", password: "12341234", username: "kim" };
+        request(app)
+          .post("/register")
+          .send(user)
+          .end((err, res) => {
+            res.body.should.be.instanceof(Object);
+            done();
+          });
+      });
+    });
+    describe("실패 시", () => {
+      it("error code 400반환", done => {
+        const user = { email: "test@test.com", password: "12341234" };
+        request(app).post("/register").send(user).expect(400).end(done);
       });
     });
   });
