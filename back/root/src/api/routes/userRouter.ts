@@ -62,6 +62,7 @@ userRouter.put("/", checkLogin, userValidateOptional, async (req: Request, res: 
     const updatedUser = await userService.updateUser(userId, email, username);
     res.status(200).json(updatedUser);
   } catch (error) {
+    res.statusCode = 400;
     next(error);
   }
 });
