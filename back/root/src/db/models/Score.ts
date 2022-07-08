@@ -31,31 +31,18 @@ export class MongoScoreModel implements IScoreModel {
       { $sort: { score: -1, time: 1 } },
       { $limit: 10 },
     ]);
-    // let add = 0;
-    // for (let i = 0; i < 9; i++) {
-    //   console.log(scores[i].score, scores[i].score);
-    //   if (scores[i].score >= scores[i + 1].score) {
-    //     console.log(i);
-    //     console.log(scores[i].rank, scores[i + 1].rank);
-    //     console.log("add: ", add);
-    //     scores[i + 1].rank += add;
-    //     add++;
-    //   } else {
-    //     add = 0;
-    //   }
-    // }
+    let max = 0;
+    for (let i = 1; i < 10; i++) {
+      console.log("i: ", i);
+      if (scores[i - 1].score !== scores[i].score) {
+        console.log(scores[i].score, scores[i + 1].score);
+        max = scores[i - 1].rank;
+        console.log(max);
+      } else {
+        console.log("else: ", max);
+        scores[i - 1].rank += max;
+      }
+    }
     return scores;
-    // return await Score.aggregate([
-    //   { $sort: { score: -1, time: 1 } },
-    //   {
-    //     $group: {
-    //       _id: "$score",
-    //       items: { $push: "$$ROOT" },
-    //     },
-    //   },
-    //   { $unwind: { path: "$items", includeArrayIndex: "items.rank" } },
-    //   { $replaceRoot: { newRoot: "$items" } },
-    //   { $sort: { score: -1, time: 1 } },
-    // ]);
   }
 }
