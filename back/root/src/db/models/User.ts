@@ -13,19 +13,19 @@ export class MongoUserModel implements IUserModel {
         point = 1;
         user.point += point;
         user.save();
-        return { user, againedPoint: point };
+        return { user, point };
       } else {
         point = word.length === 1 ? 10 : 20;
         console.log(point);
         user.point += point;
         user.study.push(word);
         user.save();
-        return { user, againedPoint: point };
+        return { user, point };
       }
     } else if (!word) {
       user.point += point;
       user.save();
-      return { user, againedPoint: point };
+      return { user, point };
     }
   }
 

@@ -168,18 +168,22 @@ paths:
         "200":
           description: Return JSON
 
-  /user/study/{word}:
+  /user/study:
     post:
       tags:
         - User
       description: "user Study record"
       parameters:
-        - in: path
+        - in: query
           name: word
           schema:
             type: string
-          required: true
           description: get word
+        - in: query
+          name: point
+          schema:
+            type: number
+          description: get point
         - name: authorization
           in: header
           type: string
