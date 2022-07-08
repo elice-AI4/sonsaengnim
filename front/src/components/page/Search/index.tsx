@@ -15,7 +15,6 @@ import {
 
 import { searchCopyRights } from "../../copyRights/copyRights";
 import ReactTooltip from "react-tooltip";
-import { imgSrc } from "./wordData";
 
 import * as Api from "../../../api";
 
@@ -24,6 +23,13 @@ interface VideoDataProps {
   english: string;
   handVideo: string;
   mouthVideo?: string;
+}
+
+interface ImgDataProps {
+  _id: string;
+  word: string;
+  english: string;
+  cardImageURL: string;
 }
 
 const boxVariants = {
@@ -48,21 +54,27 @@ const Search = () => {
   const [isEmpty, setIsEmpty] = useState(true);
   const [isFirst, setIsFirst] = useState(true);
 
+  const [wordPictures, setWordPictures] = useState<ImgDataProps[]>([]);
+
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchWord(e.target.value);
   };
 
   const handleOnClick = () => {
     setIsFirst(false);
-    //이미지 찾기
-    const tempImg = imgSrc.filter((img) => {
-      if (searchWord === img.name) return img;
-    });
 
-    if (tempImg.length > 0) {
+    //이미지 찾기
+    const check_kor = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/;
+    const searchedData = check_kor.test(searchWord)
+      ? wordPictures.filter((data) => data.word === searchWord)
+      : wordPictures.filter(
+          (data) => data.english === searchWord.toLowerCase()
+        );
+
+    if (searchedData.length > 0) {
       setSearchedImage({
-        src: tempImg[0].src,
-        alt: tempImg[0].alt,
+        src: searchedData[0].cardImageURL,
+        alt: searchedData[0].english,
       });
       setIsEmpty(false);
     } else {
@@ -73,24 +85,18 @@ const Search = () => {
       setIsEmpty(true);
     }
 
-    const temp = imgSrc.filter((data) => {
-      return data.name === searchWord;
-    });
-
-    const mapped = temp.map((data) => data.alt);
     //비디오 찾기
-    const temp2 = videos
-      .filter((data) => {
-        if (data.english === mapped[0]) {
-          return data;
-        }
-      })
-      .map((data) => {
-        return data.handVideo;
-      });
-
-    if (temp2.length > 0) {
-      setVideoSrc(temp2);
+    if (searchedData.length > 0) {
+      const filteredVideo = videos
+        .filter((data) => {
+          if (data.english === searchedData[0].english) {
+            return data;
+          }
+        })
+        .map((data) => {
+          return data.handVideo;
+        });
+      setVideoSrc(filteredVideo);
     } else {
       setVideoSrc([]);
     }
@@ -101,12 +107,24 @@ const Search = () => {
     setVideos(res.data.slice(26));
   };
 
+  const getWordPictures = async () => {
+    const res = await Api.get("cards");
+    setWordPictures(res.data);
+  };
+
+  const onKeyDown: React.KeyboardEventHandler<HTMLInputElement> = (e) => {
+    if (e.key === "Enter") {
+      handleOnClick();
+    }
+  };
+
   useEffect(() => {
     setFind(true);
   }, [searchWord]);
 
   useEffect(() => {
     getVideos();
+    getWordPictures();
   }, []);
 
   return (
@@ -116,8 +134,8 @@ const Search = () => {
           type="text"
           placeholder="여기서 입력!"
           onChange={handleOnChange}
+          onKeyDown={onKeyDown}
         />
-
         <SearchButton
           onClick={handleOnClick}
           data-tip="main-search"
@@ -135,7 +153,11 @@ const Search = () => {
           <p style={{ textAlign: "right" }}>출처: 국립국어원</p>
         </ReactTooltip>
       </SearchContainer>
-      {isEmpty && isFirst && <H1>공부했던 것을 찾아볼까요?</H1>}
+      {isEmpty && isFirst && (
+        <H1>
+          공부했던 것을 찾아볼까요? <br /> 한글로, 영어로 함께 검색해 봐요.
+        </H1>
+      )}
       <ResultContainer>
         {isEmpty && !isFirst && <H1>검색 결과가 없습니다!</H1>}
         {!isEmpty && find && videoSrc.length >= 1 && (
