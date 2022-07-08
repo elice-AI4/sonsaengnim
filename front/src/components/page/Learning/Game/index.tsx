@@ -52,6 +52,13 @@ export interface VideoDataProps {
   mouthVideo?: string;
 }
 
+export interface CardsProps {
+  cardImageURL: string;
+  english: string;
+  word: string;
+  _id: string;
+}
+
 export interface CurSelectedButtonProps {
   word: string;
   index: number;
@@ -166,10 +173,10 @@ const LearningGame = () => {
       ALPHABET_LENGTH,
       res.data.length
     );
-    const wordList = words.map((word) => {
+    const mappedWords = words.map((word) => {
       return word.english;
     });
-    setWordList(wordList);
+    setWordList(mappedWords);
 
     if (localIsAlphabet) {
       setCurVideo({
