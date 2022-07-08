@@ -21,8 +21,7 @@ userRouter.get("/studylist", checkLogin, async (req: Request, res: Response, nex
 userRouter.post("/study", checkLogin, async (req: Request, res: Response, next: NextFunction) => {
   try {
     const word = req.query.word;
-    let point: any = req.query.point;
-    point = parseInt(point, 10);
+    const point = parseInt(req.query.point as string, 10);
 
     const userId = req.user;
     const study = await userService.study(userId, word, point);
