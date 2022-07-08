@@ -43,16 +43,16 @@ import wrong_answer from "../../../../src_assets/modal/wrong_answer.jpg";
 import { useAtom } from "jotai";
 import { loginAtom } from "../../../../state";
 
-const ALPHABET_LENGTH = 26;
+export const ALPHABET_LENGTH = 26;
 
-interface VideoDataProps {
+export interface VideoDataProps {
   _id: string;
   english: string;
   handVideo: string;
   mouthVideo?: string;
 }
 
-export interface curSelectedButtonProps {
+export interface CurSelectedButtonProps {
   word: string;
   index: number;
 }
@@ -87,7 +87,7 @@ const LearningGame = () => {
     wrongModal: false,
   });
   const [curSelectedButton, setCurSelectedButton] =
-    useState<curSelectedButtonProps>({
+    useState<CurSelectedButtonProps>({
       word: "",
       index: 0,
     });
@@ -195,7 +195,7 @@ const LearningGame = () => {
       };
     });
   };
-  const handleSetCurSelectedButton = (data: curSelectedButtonProps) => {
+  const handleSetCurSelectedButton = (data: CurSelectedButtonProps) => {
     setCurSelectedButton(data);
   };
 
