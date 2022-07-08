@@ -1,6 +1,6 @@
 import { Router, Request, Response, NextFunction } from "express";
 import { UserService } from "../../services";
-import { userValidateOptional, wordValidate } from "../middlewares/validators";
+import { userValidateOptional } from "../middlewares/validators";
 import { MongoUserModel } from "../../db";
 import checkLogin from "../middlewares/checkLogin";
 
@@ -18,11 +18,14 @@ userRouter.get("/studylist", checkLogin, async (req: Request, res: Response, nex
   }
 });
 
-userRouter.post("/study/:word", checkLogin, wordValidate, async (req: Request, res: Response, next: NextFunction) => {
+userRouter.post("/study", checkLogin, async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const word = req.params.word;
+    const word = req.query.word;
+    let point: any = req.query.point;
+    point = parseInt(point, 10);
+
     const userId = req.user;
-    const study = await userService.study(userId, word);
+    const study = await userService.study(userId, word, point);
     res.status(200).json(study);
   } catch (error) {
     res.status(400);

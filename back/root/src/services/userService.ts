@@ -18,8 +18,8 @@ export class UserService {
     return { studyList, point };
   }
 
-  public async study(userId, word) {
-    const study = await this.userModel.study(userId, word);
+  public async study(userId, word, point) {
+    const study = await this.userModel.study(userId, word, point);
     return study;
   }
   // token 다시 받기

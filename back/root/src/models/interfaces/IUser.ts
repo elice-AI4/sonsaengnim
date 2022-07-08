@@ -6,8 +6,10 @@ export interface IUser {
   password: string;
   createdAt: string;
   updatedAt: string;
+  point: number;
   study?: Array<string>;
   errorMessage?;
   userId?: string;
   scores?: Array<IScore>;
+  againedPoint?: number;
 }

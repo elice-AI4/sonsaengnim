@@ -1,14 +1,14 @@
 /* eslint-disable no-undef */
 import app from "../src/app";
 import request from "supertest";
-import { v4 as uuid } from "uuid";
+//import { v4 as uuid } from "uuid";
 
 describe("End-to-End Test", () => {
   let random_user;
 
-  beforeAll(() => {
-    random_user = uuid().split("-")[1];
-  });
+  // beforeAll(() => {
+  //   random_user = uuid().split("-")[1];
+  // });
 
   describe("POST /register", () => {
     test("responds with user information in json", async () => {

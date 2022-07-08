@@ -26,6 +26,10 @@ const userSchema = new Schema(
     ],
     study: {
       type : Array<String>,
+    },
+    point: {
+      type: Number,
+      default : 0
     }
   },
   {
