@@ -14,6 +14,8 @@ tags:
     description: "American Sing Language API"
   - name: Score Board
     description: "Top ten scores"
+  - name: Card
+    description: "Card images only korean, no english"
 
 schemes:
   - "http"
@@ -298,6 +300,15 @@ paths:
       tags:
         - Score Board
       description: "Get Top ten scores"
+      responses:
+        "200":
+          description: Return JSON
+
+  /cards:
+    get:
+      tags:
+        - Card
+      description: "Card images in korean"
       responses:
         "200":
           description: Return JSON
