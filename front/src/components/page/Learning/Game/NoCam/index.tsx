@@ -158,16 +158,16 @@ const NoCam = () => {
           </CircleContainer>
 
           <ButtonContainer>
-            <Button
+            {/* <Button
               isHandVideo={isHandVideo}
               onClick={() => {
                 setIsHandVideo(!isHandVideo);
               }}
-              data-tip="game-hand"
-              data-for="game-hand"
+              data-tip="gameNoCam-hand"
+              data-for="gameNoCam-hand"
             >
               손모양
-              <ReactTooltip id="game-hand">
+              <ReactTooltip id="gameNoCam-hand">
                 <video autoPlay width="200" muted loop>
                   <source
                     src="http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20200824/735192/MOV000258245_700X466.mp4"
@@ -175,48 +175,92 @@ const NoCam = () => {
                   />
                 </video>
                 <p style={{ textAlign: "right" }}>출처: 국립국어원</p>
-              </ReactTooltip>
-            </Button>
+              </ReactTooltip> */}
+            {/* </Button> */}
             {isAlphabetLearningPage ? (
-              <Button
-                isHandVideo={!isHandVideo}
-                onClick={() => {
-                  setIsHandVideo(!isHandVideo);
-                }}
-                data-tip="game-mouth"
-                data-for="game-mouth"
-              >
-                입모양
-                <ReactTooltip id="game-mouth">
-                  <video autoPlay width="200" muted loop>
-                    <source
-                      src="http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20191028/631921/MOV000251816_700X466.mp4"
-                      type="video/mp4"
-                    />
-                  </video>
-                  <p style={{ textAlign: "right" }}>출처: 국립국어원</p>
-                </ReactTooltip>
-              </Button>
+              <>
+                <Button
+                  isHandVideo={isHandVideo}
+                  onClick={() => {
+                    setIsHandVideo(!isHandVideo);
+                  }}
+                  data-tip="gameNoCam-hand"
+                  data-for="gameNoCam-hand"
+                >
+                  손모양
+                  <ReactTooltip id="gameNoCam-hand">
+                    <video autoPlay width="200" muted loop>
+                      <source
+                        src="http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20200824/735192/MOV000258245_700X466.mp4"
+                        type="video/mp4"
+                      />
+                    </video>
+                    <p style={{ textAlign: "right" }}>출처: 국립국어원</p>
+                  </ReactTooltip>
+                </Button>
+                <Button
+                  isHandVideo={!isHandVideo}
+                  onClick={() => {
+                    setIsHandVideo(!isHandVideo);
+                  }}
+                  data-tip="gameNoCam-mouth"
+                  data-for="gameNoCam-mouth"
+                >
+                  입모양
+                  <ReactTooltip id="gameNoCam-mouth">
+                    <video autoPlay width="200" muted loop>
+                      <source
+                        src="http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20191028/631921/MOV000251816_700X466.mp4"
+                        type="video/mp4"
+                      />
+                    </video>
+                    <p style={{ textAlign: "right" }}>출처: 국립국어원</p>
+                  </ReactTooltip>
+                </Button>
+              </>
             ) : (
-              <Button
-                isHandVideo={!isHandVideo}
-                onClick={() => {
-                  setIsHandVideo(!isHandVideo);
-                }}
-                data-tip="game-meaning"
-                data-for="game-meaning"
-              >
-                그림
-                <ReactTooltip id="game-meaning">
-                  <video autoPlay width="200" muted loop>
-                    <source
-                      src="http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20191029/632415/MOV000250158_700X466.mp4"
-                      type="video/mp4"
-                    />
-                  </video>
-                  <p style={{ textAlign: "right" }}>출처: 국립국어원</p>
-                </ReactTooltip>
-              </Button>
+              <>
+                <Button
+                  isHandVideo={isHandVideo}
+                  onClick={() => {
+                    setIsHandVideo(!isHandVideo);
+                  }}
+                  data-tip="gameNoCam-video"
+                  data-for="gameNoCam-video"
+                >
+                  손모양
+                  <ReactTooltip id="gameNoCam-video">
+                    <video autoPlay width="200" muted loop>
+                      <source
+                        src="http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20160325/251439/MOV000263171_700X466.mp4"
+                        type="video/mp4"
+                      />
+                    </video>
+                    <p style={{ textAlign: "right" }}>출처: 국립국어원</p>
+                  </ReactTooltip>
+                </Button>
+                <Button
+                  isHandVideo={!isHandVideo}
+                  onClick={() => {
+                    setIsHandVideo(!isHandVideo);
+                  }}
+                  data-tip="gameNoCam-meaning"
+                  data-for="gameNoCam-meaning"
+                >
+                  그림
+                  <ReactTooltip id="gameNoCam-meaning">
+                    <video autoPlay width="200" muted loop>
+                      <source
+                        src="http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20191028/631960/MOV000243346_700X466.mp4"
+                        type="video/mp4"
+                      />
+                    </video>
+                    <p style={{ textAlign: "right" }}>
+                      출처: 국립국어원 울랄라
+                    </p>
+                  </ReactTooltip>
+                </Button>
+              </>
             )}
           </ButtonContainer>
           <div style={{ position: "relative" }}>
