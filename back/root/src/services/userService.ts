@@ -51,17 +51,23 @@ export class UserService {
 
   public async updateUser(userId: string, email?: string, username?: string) {
     let user = await this.userModel.findById(userId);
+
     const filter = { _id: userId };
     const updateUserData = { ...user, email, username };
+
     const updatedUser = await this.userModel.updateUser(filter, updateUserData);
+
     return updatedUser;
   }
 
   public async changePassword(userId: string, password: string) {
     let user = await this.userModel.findById(userId);
     const hashedPassword = await hashPassword(password);
+
     const updateUserData = { ...user, password: hashedPassword };
+
     const updatedUser = await this.userModel.updateUser(userId, updateUserData);
+
     return updatedUser;
   }
 

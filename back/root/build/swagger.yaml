@@ -334,7 +334,7 @@ definitions:
         type: "string"
       password:
         type: "string"
-      username:
+      name:
         type: "string"
     xml:
       name: "Order"
@@ -344,10 +344,10 @@ definitions:
       english:
         type: string
         example: "test"
-      handVideo:
+      handImage:
         type: string
-        example: "test hand video"
-      mouthVideo:
+        example: "test hand image"
+      mouthImage:
         type: string
         example: "test mouth video"
   Score:

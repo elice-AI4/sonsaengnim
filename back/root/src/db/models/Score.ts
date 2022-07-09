@@ -1,5 +1,4 @@
 import Score from "../schemas/score";
-// import { MongoUserModel } from "./User";
 import { IScore, IScoreModel } from "../../models";
 
 export class MongoScoreModel implements IScoreModel {
@@ -17,19 +16,40 @@ export class MongoScoreModel implements IScoreModel {
   }
 
   public async getTopten() {
-    return await Score.aggregate([
-      {
-        $setWindowFields: {
-          partitionBy: "$state",
-          sortBy: { score: -1 },
-          output: {
-            rank: {
-              $rank: {},
-            },
-          },
-        },
-      },
-      { $sort: { score: -1, time: 1 } },
-    ]).limit(10);
+    // let scores = await Score.aggregate([
+    //   {
+    //     $setWindowFields: {
+    //       partitionBy: "$score",
+    //       sortBy: { time: 1 },
+    //       output: {
+    //         rank: {
+    //           $rank: {},
+    //         },
+    //       },
+    //     },
+    //   },
+    //   { $sort: { score: -1, time: 1 } },
+    //   { $limit: 10 },
+    // ]);
+    let scores = await Score.aggregate([{ $sort: { score: -1, time: 1 } }, { $addFields: { rank: 0 } }]);
+    let result = [];
+    for (let i = 1, add = 1, r = 1; i < scores.length; i++, r++) {
+      if (scores[i].score == scores[i - 1].score) {
+        if (scores[i].time == scores[i - 1].time) {
+          add++;
+          scores[i].rank = scores[i - 1].rank;
+        } else {
+          scores[i].rank = scores[i - 1].rank + add;
+          add = 1;
+        }
+      } else {
+        scores[i].rank = scores[i - 1].rank + add;
+        add = 1;
+      }
+      result.push(scores[i]);
+      if (r == 10) break;
+    }
+
+    return result;
   }
 }
