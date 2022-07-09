@@ -40,6 +40,7 @@ import grading from "../../../../src_assets/modal/grading.jpg";
 import none_user_correct from "../../../../src_assets/modal/none_user_correct.jpg";
 import user_correct from "../../../../src_assets/modal/user_correct.jpg";
 import wrong_answer from "../../../../src_assets/modal/wrong_answer.jpg";
+import playGuide from "../../../../src_assets/learning/play/playGuide.jpg";
 import { useAtom } from "jotai";
 import { loginAtom } from "../../../../state";
 
@@ -517,8 +518,20 @@ const LearningGame = () => {
                 handleSetSocketAnswer={handleSetSocketAnswer}
                 openModal={openModal}
               />
-              <StartButton onClick={handleClickButton} cameraOn={cameraOn}>
+              <StartButton
+                onClick={handleClickButton}
+                cameraOn={cameraOn}
+                data-tip="game-guide"
+                data-for="game-guide"
+              >
                 <StartTriangle cameraOn={cameraOn} />
+                <ReactTooltip id="game-guide">
+                  <img src={playGuide} alt="playGuide" width="300"></img>
+                  <p style={{ textAlign: "center", fontSize: "24px" }}>
+                    그림처럼 얼굴과 어깨와 손이 <br />
+                    함께 나오도록 자세를 잡아주세요
+                  </p>
+                </ReactTooltip>
               </StartButton>
             </BottomContainer>
           </Moniter>
