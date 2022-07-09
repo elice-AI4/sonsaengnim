@@ -46,7 +46,7 @@ const LearningTemplate = ({ imgs, title, children }: LearningTemplateProps) => {
           >
             따라해 보기
             <ReactTooltip id="learningTemplate-follow">
-              <video autoPlay width="400" muted loop>
+              <video autoPlay width="300" muted loop>
                 <source
                   src="http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20200811/727699/MOV000240877_700X466.mp4"
                   type="video/mp4"
@@ -56,8 +56,21 @@ const LearningTemplate = ({ imgs, title, children }: LearningTemplateProps) => {
             </ReactTooltip>
           </ButtonLink>
         ) : (
-          <ButtonLink to={`${pathname}/${ROUTE.GAME.link}/${ROUTE.NOCAM.link}`}>
+          <ButtonLink
+            to={`${pathname}/${ROUTE.GAME.link}/${ROUTE.NOCAM.link}`}
+            data-tip="learningTemplate-study"
+            data-for="learningTemplate-study"
+          >
             학습하러 가기
+            <ReactTooltip id="learningTemplate-study" place="bottom">
+              <video autoPlay width="300" muted loop>
+                <source
+                  src="http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20200812/728438/MOV000248732_700X466.mp4"
+                  type="video/mp4"
+                />
+              </video>
+              <p style={{ textAlign: "right" }}>출처: 국립국어원</p>
+            </ReactTooltip>
           </ButtonLink>
         )}
         <CardContainer>
