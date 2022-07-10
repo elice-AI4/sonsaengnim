@@ -16,24 +16,9 @@ export class MongoScoreModel implements IScoreModel {
   }
 
   public async getTopten() {
-    // let scores = await Score.aggregate([
-    //   {
-    //     $setWindowFields: {
-    //       partitionBy: "$score",
-    //       sortBy: { time: 1 },
-    //       output: {
-    //         rank: {
-    //           $rank: {},
-    //         },
-    //       },
-    //     },
-    //   },
-    //   { $sort: { score: -1, time: 1 } },
-    //   { $limit: 10 },
-    // ]);
     let scores = await Score.aggregate([{ $sort: { score: -1, time: 1 } }, { $addFields: { rank: 0 } }]);
     let result = [];
-    for (let i = 1, add = 1, r = 1; i < scores.length; i++, r++) {
+    for (let i = 1, add = 1; i < scores.length; i++) {
       if (scores[i].score == scores[i - 1].score) {
         if (scores[i].time == scores[i - 1].time) {
           add++;
@@ -47,7 +32,7 @@ export class MongoScoreModel implements IScoreModel {
         add = 1;
       }
       result.push(scores[i]);
-      if (r == 10) break;
+      if (i == 10) break;
     }
 
     return result;
