@@ -28,17 +28,20 @@ function Main() {
 
   useEffect(() => {
     async function getMedia() {
-      let stream = null;
-
-      try {
-        stream = await navigator.mediaDevices.getUserMedia({ video: true });
-        console.log(stream);
-        if (stream !== null) {
-          setWebcamExist(true);
+      const deviceList = await navigator.mediaDevices.enumerateDevices();
+      if (
+        deviceList.length === 0 ||
+        deviceList === null ||
+        deviceList === undefined
+      ) {
+        setWebcamExist(false);
+      } else {
+        for (let i = 0; i < deviceList.length; i++) {
+          if (deviceList[i].kind === "videoinput") {
+            setWebcamExist(true);
+            return;
+          }
         }
-        /* 스트림 사용 */
-      } catch (err) {
-        /* 오류 처리 */
         setWebcamExist(false);
       }
     }

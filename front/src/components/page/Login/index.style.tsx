@@ -1,5 +1,4 @@
 import styled, { css } from "styled-components";
-import LoginImg from "./login.jpg";
 
 export const LoginPage = styled.div`
   width: 100%;

@@ -30,6 +30,9 @@ export const ROUTE = {
     link: "rank",
   },
   SEARCH: {
-    link: "search"
-  }
+    link: "search",
+  },
+  DONATION: {
+    link: "donation",
+  },
 };
