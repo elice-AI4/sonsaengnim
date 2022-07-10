@@ -5,6 +5,7 @@ export * from "./models/User";
 export * from "./models/Hand";
 export * from "./models/Score";
 export * from "./models/Quiz";
+export * from "./models/Card";
 
 mongoose
   .connect(config.MONGO_URL)

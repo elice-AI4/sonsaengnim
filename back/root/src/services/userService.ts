@@ -18,8 +18,8 @@ export class UserService {
     return { studyList, point };
   }
 
-  public async study(userId, word) {
-    const study = await this.userModel.study(userId, word);
+  public async study(userId, word, point) {
+    const study = await this.userModel.study(userId, word, point);
     return study;
   }
   // token 다시 받기
@@ -51,17 +51,23 @@ export class UserService {
 
   public async updateUser(userId: string, email?: string, username?: string) {
     let user = await this.userModel.findById(userId);
+
     const filter = { _id: userId };
     const updateUserData = { ...user, email, username };
+
     const updatedUser = await this.userModel.updateUser(filter, updateUserData);
+
     return updatedUser;
   }
 
   public async changePassword(userId: string, password: string) {
     let user = await this.userModel.findById(userId);
     const hashedPassword = await hashPassword(password);
+
     const updateUserData = { ...user, password: hashedPassword };
+
     const updatedUser = await this.userModel.updateUser(userId, updateUserData);
+
     return updatedUser;
   }
 

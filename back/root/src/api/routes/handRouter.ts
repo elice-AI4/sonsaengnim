@@ -23,6 +23,9 @@ handRouter.get("/:english", checkEnglishParam, async (req: Request, res: Respons
 handRouter.get("/", async (req: Request, res: Response, next: NextFunction) => {
   try {
     const data = await handService.getAll();
+    if (data instanceof Error) {
+      throw data;
+    }
     return res.status(200).send(data);
   } catch (error) {
     res.status(400);
@@ -33,9 +36,12 @@ handRouter.get("/", async (req: Request, res: Response, next: NextFunction) => {
 // 수화 데이터 입력하기
 handRouter.post("/", handValidate, async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const { alphabet, handVideo, mouthVideo } = req.body;
-    const newHandData: IHand = { alphabet, handVideo, mouthVideo };
+    const { alphabet, handImage, mouthImage, video } = req.body;
+    const newHandData: IHand = { alphabet, handImage, mouthImage, video };
     const newHand = await handService.create(newHandData);
+    if (newHand instanceof Error) {
+      throw newHand;
+    }
     res.status(200).json(newHand);
   } catch (error) {
     res.status(400);

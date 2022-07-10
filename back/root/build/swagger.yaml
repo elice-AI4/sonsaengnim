@@ -14,6 +14,8 @@ tags:
     description: "American Sing Language API"
   - name: Score Board
     description: "Top ten scores"
+  - name: Card
+    description: "Card images only korean, no english"
 
 schemes:
   - "http"
@@ -168,18 +170,22 @@ paths:
         "200":
           description: Return JSON
 
-  /user/study/{word}:
+  /user/study:
     post:
       tags:
         - User
       description: "user Study record"
       parameters:
-        - in: path
+        - in: query
           name: word
           schema:
             type: string
-          required: true
           description: get word
+        - in: query
+          name: point
+          schema:
+            type: number
+          description: get point
         - name: authorization
           in: header
           type: string
@@ -298,6 +304,15 @@ paths:
         "200":
           description: Return JSON
 
+  /cards:
+    get:
+      tags:
+        - Card
+      description: "Card images in korean"
+      responses:
+        "200":
+          description: Return JSON
+
 securityDefinitions:
   petstore_auth:
     type: "oauth2"
@@ -319,7 +334,7 @@ definitions:
         type: "string"
       password:
         type: "string"
-      username:
+      name:
         type: "string"
     xml:
       name: "Order"
@@ -329,10 +344,10 @@ definitions:
       english:
         type: string
         example: "test"
-      handVideo:
+      handImage:
         type: string
-        example: "test hand video"
-      mouthVideo:
+        example: "test hand image"
+      mouthImage:
         type: string
         example: "test mouth video"
   Score:

@@ -1,3 +1,0 @@
-const getToptenScores = () => {};
-
-export { getToptenScores };

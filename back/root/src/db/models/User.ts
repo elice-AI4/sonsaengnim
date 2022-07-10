@@ -6,14 +6,26 @@ export class MongoUserModel implements IUserModel {
     return studyList;
   }
 
-  public async study(userId: string, word: string) {
+  public async study(userId: string, word: string, point: number) {
     const user = await User.findById(userId);
-    if (user.study.indexOf(word) !== -1) {
-      throw new Error("이미 학습한 데이터 입니다.");
-    } else {
-      user.study.push(word);
+    if (!point) {
+      if (user.study.indexOf(word) !== -1) {
+        point = 1;
+        user.point += point;
+        user.save();
+        return { user, point };
+      } else {
+        point = word.length === 1 ? 10 : 20;
+        console.log(point);
+        user.point += point;
+        user.study.push(word);
+        user.save();
+        return { user, point };
+      }
+    } else if (!word) {
+      user.point += point;
       user.save();
-      return user;
+      return { user, point };
     }
   }
 
