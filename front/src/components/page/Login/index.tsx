@@ -128,11 +128,11 @@ function Login() {
             ></LoginButton>
           </LoginForm>
         </LoginBackground>
+        <Footer
+          aLinks={loginCopyRights.aLinks}
+          contents={loginCopyRights.contents}
+        />
       </LoginPage>
-      <Footer
-        aLinks={loginCopyRights.aLinks}
-        contents={loginCopyRights.contents}
-      />
     </>
   );
 }

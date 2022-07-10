@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import registerimg from "./register.jpg";
 
 export const RegisterBackground = styled.div`
@@ -7,6 +7,7 @@ export const RegisterBackground = styled.div`
   background-image: url(${registerimg});
   background-repeat: no-repeat;
   background-size: cover;
+  background-position: center;
   display: flex;
   justify-content: center;
   align-items: center;

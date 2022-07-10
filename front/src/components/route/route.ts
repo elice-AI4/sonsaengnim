@@ -8,6 +8,9 @@ export const ROUTE = {
   LEARNING: {
     link: "learning",
   },
+  NOCAM: {
+    link: "nocamLearning",
+  },
   ALPHABET: {
     link: "alphabet",
   },

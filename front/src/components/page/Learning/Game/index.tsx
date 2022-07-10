@@ -40,19 +40,27 @@ import grading from "../../../../src_assets/modal/grading.jpg";
 import none_user_correct from "../../../../src_assets/modal/none_user_correct.jpg";
 import user_correct from "../../../../src_assets/modal/user_correct.jpg";
 import wrong_answer from "../../../../src_assets/modal/wrong_answer.jpg";
+import playGuide from "../../../../src_assets/learning/play/playGuide.jpg";
 import { useAtom } from "jotai";
 import { loginAtom } from "../../../../state";
 
-const ALPHABET_LENGTH = 26;
+export const ALPHABET_LENGTH = 26;
 
-interface VideoDataProps {
+export interface VideoDataProps {
   _id: string;
   english: string;
   handVideo: string;
   mouthVideo?: string;
 }
 
-export interface curSelectedButtonProps {
+export interface CardsProps {
+  cardImageURL: string;
+  english: string;
+  word: string;
+  _id: string;
+}
+
+export interface CurSelectedButtonProps {
   word: string;
   index: number;
 }
@@ -87,7 +95,7 @@ const LearningGame = () => {
     wrongModal: false,
   });
   const [curSelectedButton, setCurSelectedButton] =
-    useState<curSelectedButtonProps>({
+    useState<CurSelectedButtonProps>({
       word: "",
       index: 0,
     });
@@ -166,10 +174,10 @@ const LearningGame = () => {
       ALPHABET_LENGTH,
       res.data.length
     );
-    const wordList = words.map((word) => {
+    const mappedWords = words.map((word) => {
       return word.english;
     });
-    setWordList(wordList);
+    setWordList(mappedWords);
 
     if (localIsAlphabet) {
       setCurVideo({
@@ -195,7 +203,7 @@ const LearningGame = () => {
       };
     });
   };
-  const handleSetCurSelectedButton = (data: curSelectedButtonProps) => {
+  const handleSetCurSelectedButton = (data: CurSelectedButtonProps) => {
     setCurSelectedButton(data);
   };
 
@@ -498,7 +506,7 @@ const LearningGame = () => {
                 ) : (
                   <Explain>양손으로 학습해봐요.</Explain>
                 )}
-                <Explain>얼굴을 카메라 중앙에 맞추세요</Explain>
+                <Explain>얼굴을 카메라 중앙에 맞춰 주세요.</Explain>
               </div>
               <HR />
             </TopContainer>
@@ -510,8 +518,20 @@ const LearningGame = () => {
                 handleSetSocketAnswer={handleSetSocketAnswer}
                 openModal={openModal}
               />
-              <StartButton onClick={handleClickButton} cameraOn={cameraOn}>
+              <StartButton
+                onClick={handleClickButton}
+                cameraOn={cameraOn}
+                data-tip="game-guide"
+                data-for="game-guide"
+              >
                 <StartTriangle cameraOn={cameraOn} />
+                <ReactTooltip id="game-guide">
+                  <img src={playGuide} alt="playGuide" width="300"></img>
+                  <p style={{ textAlign: "center", fontSize: "24px" }}>
+                    그림처럼 얼굴과 어깨와 손이 <br />
+                    함께 나오도록 자세를 잡아주세요
+                  </p>
+                </ReactTooltip>
               </StartButton>
             </BottomContainer>
           </Moniter>
