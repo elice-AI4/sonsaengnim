@@ -6,8 +6,10 @@ import {
   StopButton,
   TextP,
   RankRegisterButton,
+  ExitButton,
 } from "./index.style";
 import Modal from "../../Modal";
+import { useNavigate } from "react-router-dom";
 
 const ModalStyle = {
   width: "1000px",
@@ -38,6 +40,11 @@ function SolveModal({
   MoveRecord,
   timeOver,
 }: SolveProps) {
+  const navigate = useNavigate();
+
+  const handleExit = () => {
+    navigate("/");
+  };
   return (
     <Modal visible={modal} style={ModalStyle as React.CSSProperties}>
       {answer ? (
@@ -59,6 +66,7 @@ function SolveModal({
           <RankRegisterButton onClick={MoveRecord}>
             순위 등록하러가기
           </RankRegisterButton>
+          <ExitButton onClick={handleExit}>나가기</ExitButton>
         </div>
       ) : (
         <div>

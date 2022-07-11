@@ -21,11 +21,12 @@ import grading from "../../../../src_assets/modal/grading.jpg";
 
 import Footer from "../../../Footer";
 import { quizBackgroundCopyRights } from "../../../copyRights/copyRights";
-import { saveTimeAtom } from "../../../../state";
 import { useAtom } from "jotai";
+import { userAtom } from "../../../../state";
+
 import { useNavigate } from "react-router-dom";
 
-export const MAX_COUNT = 10;
+export const MAX_COUNT = 2;
 
 export interface Score {
   ans: number;
@@ -69,6 +70,7 @@ function QuizGame() {
     wrongModal: false,
   });
   const lazyStartTimerId: { current: any } = useRef(null);
+  const [, setUser] = useAtom(userAtom);
 
   const handleInitial = () => {
     setScore({ ans: 0, cur: 0 });
@@ -196,8 +198,16 @@ function QuizGame() {
   useEffect(() => {
     if (score.cur === MAX_COUNT) {
       setFinish(true);
+      if (score.ans !== 0) {
+        Api.post(`user/study?point=${score.ans * 10}`, {}).then((res) =>
+          setUser((cur) => {
+            const newUser = { ...cur, point: res.data.user.point };
+            return newUser;
+          })
+        );
+      }
     }
-  });
+  }, [score.cur]);
 
   const MoveRecord = () => {
     setModal(false);

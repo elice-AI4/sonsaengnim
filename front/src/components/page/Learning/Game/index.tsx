@@ -44,7 +44,7 @@ import user_correct from "../../../../src_assets/modal/user_correct.jpg";
 import wrong_answer from "../../../../src_assets/modal/wrong_answer.jpg";
 import playGuide from "../../../../src_assets/learning/play/playGuide.jpg";
 import { useAtom } from "jotai";
-import { loginAtom } from "../../../../state";
+import { loginAtom, userAtom } from "../../../../state";
 
 export const ALPHABET_LENGTH = 26;
 
@@ -119,7 +119,7 @@ const LearningGame = () => {
     });
   const lazyStartTimerId: { current: any } = useRef(null);
   const [isLogin] = useAtom(loginAtom);
-
+  const [, setUser] = useAtom(userAtom);
   const handleSetVideo = (index: number) => {
     if (isAlphabetLearningPage) {
       setCurVideo({
@@ -267,6 +267,11 @@ const LearningGame = () => {
         {}
       );
       setPoint(res.data.point);
+      setUser((cur) => {
+        const newUser = { ...cur, point: res.data.user.point };
+        return newUser;
+      });
+      console.log(res);
     };
     try {
       if (isModalOpen.correctModal) {

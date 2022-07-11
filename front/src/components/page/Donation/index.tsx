@@ -2,15 +2,13 @@ import React, { useState, useEffect } from "react";
 import {
   DonationBox,
   InfoBox,
-  ProgressImg,
-  ProgressBar,
   ExplanationBox,
   DonationInfo,
   DonationButton,
   InfoText,
-  WordBox1,
-  WordBox2,
-  WordBox3,
+  Balloon,
+  MyLearning,
+  MyLearningBox,
 } from "./index.style";
 import { Heart } from "@brightlayer-ui/react-progress-icons";
 import * as Api from "../../../api";
@@ -41,28 +39,47 @@ function Donation() {
     <>
       <DonationBox>
         <InfoBox>
-          <h2>ㅁㅁ님이 학습 완료한 수화</h2>
-          {studyList.map((study, index) => (
-            <h2 key={index}>{study}</h2>
-          ))}
-          <h2>{`보유 포인트 : ${user.point} 점`}</h2>
+          <InfoText>{`${user.username}님이 학습 완료한 수화입니다`}</InfoText>
+          <MyLearningBox>
+            {studyList.map((study, index) => (
+              <MyLearning key={index}>{study}</MyLearning>
+            ))}
+          </MyLearningBox>
+          <InfoText>{`보유 포인트 : ${user.point} 점`}</InfoText>
         </InfoBox>
         <ExplanationBox>
-          <WordBox1>
+          <Balloon
+            BalloonImg={`${process.env.PUBLIC_URL}/donation/ballon1.png`}
+            width={"500px"}
+            height={"200px"}
+            padding={"30px 0px 0px 65px"}
+          >
             <InfoText>
               학습, 퀴즈로 얻은 포인트로 <br></br>기부할 수 있습니다.
             </InfoText>
-          </WordBox1>
+          </Balloon>
 
-          <WordBox2>
+          <Balloon
+            BalloonImg={`${process.env.PUBLIC_URL}/donation/ballon2.png`}
+            width={"500px"}
+            height={"250px"}
+            padding={"30px 0px 0px 65px"}
+          >
             <InfoText>
-              공부한 만큼 포인트를 기부하여 청각장애인 인식 개선 캠페인에
-              참여하세요!
+              공부한 만큼 포인트를 <br></br>기부하여 농인 인식 개선<br></br>
+              캠페인에 참여하세요!
             </InfoText>
-          </WordBox2>
-          <WordBox3>
-            <InfoText>2000 포인트 이상부터 기부할 수 있습니다.</InfoText>
-          </WordBox3>
+          </Balloon>
+          <Balloon
+            BalloonImg={`${process.env.PUBLIC_URL}/donation/ballon3.png`}
+            width={"500px"}
+            height={"200px"}
+            padding={"30px 0px 0px 90px"}
+          >
+            <InfoText>
+              2000 포인트 이상부터 <br></br>기부할 수 있습니다.
+            </InfoText>
+          </Balloon>
         </ExplanationBox>
         <DonationInfo>
           {/* <ProgressImg>
