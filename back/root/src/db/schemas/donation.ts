@@ -2,6 +2,10 @@ import { model, Schema } from "mongoose";
 import { IDonation } from "../../models";
 const donationSchema = new Schema(
   {
+    name: {
+      type: String,
+      required: true,
+    },
     currentPoint: {
       type: Number,
       default: 0,
