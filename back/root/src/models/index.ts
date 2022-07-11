@@ -8,3 +8,5 @@ export * from "./interfaces/IQuiz";
 export * from "./interfaces/IQuizModel";
 export * from "./interfaces/ICard";
 export * from "./interfaces/ICardModel";
+export * from "./interfaces/IDonation";
+export * from "./interfaces/IDonationModel";
