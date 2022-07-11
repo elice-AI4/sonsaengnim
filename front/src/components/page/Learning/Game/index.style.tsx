@@ -245,6 +245,13 @@ export const StartButton = styled.div<StartButtonProp>`
   opacity: ${(props) => (props.cameraOn ? 0 : 1)};
 `;
 
+export const ToolTipContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
 export const TopContainer = styled.div`
   width: 100%;
   flex: 0.2;

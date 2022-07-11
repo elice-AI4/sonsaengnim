@@ -24,6 +24,7 @@ import {
   BackImage,
   ModalButton,
   ModalButtonContainer,
+  ToolTipContent,
 } from "./index.style";
 import { useLocation } from "react-router";
 import * as Api from "../../../../api";
@@ -536,11 +537,13 @@ const LearningGame = () => {
               >
                 <StartTriangle cameraOn={cameraOn} />
                 <ReactTooltip id="game-guide">
-                  <img src={playGuide} alt="playGuide" width="300"></img>
-                  <p style={{ textAlign: "center", fontSize: "24px" }}>
-                    그림처럼 얼굴과 어깨와 손이 <br />
-                    함께 나오도록 자세를 잡아주세요
-                  </p>
+                  <ToolTipContent>
+                    <img src={playGuide} alt="playGuide" width="300"></img>
+                    <p style={{ textAlign: "center", fontSize: "24px" }}>
+                      그림처럼 얼굴과 어깨와 손이 <br />
+                      함께 나오도록 자세를 잡아주세요
+                    </p>
+                  </ToolTipContent>
                 </ReactTooltip>
               </StartButton>
             </BottomContainer>
