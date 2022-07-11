@@ -29,7 +29,11 @@ const userSchema = new Schema(
     },
     point: {
       type: Number,
-      default : 0
+      default: 0
+    },
+    donation: {
+      type: Number,
+      default: 0
     }
   },
   {
