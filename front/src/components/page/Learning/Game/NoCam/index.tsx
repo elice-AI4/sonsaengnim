@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import {
   BlueCircle,
   CameraContainer,
@@ -48,6 +48,14 @@ const NoCam = () => {
   });
   const [curIndex, setCurIndex] = useState(0);
   const [cards, setCards] = useState<CardsProps[]>([]);
+
+  //국립국어원 영상 src
+  const [koreanVideoSrc, setKoreanVideoSrc] = useState<string[]>([
+    "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20200824/735192/MOV000258245_700X466.mp4",
+    "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20191028/631921/MOV000251816_700X466.mp4",
+    "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20160325/251439/MOV000263171_700X466.mp4",
+    "http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20191028/631960/MOV000243346_700X466.mp4",
+  ]);
 
   const getVideos = async (localIsAlphabet: boolean) => {
     const res = await Api.get("hands");
@@ -158,42 +166,20 @@ const NoCam = () => {
           </CircleContainer>
 
           <ButtonContainer>
-            {/* <Button
-              isHandVideo={isHandVideo}
-              onClick={() => {
-                setIsHandVideo(!isHandVideo);
-              }}
-              data-tip="gameNoCam-hand"
-              data-for="gameNoCam-hand"
-            >
-              손모양
-              <ReactTooltip id="gameNoCam-hand">
-                <video autoPlay width="200" muted loop>
-                  <source
-                    src="http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20200824/735192/MOV000258245_700X466.mp4"
-                    type="video/mp4"
-                  />
-                </video>
-                <p style={{ textAlign: "right" }}>출처: 국립국어원</p>
-              </ReactTooltip> */}
-            {/* </Button> */}
-            {isAlphabetLearningPage ? (
+            {isAlphabetLearningPage && (
               <>
                 <Button
                   isHandVideo={isHandVideo}
                   onClick={() => {
                     setIsHandVideo(!isHandVideo);
                   }}
-                  data-tip="gameNoCam-hand"
+                  data-tip=""
                   data-for="gameNoCam-hand"
                 >
                   손모양
                   <ReactTooltip id="gameNoCam-hand">
                     <video autoPlay width="200" muted loop>
-                      <source
-                        src="http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20200824/735192/MOV000258245_700X466.mp4"
-                        type="video/mp4"
-                      />
+                      <source src={koreanVideoSrc[0]} type="video/mp4" />
                     </video>
                     <p style={{ textAlign: "right" }}>출처: 국립국어원</p>
                   </ReactTooltip>
@@ -203,38 +189,33 @@ const NoCam = () => {
                   onClick={() => {
                     setIsHandVideo(!isHandVideo);
                   }}
-                  data-tip="gameNoCam-mouth"
+                  data-tip=""
                   data-for="gameNoCam-mouth"
                 >
                   입모양
                   <ReactTooltip id="gameNoCam-mouth">
                     <video autoPlay width="200" muted loop>
-                      <source
-                        src="http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20191028/631921/MOV000251816_700X466.mp4"
-                        type="video/mp4"
-                      />
+                      <source src={koreanVideoSrc[1]} type="video/mp4" />
                     </video>
                     <p style={{ textAlign: "right" }}>출처: 국립국어원</p>
                   </ReactTooltip>
                 </Button>
               </>
-            ) : (
+            )}
+            {!isAlphabetLearningPage && (
               <>
                 <Button
                   isHandVideo={isHandVideo}
                   onClick={() => {
                     setIsHandVideo(!isHandVideo);
                   }}
-                  data-tip="gameNoCam-video"
+                  data-tip=""
                   data-for="gameNoCam-video"
                 >
                   손모양
                   <ReactTooltip id="gameNoCam-video">
-                    <video autoPlay width="200" muted loop>
-                      <source
-                        src="http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20160325/251439/MOV000263171_700X466.mp4"
-                        type="video/mp4"
-                      />
+                    <video preload="auto" autoPlay width="200" muted loop>
+                      <source src={koreanVideoSrc[2]} type="video/mp4" />
                     </video>
                     <p style={{ textAlign: "right" }}>출처: 국립국어원</p>
                   </ReactTooltip>
@@ -244,20 +225,15 @@ const NoCam = () => {
                   onClick={() => {
                     setIsHandVideo(!isHandVideo);
                   }}
-                  data-tip="gameNoCam-meaning"
+                  data-tip=""
                   data-for="gameNoCam-meaning"
                 >
                   그림
                   <ReactTooltip id="gameNoCam-meaning">
-                    <video autoPlay width="200" muted loop>
-                      <source
-                        src="http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20191028/631960/MOV000243346_700X466.mp4"
-                        type="video/mp4"
-                      />
+                    <video preload="auto" autoPlay width="200" muted loop>
+                      <source src={koreanVideoSrc[3]} type="video/mp4" />
                     </video>
-                    <p style={{ textAlign: "right" }}>
-                      출처: 국립국어원 울랄라
-                    </p>
+                    <p style={{ textAlign: "right" }}>출처: 국립국어원</p>
                   </ReactTooltip>
                 </Button>
               </>
