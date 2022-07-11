@@ -11,6 +11,9 @@ import {
   SearchBar,
   SearchButton,
   H1,
+  AutoSearchContainer,
+  AutoSearchWrap,
+  AutoSearchData
 } from "./index.style";
 
 import { searchCopyRights } from "../../copyRights/copyRights";
@@ -109,6 +112,8 @@ const Search = () => {
 
   const getWordPictures = async () => {
     const res = await Api.get("cards");
+    console.log(res.data);
+    
     setWordPictures(res.data);
   };
 
@@ -136,6 +141,13 @@ const Search = () => {
           onChange={handleOnChange}
           onKeyDown={onKeyDown}
         />
+        <AutoSearchContainer>
+          <AutoSearchWrap>
+          <AutoSearchData>
+            <a href="#"></a>
+          </AutoSearchData>
+          </AutoSearchWrap>
+        </AutoSearchContainer>
         <SearchButton
           onClick={handleOnClick}
           data-tip="main-search"

@@ -82,3 +82,38 @@ export const H1 = styled.h1`
   justify-content: center;
   align-items: center;
 `;
+
+
+export const AutoSearchContainer = styled.div`
+  z-index: 7;
+  height: 50vh;
+  width: 438px;
+  background-color: white;
+  position: absolute;
+  top: 190px;
+  left: 9px;
+  border: 2px solid;
+  padding: 10px;
+`
+
+export const AutoSearchWrap = styled.ul`
+
+`
+
+export const AutoSearchData = styled.li`
+  padding: 10px 8px;
+  width: 100%;
+  font-size: 30px;
+  &:hover {
+    background-color: #edf5f5;
+    cursor: pointer;
+  }
+  position: relative;
+  img {
+    position: absolute;
+    right: 5px;
+    width: 18px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+`
