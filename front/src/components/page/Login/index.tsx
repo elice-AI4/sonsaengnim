@@ -48,6 +48,7 @@ function Login() {
       username: res.data.user.username,
       password: res.data.user.password,
       token: res.data.token,
+      point: res.data.user.point,
     });
     setLogin(true);
     sessionStorage.setItem("userToken", res.data.token);
@@ -80,7 +81,7 @@ function Login() {
     if (loginInfo.password != "") {
       setValid({
         ...valid,
-        pwValid: loginInfo.password.length >= 4 ? true : false,
+        pwValid: loginInfo.password.length >= 8 ? true : false,
       });
     } else {
       setValid({
@@ -89,7 +90,6 @@ function Login() {
       });
     }
   }, [loginInfo.password]);
-
   return (
     <>
       <LoginPage>
@@ -119,7 +119,7 @@ function Login() {
               />
             </InputBox>
             {!valid.pwValid && (
-              <ValidWord>비밀번호 4글자 이상 필요합니다.</ValidWord>
+              <ValidWord>비밀번호 8글자 이상 필요합니다.</ValidWord>
             )}
             <LoginButton
               type="submit"

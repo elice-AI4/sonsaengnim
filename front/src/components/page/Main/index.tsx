@@ -25,7 +25,6 @@ function Main() {
   const handleClickButton = (path: string) => {
     navigate(path);
   };
-
   useEffect(() => {
     async function getMedia() {
       const deviceList = await navigator.mediaDevices.enumerateDevices();

@@ -6,6 +6,7 @@ interface User {
   username: string;
   password: string;
   token: string;
+  point: number;
 }
 
 export const reg =
@@ -16,6 +17,7 @@ export const userAtom = atomWithStorage<User>("user", {
   username: "",
   password: "",
   token: "",
+  point: 0,
 });
 
 export const loginAtom = atomWithStorage<boolean>("login", false);

@@ -26,7 +26,7 @@ const Header = () => {
   const { pathname } = useLocation();
   const HandleLogout = () => {
     setLogin(false);
-    setUser({ email: "", username: "", password: "", token: "" });
+    setUser({ email: "", username: "", password: "", token: "", point: 0 });
   };
   const [fold, setFold] = useState(true);
   const checkPathname = (pathname: string) => {

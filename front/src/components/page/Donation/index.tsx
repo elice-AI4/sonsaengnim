@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   DonationBox,
   InfoBox,
@@ -8,9 +8,24 @@ import {
   DonationInfo,
   DonationButton,
   InfoText,
+  WordBox1,
+  WordBox2,
+  WordBox3,
 } from "./index.style";
+import { Heart } from "@brightlayer-ui/react-progress-icons";
 
 function Donation() {
+  const [donationPer, setDonationPer] = useState<number>(0);
+  const [goal, setGoal] = useState<number>(2000000);
+  const [curDonation, setCurDonation] = useState<number>(0);
+  const HandleDonation = () => {
+    setDonationPer((cur): number => {
+      return cur + (30000 / goal) * 100;
+    });
+    setCurDonation((cur) => {
+      return cur + 30000;
+    });
+  };
   return (
     <>
       <DonationBox>
@@ -20,19 +35,45 @@ function Donation() {
           <h2>보유 포인트 : 400 점</h2>
         </InfoBox>
         <ExplanationBox>
-          <InfoText>학습, 퀴즈로 얻은 포인트로 기부할 수 있습니다.</InfoText>
-          <InfoText>
-            공부한 만큼 포인트를 기부하여 청각장애인 인식 개선 캠페인에
-            참여하세요!
-          </InfoText>
-          <InfoText>2000 포인트 이상부터 기부할 수 있습니다.</InfoText>
+          <WordBox1>
+            <InfoText>
+              학습, 퀴즈로 얻은 포인트로 <br></br>기부할 수 있습니다.
+            </InfoText>
+          </WordBox1>
+
+          <WordBox2>
+            <InfoText>
+              공부한 만큼 포인트를 기부하여 청각장애인 인식 개선 캠페인에
+              참여하세요!
+            </InfoText>
+          </WordBox2>
+          <WordBox3>
+            <InfoText>2000 포인트 이상부터 기부할 수 있습니다.</InfoText>
+          </WordBox3>
         </ExplanationBox>
         <DonationInfo>
-          <ProgressImg>
+          {/* <ProgressImg>
             <ProgressBar></ProgressBar>
-          </ProgressImg>
-          <h1>목표 금액 : 2,000,000</h1>
-          <DonationButton>기부하기</DonationButton>
+          </ProgressImg> */}
+          <Heart
+            percent={donationPer}
+            size={300}
+            color={"pink"}
+            outlined={false}
+            labelColor="black"
+            showPercentLabel={true}
+            labelSize={70}
+            labelPosition="bottom"
+          />
+          <h1>{`목표 금액 : ${String(goal).replace(
+            /\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g,
+            ","
+          )}`}</h1>
+          <h1>{`현재 금액 : ${String(curDonation).replace(
+            /\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g,
+            ","
+          )}`}</h1>
+          <DonationButton onClick={HandleDonation}>기부하기</DonationButton>
         </DonationInfo>
       </DonationBox>
     </>

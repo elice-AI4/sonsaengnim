@@ -1,6 +1,15 @@
 import styled from "styled-components";
 import testImg from "./test.png";
+import wordImg1 from "./word1.png";
+import wordImg2 from "./word2.png";
+import wordImg3 from "./word3.png";
+
+import wordImg12 from "./word1_2.png";
+import wordImg22 from "./word2_2.png";
+import wordImg32 from "./word3_2.png";
+
 export const DonationBox = styled.div`
+  background-color: #ffe7ec;
   width: 100%;
   min-height: 100vh;
   border: 2px solid red;
@@ -37,7 +46,7 @@ export const ProgressBar = styled.div`
 export const ExplanationBox = styled.div`
   width: 400px;
   height: 600px;
-  border: 1px solid purple;
+  /* border: 1px solid purple; */
 `;
 
 export const DonationInfo = styled.div`
@@ -61,4 +70,31 @@ export const DonationButton = styled.button`
 export const InfoText = styled.p`
   font-size: 30px;
   font-weight: bold;
+`;
+
+export const WordBox1 = styled.div`
+  background-image: url(${wordImg1});
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 500px;
+  height: 200px;
+  padding: 20px;
+`;
+
+export const WordBox2 = styled.div`
+  background-image: url(${wordImg22});
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 500px;
+  height: 250px;
+  padding: 20px;
+`;
+
+export const WordBox3 = styled.div`
+  background-image: url(${wordImg3});
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 500px;
+  height: 200px;
+  padding: 20px;
 `;
