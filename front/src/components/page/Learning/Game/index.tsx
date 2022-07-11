@@ -25,6 +25,7 @@ import {
   ModalButton,
   ModalButtonContainer,
   ToolTipContent,
+  BoxP,
 } from "./index.style";
 import { useLocation } from "react-router";
 import * as Api from "../../../../api";
@@ -66,6 +67,21 @@ export interface CurSelectedButtonProps {
   index: number;
 }
 
+interface GetPointProps {
+  point: number;
+  user: {
+    createdAt: string;
+    email: string;
+    password: string;
+    point: number;
+    scores: number[];
+    study: string[];
+    updatedAt: string;
+    username: string;
+    _id: string;
+  };
+}
+
 const modalStyle = {
   width: "800px",
   height: "500px",
@@ -89,6 +105,7 @@ const LearningGame = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [isHandVideo, setIsHandVideo] = useState(true);
   const [socketAnswer, setSocketAnswer] = useState<string[]>();
+  const [point, setPoint] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState({
     loadingModal: false,
     waitingAnswerModal: false,
@@ -245,17 +262,16 @@ const LearningGame = () => {
 
   useEffect(() => {
     const getPoint = async () => {
-      const res = await Api.post(
+      const res: { data: GetPointProps } = await Api.post(
         `user/study?word=${curSelectedButton.word}`,
         {}
       );
-      console.log(res);
+      setPoint(res.data.point);
     };
     try {
       if (isModalOpen.correctModal) {
         if (isLogin) {
           getPoint();
-          console.log("성공적으로 포인트를 쏩니다.", curSelectedButton.word);
         }
       }
     } catch (e: any) {
@@ -319,7 +335,7 @@ const LearningGame = () => {
               delay: 0.8,
             }}
           >
-            <span>100점!</span>
+            <BoxP>{point}점 획득!</BoxP>
           </PointBox>
         )}
       </Modal>

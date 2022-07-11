@@ -288,10 +288,15 @@ export const PointBox = styled(motion.div)`
   top: -75px;
 
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   font-size: 3rem;
   font-weight: bold;
+`;
+
+export const BoxP = styled.p`
+  margin: 0;
 `;
 
 export const ModalButtonContainer = styled.div`

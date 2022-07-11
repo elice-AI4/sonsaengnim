@@ -10,12 +10,6 @@ import quizCharacter from "../../../src_assets/main/quiz_sam.png";
 import searcgCharacter from "../../../src_assets/main/search_sam.png";
 import { useNavigate } from "react-router";
 import ReactTooltip from "react-tooltip";
-import Footer from "../../Footer";
-import {
-  beaverCopyRights,
-  foxCopyRights,
-  earthwormCopyRights,
-} from "../../copyRights/copyRights";
 import { useAtom } from "jotai";
 import { webcamExistAtom } from "../../../state";
 

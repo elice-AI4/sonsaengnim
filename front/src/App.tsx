@@ -49,21 +49,20 @@ function App() {
             element={<LearningGame />}
           />
           <Route
-            path={`/${ROUTE.LEARNING.link}/${ROUTE.WORD.link}/${ROUTE.GAME.link}/${ROUTE.PLAY.link}`}
-            element={<LearningGame />}
-          />
-          <Route
             path={`/${ROUTE.LEARNING.link}/${ROUTE.ALPHABET.link}/${ROUTE.GAME.link}/${ROUTE.NOCAM.link}`}
             element={<NoCam />}
           />
           <Route
-            path={`/${ROUTE.LEARNING.link}/${ROUTE.WORD.link}/${ROUTE.GAME.link}/${ROUTE.NOCAM.link}`}
-            element={<NoCam />}
-          />
-
-          <Route
             path={`/${ROUTE.LEARNING.link}/${ROUTE.WORD.link}`}
             element={<Word />}
+          />
+          <Route
+            path={`/${ROUTE.LEARNING.link}/${ROUTE.WORD.link}/${ROUTE.GAME.link}/${ROUTE.PLAY.link}`}
+            element={<LearningGame />}
+          />
+          <Route
+            path={`/${ROUTE.LEARNING.link}/${ROUTE.WORD.link}/${ROUTE.GAME.link}/${ROUTE.NOCAM.link}`}
+            element={<NoCam />}
           />
           <Route path={`/${ROUTE.QUIZ.link}`} element={<Quiz />} />
           <Route path={`/${ROUTE.SEARCH.link}`} element={<Search />} />
