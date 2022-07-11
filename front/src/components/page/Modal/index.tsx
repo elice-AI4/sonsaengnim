@@ -8,6 +8,7 @@ interface ModalState {
   closeModal?: () => void;
   style?: React.CSSProperties;
   children: React.ReactNode;
+  backGroundTransparent?: boolean;
 }
 
 function Modal({
@@ -16,6 +17,7 @@ function Modal({
   children,
   closeModal,
   style,
+  backGroundTransparent,
 }: ModalState) {
   return (
     <>
@@ -31,6 +33,7 @@ function Modal({
           className="modal-inner"
           visible={visible}
           style={style}
+          backGroundTransparent={backGroundTransparent && backGroundTransparent}
         >
           {children}
         </ModalInner>

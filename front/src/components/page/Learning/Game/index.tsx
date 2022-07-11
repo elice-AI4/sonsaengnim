@@ -24,6 +24,8 @@ import {
   BackImage,
   ModalButton,
   ModalButtonContainer,
+  ToolTipContent,
+  BoxP,
 } from "./index.style";
 import { useLocation } from "react-router";
 import * as Api from "../../../../api";
@@ -65,6 +67,21 @@ export interface CurSelectedButtonProps {
   index: number;
 }
 
+interface GetPointProps {
+  point: number;
+  user: {
+    createdAt: string;
+    email: string;
+    password: string;
+    point: number;
+    scores: number[];
+    study: string[];
+    updatedAt: string;
+    username: string;
+    _id: string;
+  };
+}
+
 const modalStyle = {
   width: "800px",
   height: "500px",
@@ -88,6 +105,7 @@ const LearningGame = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [isHandVideo, setIsHandVideo] = useState(true);
   const [socketAnswer, setSocketAnswer] = useState<string[]>();
+  const [point, setPoint] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState({
     loadingModal: false,
     waitingAnswerModal: false,
@@ -243,8 +261,21 @@ const LearningGame = () => {
   }, []);
 
   useEffect(() => {
-    if (isModalOpen.correctModal) {
-      if (isLogin) Api.post(`user/study/` + curSelectedButton.word, {});
+    const getPoint = async () => {
+      const res: { data: GetPointProps } = await Api.post(
+        `user/study?word=${curSelectedButton.word}`,
+        {}
+      );
+      setPoint(res.data.point);
+    };
+    try {
+      if (isModalOpen.correctModal) {
+        if (isLogin) {
+          getPoint();
+        }
+      }
+    } catch (e: any) {
+      throw new Error(e);
     }
   }, [isModalOpen.correctModal]);
 
@@ -304,7 +335,7 @@ const LearningGame = () => {
               delay: 0.8,
             }}
           >
-            <span>100점!</span>
+            <BoxP>{point}점 획득!</BoxP>
           </PointBox>
         )}
       </Modal>
@@ -526,11 +557,13 @@ const LearningGame = () => {
               >
                 <StartTriangle cameraOn={cameraOn} />
                 <ReactTooltip id="game-guide">
-                  <img src={playGuide} alt="playGuide" width="300"></img>
-                  <p style={{ textAlign: "center", fontSize: "24px" }}>
-                    그림처럼 얼굴과 어깨와 손이 <br />
-                    함께 나오도록 자세를 잡아주세요
-                  </p>
+                  <ToolTipContent>
+                    <img src={playGuide} alt="playGuide" width="300"></img>
+                    <p style={{ textAlign: "center", fontSize: "24px" }}>
+                      그림처럼 얼굴과 어깨와 손이 <br />
+                      함께 나오도록 자세를 잡아주세요
+                    </p>
+                  </ToolTipContent>
                 </ReactTooltip>
               </StartButton>
             </BottomContainer>
