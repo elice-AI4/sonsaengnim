@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   DonationBox,
   InfoBox,
@@ -13,11 +13,22 @@ import {
   WordBox3,
 } from "./index.style";
 import { Heart } from "@brightlayer-ui/react-progress-icons";
+import * as Api from "../../../api";
+import { userAtom } from "../../../state";
+import { useAtom } from "jotai";
 
 function Donation() {
   const [donationPer, setDonationPer] = useState<number>(0);
   const [goal, setGoal] = useState<number>(2000000);
   const [curDonation, setCurDonation] = useState<number>(0);
+  const [studyList, setStudyList] = useState([]);
+  const [user] = useAtom(userAtom);
+  useEffect(() => {
+    Api.get("user/studylist").then((res) =>
+      setStudyList(res.data.studyList.study)
+    );
+  }, []);
+
   const HandleDonation = () => {
     setDonationPer((cur): number => {
       return cur + (30000 / goal) * 100;
@@ -31,8 +42,10 @@ function Donation() {
       <DonationBox>
         <InfoBox>
           <h2>ㅁㅁ님이 학습 완료한 수화</h2>
-          <h2>학습 리스트...</h2>
-          <h2>보유 포인트 : 400 점</h2>
+          {studyList.map((study, index) => (
+            <h2 key={index}>{study}</h2>
+          ))}
+          <h2>{`보유 포인트 : ${user.point} 점`}</h2>
         </InfoBox>
         <ExplanationBox>
           <WordBox1>

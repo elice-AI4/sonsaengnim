@@ -43,6 +43,7 @@ function Login() {
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const res = await Api.post("user", loginInfo);
+    console.log(res);
     setUser({
       email: res.data.user.email,
       username: res.data.user.username,

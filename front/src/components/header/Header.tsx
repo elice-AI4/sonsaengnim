@@ -24,6 +24,7 @@ const Header = () => {
   const [login, setLogin] = useAtom(loginAtom);
   const [user, setUser] = useAtom(userAtom);
   const { pathname } = useLocation();
+  console.log(user);
   const HandleLogout = () => {
     setLogin(false);
     setUser({ email: "", username: "", password: "", token: "", point: 0 });
