@@ -245,7 +245,10 @@ const LearningGame = () => {
 
   useEffect(() => {
     const getPoint = async () => {
-      const res = await Api.post(`user/study/` + curSelectedButton.word, {});
+      const res = await Api.post(
+        `user/study?word=${curSelectedButton.word}`,
+        {}
+      );
       console.log(res);
     };
     try {
