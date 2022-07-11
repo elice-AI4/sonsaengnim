@@ -243,8 +243,18 @@ const LearningGame = () => {
   }, []);
 
   useEffect(() => {
-    if (isModalOpen.correctModal) {
-      if (isLogin) Api.post(`user/study/` + curSelectedButton.word, {});
+    const getPoint = async () => {
+      await Api.post(`user/study/` + curSelectedButton.word, {});
+    };
+    try {
+      if (isModalOpen.correctModal) {
+        if (isLogin) {
+          getPoint();
+          console.log("성공적으로 포인트를 쏩니다.", curSelectedButton.word);
+        }
+      }
+    } catch (e: any) {
+      throw new Error(e);
     }
   }, [isModalOpen.correctModal]);
 
