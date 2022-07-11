@@ -50,10 +50,7 @@ function Main() {
   return (
     <MainBackGround>
       <ServiceBox color={"#FF7F50"}>
-        <ServiceImg
-          src={studyCharacter}
-          style={{ paddingLeft: "65px" }}
-        ></ServiceImg>
+        <ServiceImg src={studyCharacter}></ServiceImg>
         <h2>알파벳 수어를 배우러 가볼까요?</h2>
         <MoveButton
           onClick={() => handleClickButton("learning")}
