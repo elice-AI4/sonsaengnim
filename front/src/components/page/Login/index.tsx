@@ -7,15 +7,22 @@ import {
   InputBox,
   LoginButton,
   ValidWord,
+  ModalInner,
+  ModalComment,
+  PointWord,
+  P,
+  ModalButton,
 } from "./index.style";
 import { useNavigate } from "react-router-dom";
 import loginImg from "./login.jpg";
 import { useAtom } from "jotai";
 import { reg, userAtom, loginAtom } from "../../../state";
+import modalCharacter from "../../../src_assets/main/search_sam.png";
 import * as Api from "../../../api";
 
 import Footer from "../../Footer";
 import { loginCopyRights } from "../../copyRights/copyRights";
+import Modal from "../Modal";
 
 interface UserLogin {
   email: string;
@@ -27,10 +34,18 @@ interface LoginValid {
   pwValid: boolean;
 }
 
+const modalStyle = {
+  fontSize: "2rem",
+  width: "80rem",
+  height: "45rem",
+  padding: "0",
+};
+
 function Login() {
   const navigate = useNavigate();
   const [user, setUser] = useAtom(userAtom);
   const [, setLogin] = useAtom(loginAtom);
+  const [modal, setModal] = useState(false);
 
   const [loginInfo, setLoginInfo] = useState<UserLogin>({
     email: "",
@@ -93,6 +108,23 @@ function Login() {
   }, [loginInfo.password]);
   return (
     <>
+      <Modal visible={modal} style={modalStyle} backGroundTransparent={true}>
+        <ModalInner onClick={() => setModal(false)}>
+          <img src={modalCharacter} alt="갸우뚱 하는 손생님" />
+          <ModalComment>
+            <P>
+              <PointWord>아이디</PointWord>
+            </P>
+            <P>혹은</P>
+            <P>
+              <PointWord>비밀번호</PointWord>
+            </P>
+            <P>를 확인 해 주세요.</P>
+          </ModalComment>
+          <ModalButton>확인</ModalButton>
+        </ModalInner>
+      </Modal>
+      ;
       <LoginPage>
         <LoginBackground loginImg={loginImg}>
           <LoginForm onSubmit={handleLogin}>
