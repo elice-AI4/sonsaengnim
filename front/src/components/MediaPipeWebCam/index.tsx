@@ -196,7 +196,6 @@ function MediaPipeWebCam({
   }, []);
 
   useEffect(() => {
-    // setSocket(io({ path: `${flaskUrl}/socket.io` }));
     // 배포용
     // setSocket(io({ path: `${flaskUrl}/socket.io` }));
     // 로컬용

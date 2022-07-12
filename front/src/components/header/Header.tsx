@@ -24,10 +24,17 @@ const Header = () => {
   const [login, setLogin] = useAtom(loginAtom);
   const [user, setUser] = useAtom(userAtom);
   const { pathname } = useLocation();
-
+  console.log(user);
   const HandleLogout = () => {
     setLogin(false);
-    setUser({ email: "", username: "", password: "", token: "", point: 0 });
+    setUser({
+      email: "",
+      username: "",
+      password: "",
+      token: "",
+      point: 0,
+      myDonation: 0,
+    });
   };
   const [fold, setFold] = useState(true);
   const checkPathname = (pathname: string) => {

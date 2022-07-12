@@ -65,6 +65,7 @@ function Login() {
       password: res.data.user.password,
       token: res.data.token,
       point: res.data.user.point,
+      myDonation: res.data.user.myDonation,
     });
     setLogin(true);
     sessionStorage.setItem("userToken", res.data.token);

@@ -9,32 +9,82 @@ import {
   Balloon,
   MyLearning,
   MyLearningBox,
+  PointText,
 } from "./index.style";
 import { Heart } from "@brightlayer-ui/react-progress-icons";
 import * as Api from "../../../api";
-import { userAtom } from "../../../state";
+import { userAtom, User } from "../../../state";
 import { useAtom } from "jotai";
+import ReactTooltip from "react-tooltip";
+
+interface DonationInfo {
+  name: string;
+  currentPoint: number;
+  goalPoint: number;
+}
 
 function Donation() {
   const [donationPer, setDonationPer] = useState<number>(0);
-  const [goal, setGoal] = useState<number>(2000000);
-  const [curDonation, setCurDonation] = useState<number>(0);
   const [studyList, setStudyList] = useState([]);
-  const [user] = useAtom(userAtom);
+  const [user, setUser] = useAtom(userAtom);
+  const [possible, setPossible] = useState<boolean>(
+    user.point >= 2000 ? true : false
+  );
+  const [donationInfo, setDonationInfo] = useState<DonationInfo>({
+    name: "",
+    currentPoint: 0,
+    goalPoint: 0,
+  });
+
   useEffect(() => {
     Api.get("user/studylist").then((res) =>
       setStudyList(res.data.studyList.study)
     );
+
+    Api.get("donation/deafDonation").then((res) => {
+      setDonationInfo({
+        name: res.data.name,
+        currentPoint: res.data.currentPoint,
+        goalPoint: res.data.goalPoint,
+      });
+      setDonationPer(
+        Math.floor((res.data.currentPoint / res.data.goalPoint) * 100)
+      );
+    });
   }, []);
 
   const HandleDonation = () => {
-    setDonationPer((cur): number => {
-      return cur + (30000 / goal) * 100;
-    });
-    setCurDonation((cur) => {
-      return cur + 30000;
-    });
+    if (possible) {
+      Api.post(
+        `user/donation?point=${user.point / 2}&&name=${donationInfo.name}`,
+        {}
+      ).then((res) => {
+        setDonationInfo((cur): DonationInfo => {
+          const newInfo = {
+            ...cur,
+            currentPoint: res.data.donation.currentPoint,
+          };
+          return newInfo;
+        });
+        setUser((cur): User => {
+          const newUserInfo = {
+            ...cur,
+            myDonation: res.data.user.myDonation,
+            point: res.data.user.point,
+          };
+          return newUserInfo;
+        });
+        setDonationPer(
+          Math.floor(
+            (res.data.donation.currentPoint / donationInfo.goalPoint) * 100
+          )
+        );
+        setPossible(res.data.user.point >= 2000 ? true : false);
+      });
+      alert("기부 참여 감사합니다.");
+    }
   };
+
   return (
     <>
       <DonationBox>
@@ -46,6 +96,7 @@ function Donation() {
             ))}
           </MyLearningBox>
           <InfoText>{`보유 포인트 : ${user.point} 점`}</InfoText>
+          <InfoText>{`기부한 포인트 : ${user.myDonation} 점`}</InfoText>
         </InfoBox>
         <ExplanationBox>
           <Balloon
@@ -95,15 +146,26 @@ function Donation() {
             labelSize={70}
             labelPosition="bottom"
           />
-          <h1>{`목표 금액 : ${String(goal).replace(
+          <PointText>{`목표 금액 : ${String(donationInfo.goalPoint).replace(
             /\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g,
             ","
-          )}`}</h1>
-          <h1>{`현재 금액 : ${String(curDonation).replace(
+          )}`}</PointText>
+          <PointText>{`현재 금액 : ${String(donationInfo.currentPoint).replace(
             /\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g,
             ","
-          )}`}</h1>
-          <DonationButton onClick={HandleDonation}>기부하기</DonationButton>
+          )}`}</PointText>
+          <DonationButton
+            onClick={HandleDonation}
+            data-tip="donation-possible"
+            data-for="donation-possible"
+          >
+            기부하기
+            {!possible && (
+              <ReactTooltip id="donation-possible">
+                <h2>포인트가 2000점 미만입니다.</h2>
+              </ReactTooltip>
+            )}
+          </DonationButton>
         </DonationInfo>
       </DonationBox>
     </>

@@ -76,3 +76,9 @@ export const MyLearning = styled.div`
   margin-top: 5px;
   margin-bottom: 5px;
 `;
+
+export const PointText = styled.div`
+  font-size: 30px;
+  font-weight: bold;
+  margin-bottom: 20px;
+`;
