@@ -23,7 +23,7 @@ userRouter.post("/study", checkLogin, async (req: Request, res: Response, next: 
   try {
     const word = req.query.word;
     const point = parseInt(req.query.point as string, 10);
-
+    console.log(point);
     const userId = req.user;
     const study = await userService.study(userId, word, point);
     res.status(200).json(study);
