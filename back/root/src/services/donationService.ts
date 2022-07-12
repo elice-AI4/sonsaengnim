@@ -9,4 +9,12 @@ export class DonationService {
     const donation = await this.donationModel.createDonation(donationData);
     return donation;
   }
+
+  public async findDonation(name: string) {
+    const foundDonation: IDonation = await this.donationModel.findDonation(name);
+    if (!foundDonation) {
+      throw new Error("donation not found");
+    }
+    return foundDonation;
+  }
 }

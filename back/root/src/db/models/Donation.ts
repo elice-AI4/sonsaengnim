@@ -6,6 +6,11 @@ class MongoDonationModel implements IDonationModel {
     const donation = await Donation.create(donationData);
     return donation;
   }
+
+  public async findDonation(name: string) {
+    const foundDonation = await Donation.findOne({ name }).lean();
+    return foundDonation;
+  }
 }
 
 export { MongoDonationModel };
