@@ -21,6 +21,7 @@ import { searchCopyRights } from "../../copyRights/copyRights";
 import ReactTooltip from "react-tooltip";
 
 import * as Api from "../../../api";
+import { isConstructorDeclaration } from "typescript";
 
 interface VideoDataProps {
   _id: string;
@@ -66,25 +67,20 @@ const Search = () => {
   const [searchAutoKey, setSearchAutoKey] = useState<ImgDataProps[]>([]);
 
   const [isClickedInList, setIsClickedInList] = useState(false);
-  const [isClickedSearchBtn, setIsClickedSearchBtn] = useState(false);
 
-  const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchWord(e.target.value);
-    setSearchAutoWord(e.target.value);
-    setIsClickedInList(false);
+  const searchData = (search: string | ImgDataProps) => {
+    if (typeof search === "string") {
+      return check_kor.test(search)
+        ? wordPictures.filter((data) => data.word === search)
+        : wordPictures.filter((data) => data.english === search.toLowerCase());
+    } else {
+      return check_kor.test(search.word)
+        ? wordPictures.filter((data) => data.word === search.word)
+        : wordPictures.filter((data) => data.english === search.english);
+    }
   };
 
-  const handleOnClick = () => {
-    setIsFirst(false);
-    setIsClickedSearchBtn(true);
-
-    //이미지 찾기
-    const searchedData = check_kor.test(searchWord)
-      ? wordPictures.filter((data) => data.word === searchWord)
-      : wordPictures.filter(
-          (data) => data.english === searchWord.toLowerCase()
-        );
-
+  const searchImg = (searchedData: any) => {
     if (searchedData.length > 0) {
       setSearchedImage({
         src: searchedData[0].cardImageURL,
@@ -98,8 +94,9 @@ const Search = () => {
       });
       setIsEmpty(true);
     }
+  };
 
-    //비디오 찾기
+  const searchVideo = (searchedData: any) => {
     if (searchedData.length > 0) {
       const filteredVideo = videos
         .filter((data) => {
@@ -116,6 +113,38 @@ const Search = () => {
     }
   };
 
+  const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchWord(e.target.value);
+    setSearchAutoWord(e.target.value);
+    setIsClickedInList(false);
+  };
+
+  const handleOnClick = () => {
+    setIsFirst(false);
+    setIsClickedInList(true);
+
+    const searchedData = searchData(searchAutoWord);
+
+    searchImg(searchedData);
+    searchVideo(searchedData);
+  };
+
+  const autoSearchOnClick = (search: ImgDataProps) => {
+    setIsFirst(false);
+    setIsClickedInList(true);
+
+    if (check_kor.test(searchAutoWord)) {
+      setSearchAutoWord(search.word);
+    } else {
+      setSearchAutoWord(search.english);
+    }
+
+    const searchedData = searchData(search);
+
+    searchImg(searchedData);
+    searchVideo(searchedData);
+  };
+
   const getVideos = async () => {
     const res = await Api.get("hands");
     setVideos(res.data.slice(26));
@@ -123,7 +152,6 @@ const Search = () => {
 
   const getWordPictures = async () => {
     const res = await Api.get("cards");
-
     setWordPictures(res.data);
   };
 
@@ -143,7 +171,6 @@ const Search = () => {
     const res = await Api.get("cards");
     const filteredData = res.data
       .filter((list: WordSearchList) => {
-        const check_kor = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/;
         return check_kor.test(searchAutoWord)
           ? list.word.includes(searchAutoWord) === true
           : list.english.includes(searchAutoWord) === true;
@@ -188,17 +215,7 @@ const Search = () => {
                   return (
                     <AutoSearchData
                       key={search.word}
-                      onClick={() => {
-                        if (check_kor.test(searchAutoWord)) {
-                          setSearchWord(search.word);
-                          setSearchAutoWord(search.word);
-                        } else {
-                          setSearchWord(search.english);
-                          setSearchAutoWord(search.english);
-                        }
-                        setIsClickedInList(true);
-                        setIsClickedSearchBtn(false);
-                      }}
+                      onClick={() => autoSearchOnClick(search)}
                     >
                       {check_kor.test(searchAutoWord) ? (
                         <a href="#">{search.word}</a>
@@ -229,16 +246,13 @@ const Search = () => {
             <p style={{ textAlign: "right" }}>출처: 국립국어원</p>
           </ReactTooltip>
         </SearchRowContainer>
-        {!isClickedSearchBtn && (
-          <h2>입력 후 검색 버튼 또는 엔터키를 눌러주세요!</h2>
-        )}
       </SearchContainer>
-      {isEmpty && isFirst && (
-        <H1>
-          공부했던 것을 찾아볼까요? <br /> 한글로, 영어로 함께 검색해 봐요.
-        </H1>
-      )}
       <ResultContainer>
+        {isEmpty && isFirst && (
+          <H1>
+            공부했던 것을 찾아볼까요? <br /> 한글로, 영어로 함께 검색해 봐요.
+          </H1>
+        )}
         {isEmpty && !isFirst && <H1>검색 결과가 없습니다!</H1>}
         {!isEmpty && find && videoSrc.length >= 1 && (
           <>
