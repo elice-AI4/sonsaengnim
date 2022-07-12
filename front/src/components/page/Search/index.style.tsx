@@ -46,18 +46,20 @@ export const SearchButton = styled.button`
 
 export const SearchContainer = styled.div`
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   transform: translateY(10rem);
-  flex: 0.3;
+  flex: 0.4;
   z-index: 2;
+  padding-bottom: 50px;
 `;
 
 export const ResultContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  flex: 0.7;
+  flex: 0.5;
   width: 100vw;
 `;
 
@@ -83,22 +85,19 @@ export const H1 = styled.h1`
   align-items: center;
 `;
 
-
 export const AutoSearchContainer = styled.div`
-  z-index: 7;
-  height: 50vh;
+  z-index: -1;
+  height: 55vh;
   width: 438px;
   background-color: white;
   position: absolute;
-  top: 190px;
+  top: 160px;
   left: 9px;
   border: 2px solid;
-  padding: 10px;
-`
+  padding-top: 45px;
+`;
 
-export const AutoSearchWrap = styled.ul`
-
-`
+export const AutoSearchWrap = styled.ul``;
 
 export const AutoSearchData = styled.li`
   padding: 10px 8px;
@@ -116,4 +115,12 @@ export const AutoSearchData = styled.li`
     top: 50%;
     transform: translateY(-50%);
   }
-`
+`;
+
+export const SearchRowContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2;
+  bottom: 30px;
+`;
