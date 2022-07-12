@@ -14,6 +14,8 @@ tags:
     description: "American Sing Language API"
   - name: Score Board
     description: "Top ten scores"
+  - name: Card
+    description: "Card images only korean, no english"
 
 schemes:
   - "http"
@@ -168,18 +170,22 @@ paths:
         "200":
           description: Return JSON
 
-  /user/study/{word}:
+  /user/study:
     post:
       tags:
         - User
       description: "user Study record"
       parameters:
-        - in: path
+        - in: query
           name: word
           schema:
             type: string
-          required: true
           description: get word
+        - in: query
+          name: point
+          schema:
+            type: number
+          description: get point
         - name: authorization
           in: header
           type: string
@@ -187,6 +193,73 @@ paths:
       responses:
         "200":
           description: Return JSON
+  /user/donation:
+    post:
+      tags:
+        - User
+      description: "user donation post"
+      parameters:
+        - in: query
+          name: point
+          schema:
+            type: number
+          description: user point
+        - in: query
+          name: name
+          schema:
+            type: string
+          description: donation name
+        - name: authorization
+          in: header
+          type: string
+          required: true
+      responses:
+        "200":
+          description: Return JSON
+
+  /donation:
+    post:
+      tags:
+        - Donation
+      description: "post donation point"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "name"
+          description: "donation name data"
+          required: true
+          schema:
+            $ref: "#/definitions/Donation"
+      responses:
+        "201":
+          description: "POST Successful."
+        "405":
+          description: "Invalid input"
+
+  /donation/{name}:
+    get:
+      tags:
+        - Donation
+      description: "post donation point"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: path
+          name: name
+          schema:
+            type: string
+          schema:
+            $ref: "#/definitions/Donation"
+      responses:
+        "201":
+          description: "GET Successful."
+        "400":
+          description: "Invalid input"
 
   /hands:
     post:
@@ -298,6 +371,15 @@ paths:
         "200":
           description: Return JSON
 
+  /cards:
+    get:
+      tags:
+        - Card
+      description: "Card images in korean"
+      responses:
+        "200":
+          description: Return JSON
+
 securityDefinitions:
   petstore_auth:
     type: "oauth2"
@@ -329,10 +411,10 @@ definitions:
       english:
         type: string
         example: "test"
-      handVideo:
+      handImage:
         type: string
-        example: "test hand video"
-      mouthVideo:
+        example: "test hand image"
+      mouthImage:
         type: string
         example: "test mouth video"
   Score:
@@ -356,6 +438,18 @@ definitions:
       time:
         type: number
         example: 300
+  Donation:
+    type: object
+    properties:
+      name:
+        type: string
+        example: "donation"
+      currentPoint:
+        type: number
+        example: "0"
+      goalPoint:
+        type: number
+        example: 20000000
 
 externalDocs:
   description: "Find out more about Swagger"

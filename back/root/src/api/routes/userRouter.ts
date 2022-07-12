@@ -1,11 +1,26 @@
 import { Router, Request, Response, NextFunction } from "express";
 import { UserService } from "../../services";
-import { userValidateOptional, wordValidate } from "../middlewares/validators";
+import { userValidateOptional } from "../middlewares/validators";
 import { MongoUserModel } from "../../db";
+
 import checkLogin from "../middlewares/checkLogin";
 
 const userRouter = Router();
 const userService = new UserService(new MongoUserModel());
+
+userRouter.post("/donation", checkLogin, async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const userId = req.user;
+    const point: number = parseInt(req.query.point as string, 10);
+    const name: string = req.query.name as string;
+    const userDonation = await userService.postDonation(userId, point, name);
+
+    res.status(201).json(userDonation);
+  } catch (error) {
+    res.status(400);
+    next(error);
+  }
+});
 
 userRouter.get("/studylist", checkLogin, async (req: Request, res: Response, next: NextFunction) => {
   try {
@@ -18,11 +33,13 @@ userRouter.get("/studylist", checkLogin, async (req: Request, res: Response, nex
   }
 });
 
-userRouter.post("/study/:word", checkLogin, wordValidate, async (req: Request, res: Response, next: NextFunction) => {
+userRouter.post("/study", checkLogin, async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const word = req.params.word;
+    const word = req.query.word;
+    const point = parseInt(req.query.point as string, 10);
+    console.log(point);
     const userId = req.user;
-    const study = await userService.study(userId, word);
+    const study = await userService.study(userId, word, point);
     res.status(200).json(study);
   } catch (error) {
     res.status(400);
@@ -48,7 +65,7 @@ userRouter.post("/", userValidateOptional, async (req: Request, res: Response, n
 
     res.status(200).json(loginedUser);
   } catch (error) {
-    res.status(400);
+    res.statusCode = 400;
     next(error);
   }
 });
@@ -61,28 +78,21 @@ userRouter.put("/", checkLogin, userValidateOptional, async (req: Request, res: 
     const updatedUser = await userService.updateUser(userId, email, username);
     res.status(200).json(updatedUser);
   } catch (error) {
-    res.status(400);
     next(error);
   }
 });
 
-userRouter.put(
-  "/password",
-  checkLogin,
-  userValidateOptional,
-  async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      const { password } = req.body;
-      const userId = req.user;
+userRouter.patch("/", checkLogin, userValidateOptional, async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const { password } = req.body;
+    const userId = req.user;
 
-      const updatedUser = await userService.changePassword(userId, password);
-      res.status(200).json(updatedUser);
-    } catch (error) {
-      res.status(400);
-      next(error);
-    }
-  },
-);
+    const updatedUser = await userService.changePassword(userId, password);
+    res.status(200).json(updatedUser);
+  } catch (error) {
+    next(error);
+  }
+});
 
 userRouter.delete("/", checkLogin, async (req: Request, res: Response, next: NextFunction) => {
   try {

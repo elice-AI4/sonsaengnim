@@ -57,20 +57,19 @@ function Login() {
   });
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    try {
-      const res = await Api.post("user", loginInfo);
-      setUser({
-        email: res.data.user.email,
-        username: res.data.user.username,
-        password: res.data.user.password,
-        token: res.data.token,
-      });
-      setLogin(true);
-      sessionStorage.setItem("userToken", res.data.token);
-      navigate("/");
-    } catch (e: any) {
-      setModal(true);
-    }
+    const res = await Api.post("user", loginInfo);
+    console.log(res);
+    setUser({
+      email: res.data.user.email,
+      username: res.data.user.username,
+      password: res.data.user.password,
+      token: res.data.token,
+      point: res.data.user.point,
+      myDonation: res.data.user.myDonation,
+    });
+    setLogin(true);
+    sessionStorage.setItem("userToken", res.data.token);
+    navigate("/");
   };
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setLoginInfo((cur): UserLogin => {
@@ -108,7 +107,6 @@ function Login() {
       });
     }
   }, [loginInfo.password]);
-
   return (
     <>
       <Modal visible={modal} style={modalStyle} backGroundTransparent={true}>

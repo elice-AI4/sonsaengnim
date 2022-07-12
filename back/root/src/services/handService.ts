@@ -9,7 +9,6 @@ export class HandService {
     if (!hand) {
       throw new Error("해당 수화 데이터를 찾을 수 없습니다.");
     }
-    return hand;
   }
 
   public async getAll() {

@@ -1,9 +1,9 @@
 import styled from "styled-components";
-import testImg from "./test.png";
+
 export const DonationBox = styled.div`
+  background-color: #ffe7ec;
   width: 100%;
   min-height: 100vh;
-  border: 2px solid red;
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -11,33 +11,16 @@ export const DonationBox = styled.div`
 
 export const InfoBox = styled.div`
   width: 400px;
-  height: 600px;
-  border: 2px solid blue;
-`;
-
-export const ProgressImg = styled.div`
-  background-image: url(${testImg});
-  background-repeat: no-repeat;
-  background-size: cover;
-  width: 300px;
-  height: 300px;
-  border: 1px solid orange;
-  /* background: rgba(255, 255, 255, 0.5); */
-`;
-export const ProgressBar = styled.div`
-  width: 300px;
-  height: 150px;
-  border: 1px solid green;
-  /* background: rgba(0, 0, 0, 0.5); */
-  background-color: white;
-  z-index: 10;
-  opacity: 0.5;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 `;
 
 export const ExplanationBox = styled.div`
   width: 400px;
   height: 600px;
-  border: 1px solid purple;
+  /* border: 1px solid purple; */
 `;
 
 export const DonationInfo = styled.div`
@@ -47,7 +30,6 @@ export const DonationInfo = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  border: 1px solid black;
 `;
 
 export const DonationButton = styled.button`
@@ -61,4 +43,42 @@ export const DonationButton = styled.button`
 export const InfoText = styled.p`
   font-size: 30px;
   font-weight: bold;
+`;
+
+export const Balloon = styled.div<{
+  BalloonImg: string;
+  width: string;
+  height: string;
+  padding: string;
+}>`
+  background-image: ${(props) => `url(${props.BalloonImg})`};
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: ${(props) => props.width};
+  height: ${(props) => props.height};
+  padding: ${(props) => props.padding};
+`;
+
+export const MyLearningBox = styled.div`
+  width: 350px;
+  border: 2px solid black;
+  background-color: lightblue;
+  border-radius: 10px;
+`;
+
+export const MyLearning = styled.div`
+  border: 2px solid black;
+  background-color: skyblue;
+  border-radius: 10px;
+  font-size: 30px;
+  display: inline-block;
+  margin-left: 10px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+`;
+
+export const PointText = styled.div`
+  font-size: 30px;
+  font-weight: bold;
+  margin-bottom: 20px;
 `;
