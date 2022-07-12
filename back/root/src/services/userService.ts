@@ -9,6 +9,11 @@ export class UserService {
   // eslint-disable-next-line no-unused-vars
   constructor(private userModel: MongoUserModel) {}
 
+  public async postDonation(userId: string, point: number, name: string) {
+    const userDonation = await this.userModel.postDonation(userId, point, name);
+    return userDonation;
+  }
+
   public async studyList(userId) {
     const studyList = await this.userModel.studyList(userId);
     let point: number = 0;

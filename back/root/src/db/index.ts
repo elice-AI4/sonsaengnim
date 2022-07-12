@@ -7,6 +7,7 @@ export * from "./models/Score";
 export * from "./models/Quiz";
 export * from "./models/Card";
 export * from "./models/Donation";
+
 mongoose
   .connect(config.MONGO_URL)
   .then(() => console.log(`${config.MONGO_URL} 연결 성공`))

@@ -1,9 +1,23 @@
 import User from "../schemas/user";
+import { Donation } from "../schemas/donation";
 import { IUserModel } from "../../models";
 export class MongoUserModel implements IUserModel {
   public async studyList(userId: string) {
     const studyList = await User.findById(userId, { _id: 0, study: 1 });
     return studyList;
+  }
+  public async postDonation(userId: string, point: number, name: string) {
+    const user = await User.findById(userId, { myDonation: 1, point: 1 });
+    user.myDonation += point;
+    user.point -= point;
+    if (user.point <= 0) {
+      throw new Error("User point보다 차감 point가 더 많습니다.");
+    }
+    user.save();
+    const donation = await Donation.findOne({ name }, { currentPoint: 1 });
+    donation.currentPoint += point;
+    donation.save();
+    return { user, donation };
   }
 
   public async study(userId: string, word: string, point: number) {
