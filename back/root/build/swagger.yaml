@@ -401,7 +401,7 @@ definitions:
         type: "string"
       password:
         type: "string"
-      name:
+      username:
         type: "string"
     xml:
       name: "Order"

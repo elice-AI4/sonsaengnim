@@ -10,7 +10,7 @@ export class MongoUserModel implements IUserModel {
     const user = await User.findById(userId, { myDonation: 1, point: 1 });
     user.myDonation += point;
     user.point -= point;
-    if (user.point <= 0) {
+    if (user.point < 0) {
       throw new Error("User point보다 차감 point가 더 많습니다.");
     }
     user.save();
