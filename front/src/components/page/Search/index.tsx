@@ -77,7 +77,6 @@ const Search = () => {
   const handleOnClick = () => {
     setIsFirst(false);
     setIsClickedSearchBtn(true);
-
     //이미지 찾기
     const searchedData = check_kor.test(searchWord)
       ? wordPictures.filter((data) => data.word === searchWord)

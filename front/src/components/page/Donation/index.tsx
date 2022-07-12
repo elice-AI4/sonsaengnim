@@ -56,7 +56,7 @@ function Donation() {
   const HandleDonation = () => {
     if (possible) {
       Api.post(
-        `user/donation?point=${user.point / 2}&&name=${donationInfo.name}`,
+        `user/donation?point=${user.point}&&name=${donationInfo.name}`,
         {}
       ).then((res) => {
         setDonationInfo((cur): DonationInfo => {
@@ -89,14 +89,20 @@ function Donation() {
     <>
       <DonationBox>
         <InfoBox>
-          <InfoText>{`${user.username}님이 학습 완료한 수화입니다`}</InfoText>
+          <InfoText>{`${user.username}님이 학습한 단어`}</InfoText>
           <MyLearningBox>
             {studyList.map((study, index) => (
               <MyLearning key={index}>{study}</MyLearning>
             ))}
           </MyLearningBox>
-          <InfoText>{`보유 포인트 : ${user.point} 점`}</InfoText>
-          <InfoText>{`기부한 포인트 : ${user.myDonation} 점`}</InfoText>
+          <InfoText>{`보유 포인트 : ${String(user.point).replace(
+            /\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g,
+            ","
+          )} 점`}</InfoText>
+          <InfoText>{`기부한 포인트 : ${String(user.myDonation).replace(
+            /\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g,
+            ","
+          )} 점`}</InfoText>
         </InfoBox>
         <ExplanationBox>
           <Balloon
@@ -160,9 +166,13 @@ function Donation() {
             data-for="donation-possible"
           >
             기부하기
-            {!possible && (
+            {!possible ? (
               <ReactTooltip id="donation-possible">
                 <h2>포인트가 2000점 미만입니다.</h2>
+              </ReactTooltip>
+            ) : (
+              <ReactTooltip id="donation-possible">
+                <h2>보유하고 있는 모든 포인트가 기부됩니다.</h2>
               </ReactTooltip>
             )}
           </DonationButton>

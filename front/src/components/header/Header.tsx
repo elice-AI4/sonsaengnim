@@ -65,7 +65,11 @@ const Header = () => {
           <HomeLink to="/">
             <img src={title} alt="title 손생님" width="180px" height="100%" />
           </HomeLink>
-          {login && <WelcomeBox>{`${user.username}님 환영합니다!`}</WelcomeBox>}
+          {login && (
+            <WelcomeBox>{`${user.username}님 환영합니다! ${String(
+              user.point
+            ).replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")} 점`}</WelcomeBox>
+          )}
         </TitleContainer>
         <List fold={fold}>
           {!login && (

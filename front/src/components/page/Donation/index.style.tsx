@@ -10,7 +10,7 @@ export const DonationBox = styled.div`
 `;
 
 export const InfoBox = styled.div`
-  width: 400px;
+  width: 450px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -75,6 +75,7 @@ export const MyLearning = styled.div`
   margin-left: 10px;
   margin-top: 5px;
   margin-bottom: 5px;
+  padding: 5px;
 `;
 
 export const PointText = styled.div`
