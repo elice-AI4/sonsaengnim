@@ -1,3 +1,5 @@
-// import { IDonation } from "./IDonation";
+import { IDonation } from "./IDonation";
 
-export interface IDonationModel {}
+export interface IDonationModel {
+  createDonation(donationModel: IDonation): Promise<IDonation>;
+}

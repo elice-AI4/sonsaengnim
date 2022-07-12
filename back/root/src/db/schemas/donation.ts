@@ -5,6 +5,7 @@ const donationSchema = new Schema(
     name: {
       type: String,
       required: true,
+      unique: true,
     },
     currentPoint: {
       type: Number,
