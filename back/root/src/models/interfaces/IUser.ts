@@ -8,6 +8,7 @@ export interface IUser {
   createdAt: string;
   updatedAt: string;
   point: number;
+  myDonation: number;
   study?: Array<string>;
   errorMessage?;
   userId?: string;

@@ -193,6 +193,73 @@ paths:
       responses:
         "200":
           description: Return JSON
+  /user/donation:
+    post:
+      tags:
+        - User
+      description: "user donation post"
+      parameters:
+        - in: query
+          name: point
+          schema:
+            type: number
+          description: user point
+        - in: query
+          name: name
+          schema:
+            type: string
+          description: donation name
+        - name: authorization
+          in: header
+          type: string
+          required: true
+      responses:
+        "200":
+          description: Return JSON
+
+  /donation:
+    post:
+      tags:
+        - Donation
+      description: "post donation point"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "name"
+          description: "donation name data"
+          required: true
+          schema:
+            $ref: "#/definitions/Donation"
+      responses:
+        "201":
+          description: "POST Successful."
+        "405":
+          description: "Invalid input"
+
+  /donation/{name}:
+    get:
+      tags:
+        - Donation
+      description: "post donation point"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: path
+          name: name
+          schema:
+            type: string
+          schema:
+            $ref: "#/definitions/Donation"
+      responses:
+        "201":
+          description: "GET Successful."
+        "400":
+          description: "Invalid input"
 
   /hands:
     post:
@@ -334,7 +401,7 @@ definitions:
         type: "string"
       password:
         type: "string"
-      name:
+      username:
         type: "string"
     xml:
       name: "Order"
@@ -371,6 +438,18 @@ definitions:
       time:
         type: number
         example: 300
+  Donation:
+    type: object
+    properties:
+      name:
+        type: string
+        example: "donation"
+      currentPoint:
+        type: number
+        example: "0"
+      goalPoint:
+        type: number
+        example: 20000000
 
 externalDocs:
   description: "Find out more about Swagger"

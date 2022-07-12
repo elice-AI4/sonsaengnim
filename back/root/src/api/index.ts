@@ -6,6 +6,7 @@ import { handRouter } from "./routes/handRouter";
 import { scoreRouter } from "./routes/scoreRouter";
 import { quizRouter } from "./routes/quizRouter";
 import { cardRouter } from "./routes/cardRouter";
+import { donationRouter } from "./routes/donationRouter";
 
 const router = Router();
 
@@ -16,5 +17,6 @@ router.use("/hands", handRouter);
 router.use("/scores", scoreRouter);
 router.use("/quiz", quizRouter);
 router.use("/cards", cardRouter);
+router.use("/donation", donationRouter);
 
 export { router };

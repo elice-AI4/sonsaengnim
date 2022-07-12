@@ -8,6 +8,20 @@ import checkLogin from "../middlewares/checkLogin";
 const userRouter = Router();
 const userService = new UserService(new MongoUserModel());
 
+userRouter.post("/donation", checkLogin, async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const userId = req.user;
+    const point: number = parseInt(req.query.point as string, 10);
+    const name: string = req.query.name as string;
+    const userDonation = await userService.postDonation(userId, point, name);
+
+    res.status(201).json(userDonation);
+  } catch (error) {
+    res.status(400);
+    next(error);
+  }
+});
+
 userRouter.get("/studylist", checkLogin, async (req: Request, res: Response, next: NextFunction) => {
   try {
     const userId = req.user;
