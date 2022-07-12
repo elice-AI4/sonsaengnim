@@ -5,6 +5,7 @@ import Footer from "../../Footer";
 import {
   LearningContainer,
   SearchContainer,
+  SearchRowContainer,
   ResultContainer,
   CardContainer,
   VideoContainer,
@@ -13,7 +14,7 @@ import {
   H1,
   AutoSearchContainer,
   AutoSearchWrap,
-  AutoSearchData
+  AutoSearchData,
 } from "./index.style";
 
 import { searchCopyRights } from "../../copyRights/copyRights";
@@ -42,6 +43,8 @@ const boxVariants = {
 };
 
 const Search = () => {
+  const check_kor = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/;
+
   const [searchWord, setSearchWord] = useState("");
   const [find, setFind] = useState(false);
   const constraintsRef = useRef<HTMLDivElement>(null);
@@ -59,15 +62,23 @@ const Search = () => {
 
   const [wordPictures, setWordPictures] = useState<ImgDataProps[]>([]);
 
+  const [searchAutoWord, setSearchAutoWord] = useState<string>("");
+  const [searchAutoKey, setSearchAutoKey] = useState<ImgDataProps[]>([]);
+
+  const [isClickedInList, setIsClickedInList] = useState(false);
+  const [isClickedSearchBtn, setIsClickedSearchBtn] = useState(false);
+
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchWord(e.target.value);
+    setSearchAutoWord(e.target.value);
+    setIsClickedInList(false);
   };
 
   const handleOnClick = () => {
     setIsFirst(false);
+    setIsClickedSearchBtn(true);
 
     //이미지 찾기
-    const check_kor = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/;
     const searchedData = check_kor.test(searchWord)
       ? wordPictures.filter((data) => data.word === searchWord)
       : wordPictures.filter(
@@ -112,8 +123,7 @@ const Search = () => {
 
   const getWordPictures = async () => {
     const res = await Api.get("cards");
-    console.log(res.data);
-    
+
     setWordPictures(res.data);
   };
 
@@ -121,6 +131,25 @@ const Search = () => {
     if (e.key === "Enter") {
       handleOnClick();
     }
+  };
+
+  interface WordSearchList {
+    includes(data: string): boolean;
+    word?: any;
+    english?: any;
+  }
+
+  const updateData = async () => {
+    const res = await Api.get("cards");
+    const filteredData = res.data
+      .filter((list: WordSearchList) => {
+        const check_kor = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/;
+        return check_kor.test(searchAutoWord)
+          ? list.word.includes(searchAutoWord) === true
+          : list.english.includes(searchAutoWord) === true;
+      })
+      .slice(0, 8);
+    setSearchAutoKey(filteredData);
   };
 
   useEffect(() => {
@@ -132,38 +161,77 @@ const Search = () => {
     getWordPictures();
   }, []);
 
+  useEffect(() => {
+    const debounce = setTimeout(() => {
+      if (searchAutoWord) updateData();
+    }, 200);
+    return () => {
+      clearTimeout(debounce);
+    };
+  }, [searchAutoWord]);
+
   return (
     <LearningContainer>
       <SearchContainer>
-        <SearchBar
-          type="text"
-          placeholder="여기서 입력!"
-          onChange={handleOnChange}
-          onKeyDown={onKeyDown}
-        />
-        <AutoSearchContainer>
-          <AutoSearchWrap>
-          <AutoSearchData>
-            <a href="#"></a>
-          </AutoSearchData>
-          </AutoSearchWrap>
-        </AutoSearchContainer>
-        <SearchButton
-          onClick={handleOnClick}
-          data-tip="main-search"
-          data-for="main-search"
-        >
-          검색!
-        </SearchButton>
-        <ReactTooltip id="main-search" place="bottom">
-          <video autoPlay width="400" muted loop>
-            <source
-              src="http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20160325/251010/MOV000262948_700X466.mp4"
-              type="video/mp4"
-            />
-          </video>
-          <p style={{ textAlign: "right" }}>출처: 국립국어원</p>
-        </ReactTooltip>
+        <SearchRowContainer>
+          <SearchBar
+            type="text"
+            placeholder="여기서 입력!"
+            value={searchAutoWord}
+            onChange={handleOnChange}
+            onKeyDown={onKeyDown}
+          />
+          {!isClickedInList && searchAutoKey.length > 0 && searchAutoWord && (
+            <AutoSearchContainer>
+              <AutoSearchWrap>
+                {searchAutoKey.map((search: ImgDataProps, index: number) => {
+                  return (
+                    <AutoSearchData
+                      key={search.word}
+                      onClick={() => {
+                        if (check_kor.test(searchAutoWord)) {
+                          setSearchWord(search.word);
+                          setSearchAutoWord(search.word);
+                        } else {
+                          setSearchWord(search.english);
+                          setSearchAutoWord(search.english);
+                        }
+                        setIsClickedInList(true);
+                        setIsClickedSearchBtn(false);
+                      }}
+                    >
+                      {check_kor.test(searchAutoWord) ? (
+                        <a href="#">{search.word}</a>
+                      ) : (
+                        <a href="#">{search.english}</a>
+                      )}
+                    </AutoSearchData>
+                  );
+                })}
+              </AutoSearchWrap>
+            </AutoSearchContainer>
+          )}
+
+          <SearchButton
+            onClick={handleOnClick}
+            data-tip="main-search"
+            data-for="main-search"
+          >
+            검색!
+          </SearchButton>
+          <ReactTooltip id="main-search" place="bottom">
+            <video autoPlay width="400" muted loop>
+              <source
+                src="http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20160325/251010/MOV000262948_700X466.mp4"
+                type="video/mp4"
+              />
+            </video>
+            <p style={{ textAlign: "right" }}>출처: 국립국어원</p>
+          </ReactTooltip>
+        </SearchRowContainer>
+        {!isClickedSearchBtn && (
+          <h2>입력 후 검색 버튼 또는 엔터키를 눌러주세요!</h2>
+        )}
       </SearchContainer>
       {isEmpty && isFirst && (
         <H1>
