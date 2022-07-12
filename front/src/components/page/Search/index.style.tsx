@@ -10,7 +10,6 @@ export const LearningContainer = styled.div`
   width: 100vw;
   min-height: 100vh;
   min-width: 1000px;
-
   display: flex;
   justify-content: center;
   align-items: center;
@@ -18,6 +17,7 @@ export const LearningContainer = styled.div`
 `;
 
 export const SearchBar = styled.input`
+  display: flex;
   font-size: 40px;
   padding: 10px;
   margin: 10px;
@@ -59,7 +59,7 @@ export const ResultContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  flex: 0.5;
+  flex: 0.6;
   width: 100vw;
 `;
 
@@ -91,10 +91,9 @@ export const AutoSearchContainer = styled.div`
   width: 438px;
   background-color: white;
   position: absolute;
-  top: 160px;
+  transform: translateY(24rem);
   left: 9px;
-  border: 2px solid;
-  padding-top: 45px;
+  padding-top: 55px;
 `;
 
 export const AutoSearchWrap = styled.ul``;
