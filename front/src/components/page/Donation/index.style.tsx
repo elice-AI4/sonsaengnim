@@ -96,6 +96,12 @@ export const ScrollbarBox = styled.div`
   }
 `;
 
+export const EmptyScript = styled.p`
+  font-size: 3rem;
+  font-weight: bold;
+  margin-top: 15rem;
+`;
+
 export const MyLearning = styled.div<{ empty?: boolean }>`
   min-width: 9rem;
   height: 6rem;

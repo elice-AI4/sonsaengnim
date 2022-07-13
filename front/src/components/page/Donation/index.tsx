@@ -11,6 +11,7 @@ import {
   MyLearningBox,
   PointText,
   ScrollbarBox,
+  EmptyScript,
 } from "./index.style";
 import { Heart } from "@brightlayer-ui/react-progress-icons";
 import * as Api from "../../../api";
@@ -93,11 +94,17 @@ function Donation() {
           <InfoText>{`${user.username}님이 학습한 단어`}</InfoText>
           <MyLearningBox>
             <ScrollbarBox>
-              {studyList.map((study, index) => (
-                <MyLearning key={index}>{study}</MyLearning>
-              ))}
-              <MyLearning empty={true} />
-              <MyLearning empty={true} />
+              {studyList.length === 0 ? (
+                <EmptyScript>학습 이력이 없어요.</EmptyScript>
+              ) : (
+                <>
+                  {studyList.map((study, index) => (
+                    <MyLearning key={index}>{study}</MyLearning>
+                  ))}
+                  <MyLearning empty={true} />
+                  <MyLearning empty={true} />
+                </>
+              )}
             </ScrollbarBox>
           </MyLearningBox>
           <InfoText>{`보유 포인트 : ${String(user.point).replace(
