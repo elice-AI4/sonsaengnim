@@ -15,7 +15,6 @@ registerRouter.post("/", userValidate, async (req: Request, res: Response, next:
 
     res.status(200).json(newUser);
   } catch (error) {
-    res.status(400);
     next(error);
   }
 });

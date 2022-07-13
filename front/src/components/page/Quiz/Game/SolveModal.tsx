@@ -6,8 +6,10 @@ import {
   StopButton,
   TextP,
   RankRegisterButton,
+  ExitButton,
 } from "./index.style";
 import Modal from "../../Modal";
+import { useNavigate } from "react-router-dom";
 
 const ModalStyle = {
   width: "1000px",
@@ -38,20 +40,24 @@ function SolveModal({
   MoveRecord,
   timeOver,
 }: SolveProps) {
+  const navigate = useNavigate();
+
+  const handleExit = () => {
+    navigate("/");
+  };
+  console.log("answer : ", answer);
+
   return (
     <Modal visible={modal} style={ModalStyle as React.CSSProperties}>
+      {<h1>이거 뭔데? {answer}</h1>}
       {answer ? (
-        <>
-          <AnswerImg
-            src={`${process.env.PUBLIC_URL}/quizgamepic/answer1.jpg`}
-          ></AnswerImg>
-        </>
+        <AnswerImg
+          src={`${process.env.PUBLIC_URL}/quizgamepic/answer1.jpg`}
+        ></AnswerImg>
       ) : (
-        <>
-          <AnswerImg
-            src={`${process.env.PUBLIC_URL}/quizgamepic/wrong.jpg`}
-          ></AnswerImg>
-        </>
+        <AnswerImg
+          src={`${process.env.PUBLIC_URL}/quizgamepic/wrong.jpg`}
+        ></AnswerImg>
       )}
       <h1>{`맞힌 개수 ${score.ans}/${MAX_COUNT}`}</h1>
       {finish ? (
@@ -59,6 +65,7 @@ function SolveModal({
           <RankRegisterButton onClick={MoveRecord}>
             순위 등록하러가기
           </RankRegisterButton>
+          <ExitButton onClick={handleExit}>나가기</ExitButton>
         </div>
       ) : (
         <div>

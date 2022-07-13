@@ -25,14 +25,22 @@ export const ModalOverlay = styled.div<{ visible: boolean }>`
   z-index: 999;
 `;
 
-export const ModalInner = styled.div<{ visible: boolean }>`
+interface ModalInnerProps {
+  visible: boolean;
+  backGroundTransparent?: boolean;
+}
+
+export const ModalInner = styled.div<ModalInnerProps>`
   box-sizing: border-box;
   position: relative;
-  box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.5);
-  background-color: #fff;
+  box-shadow: ${(props) =>
+    props.backGroundTransparent
+      ? "rgba(6, 10, 10, 0.6) 0px 0px 10px 7px, rgba(6, 24, 44, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.7) 1200px 100px 100px inset;"
+      : "0 0 6px 0 rgba(0, 0, 0, 0.5)"};
+  background-color: ${(props) =>
+    props.backGroundTransparent ? "rgba(0, 0, 0, 0)" : "#fff"};
   border-radius: 10px;
   width: 360px;
-  /* max-width: 480px; */
   top: 50%;
   margin: 0 auto;
   padding: 40px 20px;

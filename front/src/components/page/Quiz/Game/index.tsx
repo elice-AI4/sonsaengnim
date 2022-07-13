@@ -21,8 +21,9 @@ import grading from "../../../../src_assets/modal/grading.jpg";
 
 import Footer from "../../../Footer";
 import { quizBackgroundCopyRights } from "../../../copyRights/copyRights";
-import { saveTimeAtom } from "../../../../state";
 import { useAtom } from "jotai";
+import { userAtom } from "../../../../state";
+
 import { useNavigate } from "react-router-dom";
 
 export const MAX_COUNT = 10;
@@ -69,6 +70,7 @@ function QuizGame() {
     wrongModal: false,
   });
   const lazyStartTimerId: { current: any } = useRef(null);
+  const [, setUser] = useAtom(userAtom);
 
   const handleInitial = () => {
     setScore({ ans: 0, cur: 0 });
@@ -111,11 +113,12 @@ function QuizGame() {
   const nextQuiz = () => {
     if (quizNumber === undefined) return;
     setQuizNumber(Math.floor(Math.random() * problemCount));
-    setOne(true);
+    // setOne(true);
     setModal(false);
+    setSocketAnswer([]);
   };
 
-  const [socketAnswer, setSocketAnswer] = useState<string[]>();
+  const [socketAnswer, setSocketAnswer] = useState<string[]>([]);
   const handleSetSocketAnswer = (answer: string[]) => {
     setSocketAnswer(answer);
   };
@@ -149,31 +152,30 @@ function QuizGame() {
     if (socketAnswer === undefined || socketAnswer.length === 0 || timeOver) {
       return;
     }
-    if (one) {
-      if (socketAnswer.includes(problem.word)) {
-        setOne(false);
-        console.log("정답");
-        setAnswer(true);
-        setScore((cur): Score => {
-          const newScore: Score = { ...cur };
-          newScore["ans"] += 1;
-          newScore["cur"] += 1;
-          return newScore;
-        });
-        setModal(true);
-        setSocketAnswer(undefined);
-      } else {
-        setOne(false);
-        console.log("오답");
-        setAnswer(false);
-        setScore((cur): Score => {
-          const newScore: Score = { ...cur };
-          newScore["cur"] += 1;
-          return newScore;
-        });
-        setModal(true);
-        setSocketAnswer(undefined);
-      }
+    if (socketAnswer.includes(problem.word)) {
+      console.log("정답인 경우 socketAnswer: ", socketAnswer);
+      console.log("정답인 경우 problem.word: ", problem.word);
+
+      setOne(false);
+      setAnswer(true);
+      setScore((cur): Score => {
+        const newScore: Score = { ...cur };
+        newScore["ans"] += 1;
+        newScore["cur"] += 1;
+        return newScore;
+      });
+      setModal(true);
+    } else {
+      setOne(false);
+      console.log("오답인 경우 socketAnswer: ", socketAnswer);
+      console.log("오답인 경우 problem.word: ", problem.word);
+      setAnswer(false);
+      setScore((cur): Score => {
+        const newScore: Score = { ...cur };
+        newScore["cur"] += 1;
+        return newScore;
+      });
+      setModal(true);
     }
     setIsModalOpen((cur) => {
       return {
@@ -196,8 +198,16 @@ function QuizGame() {
   useEffect(() => {
     if (score.cur === MAX_COUNT) {
       setFinish(true);
+      if (score.ans !== 0) {
+        Api.post(`user/study?point=${score.ans * 10}`, {}).then((res) =>
+          setUser((cur) => {
+            const newUser = { ...cur, point: res.data.user.point };
+            return newUser;
+          })
+        );
+      }
     }
-  });
+  }, [score.cur]);
 
   const MoveRecord = () => {
     setModal(false);
@@ -211,7 +221,7 @@ function QuizGame() {
         <img src={ai_loading} alt="ai가 켜지길 기다리는중" />
       </Modal>
       <Modal visible={isModalOpen.waitingAnswerModal} style={modalStyle}>
-        {!socketAnswer && <img src={grading} alt="채점중인 로봇" />}
+        {socketAnswer.length === 0 && <img src={grading} alt="채점중인 로봇" />}
       </Modal>
       <ProblemBox
         quizBackImg={`${process.env.PUBLIC_URL}/quizgamepic/quizback3.jpg`}
@@ -224,7 +234,9 @@ function QuizGame() {
         <SolveModal
           modal={modal}
           closeModal={closeModal}
-          answer={answer}
+          answer={
+            socketAnswer.length > 0 && socketAnswer.includes(problem.word)
+          }
           finish={finish}
           score={score}
           nextQuiz={nextQuiz}
@@ -268,11 +280,11 @@ function QuizGame() {
             )}
           </AnswerBox>
         </QuizBox>
+        <Footer
+          aLinks={quizBackgroundCopyRights.aLinks}
+          contents={quizBackgroundCopyRights.contents}
+        />
       </ProblemBox>
-      <Footer
-        aLinks={quizBackgroundCopyRights.aLinks}
-        contents={quizBackgroundCopyRights.contents}
-      />
     </>
   );
 }

@@ -24,6 +24,8 @@ import {
   BackImage,
   ModalButton,
   ModalButtonContainer,
+  ToolTipContent,
+  BoxP,
 } from "./index.style";
 import { useLocation } from "react-router";
 import * as Api from "../../../../api";
@@ -40,21 +42,45 @@ import grading from "../../../../src_assets/modal/grading.jpg";
 import none_user_correct from "../../../../src_assets/modal/none_user_correct.jpg";
 import user_correct from "../../../../src_assets/modal/user_correct.jpg";
 import wrong_answer from "../../../../src_assets/modal/wrong_answer.jpg";
+import playAlphabetGuide from "../../../../src_assets/learning/play/playAlphabetGuide.jpg";
+import playWordGuide from "../../../../src_assets/learning/play/playWordGuide.jpg";
 import { useAtom } from "jotai";
-import { loginAtom } from "../../../../state";
+import { loginAtom, userAtom } from "../../../../state";
 
-const ALPHABET_LENGTH = 26;
+export const ALPHABET_LENGTH = 26;
 
-interface VideoDataProps {
+export interface VideoDataProps {
   _id: string;
   english: string;
   handVideo: string;
   mouthVideo?: string;
 }
 
-export interface curSelectedButtonProps {
+export interface CardsProps {
+  cardImageURL: string;
+  english: string;
+  word: string;
+  _id: string;
+}
+
+export interface CurSelectedButtonProps {
   word: string;
   index: number;
+}
+
+interface GetPointProps {
+  point: number;
+  user: {
+    createdAt: string;
+    email: string;
+    password: string;
+    point: number;
+    scores: number[];
+    study: string[];
+    updatedAt: string;
+    username: string;
+    _id: string;
+  };
 }
 
 const modalStyle = {
@@ -80,6 +106,7 @@ const LearningGame = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [isHandVideo, setIsHandVideo] = useState(true);
   const [socketAnswer, setSocketAnswer] = useState<string[]>();
+  const [point, setPoint] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState({
     loadingModal: false,
     waitingAnswerModal: false,
@@ -87,13 +114,13 @@ const LearningGame = () => {
     wrongModal: false,
   });
   const [curSelectedButton, setCurSelectedButton] =
-    useState<curSelectedButtonProps>({
+    useState<CurSelectedButtonProps>({
       word: "",
       index: 0,
     });
   const lazyStartTimerId: { current: any } = useRef(null);
   const [isLogin] = useAtom(loginAtom);
-
+  const [, setUser] = useAtom(userAtom);
   const handleSetVideo = (index: number) => {
     if (isAlphabetLearningPage) {
       setCurVideo({
@@ -166,10 +193,10 @@ const LearningGame = () => {
       ALPHABET_LENGTH,
       res.data.length
     );
-    const wordList = words.map((word) => {
+    const mappedWords = words.map((word) => {
       return word.english;
     });
-    setWordList(wordList);
+    setWordList(mappedWords);
 
     if (localIsAlphabet) {
       setCurVideo({
@@ -195,7 +222,7 @@ const LearningGame = () => {
       };
     });
   };
-  const handleSetCurSelectedButton = (data: curSelectedButtonProps) => {
+  const handleSetCurSelectedButton = (data: CurSelectedButtonProps) => {
     setCurSelectedButton(data);
   };
 
@@ -235,8 +262,27 @@ const LearningGame = () => {
   }, []);
 
   useEffect(() => {
-    if (isModalOpen.correctModal) {
-      if (isLogin) Api.post(`user/study/` + curSelectedButton.word, {});
+    const getPoint = async () => {
+      const res: { data: GetPointProps } = await Api.post(
+        `user/study?word=${curSelectedButton.word}`,
+        {}
+      );
+
+      setPoint(res.data.point);
+      setUser((cur) => {
+        const newUser = { ...cur, point: res.data.user.point };
+        return newUser;
+      });
+      console.log(res);
+    };
+    try {
+      if (isModalOpen.correctModal) {
+        if (isLogin) {
+          getPoint();
+        }
+      }
+    } catch (e: any) {
+      throw new Error(e);
     }
   }, [isModalOpen.correctModal]);
 
@@ -296,7 +342,7 @@ const LearningGame = () => {
               delay: 0.8,
             }}
           >
-            <span>100점!</span>
+            {isLogin ? <BoxP>{point}점 획득!</BoxP> : <BoxP>잘했어요!</BoxP>}
           </PointBox>
         )}
       </Modal>
@@ -498,7 +544,7 @@ const LearningGame = () => {
                 ) : (
                   <Explain>양손으로 학습해봐요.</Explain>
                 )}
-                <Explain>얼굴을 카메라 중앙에 맞추세요</Explain>
+                <Explain>얼굴을 카메라 중앙에 맞춰 주세요.</Explain>
               </div>
               <HR />
             </TopContainer>
@@ -510,9 +556,71 @@ const LearningGame = () => {
                 handleSetSocketAnswer={handleSetSocketAnswer}
                 openModal={openModal}
               />
-              <StartButton onClick={handleClickButton} cameraOn={cameraOn}>
+              {isAlphabetLearningPage ? (
+                <StartButton
+                  onClick={handleClickButton}
+                  cameraOn={cameraOn}
+                  data-tip="game-alphabetGuide"
+                  data-for="game-alphabetGuide"
+                >
+                  <StartTriangle cameraOn={cameraOn} />
+
+                  <ReactTooltip id="game-alphabetGuide">
+                    <ToolTipContent>
+                      <img
+                        src={playAlphabetGuide}
+                        alt="playGuide"
+                        width="300"
+                      ></img>
+                      <p style={{ textAlign: "center", fontSize: "24px" }}>
+                        그림처럼 얼굴과 어깨와 손이 <br />
+                        함께 나오도록 자세를 잡아주세요
+                      </p>
+                    </ToolTipContent>
+                  </ReactTooltip>
+                </StartButton>
+              ) : (
+                <StartButton
+                  onClick={handleClickButton}
+                  cameraOn={cameraOn}
+                  data-tip="game-wordGuide"
+                  data-for="game-wordGuide"
+                >
+                  <StartTriangle cameraOn={cameraOn} />
+
+                  <ReactTooltip id="game-wordGuide">
+                    <ToolTipContent>
+                      <img
+                        src={playWordGuide}
+                        alt="playGuide"
+                        width="300"
+                      ></img>
+                      <p style={{ textAlign: "center", fontSize: "24px" }}>
+                        그림처럼 얼굴과 어깨와 양손이 <br />
+                        함께 나오도록 자세를 잡아주세요
+                      </p>
+                    </ToolTipContent>
+                  </ReactTooltip>
+                </StartButton>
+              )}
+              {/* <StartButton
+                onClick={handleClickButton}
+                cameraOn={cameraOn}
+                data-tip="game-guide"
+                data-for="game-guide"
+              >
                 <StartTriangle cameraOn={cameraOn} />
-              </StartButton>
+
+                <ReactTooltip id="game-guide">
+                  <ToolTipContent>
+                    <img src={playGuide} alt="playGuide" width="300"></img>
+                    <p style={{ textAlign: "center", fontSize: "24px" }}>
+                      그림처럼 얼굴과 어깨와 손이 <br />
+                      함께 나오도록 자세를 잡아주세요
+                    </p>
+                  </ToolTipContent>
+                </ReactTooltip>
+              </StartButton> */}
             </BottomContainer>
           </Moniter>
           <Footer

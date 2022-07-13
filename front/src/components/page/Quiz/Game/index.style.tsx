@@ -70,6 +70,13 @@ export const RecordButton = styled.button`
   font-size: 18px;
   font-weight: bold;
 `;
+export const ExitButton = styled.button`
+  width: 200px;
+  height: 50px;
+  background-color: crimson;
+  font-size: 18px;
+  font-weight: bold;
+`;
 
 export const RecordBox = styled.div`
   width: 350px;

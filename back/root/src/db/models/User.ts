@@ -1,19 +1,45 @@
 import User from "../schemas/user";
+import { Donation } from "../schemas/donation";
 import { IUserModel } from "../../models";
 export class MongoUserModel implements IUserModel {
   public async studyList(userId: string) {
     const studyList = await User.findById(userId, { _id: 0, study: 1 });
     return studyList;
   }
+  public async postDonation(userId: string, point: number, name: string) {
+    const user = await User.findById(userId, { myDonation: 1, point: 1 });
+    user.myDonation += point;
+    user.point -= point;
+    if (user.point < 0) {
+      throw new Error("User point보다 차감 point가 더 많습니다.");
+    }
+    user.save();
+    const donation = await Donation.findOne({ name }, { currentPoint: 1 });
+    donation.currentPoint += point;
+    donation.save();
+    return { user, donation };
+  }
 
-  public async study(userId: string, word: string) {
+  public async study(userId: string, word: string, point: number) {
     const user = await User.findById(userId);
-    if (user.study.indexOf(word) !== -1) {
-      throw new Error("이미 학습한 데이터 입니다.");
-    } else {
-      user.study.push(word);
+    if (!point) {
+      if (user.study.indexOf(word) !== -1) {
+        point = 1;
+        user.point += point;
+        user.save();
+        return { user, point };
+      } else {
+        point = word.length === 1 ? 10 : 20;
+        console.log(point);
+        user.point += point;
+        user.study.push(word);
+        user.save();
+        return { user, point };
+      }
+    } else if (!word) {
+      user.point += point;
       user.save();
-      return user;
+      return { user, point };
     }
   }
 

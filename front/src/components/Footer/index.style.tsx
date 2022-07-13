@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const FooterContainer = styled.footer`
-  width: 100vw;
+  /* width: 100vw; */
   display: flex;
   flex-direction: column;
   justify-content: center;

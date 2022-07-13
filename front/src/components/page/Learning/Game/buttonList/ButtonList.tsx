@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { curSelectedButtonProps } from "..";
+import { CurSelectedButtonProps } from "..";
 import { BlankButton, Button, Container, WordButton } from "./ButtonList.style";
 
 const Alphabet = Array.from(Array(26))
@@ -10,7 +10,7 @@ interface ButtonListProps {
   handleSetVideo: (index: number) => void;
   isAlphabetLearningPage: boolean;
   wordList?: string[];
-  handleSetCurSelectedButton: (data: curSelectedButtonProps) => void;
+  handleSetCurSelectedButton: (data: CurSelectedButtonProps) => void;
 }
 
 const ButtonList = ({
