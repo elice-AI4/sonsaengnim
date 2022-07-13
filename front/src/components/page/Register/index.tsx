@@ -7,6 +7,11 @@ import {
   ValidWord,
   RegisterButton,
   RegisterText,
+  ModalInner,
+  ModalComment,
+  PointWord,
+  P,
+  ModalButton,
 } from "./index.style";
 import { reg } from "../../../state";
 import { useNavigate } from "react-router-dom";
@@ -14,6 +19,9 @@ import * as Api from "../../../api";
 
 import Footer from "../../Footer";
 import { registerCopyRights } from "../../copyRights/copyRights";
+import Modal from "../Modal";
+import modalCharacter from "../../../src_assets/main/search_sam.png";
+
 interface UserRegister {
   email: string;
   password: string;
@@ -24,6 +32,13 @@ interface LoginValid {
   idValid: boolean;
   pwValid: boolean;
 }
+
+const modalStyle = {
+  fontSize: "2rem",
+  width: "80rem",
+  height: "45rem",
+  padding: "0",
+};
 
 function Register() {
   const navigate = useNavigate();
@@ -36,21 +51,26 @@ function Register() {
     idValid: false,
     pwValid: false,
   });
+  const [modal, setModal] = useState(false);
 
   const handleRegister = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const res = await Api.post("register", registerInfo);
-    setRegisterInfo({
-      email: "",
-      password: "",
-      username: "",
-    });
-    setValid({
-      idValid: false,
-      pwValid: false,
-    });
-    alert("회원가입이 완료되었습니다.");
-    navigate("/login");
+    try {
+      const res = await Api.post("register", registerInfo);
+      setRegisterInfo({
+        email: "",
+        password: "",
+        username: "",
+      });
+      setValid({
+        idValid: false,
+        pwValid: false,
+      });
+      alert("회원가입이 완료되었습니다.");
+      navigate("/login");
+    } catch (e: any) {
+      setModal(true);
+    }
   };
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -91,6 +111,21 @@ function Register() {
 
   return (
     <>
+      <Modal visible={modal} style={modalStyle} backGroundTransparent={true}>
+        <ModalInner onClick={() => setModal(false)}>
+          <img src={modalCharacter} alt="갸우뚱 하는 손생님" />
+          <ModalComment>
+            <P>
+              <PointWord>이미 존재하는</PointWord> 이메일입니다.
+            </P>
+            <P>
+              <PointWord>다른 이메일</PointWord>로 다시 시도해주세요.
+            </P>
+          </ModalComment>
+          <ModalButton>확인</ModalButton>
+        </ModalInner>
+      </Modal>
+      ;
       <RegisterBackground>
         <RegisterForm onSubmit={handleRegister}>
           <InputBox>

@@ -58,3 +58,48 @@ export const ValidWord = styled.p`
 export const RegisterText = styled.h2`
   font-weight: bold;
 `;
+
+export const ModalInner = styled.div`
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+
+  position: relative;
+`;
+
+export const ModalComment = styled.div`
+  font-size: 2.5rem;
+  background-color: white;
+  border-radius: 1rem;
+
+  width: 40rem;
+  height: 30rem;
+
+  padding: 4rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+`;
+
+export const P = styled.p`
+  margin: 0 0 2rem 0;
+  &:last-child {
+    margin-bottom: 0;
+  }
+  font-size: 23px;
+`;
+
+export const ModalButton = styled.button`
+  position: absolute;
+  bottom: 1rem;
+  color: black;
+  font-size: 2.8rem;
+  font-weight: bold;
+`;
+
+export const PointWord = styled.b`
+  color: orange;
+`;
