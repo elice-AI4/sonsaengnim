@@ -267,6 +267,7 @@ const LearningGame = () => {
         `user/study?word=${curSelectedButton.word}`,
         {}
       );
+
       setPoint(res.data.point);
       setUser((cur) => {
         const newUser = { ...cur, point: res.data.user.point };
@@ -341,7 +342,7 @@ const LearningGame = () => {
               delay: 0.8,
             }}
           >
-            <BoxP>{point}점 획득!</BoxP>
+            {isLogin ? <BoxP>{point}점 획득!</BoxP> : <BoxP>잘했어요!</BoxP>}
           </PointBox>
         )}
       </Modal>

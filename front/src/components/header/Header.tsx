@@ -113,7 +113,7 @@ const Header = () => {
               로그아웃
             </StyledLink>
           )}
-          <StyledLink to={ROUTE.ABOUT.link}>ABOUT</StyledLink>
+          <StyledLink to={ROUTE.ABOUT.link}>소개</StyledLink>
           <StyledLink
             to={ROUTE.LEARNING.link}
             data-tip="header-learning"
@@ -146,8 +146,8 @@ const Header = () => {
               <p style={{ textAlign: "right" }}>출처: 국립국어원</p>
             </ReactTooltip>
           </StyledLink>
-          <StyledLink to={ROUTE.RANK.link}>랭킹</StyledLink>
-          {login && <StyledLink to={ROUTE.DONATION.link}>기부하기</StyledLink>}
+          <StyledLink to={ROUTE.RANK.link}>순위</StyledLink>
+          {login && <StyledLink to={ROUTE.DONATION.link}>학습이력</StyledLink>}
         </List>
       </Navbar>
       {checkPathname(pathname) === true ? (

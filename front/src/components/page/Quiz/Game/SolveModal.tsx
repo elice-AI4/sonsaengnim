@@ -45,20 +45,19 @@ function SolveModal({
   const handleExit = () => {
     navigate("/");
   };
+  console.log("answer : ", answer);
+
   return (
     <Modal visible={modal} style={ModalStyle as React.CSSProperties}>
+      {<h1>이거 뭔데? {answer}</h1>}
       {answer ? (
-        <>
-          <AnswerImg
-            src={`${process.env.PUBLIC_URL}/quizgamepic/answer1.jpg`}
-          ></AnswerImg>
-        </>
+        <AnswerImg
+          src={`${process.env.PUBLIC_URL}/quizgamepic/answer1.jpg`}
+        ></AnswerImg>
       ) : (
-        <>
-          <AnswerImg
-            src={`${process.env.PUBLIC_URL}/quizgamepic/wrong.jpg`}
-          ></AnswerImg>
-        </>
+        <AnswerImg
+          src={`${process.env.PUBLIC_URL}/quizgamepic/wrong.jpg`}
+        ></AnswerImg>
       )}
       <h1>{`맞힌 개수 ${score.ans}/${MAX_COUNT}`}</h1>
       {finish ? (
