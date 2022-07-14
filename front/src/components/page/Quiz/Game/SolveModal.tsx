@@ -45,11 +45,9 @@ function SolveModal({
   const handleExit = () => {
     navigate("/");
   };
-  console.log("answer : ", answer);
 
   return (
     <Modal visible={modal} style={ModalStyle as React.CSSProperties}>
-      {<h1>이거 뭔데? {answer}</h1>}
       {answer ? (
         <AnswerImg
           src={`${process.env.PUBLIC_URL}/quizgamepic/answer1.jpg`}
