@@ -14,7 +14,7 @@ def create_app():
     CORS(app)
     app.config['SECRET_KEY'] = 'secret!'
 
-    socket.init_app(app, cors_allowed_origins='*', engineio_logger=False)
+    socket.init_app(app, async_mode='eventlet', cors_allowed_origins='*', engineio_logger=False)
     model = HandSignModel()
 
     # Handle the webapp 
