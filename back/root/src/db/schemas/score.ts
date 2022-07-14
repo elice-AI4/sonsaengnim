@@ -30,5 +30,5 @@ const scoreSchema = new Schema(
 );
 
 const Score = model<IScore>("Score", scoreSchema);
-
+Score.schema.index({ createdAt: 1 }, { expireAfterSeconds: 604800 });
 export default Score;
