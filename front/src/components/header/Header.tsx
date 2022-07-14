@@ -72,7 +72,7 @@ const Header = () => {
           )}
         </TitleContainer>
         <List fold={fold}>
-          {!login && (
+          {!login ? (
             <>
               <StyledLink
                 to={ROUTE.LOGIN.link}
@@ -80,7 +80,11 @@ const Header = () => {
                 data-for="header-login"
               >
                 로그인
-                <ReactTooltip id="header-login" place="bottom">
+                <ReactTooltip
+                  key="header-login"
+                  id="header-login"
+                  place="bottom"
+                >
                   <video autoPlay width="300" muted loop>
                     <source
                       src="http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20160325/268749/MOV000272243_700X466.mp4"
@@ -96,7 +100,11 @@ const Header = () => {
                 data-for="header-register"
               >
                 회원가입
-                <ReactTooltip id="header-register" place="bottom">
+                <ReactTooltip
+                  key="header-register"
+                  id="header-register"
+                  place="bottom"
+                >
                   <video autoPlay width="300" muted loop>
                     <source
                       src="http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20191015/627638/MOV000249914_700X466.mp4"
@@ -107,13 +115,44 @@ const Header = () => {
                 </ReactTooltip>
               </StyledLink>
             </>
+          ) : (
+            <>
+              <StyledLink
+                onClick={HandleLogout}
+                to={"/"}
+                data-tip="header-logout"
+                data-for="header-logout"
+              >
+                로그아웃
+                <ReactTooltip id="header-logout" place="bottom">
+                  <video autoPlay width="300" muted loop>
+                    <source
+                      src="http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20160325/268746/MOV000272234_700X466.mp4"
+                      type="video/mp4"
+                    />
+                  </video>
+                  <p style={{ textAlign: "right" }}>출처: 국립국어원</p>
+                </ReactTooltip>
+              </StyledLink>
+              <StyledLink
+                to={ROUTE.DONATION.link}
+                data-tip="header-educationContent"
+                data-for="header-educationContent"
+              >
+                학습이력
+                <ReactTooltip id="header-educationContent" place="bottom">
+                  <video autoPlay width="300" muted loop>
+                    <source
+                      src="http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20191028/631910/MOV000241683_700X466.mp4"
+                      type="video/mp4"
+                    />
+                  </video>
+                  <p style={{ textAlign: "right" }}>출처: 국립국어원</p>
+                </ReactTooltip>
+              </StyledLink>
+            </>
           )}
-          {login && (
-            <StyledLink onClick={HandleLogout} to={"/"}>
-              로그아웃
-            </StyledLink>
-          )}
-          <StyledLink to={ROUTE.ABOUT.link}>ABOUT</StyledLink>
+
           <StyledLink
             to={ROUTE.LEARNING.link}
             data-tip="header-learning"
@@ -146,8 +185,38 @@ const Header = () => {
               <p style={{ textAlign: "right" }}>출처: 국립국어원</p>
             </ReactTooltip>
           </StyledLink>
-          <StyledLink to={ROUTE.RANK.link}>랭킹</StyledLink>
-          {login && <StyledLink to={ROUTE.DONATION.link}>기부하기</StyledLink>}
+          <StyledLink
+            to={ROUTE.RANK.link}
+            data-tip="header-rank"
+            data-for="header-rank"
+          >
+            순위
+            <ReactTooltip id="header-rank" place="bottom">
+              <video autoPlay width="300" muted loop>
+                <source
+                  src="http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20191025/630930/MOV000253300_700X466.mp4"
+                  type="video/mp4"
+                />
+              </video>
+              <p style={{ textAlign: "right" }}>출처: 국립국어원</p>
+            </ReactTooltip>
+          </StyledLink>
+          <StyledLink
+            to={ROUTE.ABOUT.link}
+            data-tip="header-about"
+            data-for="header-about"
+          >
+            소개
+            <ReactTooltip id="header-about" place="bottom">
+              <video autoPlay width="300" muted loop>
+                <source
+                  src="http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20191022/630035/MOV000234719_700X466.mp4"
+                  type="video/mp4"
+                />
+              </video>
+              <p style={{ textAlign: "right" }}>출처: 국립국어원</p>
+            </ReactTooltip>
+          </StyledLink>
         </List>
       </Navbar>
       {checkPathname(pathname) === true ? (

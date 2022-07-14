@@ -3,12 +3,12 @@ import styled from "styled-components";
 
 interface CardProps {
   src: string;
-  check: boolean;
+  check: string;
 }
 
 export const Card = styled(motion.div)<CardProps>`
-  width: ${(props) => (props.check ? "10rem" : "16rem")};
-  height: ${(props) => (props.check ? "10rem" : "12rem")};
+  width: ${(props) => (props.check === "true" ? "10rem" : "16rem")};
+  height: ${(props) => (props.check === "true" ? "10rem" : "12rem")};
   text-align: center;
   border-radius: 5px;
 

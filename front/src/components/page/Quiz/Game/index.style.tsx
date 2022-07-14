@@ -153,3 +153,10 @@ export const RankRegisterButton = styled.button`
 export const TextP = styled.p`
   font-size: 20px;
 `;
+
+export const ToolTipContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;

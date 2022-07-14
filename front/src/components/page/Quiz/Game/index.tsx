@@ -7,6 +7,7 @@ import {
   TimerStartButton,
   StartButton,
   StartTriangle,
+  ToolTipContent,
 } from "./index.style";
 import SolveModal from "./SolveModal";
 import RecordModal from "./RecordModal";
@@ -18,6 +19,7 @@ import * as Api from "../../../../api";
 import Modal from "../../Modal";
 import ai_loading from "../../../../src_assets/modal/ai_loading.jpg";
 import grading from "../../../../src_assets/modal/grading.jpg";
+import playWordGuide from "../../../../src_assets/learning/play/playWordGuide.jpg";
 
 import Footer from "../../../Footer";
 import { quizBackgroundCopyRights } from "../../../copyRights/copyRights";
@@ -113,11 +115,12 @@ function QuizGame() {
   const nextQuiz = () => {
     if (quizNumber === undefined) return;
     setQuizNumber(Math.floor(Math.random() * problemCount));
-    setOne(true);
+    // setOne(true);
     setModal(false);
+    setSocketAnswer([]);
   };
 
-  const [socketAnswer, setSocketAnswer] = useState<string[]>();
+  const [socketAnswer, setSocketAnswer] = useState<string[]>([]);
   const handleSetSocketAnswer = (answer: string[]) => {
     setSocketAnswer(answer);
   };
@@ -151,31 +154,26 @@ function QuizGame() {
     if (socketAnswer === undefined || socketAnswer.length === 0 || timeOver) {
       return;
     }
-    if (one) {
-      if (socketAnswer.includes(problem.word)) {
-        setOne(false);
-        console.log("정답");
-        setAnswer(true);
-        setScore((cur): Score => {
-          const newScore: Score = { ...cur };
-          newScore["ans"] += 1;
-          newScore["cur"] += 1;
-          return newScore;
-        });
-        setModal(true);
-        setSocketAnswer(undefined);
-      } else {
-        setOne(false);
-        console.log("오답");
-        setAnswer(false);
-        setScore((cur): Score => {
-          const newScore: Score = { ...cur };
-          newScore["cur"] += 1;
-          return newScore;
-        });
-        setModal(true);
-        setSocketAnswer(undefined);
-      }
+    if (socketAnswer.includes(problem.word)) {
+
+      setOne(false);
+      setAnswer(true);
+      setScore((cur): Score => {
+        const newScore: Score = { ...cur };
+        newScore["ans"] += 1;
+        newScore["cur"] += 1;
+        return newScore;
+      });
+      setModal(true);
+    } else {
+      setOne(false);
+      setAnswer(false);
+      setScore((cur): Score => {
+        const newScore: Score = { ...cur };
+        newScore["cur"] += 1;
+        return newScore;
+      });
+      setModal(true);
     }
     setIsModalOpen((cur) => {
       return {
@@ -221,7 +219,7 @@ function QuizGame() {
         <img src={ai_loading} alt="ai가 켜지길 기다리는중" />
       </Modal>
       <Modal visible={isModalOpen.waitingAnswerModal} style={modalStyle}>
-        {!socketAnswer && <img src={grading} alt="채점중인 로봇" />}
+        {socketAnswer.length === 0 && <img src={grading} alt="채점중인 로봇" />}
       </Modal>
       <ProblemBox
         quizBackImg={`${process.env.PUBLIC_URL}/quizgamepic/quizback3.jpg`}
@@ -234,7 +232,9 @@ function QuizGame() {
         <SolveModal
           modal={modal}
           closeModal={closeModal}
-          answer={answer}
+          answer={
+            socketAnswer.length > 0 && socketAnswer.includes(problem.word)
+          }
           finish={finish}
           score={score}
           nextQuiz={nextQuiz}
@@ -272,8 +272,23 @@ function QuizGame() {
               openModal={openModal}
             />
             {timer && (
-              <StartButton onClick={handleClickButton} cameraOn={cameraOn}>
+              <StartButton onClick={handleClickButton} cameraOn={cameraOn} 
+              data-tip="quiz-guide"
+              data-for="quiz-guide">
                 <StartTriangle cameraOn={cameraOn} />
+                <ReactTooltip id="quiz-guide">
+                    <ToolTipContent>
+                      <img
+                        src={playWordGuide}
+                        alt="playGuide"
+                        width="300"
+                      ></img>
+                      <p style={{ textAlign: "center", fontSize: "24px" }}>
+                        그림처럼 얼굴과 어깨와 양손이 <br />
+                        함께 나오도록 자세를 잡아주세요
+                      </p>
+                    </ToolTipContent>
+                  </ReactTooltip>
               </StartButton>
             )}
           </AnswerBox>
