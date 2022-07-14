@@ -62,7 +62,7 @@ userRouter.post("/", userValidateOptional, async (req: Request, res: Response, n
   try {
     const { email, password } = req.body;
     const loginedUser = await userService.login(email, password);
-
+    delete loginedUser.user.password;
     res.status(200).json(loginedUser);
   } catch (error) {
     res.statusCode = 400;
