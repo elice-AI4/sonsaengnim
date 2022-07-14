@@ -116,8 +116,8 @@ function QuizGame() {
     if (quizNumber === undefined) return;
     setQuizNumber(Math.floor(Math.random() * problemCount));
     // setOne(true);
-    setModal(false);
     setSocketAnswer([]);
+    setModal(false);
   };
 
   const [socketAnswer, setSocketAnswer] = useState<string[]>([]);
@@ -155,7 +155,6 @@ function QuizGame() {
       return;
     }
     if (socketAnswer.includes(problem.word)) {
-
       setOne(false);
       setAnswer(true);
       setScore((cur): Score => {
@@ -211,7 +210,6 @@ function QuizGame() {
     setModal(false);
     setRank(true);
   };
-
   return (
     <>
       {isLoading && <Loading />}
@@ -232,9 +230,7 @@ function QuizGame() {
         <SolveModal
           modal={modal}
           closeModal={closeModal}
-          answer={
-            socketAnswer.length > 0 && socketAnswer.includes(problem.word)
-          }
+          answer={answer}
           finish={finish}
           score={score}
           nextQuiz={nextQuiz}
@@ -272,23 +268,22 @@ function QuizGame() {
               openModal={openModal}
             />
             {timer && (
-              <StartButton onClick={handleClickButton} cameraOn={cameraOn} 
-              data-tip="quiz-guide"
-              data-for="quiz-guide">
+              <StartButton
+                onClick={handleClickButton}
+                cameraOn={cameraOn}
+                data-tip="quiz-guide"
+                data-for="quiz-guide"
+              >
                 <StartTriangle cameraOn={cameraOn} />
                 <ReactTooltip id="quiz-guide">
-                    <ToolTipContent>
-                      <img
-                        src={playWordGuide}
-                        alt="playGuide"
-                        width="300"
-                      ></img>
-                      <p style={{ textAlign: "center", fontSize: "24px" }}>
-                        그림처럼 얼굴과 어깨와 양손이 <br />
-                        함께 나오도록 자세를 잡아주세요
-                      </p>
-                    </ToolTipContent>
-                  </ReactTooltip>
+                  <ToolTipContent>
+                    <img src={playWordGuide} alt="playGuide" width="300"></img>
+                    <p style={{ textAlign: "center", fontSize: "24px" }}>
+                      그림처럼 얼굴과 어깨와 양손이 <br />
+                      함께 나오도록 자세를 잡아주세요
+                    </p>
+                  </ToolTipContent>
+                </ReactTooltip>
               </StartButton>
             )}
           </AnswerBox>
