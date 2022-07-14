@@ -174,7 +174,7 @@ const Search = () => {
           ? list.word.includes(searchAutoWord) === true
           : list.english.includes(searchAutoWord) === true;
       })
-      .slice(0, 8);
+      .slice(0, 7);
     setSearchAutoKey(filteredData);
   };
 
@@ -217,9 +217,9 @@ const Search = () => {
                       onClick={() => autoSearchOnClick(search)}
                     >
                       {check_kor.test(searchAutoWord) ? (
-                        <a href="#">{search.word}</a>
+                        <a style={{ textDecoration: "None", color: "black"}} href="#">{search.word}</a>
                       ) : (
-                        <a href="#">{search.english}</a>
+                        <a style={{ textDecoration: "None", color: "black"}} href="#">{search.english}</a>
                       )}
                     </AutoSearchData>
                   );
