@@ -96,7 +96,9 @@ export const AutoSearchContainer = styled.div`
   padding-top: 55px;
 `;
 
-export const AutoSearchWrap = styled.ul``;
+export const AutoSearchWrap = styled.ul`
+  list-style: none;
+`;
 
 export const AutoSearchData = styled.li`
   padding: 10px 8px;
