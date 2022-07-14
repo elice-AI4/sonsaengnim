@@ -7,6 +7,7 @@ import {
   TimerStartButton,
   StartButton,
   StartTriangle,
+  ToolTipContent,
 } from "./index.style";
 import SolveModal from "./SolveModal";
 import RecordModal from "./RecordModal";
@@ -18,6 +19,7 @@ import * as Api from "../../../../api";
 import Modal from "../../Modal";
 import ai_loading from "../../../../src_assets/modal/ai_loading.jpg";
 import grading from "../../../../src_assets/modal/grading.jpg";
+import playWordGuide from "../../../../src_assets/learning/play/playWordGuide.jpg";
 
 import Footer from "../../../Footer";
 import { quizBackgroundCopyRights } from "../../../copyRights/copyRights";
@@ -114,8 +116,8 @@ function QuizGame() {
     if (quizNumber === undefined) return;
     setQuizNumber(Math.floor(Math.random() * problemCount));
     // setOne(true);
-    setModal(false);
     setSocketAnswer([]);
+    setModal(false);
   };
 
   const [socketAnswer, setSocketAnswer] = useState<string[]>([]);
@@ -153,9 +155,6 @@ function QuizGame() {
       return;
     }
     if (socketAnswer.includes(problem.word)) {
-      console.log("정답인 경우 socketAnswer: ", socketAnswer);
-      console.log("정답인 경우 problem.word: ", problem.word);
-
       setOne(false);
       setAnswer(true);
       setScore((cur): Score => {
@@ -167,8 +166,6 @@ function QuizGame() {
       setModal(true);
     } else {
       setOne(false);
-      console.log("오답인 경우 socketAnswer: ", socketAnswer);
-      console.log("오답인 경우 problem.word: ", problem.word);
       setAnswer(false);
       setScore((cur): Score => {
         const newScore: Score = { ...cur };
@@ -213,7 +210,6 @@ function QuizGame() {
     setModal(false);
     setRank(true);
   };
-
   return (
     <>
       {isLoading && <Loading />}
@@ -234,9 +230,7 @@ function QuizGame() {
         <SolveModal
           modal={modal}
           closeModal={closeModal}
-          answer={
-            socketAnswer.length > 0 && socketAnswer.includes(problem.word)
-          }
+          answer={answer}
           finish={finish}
           score={score}
           nextQuiz={nextQuiz}
@@ -274,8 +268,22 @@ function QuizGame() {
               openModal={openModal}
             />
             {timer && (
-              <StartButton onClick={handleClickButton} cameraOn={cameraOn}>
+              <StartButton
+                onClick={handleClickButton}
+                cameraOn={cameraOn}
+                data-tip="quiz-guide"
+                data-for="quiz-guide"
+              >
                 <StartTriangle cameraOn={cameraOn} />
+                <ReactTooltip id="quiz-guide">
+                  <ToolTipContent>
+                    <img src={playWordGuide} alt="playGuide" width="300"></img>
+                    <p style={{ textAlign: "center", fontSize: "24px" }}>
+                      그림처럼 얼굴과 어깨와 양손이 <br />
+                      함께 나오도록 자세를 잡아주세요
+                    </p>
+                  </ToolTipContent>
+                </ReactTooltip>
               </StartButton>
             )}
           </AnswerBox>

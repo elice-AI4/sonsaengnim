@@ -151,9 +151,6 @@ function Donation() {
           </Balloon>
         </ExplanationBox>
         <DonationInfo>
-          {/* <ProgressImg>
-            <ProgressBar></ProgressBar>
-          </ProgressImg> */}
           <Heart
             percent={donationPer}
             size={300}
