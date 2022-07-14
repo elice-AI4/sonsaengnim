@@ -61,9 +61,11 @@ export const Balloon = styled.div<{
 
 export const MyLearningBox = styled.div`
   width: 350px;
+  height: 400px;
   border: 2px solid black;
   background-color: lightblue;
   border-radius: 10px;
+  overflow-y: scroll;
 `;
 
 export const MyLearning = styled.div`
