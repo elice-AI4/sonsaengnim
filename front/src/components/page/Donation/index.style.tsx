@@ -66,7 +66,6 @@ export const MyLearningBox = styled.div`
   background-color: lightblue;
   border-radius: 10px;
   padding: 1rem;
-
   display: flex;
   justify-content: center;
   align-items: center;
