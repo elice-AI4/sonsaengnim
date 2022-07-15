@@ -141,8 +141,6 @@ function MediaPipeWebCam({
       openModal && openModal();
       socket?.emit("coordinate", mediapipeData);
       middleRef.current = new Date();
-      console.log("startRef 값 : ", startRef.current);
-      console.log("middleRef 값 : ", middleRef.current);
 
       handleOffMediapipe();
     }
@@ -210,9 +208,6 @@ function MediaPipeWebCam({
         endRef.current = new Date();
         // 소켓 답변 매개변수로 넘겨주는 함수
         handleSetSocketAnswer && handleSetSocketAnswer(data);
-        console.log("endRef 값 : ", endRef.current);
-        console.log("둘의 차이 : ", endRef.current - startRef.current);
-        console.log("넘어온 값: ", data);
       };
       // 소켓 답변 얻어오는 함수
       socket.on("answer", func);

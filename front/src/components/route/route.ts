@@ -8,6 +8,9 @@ export const ROUTE = {
   LEARNING: {
     link: "learning",
   },
+  NOCAM: {
+    link: "nocamLearning",
+  },
   ALPHABET: {
     link: "alphabet",
   },
@@ -30,6 +33,9 @@ export const ROUTE = {
     link: "rank",
   },
   SEARCH: {
-    link: "search"
-  }
+    link: "search",
+  },
+  DONATION: {
+    link: "donation",
+  },
 };

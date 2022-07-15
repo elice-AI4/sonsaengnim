@@ -28,7 +28,7 @@ const CardTemplate = ({ src, alt, style }: CardTemplateProps) => {
     <Card
       src={src}
       ref={constraintsRef}
-      check={checkPathname()}
+      check={checkPathname().toString()}
       style={style && style}
     >
       <motion.img

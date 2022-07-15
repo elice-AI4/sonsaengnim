@@ -16,6 +16,8 @@ import About from "./components/page/About";
 import LearningGame from "./components/page/Learning/Game";
 import Rank from "./components/page/Rank";
 import Search from "./components/page/Search";
+import Donation from "./components/page/Donation";
+import NoCam from "./components/page/Learning/Game/NoCam";
 
 function App() {
   return (
@@ -47,16 +49,24 @@ function App() {
             element={<LearningGame />}
           />
           <Route
-            path={`/${ROUTE.LEARNING.link}/${ROUTE.WORD.link}/${ROUTE.GAME.link}/${ROUTE.PLAY.link}`}
-            element={<LearningGame />}
+            path={`/${ROUTE.LEARNING.link}/${ROUTE.ALPHABET.link}/${ROUTE.GAME.link}/${ROUTE.NOCAM.link}`}
+            element={<NoCam />}
           />
-
           <Route
             path={`/${ROUTE.LEARNING.link}/${ROUTE.WORD.link}`}
             element={<Word />}
           />
+          <Route
+            path={`/${ROUTE.LEARNING.link}/${ROUTE.WORD.link}/${ROUTE.GAME.link}/${ROUTE.PLAY.link}`}
+            element={<LearningGame />}
+          />
+          <Route
+            path={`/${ROUTE.LEARNING.link}/${ROUTE.WORD.link}/${ROUTE.GAME.link}/${ROUTE.NOCAM.link}`}
+            element={<NoCam />}
+          />
           <Route path={`/${ROUTE.QUIZ.link}`} element={<Quiz />} />
           <Route path={`/${ROUTE.SEARCH.link}`} element={<Search />} />
+          <Route path={`/${ROUTE.DONATION.link}`} element={<Donation />} />
           <Route path="/*" element={<NotFound />} />
         </Routes>
       </Router>

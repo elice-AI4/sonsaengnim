@@ -2,8 +2,28 @@
 import app from "../src/app";
 
 import request from "supertest";
+//import { v4 as uuid } from "uuid";
 
 describe("End-to-End Test", () => {
+  let random_user;
+
+  // beforeAll(() => {
+  //   random_user = uuid().split("-")[1];
+  // });
+
+  describe("POST /register", () => {
+    test("responds with user information in json", async () => {
+      await request(app)
+        .post("/register")
+        .set("Accept", "application/json")
+        .type("application/json")
+        .send({ username: "test" + random_user, email: random_user + "@test.com", password: "12341234" })
+        .expect(200)
+        .expect("Content-Type", /json/);
+      //.expect({ name: "modolee" });
+    });
+  });
+
   describe("GET /", () => {
     test("responds with json", async () => {
       await request(app)

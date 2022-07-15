@@ -15,6 +15,8 @@ import { ROUTE } from "../../../route/route";
 import Footer from "../../../Footer";
 import { learningTemplatecopyRights } from "../../../copyRights/copyRights";
 import ReactTooltip from "react-tooltip";
+import { useAtom } from "jotai";
+import { webcamExistAtom } from "../../../../state";
 
 interface LearningTemplateProps {
   imgs: {
@@ -27,6 +29,7 @@ interface LearningTemplateProps {
 
 const LearningTemplate = ({ imgs, title, children }: LearningTemplateProps) => {
   const { pathname } = useLocation();
+  const [webcamExist] = useAtom(webcamExistAtom);
   return (
     <TemplateContainer>
       <ContentContainer>
@@ -35,22 +38,41 @@ const LearningTemplate = ({ imgs, title, children }: LearningTemplateProps) => {
           <Underline />
           {children && <InputContainer>{children}</InputContainer>}
         </DescriptionContainer>
-        <ButtonLink
-          to={`${pathname}/${ROUTE.GAME.link}/${ROUTE.PLAY.link}`}
-          data-tip="learningTemplate-follow"
-          data-for="learningTemplate-follow"
-        >
-          따라해 보기
-          <ReactTooltip id="learningTemplate-follow">
-            <video autoPlay width="400" muted loop>
-              <source
-                src="http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20200811/727699/MOV000240877_700X466.mp4"
-                type="video/mp4"
-              />
-            </video>
-            <p style={{ textAlign: "right" }}>출처: 국립국어원</p>
-          </ReactTooltip>
-        </ButtonLink>
+        {webcamExist ? (
+          <ButtonLink
+            to={`${pathname}/${ROUTE.GAME.link}/${ROUTE.PLAY.link}`}
+            data-tip="learningTemplate-follow"
+            data-for="learningTemplate-follow"
+          >
+            따라해 보기
+            <ReactTooltip id="learningTemplate-follow">
+              <video autoPlay width="300" muted loop>
+                <source
+                  src="http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20200811/727699/MOV000240877_700X466.mp4"
+                  type="video/mp4"
+                />
+              </video>
+              <p style={{ textAlign: "right" }}>출처: 국립국어원</p>
+            </ReactTooltip>
+          </ButtonLink>
+        ) : (
+          <ButtonLink
+            to={`${pathname}/${ROUTE.GAME.link}/${ROUTE.NOCAM.link}`}
+            data-tip="learningTemplate-study"
+            data-for="learningTemplate-study"
+          >
+            학습하러 가기
+            <ReactTooltip id="learningTemplate-study" place="bottom">
+              <video autoPlay width="300" muted loop>
+                <source
+                  src="http://sldict.korean.go.kr/multimedia/multimedia_files/convert/20200812/728438/MOV000248732_700X466.mp4"
+                  type="video/mp4"
+                />
+              </video>
+              <p style={{ textAlign: "right" }}>출처: 국립국어원</p>
+            </ReactTooltip>
+          </ButtonLink>
+        )}
         <CardContainer>
           {imgs.map((img, index) => {
             return (

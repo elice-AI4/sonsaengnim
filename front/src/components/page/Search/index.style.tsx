@@ -10,7 +10,6 @@ export const LearningContainer = styled.div`
   width: 100vw;
   min-height: 100vh;
   min-width: 1000px;
-
   display: flex;
   justify-content: center;
   align-items: center;
@@ -18,6 +17,7 @@ export const LearningContainer = styled.div`
 `;
 
 export const SearchBar = styled.input`
+  display: flex;
   font-size: 40px;
   padding: 10px;
   margin: 10px;
@@ -46,18 +46,20 @@ export const SearchButton = styled.button`
 
 export const SearchContainer = styled.div`
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   transform: translateY(10rem);
-  flex: 0.3;
+  flex: 0.4;
   z-index: 2;
+  padding-bottom: 50px;
 `;
 
 export const ResultContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  flex: 0.7;
+  flex: 0.6;
   width: 100vw;
 `;
 
@@ -81,4 +83,45 @@ export const H1 = styled.h1`
   margin-bottom: 1rem;
   justify-content: center;
   align-items: center;
+`;
+
+export const AutoSearchContainer = styled.div`
+  z-index: -1;
+  height: 55vh;
+  width: 438px;
+  background-color: white;
+  position: absolute;
+  transform: translateY(24rem);
+  left: 9px;
+  padding-top: 55px;
+`;
+
+export const AutoSearchWrap = styled.ul`
+  list-style: none;
+`;
+
+export const AutoSearchData = styled.li`
+  padding: 10px 8px;
+  width: 100%;
+  font-size: 30px;
+  &:hover {
+    background-color: #edf5f5;
+    cursor: pointer;
+  }
+  position: relative;
+  img {
+    position: absolute;
+    right: 5px;
+    width: 18px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+`;
+
+export const SearchRowContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2;
+  bottom: 30px;
 `;

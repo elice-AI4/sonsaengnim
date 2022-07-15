@@ -41,8 +41,6 @@ function RecordModal({ rank, score, handleInitial }: RecordProps) {
     const data = { username: rankName, score: score.ans * 10, time: saveTime };
     await Api.post("scores/nologin", data);
     navigate("/rank");
-
-    // handleInitial();
   };
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {

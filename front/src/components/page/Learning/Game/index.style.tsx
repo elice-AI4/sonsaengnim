@@ -245,6 +245,13 @@ export const StartButton = styled.div<StartButtonProp>`
   opacity: ${(props) => (props.cameraOn ? 0 : 1)};
 `;
 
+export const ToolTipContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
 export const TopContainer = styled.div`
   width: 100%;
   flex: 0.2;
@@ -281,10 +288,15 @@ export const PointBox = styled(motion.div)`
   top: -75px;
 
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   font-size: 3rem;
   font-weight: bold;
+`;
+
+export const BoxP = styled.p`
+  margin: 0;
 `;
 
 export const ModalButtonContainer = styled.div`

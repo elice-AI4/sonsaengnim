@@ -4,7 +4,6 @@ import styled, { css } from "styled-components";
 export const Navbar = styled.nav`
   ${({ theme }) => {
     return css`
-      height: ${theme.navbar.height};
       background-color: ${theme.navbar.backgroundColor};
       display: flex;
       justify-content: space-between;
@@ -15,29 +14,50 @@ export const Navbar = styled.nav`
       z-index: 10;
     `;
   }};
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
 `;
 
 export const TitleContainer = styled.div`
-  padding: 1rem;
   cursor: pointer;
   display: flex;
   justify-content: center;
+  @media (max-width: 768px) {
+    align-self: flex-start;
+  }
 `;
 
-export const Title = styled.p`
-  margin: 0;
-  ${({ theme }) => {
-    return css`
-      font-size: ${theme.navbar.title.fontSize};
-      font-weight: ${theme.navbar.title.fontWeight};
-    `;
-  }}
+export const Hamburder = styled.img`
+  position: absolute;
+  z-index: 11;
+  width: 40px;
+  height: 40px;
+  right: 2rem;
+  cursor: pointer;
+  visibility: hidden;
+  @media (max-width: 768px) {
+    top: 2.5rem;
+    visibility: visible;
+  }
 `;
 
-export const List = styled.div`
+export const List = styled.div<{ fold: boolean }>`
   display: flex;
   justify-content: center;
   margin-right: 1rem;
+  @media (max-width: 768px) {
+    flex-direction: column;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    margin-right: 0;
+    height: ${(props) => (props.fold ? "0px" : "342px")};
+    opacity: ${(props) => (props.fold ? "0" : "1")};
+    pointer-events: ${(props) => (props.fold ? "none" : "auto")};
+  }
 `;
 
 export const DefaultLink = styled(Link)`
@@ -50,27 +70,36 @@ export const HomeLink = styled(DefaultLink)``;
 
 export const StyledLink = styled(DefaultLink)`
   position: relative;
-  /* margin-right: 1rem; */
   ${({ theme }) => {
     return css`
       font-size: ${theme.navbar.link.fontSize};
       font-weight: ${theme.navbar.link.fontWeight};
+      border: 5px solid transparent;
     `;
   }}
+  @media (max-width: 768px) {
+    width: 100vw;
+    text-align: center;
+    &:hover {
+      background-color: #ffc774;
+    }
+  }
 
-  &:hover {
-    &::after {
-      content: "";
-      position: absolute;
-      width: 80%;
-      height: 0.5rem;
-      left: 50%;
-      transform: translate(-50%, 28px);
-      ${({ theme }) => {
-        return css`
-          background-color: ${theme.navbar.link.hoverLineColor};
-        `;
-      }}
+  @media (min-width: 769px) {
+    &:hover {
+      &::after {
+        content: "";
+        position: absolute;
+        width: 80%;
+        height: 0.5rem;
+        left: 50%;
+        transform: translate(-50%, 28px);
+        ${({ theme }) => {
+          return css`
+            background-color: ${theme.navbar.link.hoverLineColor};
+          `;
+        }}
+      }
     }
   }
 `;
