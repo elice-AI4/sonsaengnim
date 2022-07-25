@@ -3,4 +3,5 @@ export interface IScore {
   userId?: string;
   score: number;
   time: number;
+  createdAt?: Date;
 }
