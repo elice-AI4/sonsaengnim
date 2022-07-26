@@ -53,7 +53,7 @@ function QuizGame() {
   const navigate = useNavigate();
   const [modal, setModal] = useState<boolean>(false);
   const [rank, setRank] = useState<boolean>(false);
-  const [answer, setAnswer] = useState<boolean>(false);
+  const [answer, setAnswer] = useState<boolean | undefined>(undefined);
   const [score, setScore] = useState<Score>({ ans: 0, cur: 0 });
   const [finish, setFinish] = useState<boolean>(false);
   const [timer, setTimer] = useState<boolean>(false);
@@ -115,14 +115,15 @@ function QuizGame() {
   const nextQuiz = () => {
     if (quizNumber === undefined) return;
     setQuizNumber(Math.floor(Math.random() * problemCount));
-    // setOne(true);
-    setSocketAnswer([]);
+    // setSocketAnswer([]);
     setModal(false);
+    setAnswer(undefined);
   };
 
   const [socketAnswer, setSocketAnswer] = useState<string[]>([]);
   const handleSetSocketAnswer = (answer: string[]) => {
     setSocketAnswer(answer);
+    setOne(true);
   };
   useEffect(() => {
     Api.get("quiz").then((res) => {
@@ -154,25 +155,28 @@ function QuizGame() {
     if (socketAnswer === undefined || socketAnswer.length === 0 || timeOver) {
       return;
     }
-    if (socketAnswer.includes(problem.word)) {
-      setOne(false);
-      setAnswer(true);
-      setScore((cur): Score => {
-        const newScore: Score = { ...cur };
-        newScore["ans"] += 1;
-        newScore["cur"] += 1;
-        return newScore;
-      });
-      setModal(true);
-    } else {
-      setOne(false);
-      setAnswer(false);
-      setScore((cur): Score => {
-        const newScore: Score = { ...cur };
-        newScore["cur"] += 1;
-        return newScore;
-      });
-      setModal(true);
+
+    if (one) {
+      if (socketAnswer.includes(problem.word)) {
+        setOne(false);
+        setAnswer(true);
+        setScore((cur): Score => {
+          const newScore: Score = { ...cur };
+          newScore["ans"] += 1;
+          newScore["cur"] += 1;
+          return newScore;
+        });
+        setModal(true);
+      } else {
+        setOne(false);
+        setAnswer(false);
+        setScore((cur): Score => {
+          const newScore: Score = { ...cur };
+          newScore["cur"] += 1;
+          return newScore;
+        });
+        setModal(true);
+      }
     }
     setIsModalOpen((cur) => {
       return {
@@ -217,7 +221,9 @@ function QuizGame() {
         <img src={ai_loading} alt="ai가 켜지길 기다리는중" />
       </Modal>
       <Modal visible={isModalOpen.waitingAnswerModal} style={modalStyle}>
-        {socketAnswer.length === 0 && <img src={grading} alt="채점중인 로봇" />}
+        {isModalOpen.waitingAnswerModal && (
+          <img src={grading} alt="채점중인 로봇" />
+        )}
       </Modal>
       <ProblemBox
         quizBackImg={`${process.env.PUBLIC_URL}/quizgamepic/quizback3.jpg`}
@@ -230,7 +236,7 @@ function QuizGame() {
         <SolveModal
           modal={modal}
           closeModal={closeModal}
-          answer={answer}
+          answer={answer !== undefined && answer}
           finish={finish}
           score={score}
           nextQuiz={nextQuiz}
