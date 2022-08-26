@@ -18,6 +18,9 @@ export class MongoScoreModel implements IScoreModel {
   public async getTopten() {
     let scores = await Score.aggregate([{ $sort: { score: -1, time: 1 } }, { $addFields: { rank: 0 } }]);
     let result = [];
+    if (scores.length === 0) {
+      return result;
+    }
     scores[0].rank = 1;
     result.push(scores[0]);
     for (let i = 1, add = 1; i < scores.length; i++) {
