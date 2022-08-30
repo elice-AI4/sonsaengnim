@@ -14,6 +14,9 @@ class MongoHandModel implements IHandModel {
   // 수화 데이터 한꺼번에 가져오기
   public async findAll() {
     const newHand = await Hand.find().sort({ _id: 1 }).lean();
+    if (newHand.length === 0) {
+      return [];
+    }
     return newHand;
   }
 
